@@ -11,6 +11,7 @@ services:
       - baza:/bot/.baza
       - state:/root/.local/share/mol_state_local
     restart: unless-stopped
+    stop_grace_period: 15s
 
   app:
     build:
