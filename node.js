@@ -21547,6 +21547,9 @@ var $;
 		account_count(){
 			return "";
 		}
+		account_code(){
+			return "";
+		}
 		status_options(){
 			return [];
 		}
@@ -21604,6 +21607,29 @@ var $;
 		}
 		qr_rows(){
 			return [(this.Qr_card(id))];
+		}
+		staff_link(){
+			return "";
+		}
+		staff_code(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Staff_code(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Staff_code_hint")));
+			(obj.value) = (next) => ((this.staff_code(next)));
+			return obj;
+		}
+		staff_add(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Staff_add(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Staff_add_title")));
+			(obj.click) = (next) => ((this.staff_add(next)));
+			return obj;
 		}
 		post_allowed(){
 			return (this.Post_form().submit_allowed());
@@ -22066,6 +22092,17 @@ var $;
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_note_title")));
 			return obj;
 		}
+		Account_code(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_code_title")));
+			(obj.content) = () => ([(this.account_code())]);
+			return obj;
+		}
+		Account_code_note(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_code_note_title")));
+			return obj;
+		}
 		Admin_title(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Admin_title_title")));
@@ -22089,6 +22126,26 @@ var $;
 		Qrs(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ((this.qr_rows()));
+			return obj;
+		}
+		Staff_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Staff_title_title")));
+			return obj;
+		}
+		Staff_invite(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.staff_link()));
+			return obj;
+		}
+		Staff_qr(){
+			const obj = new this.$.$bog_qr();
+			(obj.uri) = () => ((this.staff_link()));
+			return obj;
+		}
+		Staff_form(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Staff_code()), (this.Staff_add())]);
 			return obj;
 		}
 		Post_form(){
@@ -22250,6 +22307,10 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Qr"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Qr_link"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Qr_card"));
+	($mol_mem(($.$bog_max_app.prototype), "staff_code"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_code"));
+	($mol_mem(($.$bog_max_app.prototype), "staff_add"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_add"));
 	($mol_mem(($.$bog_max_app.prototype), "post_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Post_title_input"));
 	($mol_mem(($.$bog_max_app.prototype), "Post_title_field"));
@@ -22313,11 +22374,17 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Account_house"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_count"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_note"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_code"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_code_note"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_empty"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_rows"));
 	($mol_mem(($.$bog_max_app.prototype), "Qr_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Qrs"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_invite"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_qr"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_form"));
 	($mol_mem(($.$bog_max_app.prototype), "Post_form"));
 	($mol_mem(($.$bog_max_app.prototype), "New"));
 	($mol_mem(($.$bog_max_app.prototype), "House_line"));
@@ -22716,17 +22783,32 @@ var $;
             const staff = this.Staff();
             if (!staff)
                 return [root];
-            const lords = staff.keys().map(String).filter(lord => {
-                const atom = staff.key(lord);
+            const trusted = new Set([root]);
+            const authors = new Map();
+            for (const key of staff.keys()) {
+                const atom = staff.key(key);
                 if (!atom)
-                    return false;
+                    continue;
+                const by = [];
                 for (const unit of atom.units_of(null)) {
-                    if (unit.lord().str === root)
-                        return Boolean(atom.land().sand_decode(unit));
+                    if (atom.land().sand_decode(unit))
+                        by.push(unit.lord().str);
                 }
-                return false;
-            });
-            return [root, ...lords];
+                authors.set(String(key), by);
+            }
+            let grown = true;
+            while (grown) {
+                grown = false;
+                for (const [lord, by] of authors) {
+                    if (trusted.has(lord))
+                        continue;
+                    if (!by.some(author => trusted.has(author)))
+                        continue;
+                    trusted.add(lord);
+                    grown = true;
+                }
+            }
+            return [...trusted];
         }
     }
     $.$bog_max_uk = $bog_max_uk;
@@ -22825,9 +22907,13 @@ var $;
             }
             dev_init_data() {
                 const id = Number(this.$.$mol_state_arg.value('user') ?? '');
-                if (!id)
+                const start = this.$.$mol_state_arg.value('start') ?? '';
+                if (!id && !start)
                     return '';
-                return new URLSearchParams({ user: JSON.stringify({ id, first_name: `Демо ${id}` }) }).toString();
+                return new URLSearchParams({
+                    ...id ? { user: JSON.stringify({ id, first_name: `Демо ${id}` }) } : {},
+                    ...start ? { start_param: start } : {},
+                }).toString();
             }
             fail() {
                 try {
@@ -22914,12 +23000,17 @@ var $;
                         this.Account_house(),
                         this.Account_count(),
                         this.Account_note(),
+                        this.Account_code(),
+                        this.Account_code_note(),
                     ];
                     case 'admin': return this.staff() ? [
                         this.Admin_title(),
                         this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
                         this.Qr_title(),
                         this.Qrs(),
+                        this.Staff_title(),
+                        ...this.staff_link() ? [this.Staff_invite(), this.Staff_qr()] : [],
+                        this.Staff_form(),
                         this.Post_form(),
                     ] : [this.Fail()];
                 }
@@ -23023,6 +23114,19 @@ var $;
             }
             account_id() {
                 return String(this.session().user.id);
+            }
+            account_code() {
+                return this.$.$giper_baza_auth.current().pass().lord().str;
+            }
+            staff_link() {
+                return this.session().staff_link ?? '';
+            }
+            staff_add() {
+                const code = this.staff_code().trim();
+                if (!code)
+                    return;
+                this.uk().Staff('auto').key(code, 'auto').val('dispatcher');
+                this.staff_code('');
             }
             account_count() {
                 return String(this.mine().length);
@@ -23334,6 +23438,9 @@ var $;
             $mol_mem
         ], $bog_max_app.prototype, "news", null);
         __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "staff_add", null);
+        __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "house_options", null);
         __decorate([
@@ -23532,6 +23639,33 @@ var $;
             color: $mol_theme.shade,
             font: { size: '0.75rem' },
             wordBreak: 'break-all',
+        },
+        Staff_title: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Staff_invite: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+            wordBreak: 'break-all',
+            font: { size: '0.8125rem' },
+        },
+        Staff_qr: {
+            width: '10rem',
+            height: '10rem',
+            margin: { left: $mol_gap.block },
+        },
+        Staff_form: {
+            flex: { direction: 'column' },
+            gap: $mol_gap.space,
+            padding: $mol_gap.block,
+        },
+        Account_code: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Account_code_note: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
         },
         Post_form: {
             padding: $mol_gap.block,
