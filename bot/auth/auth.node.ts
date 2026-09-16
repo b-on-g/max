@@ -33,8 +33,9 @@ namespace $ {
 			const secret = bot.env().STAFF_SECRET ?? ''
 			const invited = Boolean( secret ) && checked.start === `staff_${ secret }`
 			const listed = bot.env_list( 'UK_STAFF' ).includes( String( checked.user.id ) )
-			if( invited || listed ) uk.Staff( 'auto' )!.key( pass.lord().str, 'auto' )!.val( 'dispatcher' )
-			const staff = bot.lords().includes( pass.lord().str )
+			if( invited || listed ) uk.Staff( 'auto' )!.key( pass.lord().str, 'auto' )!.val( 'admin' )
+			const role = uk.staff_roles( bot.lord() ).get( pass.lord().str ) ?? 'resident'
+			const staff = role !== 'resident'
 
 			const house = checked.start ? uk.house_by_code( checked.start.replace( /^house_/, '' ) ) : null
 			const name = [ checked.user.first_name, checked.user.last_name ].filter( Boolean ).join( ' ' )
@@ -44,7 +45,8 @@ namespace $ {
 				lord: bot.lord(),
 				lords: bot.lords(),
 				bot: bot.bot_name(),
-				role: staff ? 'staff' : 'resident',
+				role,
+				duty: uk.duty_by( bot.lord(), pass.lord().str ),
 				staff_link: staff && secret ? bot.start_link( `staff_${ secret }` ) : '',
 				house: house?.link().str ?? null,
 				user: { id: checked.user.id, name },

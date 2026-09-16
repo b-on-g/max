@@ -289,3 +289,8 @@
 		padding-inline: max(var(--spacing-size-xl), calc((100% - 40rem) / 2));
 	}
 }
+
+[bog_max_app] [mol_form_field][bog_max_required="true"] [mol_form_field_bid]::before {
+	content: '* ';
+	color: var(--text-negative);
+}

@@ -147,22 +147,33 @@ namespace $ {
 			color: $mol_theme.shade,
 		},
 
-		Qr_card: {
-			flex: { direction: 'column' },
-			align: { items: 'center' },
-			gap: $mol_gap.space,
-			padding: $mol_gap.block,
+		Qr_house: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
 		},
 
 		Qr: {
 			width: '12rem',
 			height: '12rem',
+			margin: { left: $mol_gap.block },
 		},
 
 		Qr_link: {
 			color: $mol_theme.shade,
 			font: { size: '0.75rem' },
 			wordBreak: 'break-all',
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		Qr_print: {
+			margin: $mol_gap.block,
+		},
+
+		House_form: {
+			padding: $mol_gap.block,
+		},
+
+		Account_role: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
 		},
 
 		Staff_title: {
@@ -180,6 +191,10 @@ namespace $ {
 			width: '10rem',
 			height: '10rem',
 			margin: { left: $mol_gap.block },
+		},
+
+		Staff_houses: {
+			flex: { wrap: 'wrap' },
 		},
 
 		Staff_form: {

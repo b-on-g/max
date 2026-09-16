@@ -97,6 +97,9 @@ $bog_max_app $mol_book2
 		content / <= account_count \
 	Account_note $mol_paragraph
 		title @ \Дом подставляется в новые заявки. Ссылка или QR-код с кодом дома выбирает его сам.
+	Account_role $mol_labeler
+		title @ \Роль
+		content / <= account_role \
 	Account_code $mol_labeler
 		title @ \Код сотрудника
 		content / <= account_code \
@@ -104,6 +107,19 @@ $bog_max_app $mol_book2
 		title @ \Сообщите код диспетчеру УК, и он откроет вам раздел диспетчера.
 	Admin_title $mol_paragraph
 		title @ \Все заявки. Статус меняется здесь или через API организации.
+	House_form $mol_form
+		submit_allowed => house_allowed
+		form_fields /
+			<= House_address_field $mol_form_field
+				name @ \Новый дом
+				bids <= house_address_bids /string
+				control <= House_address $mol_string
+					hint @ \Адрес: улица, дом, корпус
+					value? <=> house_address_new? \
+		buttons /
+			<= House_submit $mol_button_major
+				title @ \Добавить дом
+				click? <=> house_add? null
 	Admin_empty $mol_paragraph
 		title @ \Заявок пока нет.
 	Admin_rows $mol_list
@@ -116,19 +132,20 @@ $bog_max_app $mol_book2
 						dictionary <= status_dictionary *
 						value? <=> admin_status*? \
 	Qr_title $mol_paragraph
-		title @ \QR-коды домов. Наклейте у подъезда: житель откроет бота сразу с этим домом.
-	Qrs $mol_list
-		rows <= qr_rows /
-			<= Qr_card* $mol_view
-				sub /
-					<= Qr_address* $mol_paragraph
-						title <= house_address* \
-					<= Qr* $bog_qr
-						uri <= qr_uri* \
-					<= Qr_link* $mol_paragraph
-						title <= qr_uri* \
+		title @ \QR-код дома. Наклейте у подъезда: житель откроет бота сразу с этим домом.
+	Qr_house $mol_select
+		options <= my_houses /string
+		dictionary <= house_dictionary *
+		value? <=> qr_house? \
+	Qr $bog_qr
+		uri <= qr_uri \
+	Qr_link $mol_paragraph
+		title <= qr_uri
+	Qr_print $mol_button_major
+		title @ \Распечатать QR
+		click? <=> qr_print? null
 	Staff_title $mol_paragraph
-		title @ \Коллеги. Пришлите ссылку-приглашение или введите код сотрудника из его профиля.
+		title @ \Сотрудники. Пришлите ссылку-приглашение админа или введите код сотрудника из его профиля и выберите роль.
 	Staff_invite $mol_paragraph
 		title <= staff_link \
 	Staff_qr $bog_qr
@@ -138,8 +155,21 @@ $bog_max_app $mol_book2
 			<= Staff_code $mol_string
 				hint @ \Код сотрудника
 				value? <=> staff_code? \
+			<= Staff_role $mol_select
+				options /
+					\dispatcher
+					\admin
+				dictionary *
+					dispatcher @ \Диспетчер
+					admin @ \Админ
+				value? <=> staff_role? \dispatcher
+			<= Staff_houses $mol_select_list
+				options <= house_options /string
+				dictionary <= house_dictionary *
+				value? <=> staff_houses? /string
+				pick_hint @ \Дома диспетчера
 			<= Staff_add $mol_button_major
-				title @ \Сделать диспетчером
+				title @ \Добавить сотрудника
 				click? <=> staff_add? null
 	Post_form $mol_form
 		submit_allowed => post_allowed
@@ -168,7 +198,7 @@ $bog_max_app $mol_book2
 			<= Post_house_field $mol_form_field
 				name @ \Дом
 				control <= Post_house $mol_select
-					options <= house_options /string
+					options <= my_houses /string
 					dictionary <= house_dictionary *
 					value? <=> post_house? \
 		buttons /
@@ -200,6 +230,9 @@ $bog_max_app $mol_book2
 					value? <=> scope? \house
 			<= Category_field $mol_form_field
 				name @ \Что случилось
+				attr *
+					^
+					bog_max_required \true
 				bids <= category_bids /string
 				control <= Category $mol_select
 					options <= category_options /string
@@ -212,6 +245,9 @@ $bog_max_app $mol_book2
 					value? <=> entrance? \
 			<= Place_field $mol_form_field
 				name @ \Где
+				attr *
+					^
+					bog_max_required \true
 				bids <= place_bids /string
 				control <= Place $mol_string
 					hint <= place_hint \
@@ -236,7 +272,6 @@ $bog_max_app $mol_book2
 			<= Submit $mol_button_major
 				title @ \Отправить заявку
 				click? <=> submit? null
-				enabled <= submit_allowed
 	Photo_preview $mol_image
 		uri <= photo_preview \
 	Similar_title $mol_paragraph

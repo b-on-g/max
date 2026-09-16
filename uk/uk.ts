@@ -9,6 +9,7 @@ namespace $ {
 		Bindings: $giper_baza_dict_to( $giper_baza_atom_text ),
 		Notified: $giper_baza_dict_to( $giper_baza_atom_text ),
 		Staff: $giper_baza_dict_to( $giper_baza_atom_text ),
+		Duty: $giper_baza_dict_to( $giper_baza_atom_text ),
 	}) {
 
 		tickets() {
@@ -27,31 +28,47 @@ namespace $ {
 			return this.Houses()?.remote_list().find( house => house.Code()?.val() === code ) ?? null
 		}
 
-		staff_by( root: string ) {
+		staff_roles( root: string ) {
+			const roles = new Map< string, string >([[ root, 'admin' ]])
 			const staff = this.Staff()
-			if( !staff ) return [ root ]
-			const trusted = new Set([ root ])
-			const authors = new Map< string, string[] >()
+			if( !staff ) return roles
+			const entries = [] as { lord: string, role: string, by: string }[]
 			for( const key of staff.keys() ) {
 				const atom = staff.key( key )
 				if( !atom ) continue
-				const by = [] as string[]
 				for( const unit of atom.units_of( null ) ) {
-					if( atom.land().sand_decode( unit ) ) by.push( unit.lord().str )
+					const role = String( atom.land().sand_decode( unit ) ?? '' )
+					if( role ) entries.push({ lord: String( key ), role, by: unit.lord().str })
 				}
-				authors.set( String( key ), by )
 			}
 			let grown = true
 			while( grown ) {
 				grown = false
-				for( const [ lord, by ] of authors ) {
-					if( trusted.has( lord ) ) continue
-					if( !by.some( author => trusted.has( author ) ) ) continue
-					trusted.add( lord )
+				for( const { lord, role, by } of entries ) {
+					if( roles.has( lord ) ) continue
+					if( roles.get( by ) !== 'admin' ) continue
+					roles.set( lord, role )
 					grown = true
 				}
 			}
-			return [ ... trusted ]
+			return roles
+		}
+
+		staff_by( root: string ) {
+			return [ ... this.staff_roles( root ).keys() ]
+		}
+
+		duty_by( root: string, lord: string ) {
+			const roles = this.staff_roles( root )
+			const all = this.Houses()?.remote_list().map( house => house.link().str ) ?? []
+			if( roles.get( lord ) === 'admin' ) return all
+			const atom = this.Duty()?.key( lord )
+			if( !atom ) return [] as string[]
+			for( const unit of atom.units_of( null ) ) {
+				if( roles.get( unit.lord().str ) !== 'admin' ) continue
+				return String( atom.land().sand_decode( unit ) ?? '' ).split( ',' ).filter( link => all.includes( link ) )
+			}
+			return [] as string[]
 		}
 
 	}

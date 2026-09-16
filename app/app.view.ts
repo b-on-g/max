@@ -11,7 +11,8 @@ namespace $.$$ {
 		lord: string
 		lords: readonly string[]
 		bot: string
-		role: 'resident' | 'staff'
+		role: 'resident' | 'dispatcher' | 'admin'
+		duty: readonly string[]
 		staff_link: string
 		house: string | null
 		user: { id: number, name: string }
@@ -111,13 +112,28 @@ namespace $.$$ {
 			return this.session().lords ?? [ this.session().lord ]
 		}
 
-		staff() {
+		role() {
 			try {
-				return this.session().role === 'staff'
+				return this.session().role
 			} catch( error ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-				return false
+				return 'resident'
 			}
+		}
+
+		staff() {
+			return this.role() !== 'resident'
+		}
+
+		admin() {
+			return this.role() === 'admin'
+		}
+
+		@ $mol_mem
+		my_houses() {
+			if( this.admin() ) return this.house_options()
+			const duty = this.session().duty ?? []
+			return this.house_options().filter( link => duty.includes( link ) )
 		}
 
 		user_id() {
@@ -168,6 +184,7 @@ namespace $.$$ {
 					this.Account_house(),
 					this.Account_count(),
 					this.Account_note(),
+					this.Account_role(),
 					this.Account_code(),
 					this.Account_code_note(),
 				]
@@ -175,11 +192,17 @@ namespace $.$$ {
 					this.Admin_title(),
 					this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
 					this.Qr_title(),
-					this.Qrs(),
-					this.Staff_title(),
-					... this.staff_link() ? [ this.Staff_invite(), this.Staff_qr() ] : [],
-					this.Staff_form(),
+					this.Qr_house(),
+					this.Qr(),
+					this.Qr_link(),
+					this.Qr_print(),
 					this.Post_form(),
+					... this.admin() ? [
+						this.House_form(),
+						this.Staff_title(),
+						... this.staff_link() ? [ this.Staff_invite(), this.Staff_qr() ] : [],
+						this.Staff_form(),
+					] : [],
 				] : [ this.Fail() ]
 			}
 			return [
@@ -305,6 +328,14 @@ namespace $.$$ {
 			return String( this.session().user.id )
 		}
 
+		account_role() {
+			switch( this.role() ) {
+				case 'admin': return 'Админ УК: заводит дома и сотрудников'
+				case 'dispatcher': return `Диспетчер, домов: ${ this.my_houses().length }`
+			}
+			return 'Житель'
+		}
+
 		account_code() {
 			return this.$.$giper_baza_auth.current().pass().lord().str
 		}
@@ -317,8 +348,42 @@ namespace $.$$ {
 		staff_add() {
 			const code = this.staff_code().trim()
 			if( !code ) return
-			this.uk().Staff( 'auto' )!.key( code, 'auto' )!.val( 'dispatcher' )
+			this.uk().Staff( 'auto' )!.key( code, 'auto' )!.val( this.staff_role() )
+			this.uk().Duty( 'auto' )!.key( code, 'auto' )!.val( this.staff_houses().join( ',' ) )
 			this.staff_code( '' )
+			this.staff_houses( [] )
+		}
+
+		@ $mol_mem
+		house_address_bids() {
+			return this.house_address_new().trim() ? [] : [ 'Нужен адрес' ]
+		}
+
+		slug( text: string ) {
+			const map: Record< string, string > = {
+				а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z', и: 'i', й: 'y', к: 'k', л: 'l', м: 'm',
+				н: 'n', о: 'o', п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'c', ч: 'ch', ш: 'sh', щ: 'sch',
+				ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya',
+			}
+			return text.toLowerCase()
+				.replace( /ул\.|улица|пр\.|проспект|д\.|дом|к\.|корпус|стр\./g, ' ' )
+				.split( '' ).map( char => map[ char ] ?? char ).join( '' )
+				.replace( /[^a-z0-9]+/g, '' )
+				.slice( 0, 24 )
+		}
+
+		@ $mol_action
+		house_add() {
+			const address = this.house_address_new().trim()
+			if( !address ) return
+			const uk = this.uk()
+			const taken = new Set( uk.Houses()?.remote_list().map( house => house.Code()?.val() ?? '' ) ?? [] )
+			let code = this.slug( address ) || 'house'
+			while( taken.has( code ) ) code += Math.floor( Math.random() * 10 )
+			const house = uk.Houses( 'auto' )!.make( null )
+			house.Address( 'auto' )!.val( address )
+			house.Code( 'auto' )!.val( code )
+			this.house_address_new( '' )
 		}
 
 		account_count() {
@@ -386,13 +451,26 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		tried( next = false ) {
+			return next
+		}
+
+		category_valid() {
+			return this.category_options().includes( this.category() )
+		}
+
+		place_valid() {
+			return Boolean( this.place().trim() )
+		}
+
+		@ $mol_mem
 		category_bids() {
-			return this.category_options().includes( this.category() ) ? [] : [ 'Выберите категорию' ]
+			return !this.tried() || this.category_valid() ? [] : [ 'Выберите категорию' ]
 		}
 
 		@ $mol_mem
 		place_bids() {
-			return this.place().trim() ? [] : [ 'Укажите, где именно' ]
+			return !this.tried() || this.place_valid() ? [] : [ 'Укажите, где именно' ]
 		}
 
 		photo_pick_label() {
@@ -454,7 +532,10 @@ namespace $.$$ {
 
 		@ $mol_action
 		submit() {
-			if( !this.submit_allowed() ) return
+			if( !this.category_valid() || !this.place_valid() ) {
+				this.tried( true )
+				return
+			}
 			const uk = this.uk()
 			const house = this.house_of( this.house() )
 			const category = this.category_of( this.category() )
@@ -479,6 +560,7 @@ namespace $.$$ {
 			this.entrance( '' )
 			this.category( '' )
 			this.photo_files( [] )
+			this.tried( false )
 			this.$.$mol_state_arg.dict({ ... this.$.$mol_state_arg.dict(), screen: null, ticket: ticket.link().str })
 		}
 
@@ -604,7 +686,11 @@ namespace $.$$ {
 
 		@ $mol_mem
 		all() {
-			return this.uk().tickets().map( ticket => ticket.link().str ).reverse()
+			const houses = this.my_houses()
+			return this.uk().tickets()
+				.filter( ticket => houses.includes( ticket.House()?.val()?.str ?? '' ) )
+				.map( ticket => ticket.link().str )
+				.reverse()
 		}
 
 		admin_rows() {
@@ -630,16 +716,33 @@ namespace $.$$ {
 			return this.status_of( link )
 		}
 
-		qr_rows() {
-			return this.house_options().map( link => this.Qr_card( link ) )
+		@ $mol_mem
+		qr_house( next?: string ) {
+			const houses = this.my_houses()
+			if( next !== undefined && houses.includes( next ) ) return next
+			return houses.includes( this.house() ) ? this.house() : houses[0] ?? ''
 		}
 
-		qr_uri( link: string ) {
-			const code = this.house_of( link ).Code()?.val() ?? ''
+		qr_uri() {
+			const code = this.house_of( this.qr_house() ).Code()?.val() ?? ''
 			const bot = this.session().bot
 			if( bot ) return `https://max.ru/${ bot }?start=house_${ code }`
 			const location = this.$.$mol_dom_context.location
 			return `${ location.origin }${ location.pathname }#!house=${ code }`
+		}
+
+		@ $mol_action
+		qr_print() {
+			const svg = this.Qr().dom_node().outerHTML
+			const address = this.house_address( this.qr_house() )
+			const win = this.$.$mol_dom_context.open( '', '_blank' )
+			if( !win ) return
+			win.document.write( `<!doctype html><html><head><meta charset="utf-8"><title>${ address }</title>
+				<style>body{font-family:system-ui;text-align:center;padding:2rem} svg{width:60vmin;height:60vmin} h1{font-size:1.5rem} p{color:#555}</style></head>
+				<body><h1>${ address }</h1><p>Наведите камеру, чтобы сообщить о проблеме в доме</p>${ svg }<p>${ this.qr_uri() }</p></body></html>` )
+			win.document.close()
+			win.focus()
+			win.print()
 		}
 
 		@ $mol_mem
@@ -649,7 +752,9 @@ namespace $.$$ {
 
 		@ $mol_mem
 		post_house( next?: string ) {
-			return next ?? this.house()
+			const houses = this.my_houses()
+			if( next !== undefined && houses.includes( next ) ) return next
+			return houses.includes( this.house() ) ? this.house() : houses[0] ?? ''
 		}
 
 		@ $mol_action
