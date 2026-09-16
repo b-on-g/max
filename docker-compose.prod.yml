@@ -1,0 +1,13 @@
+services:
+
+  bot:
+    ports: !override []
+
+  app:
+    ports: !override
+      - "127.0.0.1:8081:80"
+    labels:
+      caddy: ${MAX_DOMAIN:-cmyser-ru-max.91.188.212.151.ip.giper.dev}
+      caddy.encode: zstd gzip
+      caddy.reverse_proxy: ":8081"
+    restart: unless-stopped

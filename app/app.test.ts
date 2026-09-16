@@ -10,17 +10,17 @@ namespace $ {
 			$mol_assert_equal( app.main_body(), [ app.Fail() ] )
 		},
 
-		'new ticket needs house, category and place'( $ ) {
+		'empty category and place get bids'( $ ) {
 			const app = $$.$bog_max_app.make({ $ })
-			app.house = ()=> 'house'
-			app.category = ()=> 'category'
+			app.category = ()=> ''
 			app.place = ()=> '  '
-			$mol_assert_equal( app.submit_allowed(), false )
+			$mol_assert_equal( app.category_bids(), [ 'Выберите категорию' ] )
+			$mol_assert_equal( app.place_bids(), [ 'Укажите, где именно' ] )
 			const ready = $$.$bog_max_app.make({ $ })
-			ready.house = ()=> 'house'
 			ready.category = ()=> 'category'
 			ready.place = ()=> 'подъезд 2'
-			$mol_assert_equal( ready.submit_allowed(), true )
+			$mol_assert_equal( ready.category_bids(), [] )
+			$mol_assert_equal( ready.place_bids(), [] )
 		},
 
 		'sections switch the main body'( $ ) {

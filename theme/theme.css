@@ -271,3 +271,14 @@
 [bog_max_app_search] {
 	align-self: stretch;
 }
+
+[bog_max_app] [mol_form_field_bid] {
+	color: var(--text-negative);
+	font-size: var(--font-size-description);
+	text-shadow: none;
+}
+
+[bog_max_app] [mol_form_field][mol_form_field_state="bid"] [mol_string],
+[bog_max_app] [mol_form_field][mol_form_field_state="bid"] [mol_select_trigger] {
+	box-shadow: inset 0 0 0 1px var(--text-negative);
+}

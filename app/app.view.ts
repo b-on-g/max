@@ -273,12 +273,18 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		submit_allowed() {
-			return Boolean( this.house() && this.category() && this.place().trim() )
+		category_bids() {
+			return this.category() ? [] : [ 'Выберите категорию' ]
+		}
+
+		@ $mol_mem
+		place_bids() {
+			return this.place().trim() ? [] : [ 'Укажите, где именно' ]
 		}
 
 		@ $mol_action
 		submit() {
+			if( !this.submit_allowed() ) return
 			const uk = this.uk()
 			const house = this.house_of( this.house() )
 			const category = this.category_of( this.category() )
