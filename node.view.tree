@@ -391,6 +391,58 @@ $giper_baza_status $mol_select
 				<= Fail $mol_icon_sync_off
 			hint <= message <= hint \Sync status
 
+$mol_icon_clipboard $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3
+
+$mol_icon_clipboard_text $mol_icon path \M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z
+
+$bog_max_nav_item $mol_link
+	label \
+	active \off
+	Icon $mol_view
+	attr *
+		^
+		bog_max_nav_active <= active
+	sub /
+		<= Icon
+		<= Label $mol_view
+			sub / <= label
+
+$mol_icon_home $mol_icon path \M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z
+
+$mol_icon_home_city $mol_icon path \M0,21V10L7.5,5L15,10V21H10V14H5V21H0M24,2V21H17V8.93L16,8.27V6H14V6.93L10,4.27V2H24M21,14H19V16H21V14M21,10H19V12H21V10M21,6H19V8H21V6Z
+
+$mol_icon_account $mol_icon path \M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z
+
+$mol_icon_account_circle $mol_icon path \M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z
+
+$bog_max_nav $mol_view
+	section \tickets
+	sub /
+		<= Tab_tickets $bog_max_nav_item
+			arg *
+				section null
+				screen null
+				ticket null
+			label @ \Заявки
+			active <= tickets_active \off
+			Icon <= Tickets_icon $mol_icon_clipboard_text
+		<= Tab_house $bog_max_nav_item
+			arg *
+				section \house
+				screen null
+				ticket null
+			label @ \Дом
+			active <= house_active \off
+			Icon <= House_icon $mol_icon_home_city
+		<= Tab_account $bog_max_nav_item
+			arg *
+				section \account
+				screen null
+				ticket null
+			label @ \Профиль
+			active <= account_active \off
+			Icon <= Account_icon $mol_icon_account_circle
+
 $mol_button_major $mol_button_minor
 	theme \$mol_theme_base
 
@@ -487,23 +539,25 @@ $bog_max_app $mol_book2
 				\$mol_theme_calm_light
 				\$mol_theme_calm_dark
 	pages /
-	Home $mol_page
-		title @ \Мои заявки
+	Main $mol_page
+		title <= main_title \
 		tools /
 			<= Sync $giper_baza_status
-		body <= home_body /
+		body <= main_body /
 		foot /
-			<= New_link $mol_link
-				arg *
-					screen \new
-					ticket null
-				sub /
-					<= New_button $mol_button_major
-						title @ \Новая заявка
+			<= Nav $bog_max_nav
+				section <= section \tickets
 	Wait $mol_paragraph
 		title @ \Подключаемся к управляющей компании…
 	Fail $mol_paragraph
 		title <= fail \
+	New_link $mol_link
+		arg *
+			screen \new
+			ticket null
+		sub /
+			<= New_button $mol_button_major
+				title @ \Новая заявка
 	House_title $mol_paragraph
 		title <= house_title \
 	Empty $mol_paragraph
@@ -519,6 +573,30 @@ $bog_max_app $mol_book2
 						title <= row_title* \
 					<= Row_status* $mol_paragraph
 						title <= row_status* \
+	Search $mol_search
+		query? <=> query? \
+		hint @ \Поиск по заявкам дома
+	House_empty $mol_paragraph
+		title @ \По этому дому заявок ещё нет.
+	House_rows $mol_list
+		rows <= house_rows /
+	Account_name $mol_labeler
+		title @ \Имя
+		content / <= account_name \
+	Account_id $mol_labeler
+		title @ \ID в MAX
+		content / <= account_id \
+	Account_house $mol_form_field
+		name @ \Мой дом
+		control <= House $mol_select
+			options <= house_options /string
+			dictionary <= house_dictionary *
+			value? <=> house? \
+	Account_count $mol_labeler
+		title @ \Заявок подано
+		content / <= account_count \
+	Account_note $mol_paragraph
+		title @ \Дом подставляется в новые заявки. Ссылка или QR-код с кодом дома выбирает его сам.
 	New $mol_page
 		title @ \Новая заявка
 		tools /
@@ -531,12 +609,9 @@ $bog_max_app $mol_book2
 			<= Form $mol_form
 				submit_allowed <= submit_allowed false
 				form_fields /
-					<= House_field $mol_form_field
-						name @ \Дом
-						control <= House $mol_select
-							options <= house_options /string
-							dictionary <= house_dictionary *
-							value? <=> house? \
+					<= House_line $mol_labeler
+						title @ \Дом
+						content / <= house_address \
 					<= Category_field $mol_form_field
 						name @ \Что случилось
 						control <= Category $mol_select

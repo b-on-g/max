@@ -1287,7 +1287,7 @@ declare namespace $ {
      * Theme css variables
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
      */
-    const $mol_theme: Record<"image" | "line" | "text" | "field" | "current" | "focus" | "hue" | "back" | "hover" | "card" | "special" | "control" | "shade" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
+    const $mol_theme: Record<"image" | "line" | "text" | "field" | "current" | "control" | "focus" | "hue" | "back" | "hover" | "card" | "special" | "shade" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -1885,7 +1885,7 @@ declare namespace $ {
      * Theme css variables
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
      */
-    const $bog_theme: Record<"image" | "line" | "text" | "field" | "current" | "focus" | "background" | "back" | "hover" | "card" | "special" | "control" | "shade" | "spirit", $mol_style_func<"var", unknown>>;
+    const $bog_theme: Record<"image" | "line" | "text" | "field" | "current" | "control" | "focus" | "background" | "back" | "hover" | "card" | "special" | "shade" | "spirit", $mol_style_func<"var", unknown>>;
     /**
      * Available theme names.
      * Add new theme to theme.css and add its name here.
@@ -38747,6 +38747,186 @@ declare namespace $ {
 }
 
 declare namespace $ {
+
+	export class $mol_icon_clipboard extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=clipboard.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_clipboard_text extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=text.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_view__sub_bog_max_nav_item_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $bog_max_nav_item extends $mol_link {
+		Label( ): $mol_view
+		label( ): string
+		active( ): string
+		Icon( ): $mol_view
+		attr( ): ({ 
+			'bog_max_nav_active': ReturnType< $bog_max_nav_item['active'] >,
+		})  & ReturnType< $mol_link['attr'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=item.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_icon_home extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=home.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_home_city extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=city.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_account extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=account.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_account_circle extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=circle.view.tree.d.ts.map
+declare namespace $ {
+
+	type $bog_max_nav_item__arg_bog_max_nav_1 = $mol_type_enforce<
+		({ 
+			'section': any,
+			'screen': any,
+			'ticket': any,
+		}) 
+		,
+		ReturnType< $bog_max_nav_item['arg'] >
+	>
+	type $bog_max_nav_item__label_bog_max_nav_2 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $bog_max_nav_item['label'] >
+	>
+	type $bog_max_nav_item__active_bog_max_nav_3 = $mol_type_enforce<
+		ReturnType< $bog_max_nav['tickets_active'] >
+		,
+		ReturnType< $bog_max_nav_item['active'] >
+	>
+	type $bog_max_nav_item__Icon_bog_max_nav_4 = $mol_type_enforce<
+		ReturnType< $bog_max_nav['Tickets_icon'] >
+		,
+		ReturnType< $bog_max_nav_item['Icon'] >
+	>
+	type $bog_max_nav_item__arg_bog_max_nav_5 = $mol_type_enforce<
+		({ 
+			'section': string,
+			'screen': any,
+			'ticket': any,
+		}) 
+		,
+		ReturnType< $bog_max_nav_item['arg'] >
+	>
+	type $bog_max_nav_item__label_bog_max_nav_6 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $bog_max_nav_item['label'] >
+	>
+	type $bog_max_nav_item__active_bog_max_nav_7 = $mol_type_enforce<
+		ReturnType< $bog_max_nav['house_active'] >
+		,
+		ReturnType< $bog_max_nav_item['active'] >
+	>
+	type $bog_max_nav_item__Icon_bog_max_nav_8 = $mol_type_enforce<
+		ReturnType< $bog_max_nav['House_icon'] >
+		,
+		ReturnType< $bog_max_nav_item['Icon'] >
+	>
+	type $bog_max_nav_item__arg_bog_max_nav_9 = $mol_type_enforce<
+		({ 
+			'section': string,
+			'screen': any,
+			'ticket': any,
+		}) 
+		,
+		ReturnType< $bog_max_nav_item['arg'] >
+	>
+	type $bog_max_nav_item__label_bog_max_nav_10 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $bog_max_nav_item['label'] >
+	>
+	type $bog_max_nav_item__active_bog_max_nav_11 = $mol_type_enforce<
+		ReturnType< $bog_max_nav['account_active'] >
+		,
+		ReturnType< $bog_max_nav_item['active'] >
+	>
+	type $bog_max_nav_item__Icon_bog_max_nav_12 = $mol_type_enforce<
+		ReturnType< $bog_max_nav['Account_icon'] >
+		,
+		ReturnType< $bog_max_nav_item['Icon'] >
+	>
+	export class $bog_max_nav extends $mol_view {
+		tickets_active( ): string
+		Tickets_icon( ): $mol_icon_clipboard_text
+		Tab_tickets( ): $bog_max_nav_item
+		house_active( ): string
+		House_icon( ): $mol_icon_home_city
+		Tab_house( ): $bog_max_nav_item
+		account_active( ): string
+		Account_icon( ): $mol_icon_account_circle
+		Tab_account( ): $bog_max_nav_item
+		section( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=nav.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_max_nav extends $.$bog_max_nav {
+        tickets_active(): "on" | "off";
+        house_active(): "on" | "off";
+        account_active(): "on" | "off";
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -45169,35 +45349,27 @@ declare namespace $ {
 		,
 		ReturnType< $bog_theme_auto['themes'] >
 	>
-	type $mol_button_major__title_bog_max_app_4 = $mol_type_enforce<
+	type $bog_max_nav__section_bog_max_app_4 = $mol_type_enforce<
+		ReturnType< $bog_max_app['section'] >
+		,
+		ReturnType< $bog_max_nav['section'] >
+	>
+	type $mol_button_major__title_bog_max_app_5 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_link__arg_bog_max_app_5 = $mol_type_enforce<
-		({ 
-			'screen': string,
-			'ticket': any,
-		}) 
-		,
-		ReturnType< $mol_link['arg'] >
-	>
-	type $mol_link__sub_bog_max_app_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_link['sub'] >
-	>
-	type $mol_paragraph__title_bog_max_app_7 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_6 = $mol_type_enforce<
 		ReturnType< $bog_max_app['row_title'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_8 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_7 = $mol_type_enforce<
 		ReturnType< $bog_max_app['row_status'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_link__arg_bog_max_app_9 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_8 = $mol_type_enforce<
 		({ 
 			'ticket': ReturnType< $bog_max_app['row_link'] >,
 			'screen': any,
@@ -45205,321 +45377,399 @@ declare namespace $ {
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_10 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_9 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_link__arg_bog_max_app_11 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_10 = $mol_type_enforce<
+		ReturnType< $bog_max_app['house_options'] >
+		,
+		ReturnType< $mol_select['options'] >
+	>
+	type $mol_select__dictionary_bog_max_app_11 = $mol_type_enforce<
+		ReturnType< $bog_max_app['house_dictionary'] >
+		,
+		ReturnType< $mol_select['dictionary'] >
+	>
+	type $mol_select__value_bog_max_app_12 = $mol_type_enforce<
+		ReturnType< $bog_max_app['house'] >
+		,
+		ReturnType< $mol_select['value'] >
+	>
+	type $mol_link__arg_bog_max_app_13 = $mol_type_enforce<
 		({ 
 			'screen': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_12 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_14 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_select__options_bog_max_app_13 = $mol_type_enforce<
-		ReturnType< $bog_max_app['house_options'] >
-		,
-		ReturnType< $mol_select['options'] >
-	>
-	type $mol_select__dictionary_bog_max_app_14 = $mol_type_enforce<
-		ReturnType< $bog_max_app['house_dictionary'] >
-		,
-		ReturnType< $mol_select['dictionary'] >
-	>
-	type $mol_select__value_bog_max_app_15 = $mol_type_enforce<
-		ReturnType< $bog_max_app['house'] >
-		,
-		ReturnType< $mol_select['value'] >
-	>
-	type $mol_form_field__name_bog_max_app_16 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_15 = $mol_type_enforce<
 		string
 		,
-		ReturnType< $mol_form_field['name'] >
+		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_form_field__control_bog_max_app_17 = $mol_type_enforce<
-		ReturnType< $bog_max_app['House'] >
+	type $mol_labeler__content_bog_max_app_16 = $mol_type_enforce<
+		readonly(any)[]
 		,
-		ReturnType< $mol_form_field['control'] >
+		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_select__options_bog_max_app_18 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_17 = $mol_type_enforce<
 		ReturnType< $bog_max_app['category_options'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_19 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_18 = $mol_type_enforce<
 		ReturnType< $bog_max_app['category_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_20 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_19 = $mol_type_enforce<
 		ReturnType< $bog_max_app['category'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_21 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_20 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_22 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_21 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Category'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__hint_bog_max_app_23 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_22 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_24 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_23 = $mol_type_enforce<
 		ReturnType< $bog_max_app['place'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_25 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_24 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_26 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_25 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Place'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__hint_bog_max_app_27 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_26 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_28 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_27 = $mol_type_enforce<
 		ReturnType< $bog_max_app['text'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_29 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_28 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_30 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_29 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Text'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_button_major__title_bog_max_app_31 = $mol_type_enforce<
+	type $mol_button_major__title_bog_max_app_30 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click_bog_max_app_32 = $mol_type_enforce<
+	type $mol_button_major__click_bog_max_app_31 = $mol_type_enforce<
 		ReturnType< $bog_max_app['submit'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__enabled_bog_max_app_33 = $mol_type_enforce<
+	type $mol_button_major__enabled_bog_max_app_32 = $mol_type_enforce<
 		ReturnType< $bog_max_app['submit_allowed'] >
 		,
 		ReturnType< $mol_button_major['enabled'] >
 	>
-	type $mol_form__submit_allowed_bog_max_app_34 = $mol_type_enforce<
+	type $mol_form__submit_allowed_bog_max_app_33 = $mol_type_enforce<
 		ReturnType< $bog_max_app['submit_allowed'] >
 		,
 		ReturnType< $mol_form['submit_allowed'] >
 	>
-	type $mol_form__form_fields_bog_max_app_35 = $mol_type_enforce<
+	type $mol_form__form_fields_bog_max_app_34 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['form_fields'] >
 	>
-	type $mol_form__buttons_bog_max_app_36 = $mol_type_enforce<
+	type $mol_form__buttons_bog_max_app_35 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['buttons'] >
 	>
-	type $mol_link__arg_bog_max_app_37 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_36 = $mol_type_enforce<
 		({ 
 			'ticket': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_38 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_37 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_paragraph__title_bog_max_app_39 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_38 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_status'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_labeler__title_bog_max_app_40 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_39 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_41 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_40 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_42 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_41 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_43 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_42 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_44 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_43 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_45 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_44 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_46 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_45 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_47 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_46 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_48 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_47 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_49 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_48 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_50 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_49 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_51 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_50 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_52 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_51 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_53 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_52 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_54 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_53 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_55 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_54 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_paragraph__title_bog_max_app_56 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_55 = $mol_type_enforce<
 		ReturnType< $bog_max_app['log_row'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_57 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_56 = $mol_type_enforce<
 		ReturnType< $bog_max_app['log_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_page__title_bog_max_app_58 = $mol_type_enforce<
-		string
+	type $mol_page__title_bog_max_app_57 = $mol_type_enforce<
+		ReturnType< $bog_max_app['main_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_59 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_58 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_60 = $mol_type_enforce<
-		ReturnType< $bog_max_app['home_body'] >
+	type $mol_page__body_bog_max_app_59 = $mol_type_enforce<
+		ReturnType< $bog_max_app['main_body'] >
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__foot_bog_max_app_61 = $mol_type_enforce<
+	type $mol_page__foot_bog_max_app_60 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['foot'] >
 	>
-	type $mol_paragraph__title_bog_max_app_62 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_61 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_63 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_62 = $mol_type_enforce<
 		ReturnType< $bog_max_app['fail'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_64 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_63 = $mol_type_enforce<
+		({ 
+			'screen': string,
+			'ticket': any,
+		}) 
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_max_app_64 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_paragraph__title_bog_max_app_65 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_title'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_65 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_66 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_66 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_67 = $mol_type_enforce<
 		ReturnType< $bog_max_app['rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_page__title_bog_max_app_67 = $mol_type_enforce<
+	type $mol_search__query_bog_max_app_68 = $mol_type_enforce<
+		ReturnType< $bog_max_app['query'] >
+		,
+		ReturnType< $mol_search['query'] >
+	>
+	type $mol_search__hint_bog_max_app_69 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_search['hint'] >
+	>
+	type $mol_paragraph__title_bog_max_app_70 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_list__rows_bog_max_app_71 = $mol_type_enforce<
+		ReturnType< $bog_max_app['house_rows'] >
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_labeler__title_bog_max_app_72 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_labeler['title'] >
+	>
+	type $mol_labeler__content_bog_max_app_73 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_labeler['content'] >
+	>
+	type $mol_labeler__title_bog_max_app_74 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_labeler['title'] >
+	>
+	type $mol_labeler__content_bog_max_app_75 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_labeler['content'] >
+	>
+	type $mol_form_field__name_bog_max_app_76 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_form_field['name'] >
+	>
+	type $mol_form_field__control_bog_max_app_77 = $mol_type_enforce<
+		ReturnType< $bog_max_app['House'] >
+		,
+		ReturnType< $mol_form_field['control'] >
+	>
+	type $mol_labeler__title_bog_max_app_78 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_labeler['title'] >
+	>
+	type $mol_labeler__content_bog_max_app_79 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_labeler['content'] >
+	>
+	type $mol_paragraph__title_bog_max_app_80 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_page__title_bog_max_app_81 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_68 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_82 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_69 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_83 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__title_bog_max_app_70 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_84 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_71 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_85 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_72 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_86 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
@@ -45527,11 +45777,13 @@ declare namespace $ {
 	export class $bog_max_app extends $mol_book2 {
 		platform( ): string
 		Theme( ): $bog_theme_auto
+		main_title( ): string
 		Sync( ): $giper_baza_status
-		home_body( ): readonly(any)[]
-		New_button( ): $mol_button_major
-		New_link( ): $mol_link
+		main_body( ): readonly(any)[]
+		section( ): string
+		Nav( ): $bog_max_nav
 		fail( ): string
+		New_button( ): $mol_button_major
 		house_title( ): string
 		row_link( id: any): string
 		row_title( id: any): string
@@ -45540,14 +45792,20 @@ declare namespace $ {
 		Row_status( id: any): $mol_paragraph
 		Row( id: any): $mol_link
 		rows( ): readonly(any)[]
-		Close_new_icon( ): $mol_icon_close
-		Close_new( ): $mol_link
-		submit_allowed( ): boolean
+		query( next?: string ): string
+		house_rows( ): readonly(any)[]
+		account_name( ): string
+		account_id( ): string
 		house_options( ): readonly(string)[]
 		house_dictionary( ): Record<string, any>
 		house( next?: string ): string
 		House( ): $mol_select
-		House_field( ): $mol_form_field
+		account_count( ): string
+		Close_new_icon( ): $mol_icon_close
+		Close_new( ): $mol_link
+		submit_allowed( ): boolean
+		house_address( ): string
+		House_line( ): $mol_labeler
 		category_options( ): readonly(string)[]
 		category_dictionary( ): Record<string, any>
 		category( next?: string ): string
@@ -45593,12 +45851,21 @@ declare namespace $ {
 		})  & ReturnType< $mol_book2['attr'] >
 		plugins( ): readonly(any)[]
 		pages( ): readonly(any)[]
-		Home( ): $mol_page
+		Main( ): $mol_page
 		Wait( ): $mol_paragraph
 		Fail( ): $mol_paragraph
+		New_link( ): $mol_link
 		House_title( ): $mol_paragraph
 		Empty( ): $mol_paragraph
 		Rows( ): $mol_list
+		Search( ): $mol_search
+		House_empty( ): $mol_paragraph
+		House_rows( ): $mol_list
+		Account_name( ): $mol_labeler
+		Account_id( ): $mol_labeler
+		Account_house( ): $mol_form_field
+		Account_count( ): $mol_labeler
+		Account_note( ): $mol_paragraph
 		New( ): $mol_page
 		Ticket( ): $mol_page
 	}
@@ -45631,7 +45898,15 @@ declare namespace $.$$ {
         house_of(link: string): $bog_max_house;
         category_of(link: string): $bog_max_category;
         mine(): string[];
-        home_body(): ($.$mol_paragraph | $.$mol_list)[];
+        section(): string;
+        main_title(): "Заявки дома" | "Профиль" | "Мои заявки";
+        main_body(): ($.$mol_paragraph | $.$mol_list | $.$mol_search)[] | ($.$mol_paragraph | $.$mol_form_field | $mol_labeler)[] | ($.$mol_paragraph | $.$mol_list | $.$mol_link)[];
+        neighbours(): string[];
+        house_rows(): $.$mol_link[];
+        account_name(): string;
+        account_id(): string;
+        account_count(): string;
+        house_address(): string;
         rows(): $.$mol_link[];
         row_link(link: string): string;
         number(link: string): number;

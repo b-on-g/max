@@ -19002,6 +19002,265 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_icon_clipboard) = class $mol_icon_clipboard extends ($.$mol_icon) {
+		path(){
+			return "M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_clipboard_text) = class $mol_icon_clipboard_text extends ($.$mol_icon) {
+		path(){
+			return "M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$bog_max_nav_item) = class $bog_max_nav_item extends ($.$mol_link) {
+		Label(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.label())]);
+			return obj;
+		}
+		label(){
+			return "";
+		}
+		active(){
+			return "off";
+		}
+		Icon(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		attr(){
+			return {...(super.attr()), "bog_max_nav_active": (this.active())};
+		}
+		sub(){
+			return [(this.Icon()), (this.Label())];
+		}
+	};
+	($mol_mem(($.$bog_max_nav_item.prototype), "Label"));
+	($mol_mem(($.$bog_max_nav_item.prototype), "Icon"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_max_nav_item, {
+        flex: { direction: 'column', grow: 1, basis: '0%' },
+        align: { items: 'center' },
+        justify: { content: 'center' },
+        gap: '2px',
+        padding: { top: '0.5rem', bottom: '0.5rem', left: '0.5rem', right: '0.5rem' },
+        minWidth: 0,
+        minHeight: '3.5rem',
+        borderRadius: '0.75rem',
+        color: $mol_theme.shade,
+        textDecoration: 'none',
+        Icon: {
+            width: '1.5rem',
+            height: '1.5rem',
+            color: 'inherit',
+        },
+        Label: {
+            font: { size: '0.6875rem', weight: 500 },
+            color: 'inherit',
+            whiteSpace: 'nowrap',
+        },
+        ':hover': {
+            background: { color: $mol_theme.hover },
+            color: $mol_theme.text,
+        },
+        '@': {
+            bog_max_nav_active: {
+                on: {
+                    color: $mol_theme.current,
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_home) = class $mol_icon_home extends ($.$mol_icon) {
+		path(){
+			return "M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_home_city) = class $mol_icon_home_city extends ($.$mol_icon) {
+		path(){
+			return "M0,21V10L7.5,5L15,10V21H10V14H5V21H0M24,2V21H17V8.93L16,8.27V6H14V6.93L10,4.27V2H24M21,14H19V16H21V14M21,10H19V12H21V10M21,6H19V8H21V6Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_account) = class $mol_icon_account extends ($.$mol_icon) {
+		path(){
+			return "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_account_circle) = class $mol_icon_account_circle extends ($.$mol_icon) {
+		path(){
+			return "M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$bog_max_nav) = class $bog_max_nav extends ($.$mol_view) {
+		tickets_active(){
+			return "off";
+		}
+		Tickets_icon(){
+			const obj = new this.$.$mol_icon_clipboard_text();
+			return obj;
+		}
+		Tab_tickets(){
+			const obj = new this.$.$bog_max_nav_item();
+			(obj.arg) = () => ({
+				"section": null, 
+				"screen": null, 
+				"ticket": null
+			});
+			(obj.label) = () => ((this.$.$mol_locale.text("$bog_max_nav_Tab_tickets_label")));
+			(obj.active) = () => ((this.tickets_active()));
+			(obj.Icon) = () => ((this.Tickets_icon()));
+			return obj;
+		}
+		house_active(){
+			return "off";
+		}
+		House_icon(){
+			const obj = new this.$.$mol_icon_home_city();
+			return obj;
+		}
+		Tab_house(){
+			const obj = new this.$.$bog_max_nav_item();
+			(obj.arg) = () => ({
+				"section": "house", 
+				"screen": null, 
+				"ticket": null
+			});
+			(obj.label) = () => ((this.$.$mol_locale.text("$bog_max_nav_Tab_house_label")));
+			(obj.active) = () => ((this.house_active()));
+			(obj.Icon) = () => ((this.House_icon()));
+			return obj;
+		}
+		account_active(){
+			return "off";
+		}
+		Account_icon(){
+			const obj = new this.$.$mol_icon_account_circle();
+			return obj;
+		}
+		Tab_account(){
+			const obj = new this.$.$bog_max_nav_item();
+			(obj.arg) = () => ({
+				"section": "account", 
+				"screen": null, 
+				"ticket": null
+			});
+			(obj.label) = () => ((this.$.$mol_locale.text("$bog_max_nav_Tab_account_label")));
+			(obj.active) = () => ((this.account_active()));
+			(obj.Icon) = () => ((this.Account_icon()));
+			return obj;
+		}
+		section(){
+			return "tickets";
+		}
+		sub(){
+			return [
+				(this.Tab_tickets()), 
+				(this.Tab_house()), 
+				(this.Tab_account())
+			];
+		}
+	};
+	($mol_mem(($.$bog_max_nav.prototype), "Tickets_icon"));
+	($mol_mem(($.$bog_max_nav.prototype), "Tab_tickets"));
+	($mol_mem(($.$bog_max_nav.prototype), "House_icon"));
+	($mol_mem(($.$bog_max_nav.prototype), "Tab_house"));
+	($mol_mem(($.$bog_max_nav.prototype), "Account_icon"));
+	($mol_mem(($.$bog_max_nav.prototype), "Tab_account"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_max_nav extends $.$bog_max_nav {
+            tickets_active() {
+                return this.section() === 'tickets' ? 'on' : 'off';
+            }
+            house_active() {
+                return this.section() === 'house' ? 'on' : 'off';
+            }
+            account_active() {
+                return this.section() === 'account' ? 'on' : 'off';
+            }
+        }
+        $$.$bog_max_nav = $bog_max_nav;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_max_nav, {
+        flex: { direction: 'row' },
+        padding: { top: '0.375rem', bottom: '0.375rem', left: '0.5rem', right: '0.5rem' },
+        gap: '0.25rem',
+        background: { color: $mol_theme.card },
+        border: { top: { width: '1px', style: 'solid', color: $mol_theme.line } },
+    });
+})($ || ($ = {}));
+
+;
 	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
 		theme(){
 			return "$mol_theme_base";
@@ -19611,26 +19870,31 @@ var $;
 			(obj.themes) = () => (["$mol_theme_calm_light", "$mol_theme_calm_dark"]);
 			return obj;
 		}
+		main_title(){
+			return "";
+		}
 		Sync(){
 			const obj = new this.$.$giper_baza_status();
 			return obj;
 		}
-		home_body(){
+		main_body(){
 			return [];
+		}
+		section(){
+			return "tickets";
+		}
+		Nav(){
+			const obj = new this.$.$bog_max_nav();
+			(obj.section) = () => ((this.section()));
+			return obj;
+		}
+		fail(){
+			return "";
 		}
 		New_button(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_New_button_title")));
 			return obj;
-		}
-		New_link(){
-			const obj = new this.$.$mol_link();
-			(obj.arg) = () => ({"screen": "new", "ticket": null});
-			(obj.sub) = () => ([(this.New_button())]);
-			return obj;
-		}
-		fail(){
-			return "";
 		}
 		house_title(){
 			return "";
@@ -19663,18 +19927,18 @@ var $;
 		rows(){
 			return [(this.Row(id))];
 		}
-		Close_new_icon(){
-			const obj = new this.$.$mol_icon_close();
-			return obj;
+		query(next){
+			if(next !== undefined) return next;
+			return "";
 		}
-		Close_new(){
-			const obj = new this.$.$mol_link();
-			(obj.arg) = () => ({"screen": null});
-			(obj.sub) = () => ([(this.Close_new_icon())]);
-			return obj;
+		house_rows(){
+			return [];
 		}
-		submit_allowed(){
-			return false;
+		account_name(){
+			return "";
+		}
+		account_id(){
+			return "";
 		}
 		house_options(){
 			return [];
@@ -19693,10 +19957,29 @@ var $;
 			(obj.value) = (next) => ((this.house(next)));
 			return obj;
 		}
-		House_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_House_field_name")));
-			(obj.control) = () => ((this.House()));
+		account_count(){
+			return "";
+		}
+		Close_new_icon(){
+			const obj = new this.$.$mol_icon_close();
+			return obj;
+		}
+		Close_new(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({"screen": null});
+			(obj.sub) = () => ([(this.Close_new_icon())]);
+			return obj;
+		}
+		submit_allowed(){
+			return false;
+		}
+		house_address(){
+			return "";
+		}
+		House_line(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_House_line_title")));
+			(obj.content) = () => ([(this.house_address())]);
 			return obj;
 		}
 		category_options(){
@@ -19769,7 +20052,7 @@ var $;
 			const obj = new this.$.$mol_form();
 			(obj.submit_allowed) = () => ((this.submit_allowed()));
 			(obj.form_fields) = () => ([
-				(this.House_field()), 
+				(this.House_line()), 
 				(this.Category_field()), 
 				(this.Place_field()), 
 				(this.Text_field())
@@ -19898,12 +20181,12 @@ var $;
 		pages(){
 			return [];
 		}
-		Home(){
+		Main(){
 			const obj = new this.$.$mol_page();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Home_title")));
+			(obj.title) = () => ((this.main_title()));
 			(obj.tools) = () => ([(this.Sync())]);
-			(obj.body) = () => ((this.home_body()));
-			(obj.foot) = () => ([(this.New_link())]);
+			(obj.body) = () => ((this.main_body()));
+			(obj.foot) = () => ([(this.Nav())]);
 			return obj;
 		}
 		Wait(){
@@ -19914,6 +20197,12 @@ var $;
 		Fail(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ((this.fail()));
+			return obj;
+		}
+		New_link(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({"screen": "new", "ticket": null});
+			(obj.sub) = () => ([(this.New_button())]);
 			return obj;
 		}
 		House_title(){
@@ -19929,6 +20218,51 @@ var $;
 		Rows(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ((this.rows()));
+			return obj;
+		}
+		Search(){
+			const obj = new this.$.$mol_search();
+			(obj.query) = (next) => ((this.query(next)));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Search_hint")));
+			return obj;
+		}
+		House_empty(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_House_empty_title")));
+			return obj;
+		}
+		House_rows(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.house_rows()));
+			return obj;
+		}
+		Account_name(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_name_title")));
+			(obj.content) = () => ([(this.account_name())]);
+			return obj;
+		}
+		Account_id(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_id_title")));
+			(obj.content) = () => ([(this.account_id())]);
+			return obj;
+		}
+		Account_house(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_house_name")));
+			(obj.control) = () => ((this.House()));
+			return obj;
+		}
+		Account_count(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_count_title")));
+			(obj.content) = () => ([(this.account_count())]);
+			return obj;
+		}
+		Account_note(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_note_title")));
 			return obj;
 		}
 		New(){
@@ -19959,16 +20293,17 @@ var $;
 	};
 	($mol_mem(($.$bog_max_app.prototype), "Theme"));
 	($mol_mem(($.$bog_max_app.prototype), "Sync"));
+	($mol_mem(($.$bog_max_app.prototype), "Nav"));
 	($mol_mem(($.$bog_max_app.prototype), "New_button"));
-	($mol_mem(($.$bog_max_app.prototype), "New_link"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_title"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row"));
-	($mol_mem(($.$bog_max_app.prototype), "Close_new_icon"));
-	($mol_mem(($.$bog_max_app.prototype), "Close_new"));
+	($mol_mem(($.$bog_max_app.prototype), "query"));
 	($mol_mem(($.$bog_max_app.prototype), "house"));
 	($mol_mem(($.$bog_max_app.prototype), "House"));
-	($mol_mem(($.$bog_max_app.prototype), "House_field"));
+	($mol_mem(($.$bog_max_app.prototype), "Close_new_icon"));
+	($mol_mem(($.$bog_max_app.prototype), "Close_new"));
+	($mol_mem(($.$bog_max_app.prototype), "House_line"));
 	($mol_mem(($.$bog_max_app.prototype), "category"));
 	($mol_mem(($.$bog_max_app.prototype), "Category"));
 	($mol_mem(($.$bog_max_app.prototype), "Category_field"));
@@ -19994,12 +20329,21 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_basis"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Log_row"));
 	($mol_mem(($.$bog_max_app.prototype), "Log"));
-	($mol_mem(($.$bog_max_app.prototype), "Home"));
+	($mol_mem(($.$bog_max_app.prototype), "Main"));
 	($mol_mem(($.$bog_max_app.prototype), "Wait"));
 	($mol_mem(($.$bog_max_app.prototype), "Fail"));
+	($mol_mem(($.$bog_max_app.prototype), "New_link"));
 	($mol_mem(($.$bog_max_app.prototype), "House_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Empty"));
 	($mol_mem(($.$bog_max_app.prototype), "Rows"));
+	($mol_mem(($.$bog_max_app.prototype), "Search"));
+	($mol_mem(($.$bog_max_app.prototype), "House_empty"));
+	($mol_mem(($.$bog_max_app.prototype), "House_rows"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_name"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_id"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_house"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_count"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_note"));
 	($mol_mem(($.$bog_max_app.prototype), "New"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket"));
 
@@ -20444,15 +20788,66 @@ var $;
                     .map(ticket => ticket.link().str)
                     .reverse();
             }
-            home_body() {
+            section() {
+                return this.$.$mol_state_arg.value('section') ?? 'tickets';
+            }
+            main_title() {
+                switch (this.section()) {
+                    case 'house': return 'Заявки дома';
+                    case 'account': return 'Профиль';
+                }
+                return 'Мои заявки';
+            }
+            main_body() {
                 if (this.waiting())
                     return [this.Wait()];
                 if (this.fail())
                     return [this.Fail()];
+                switch (this.section()) {
+                    case 'house': return [
+                        this.Search(),
+                        this.house_rows().length ? this.House_rows() : this.House_empty(),
+                    ];
+                    case 'account': return [
+                        this.Account_name(),
+                        this.Account_id(),
+                        this.Account_house(),
+                        this.Account_count(),
+                        this.Account_note(),
+                    ];
+                }
                 return [
+                    this.New_link(),
                     this.House_title(),
                     this.mine().length ? this.Rows() : this.Empty(),
                 ];
+            }
+            neighbours() {
+                const house = this.house();
+                return this.uk().tickets()
+                    .filter(ticket => ticket.House()?.val()?.str === house)
+                    .filter($mol_match_text(this.query(), ticket => [
+                    ticket.category()?.Title()?.val() ?? '',
+                    ticket.Place()?.val() ?? '',
+                    ticket.Text()?.val() ?? '',
+                ]))
+                    .map(ticket => ticket.link().str)
+                    .reverse();
+            }
+            house_rows() {
+                return this.neighbours().map(link => this.Row(link));
+            }
+            account_name() {
+                return this.session().user.name || 'Без имени';
+            }
+            account_id() {
+                return String(this.session().user.id);
+            }
+            account_count() {
+                return String(this.mine().length);
+            }
+            house_address() {
+                return this.house_dictionary()[this.house()] ?? '';
             }
             rows() {
                 return this.mine().map(link => this.Row(link));
@@ -20484,7 +20879,7 @@ var $;
             }
             pages() {
                 return [
-                    this.Home(),
+                    this.Main(),
                     ...this.screen() === 'new' ? [this.New()] : [],
                     ...this.ticket_link() ? [this.Ticket()] : [],
                 ];
@@ -20593,7 +20988,13 @@ var $;
         ], $bog_max_app.prototype, "mine", null);
         __decorate([
             $mol_mem
-        ], $bog_max_app.prototype, "home_body", null);
+        ], $bog_max_app.prototype, "section", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "main_body", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "neighbours", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "screen", null);
@@ -20633,8 +21034,29 @@ var $;
 var $;
 (function ($) {
     $mol_style_define($bog_max_app, {
-        Home: {
+        Main: {
             flex: { basis: '24rem' },
+        },
+        New_link: {
+            display: 'flex',
+            padding: $mol_gap.block,
+        },
+        Search: {
+            padding: $mol_gap.block,
+        },
+        Account_note: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
+        },
+        Account_name: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Account_id: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Account_count: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
         },
         House_title: {
             color: $mol_theme.shade,
@@ -20643,6 +21065,13 @@ var $;
         Empty: {
             padding: $mol_gap.block,
             color: $mol_theme.shade,
+        },
+        House_empty: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        House_rows: {
+            gap: $mol_gap.space,
         },
         Wait: {
             padding: $mol_gap.block,
@@ -20693,7 +21122,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major]:disabled {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n");
+    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major]:disabled {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -27658,7 +28087,7 @@ var $;
             app.session = () => $mol_fail(new Error('Подпись MAX не прошла проверку'));
             $mol_assert_equal(app.fail(), 'Подпись MAX не прошла проверку');
             $mol_assert_equal(app.waiting(), false);
-            $mol_assert_equal(app.home_body(), [app.Fail()]);
+            $mol_assert_equal(app.main_body(), [app.Fail()]);
         },
         'new ticket needs house, category and place'($) {
             const app = $$.$bog_max_app.make({ $ });
@@ -27672,11 +28101,27 @@ var $;
             ready.place = () => 'подъезд 2';
             $mol_assert_equal(ready.submit_allowed(), true);
         },
+        'sections switch the main body'($) {
+            const app = $$.$bog_max_app.make({ $ });
+            app.waiting = () => false;
+            app.fail = () => '';
+            app.section = () => 'account';
+            $mol_assert_equal(app.main_body()[0], app.Account_name());
+            $mol_assert_equal(app.main_title(), 'Профиль');
+        },
+        'house list filters neighbours by query'($) {
+            const app = $$.$bog_max_app.make({ $ });
+            app.waiting = () => false;
+            app.fail = () => '';
+            app.section = () => 'house';
+            app.neighbours = () => [];
+            $mol_assert_equal(app.main_body(), [app.Search(), app.House_empty()]);
+        },
         'ticket page opens by arg'($) {
             const app = $$.$bog_max_app.make({ $ });
             app.ticket_link = () => 'link';
             app.screen = () => '';
-            $mol_assert_equal(app.pages(), [app.Home(), app.Ticket()]);
+            $mol_assert_equal(app.pages(), [app.Main(), app.Ticket()]);
         },
     });
 })($ || ($ = {}));
