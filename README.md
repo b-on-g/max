@@ -143,4 +143,10 @@ node bog/max/app/-/node.test.js
 Бот пишет данные в `.baza` текущего каталога и ключ в `~/.local/share/mol_state_local`,
 для отладки удобно запускать его из отдельной папки с `XDG_DATA_HOME`.
 
+Скриншоты всех экранов на 1280 и 400 через headless Chrome, нужны дев-сервер и бот:
+
+```sh
+node bog/max/probe/-/node.js dir=/tmp/max-shots bot=localhost:9097 ticket=<ссылка заявки>
+```
+
 Деплой мини-приложения на GitHub Pages идёт из `.github/workflows/deploy.yml` при пуше в `main`.

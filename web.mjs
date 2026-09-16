@@ -17748,6 +17748,7 @@ var $;
         gap: '2px',
         padding: { top: '0.5rem', bottom: '0.5rem', left: '0.5rem', right: '0.5rem' },
         minWidth: 0,
+        maxWidth: '10rem',
         minHeight: '3.5rem',
         borderRadius: '0.75rem',
         color: $mol_theme.shade,
@@ -17932,7 +17933,8 @@ var $;
 var $;
 (function ($) {
     $mol_style_define($bog_max_nav, {
-        flex: { direction: 'row' },
+        flex: { direction: 'row', grow: 1 },
+        justify: { content: 'center' },
         padding: { top: '0.375rem', bottom: '0.375rem', left: '0.5rem', right: '0.5rem' },
         gap: '0.25rem',
         background: { color: $mol_theme.card },
@@ -30569,9 +30571,6 @@ var $;
 			(obj.sub) = () => ([(this.Close_new_icon())]);
 			return obj;
 		}
-		submit_allowed(){
-			return false;
-		}
 		house_address(){
 			return "";
 		}
@@ -30580,6 +30579,9 @@ var $;
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_House_line_title")));
 			(obj.content) = () => ([(this.house_address())]);
 			return obj;
+		}
+		submit_allowed(){
+			return false;
 		}
 		category_options(){
 			return [];
@@ -30651,7 +30653,6 @@ var $;
 			const obj = new this.$.$mol_form();
 			(obj.submit_allowed) = () => ((this.submit_allowed()));
 			(obj.form_fields) = () => ([
-				(this.House_line()), 
 				(this.Category_field()), 
 				(this.Place_field()), 
 				(this.Text_field())
@@ -30768,6 +30769,20 @@ var $;
 			(obj.rows) = () => ((this.log_rows()));
 			return obj;
 		}
+		ticket_body(){
+			return [
+				(this.Ticket_status()), 
+				(this.Ticket_category()), 
+				(this.Ticket_house()), 
+				(this.Ticket_place()), 
+				(this.Ticket_text()), 
+				(this.Ticket_owner()), 
+				(this.Ticket_react()), 
+				(this.Ticket_fix()), 
+				(this.Ticket_basis()), 
+				(this.Log())
+			];
+		}
 		bot_prod(){
 			return "";
 		}
@@ -30778,6 +30793,9 @@ var $;
 			return [(this.Theme())];
 		}
 		pages(){
+			return [];
+		}
+		placeholders(){
 			return [];
 		}
 		Main(){
@@ -30868,25 +30886,14 @@ var $;
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_New_title")));
 			(obj.tools) = () => ([(this.Close_new())]);
-			(obj.body) = () => ([(this.Form())]);
+			(obj.body) = () => ([(this.House_line()), (this.Form())]);
 			return obj;
 		}
 		Ticket(){
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ((this.ticket_title()));
 			(obj.tools) = () => ([(this.Close_ticket())]);
-			(obj.body) = () => ([
-				(this.Ticket_status()), 
-				(this.Ticket_category()), 
-				(this.Ticket_house()), 
-				(this.Ticket_place()), 
-				(this.Ticket_text()), 
-				(this.Ticket_owner()), 
-				(this.Ticket_react()), 
-				(this.Ticket_fix()), 
-				(this.Ticket_basis()), 
-				(this.Log())
-			]);
+			(obj.body) = () => ((this.ticket_body()));
 			return obj;
 		}
 	};
@@ -30955,7 +30962,22 @@ var $;
         static app() {
             return this.$.$mol_dom_context.WebApp ?? null;
         }
-        static inside() {
+        static script() {
+            return this.$.$mol_dom_context.document?.querySelector('script[src*="max-web-app"]') ?? null;
+        }
+        static async settle(script) {
+            await new Promise(done => {
+                script.addEventListener('load', () => done());
+                script.addEventListener('error', () => done());
+                setTimeout(done, 3000);
+            });
+        }
+        static loaded() {
+            if (this.app())
+                return true;
+            const script = this.script();
+            if (script)
+                $mol_wire_sync(this).settle(script);
             return this.app() !== null;
         }
         static init_data() {
@@ -30968,6 +30990,9 @@ var $;
             this.app()?.ready();
         }
     }
+    __decorate([
+        $mol_mem
+    ], $bog_max_bridge, "loaded", null);
     $.$bog_max_bridge = $bog_max_bridge;
 })($ || ($ = {}));
 
@@ -31259,7 +31284,20 @@ var $;
                 return $bog_max_bridge.platform();
             }
             auto() {
+                this.pin();
                 $bog_max_bridge.ready();
+            }
+            pin() {
+                const yard = this.$.$giper_baza_yard;
+                const url = this.bot_url();
+                const masters = yard.masters();
+                if (masters.length === 1 && masters[0] === url)
+                    return;
+                yard.masters_default.length = 0;
+                yard.masters = () => url ? [url] : [];
+                const live = this.$.$giper_baza_glob.yard();
+                live.master_cursor(1);
+                live.master_cursor(0);
             }
             bot_url() {
                 const arg = this.$.$mol_state_arg.value('bot');
@@ -31275,6 +31313,7 @@ var $;
                 if (!url)
                     $mol_fail(new Error('Адрес бота не задан'));
                 const pass = this.$.$giper_baza_auth.current().pass().toString();
+                this.$.$bog_max_bridge.loaded();
                 const init_data = $bog_max_bridge.init_data();
                 const response = this.$.$mol_fetch.response(url + 'auth', {
                     method: 'POST',
@@ -31479,6 +31518,20 @@ var $;
                 this.category('');
                 this.$.$mol_state_arg.dict({ ...this.$.$mol_state_arg.dict(), screen: null, ticket: ticket.link().str });
             }
+            ticket_body() {
+                return [
+                    this.Ticket_status(),
+                    this.Ticket_category(),
+                    this.Ticket_house(),
+                    this.Ticket_place(),
+                    ...this.ticket_text() ? [this.Ticket_text()] : [],
+                    this.Ticket_owner(),
+                    this.Ticket_react(),
+                    this.Ticket_fix(),
+                    this.Ticket_basis(),
+                    this.Log(),
+                ];
+            }
             ticket_title() {
                 return `Заявка № ${this.number(this.ticket_link())}`;
             }
@@ -31580,7 +31633,7 @@ var $;
 (function ($) {
     $mol_style_define($bog_max_app, {
         Main: {
-            flex: { basis: '24rem' },
+            flex: { grow: 1, shrink: 0, basis: '24rem' },
         },
         New_link: {
             display: 'flex',
@@ -31667,7 +31720,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major]:disabled {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n");
+    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major]:disabled {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n\n@media (max-width: 720px) {\n\t[bog_max_app] > [mol_page] {\n\t\tmin-width: 100%;\n\t}\n}\n\n[bog_max_app] > *::before,\n[bog_max_app] > *::after {\n\tdisplay: none;\n}\n\n[bog_max_app] [mol_form_field] [mol_select] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[bog_max_app] [mol_form_foot] {\n\tpadding: var(--spacing-size-xl) 0;\n}\n\n[bog_max_app] [mol_form_foot] [mol_button_major] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app_search],\n[bog_max_app_search] [mol_pop_anchor],\n[bog_max_app_search] [mol_search_query] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app] [mol_labeler_content] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app_search] {\n\talign-self: stretch;\n}\n");
 })($ || ($ = {}));
 
 

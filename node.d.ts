@@ -39224,7 +39224,9 @@ declare namespace $ {
     };
     class $bog_max_bridge extends $mol_object {
         static app(): $bog_max_bridge_app | null;
-        static inside(): boolean;
+        static script(): HTMLScriptElement | null;
+        static settle(script: HTMLScriptElement): Promise<void>;
+        static loaded(): boolean;
         static init_data(): string;
         static platform(): string;
         static ready(): void;
@@ -45770,7 +45772,7 @@ declare namespace $ {
 		ReturnType< $mol_page['tools'] >
 	>
 	type $mol_page__body_bog_max_app_86 = $mol_type_enforce<
-		readonly(any)[]
+		ReturnType< $bog_max_app['ticket_body'] >
 		,
 		ReturnType< $mol_page['body'] >
 	>
@@ -45803,9 +45805,9 @@ declare namespace $ {
 		account_count( ): string
 		Close_new_icon( ): $mol_icon_close
 		Close_new( ): $mol_link
-		submit_allowed( ): boolean
 		house_address( ): string
 		House_line( ): $mol_labeler
+		submit_allowed( ): boolean
 		category_options( ): readonly(string)[]
 		category_dictionary( ): Record<string, any>
 		category( next?: string ): string
@@ -45845,12 +45847,14 @@ declare namespace $ {
 		Log_row( id: any): $mol_paragraph
 		log_rows( ): readonly(any)[]
 		Log( ): $mol_list
+		ticket_body( ): readonly(any)[]
 		bot_prod( ): string
 		attr( ): ({ 
 			'bog_max_platform': ReturnType< $bog_max_app['platform'] >,
 		})  & ReturnType< $mol_book2['attr'] >
 		plugins( ): readonly(any)[]
 		pages( ): readonly(any)[]
+		placeholders( ): readonly(any)[]
 		Main( ): $mol_page
 		Wait( ): $mol_paragraph
 		Fail( ): $mol_paragraph
@@ -45886,6 +45890,7 @@ declare namespace $.$$ {
     class $bog_max_app extends $.$bog_max_app {
         platform(): string;
         auto(): void;
+        pin(): void;
         bot_url(): string;
         session(): $bog_max_app_session;
         fail(): string;
@@ -45928,6 +45933,7 @@ declare namespace $.$$ {
         };
         submit_allowed(): boolean;
         submit(): void;
+        ticket_body(): ($.$mol_paragraph | $.$mol_list | $mol_labeler)[];
         ticket_title(): string;
         ticket_status(): "Отправлена, ждём регистрации" | "Зарегистрирована" | "Принята, назначен исполнитель" | "В работе" | "Выполнена" | "Отклонена";
         ticket_category(): string;
