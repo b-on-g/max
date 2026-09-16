@@ -6,6 +6,7 @@ namespace $ {
 			const app = $$.$bog_max_app.make({ $ })
 			app.session = ()=> $mol_fail( new Error( 'Подпись MAX не прошла проверку' ) )
 			$mol_assert_equal( app.fail(), 'Подпись MAX не прошла проверку' )
+			$mol_assert_equal( app.waiting(), false )
 			$mol_assert_equal( app.home_body(), [ app.Fail() ] )
 		},
 

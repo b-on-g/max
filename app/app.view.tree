@@ -2,7 +2,7 @@ $bog_max_app $mol_book2
 	bot_prod \
 	attr *
 		^
-		max_platform <= platform \web
+		bog_max_platform <= platform \web
 	plugins /
 		<= Theme $bog_theme_auto
 			theme_light \$mol_theme_calm_light
@@ -24,6 +24,8 @@ $bog_max_app $mol_book2
 				sub /
 					<= New_button $mol_button_major
 						title @ \Новая заявка
+	Wait $mol_paragraph
+		title @ \Подключаемся к управляющей компании…
 	Fail $mol_paragraph
 		title <= fail \
 	House_title $mol_paragraph

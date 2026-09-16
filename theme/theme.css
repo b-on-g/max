@@ -1,0 +1,217 @@
+[bog_max_app] {
+	--font: system-ui, -apple-system, BlinkMacSystemFont, "Roboto", "Apple Color Emoji", "Helvetica Neue", sans-serif;
+	--family-base: -apple-system, system-ui, "Helvetica Neue", Roboto, sans-serif;
+
+	--font-size-title: 1.0625rem;
+	--line-height-title: 1.5rem;
+	--font-weight-title: 600;
+	--font-size-body: 1rem;
+	--line-height-body: 1.25rem;
+	--font-weight-body: 400;
+	--font-weight-body-strong: 500;
+	--font-size-detail: 0.9375rem;
+	--line-height-detail: 1.25rem;
+	--font-size-description: 0.8125rem;
+	--line-height-description: 1rem;
+	--font-size-label: 0.75rem;
+	--line-height-label: 1rem;
+	--font-size-action-medium: 1rem;
+	--line-height-action-medium: 1.25rem;
+	--font-weight-action-medium: 500;
+	--letter-spacing-body: 0rem;
+
+	--spacing-size-xs: 4px;
+	--spacing-size-s: 6px;
+	--spacing-size-m: 8px;
+	--spacing-size-l: 10px;
+	--spacing-size-xl: 12px;
+	--spacing-size2xl: 16px;
+	--spacing-size3xl: 20px;
+	--size-border-radius-action-medium: 12px;
+	--size-border-radius-action-large: 16px;
+	--size-border-radius-button-medium: 16px;
+	--size-border-radius-semantic-border-radius-card: 16px;
+	--r-1652: 16px;
+
+	--background-surface: rgb(237 238 242);
+	--background-primary: rgb(255 255 255);
+	--background-secondary: rgb(245 247 250);
+	--background-tertiary: rgb(9 9 9 / 0.05);
+	--background-card: rgb(255 255 255);
+	--icon-primary: rgb(6 7 8 / 0.84);
+	--icon-tertiary: rgb(6 7 8 / 0.48);
+	--icon-mute: rgb(6 7 8 / 0.28);
+	--icon-themed: rgb(0 122 255);
+	--icon-positive: rgb(26 190 67);
+	--icon-negative: rgb(255 48 60);
+	--text-primary: rgb(6 7 8);
+	--text-secondary: rgb(6 7 8 / 0.68);
+	--text-tertiary: rgb(6 7 8 / 0.52);
+	--text-primary-inverse-static: rgb(255 255 255);
+	--text-themed: rgb(0 122 255);
+	--text-negative: rgb(255 48 60);
+	--divider-primary: rgb(12 13 14 / 0.16);
+	--divider-secondary: rgb(12 13 14 / 0.06);
+	--button-primary: rgb(0 122 255);
+	--button-secondary: rgb(233 235 241);
+	--button-secondary-contrast: rgb(32 54 110 / 0.1);
+	--button-negative: rgb(255 48 60);
+	--controls-active: rgb(0 122 255);
+	--controls-inactive: rgb(9 9 9 / 0.08);
+	--states-button-primary-hover: rgb(71 159 255);
+	--states-button-primary-pressed: rgb(0 110 229);
+	--states-button-primary-disabled: rgb(0 122 255 / 0.48);
+	--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);
+	--states-background-hovered-transparent: rgb(13 13 13 / 0.04);
+	--states-background-pressed-transparent: rgb(13 13 13 / 0.08);
+
+	--mol_theme_luma: 1;
+	--mol_theme_image: none;
+	--mol_theme_spirit: rgb(255 255 255 / 0.75);
+	--mol_theme_back: var(--background-surface);
+	--mol_theme_card: var(--background-card);
+	--mol_theme_field: var(--background-secondary);
+	--mol_theme_hover: var(--states-background-hovered-transparent);
+	--mol_theme_text: var(--text-primary);
+	--mol_theme_shade: var(--text-tertiary);
+	--mol_theme_line: var(--divider-primary);
+	--mol_theme_focus: var(--controls-active);
+	--mol_theme_control: var(--text-themed);
+	--mol_theme_current: var(--text-themed);
+	--mol_theme_special: var(--text-negative);
+	--mol_gap_block: var(--spacing-size-xl);
+	--mol_gap_space: var(--spacing-size-s);
+	--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);
+	--mol_gap_round: var(--size-border-radius-action-medium);
+
+	font-family: var(--family-base);
+	font-size: var(--font-size-body);
+	line-height: var(--line-height-body);
+	letter-spacing: var(--letter-spacing-body);
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+[bog_max_app][bog_max_platform="ios"] {
+	--letter-spacing-body: -0.019375rem;
+}
+
+[bog_max_app][bog_max_platform="android"] {
+	--letter-spacing-body: 0.009375rem;
+}
+
+[bog_max_app][mol_theme='$mol_theme_calm_dark'] {
+	--background-surface: rgb(15 15 18);
+	--background-primary: rgb(23 24 28);
+	--background-secondary: rgb(37 38 45);
+	--background-tertiary: rgb(255 255 255 / 0.09);
+	--background-card: rgb(37 38 45);
+	--icon-primary: rgb(255 255 255);
+	--icon-tertiary: rgb(255 255 255 / 0.52);
+	--icon-mute: rgb(255 255 255 / 0.36);
+	--icon-positive: rgb(43 198 68);
+	--icon-negative: rgb(206 66 87);
+	--text-primary: rgb(255 255 255);
+	--text-secondary: rgb(255 255 255 / 0.8);
+	--text-tertiary: rgb(255 255 255 / 0.64);
+	--text-negative: rgb(206 66 87);
+	--divider-primary: rgb(255 255 255 / 0.12);
+	--divider-secondary: rgb(255 255 255 / 0.06);
+	--button-secondary: rgb(44 45 52);
+	--button-secondary-contrast: rgb(255 255 255 / 0.12);
+	--controls-inactive: rgb(255 255 255 / 0.12);
+	--states-background-hovered-transparent: rgb(255 255 255 / 0.06);
+	--states-background-pressed-transparent: rgb(255 255 255 / 0.1);
+
+	--mol_theme_luma: -1;
+	--mol_theme_image: invert(1) hue-rotate(180deg);
+	--mol_theme_spirit: rgb(0 0 0 / 0.75);
+}
+
+[bog_max_app] [mol_page_head] {
+	background: var(--background-primary);
+	box-shadow: none;
+	border-bottom: 1px solid var(--divider-secondary);
+}
+
+[bog_max_app] [mol_page_title] {
+	font-size: var(--font-size-title);
+	line-height: var(--line-height-title);
+	font-weight: var(--font-weight-title);
+}
+
+[bog_max_app] [mol_page_foot] {
+	background: var(--background-primary);
+	padding: var(--spacing-size-xl) var(--spacing-size2xl);
+	box-shadow: none;
+	border-top: 1px solid var(--divider-secondary);
+}
+
+[bog_max_app] [mol_button_major] {
+	background: var(--button-primary);
+	color: var(--text-primary-inverse-static);
+	border-radius: var(--size-border-radius-button-medium);
+	min-height: 52px;
+	padding: var(--spacing-size2xl) var(--spacing-size3xl);
+	justify-content: center;
+	font-size: var(--font-size-action-medium);
+	line-height: var(--line-height-action-medium);
+	font-weight: var(--font-weight-action-medium);
+}
+
+[bog_max_app] [mol_button_major]:hover {
+	background: var(--states-button-primary-hover);
+}
+
+[bog_max_app] [mol_button_major]:active {
+	background: var(--states-button-primary-pressed);
+}
+
+[bog_max_app] [mol_button_major]:disabled {
+	background: var(--states-button-primary-disabled);
+	color: var(--states-text-primary-inverse-static-disabled);
+}
+
+[bog_max_app] [mol_form_field] [mol_labeler_label] {
+	font-size: var(--font-size-description);
+	line-height: var(--line-height-description);
+	color: var(--text-tertiary);
+	min-height: 0;
+	padding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);
+}
+
+[bog_max_app] [mol_form_field] [mol_labeler_content] {
+	padding: 0;
+}
+
+[bog_max_app] [mol_string],
+[bog_max_app] [mol_form_field] [mol_select_trigger] {
+	background: var(--background-secondary);
+	border-radius: var(--size-border-radius-action-large);
+	min-height: 52px;
+	padding: var(--spacing-size2xl) var(--spacing-size-xl);
+	box-shadow: none;
+	color: var(--text-primary);
+	flex: 1 1 auto;
+	align-items: center;
+}
+
+[bog_max_app] [mol_string]:hover,
+[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {
+	box-shadow: inset 0 0 0 1px var(--divider-primary);
+}
+
+[bog_max_app] [mol_string]:focus,
+[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {
+	box-shadow: inset 0 0 0 1px var(--controls-active);
+}
+
+[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {
+	color: var(--icon-mute);
+}
+
+[bog_max_app] [mol_labeler_label] {
+	color: var(--text-tertiary);
+	font-size: var(--font-size-description);
+	line-height: var(--line-height-description);
+}

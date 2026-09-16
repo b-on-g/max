@@ -52,8 +52,18 @@ namespace $.$$ {
 				this.session()
 				return ''
 			} catch( error ) {
-				if( $mol_promise_like( error ) ) return 'Подключаемся к управляющей компании…'
+				if( $mol_promise_like( error ) ) return ''
 				return ( error as Error ).message
+			}
+		}
+
+		@ $mol_mem
+		waiting() {
+			try {
+				this.session()
+				return false
+			} catch( error ) {
+				return $mol_promise_like( error )
 			}
 		}
 
@@ -96,6 +106,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		home_body() {
+			if( this.waiting() ) return [ this.Wait() ]
 			if( this.fail() ) return [ this.Fail() ]
 			return [
 				this.House_title(),
@@ -180,7 +191,10 @@ namespace $.$$ {
 
 		@ $mol_mem
 		category_dictionary() {
-			return Object.fromEntries( this.category_options().map( link => [ link, this.category_of( link ).Title()?.val() ?? '' ] ) )
+			return {
+				'': 'Выберите категорию',
+				... Object.fromEntries( this.category_options().map( link => [ link, this.category_of( link ).Title()?.val() ?? '' ] ) ),
+			}
 		}
 
 		@ $mol_mem
