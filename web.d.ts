@@ -48478,51 +48478,56 @@ declare namespace $ {
 		ReturnType< $mol_page['foot'] >
 	>
 	type $mol_paragraph__title_bog_max_app_62 = $mol_type_enforce<
-		ReturnType< $bog_max_app['fail'] >
+		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
 	type $mol_paragraph__title_bog_max_app_63 = $mol_type_enforce<
-		ReturnType< $bog_max_app['house_title'] >
+		ReturnType< $bog_max_app['fail'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
 	type $mol_paragraph__title_bog_max_app_64 = $mol_type_enforce<
+		ReturnType< $bog_max_app['house_title'] >
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_paragraph__title_bog_max_app_65 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_65 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_66 = $mol_type_enforce<
 		ReturnType< $bog_max_app['rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_page__title_bog_max_app_66 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_67 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_67 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_68 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_68 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_69 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__title_bog_max_app_69 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_70 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_70 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_71 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_71 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_72 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
@@ -48592,11 +48597,12 @@ declare namespace $ {
 		Log( ): $mol_list
 		bot_prod( ): string
 		attr( ): ({ 
-			'max_platform': ReturnType< $bog_max_app['platform'] >,
+			'bog_max_platform': ReturnType< $bog_max_app['platform'] >,
 		})  & ReturnType< $mol_book2['attr'] >
 		plugins( ): readonly(any)[]
 		pages( ): readonly(any)[]
 		Home( ): $mol_page
+		Wait( ): $mol_paragraph
 		Fail( ): $mol_paragraph
 		House_title( ): $mol_paragraph
 		Empty( ): $mol_paragraph
@@ -48624,6 +48630,7 @@ declare namespace $.$$ {
         bot_url(): string;
         session(): $bog_max_app_session;
         fail(): string;
+        waiting(): boolean;
         land(): $giper_baza_land;
         uk(): $bog_max_uk;
         lord(): string;
@@ -48650,7 +48657,7 @@ declare namespace $.$$ {
         house_title(): string;
         category_options(): string[];
         category_dictionary(): {
-            [k: string]: string;
+            '': string;
         };
         submit_allowed(): boolean;
         submit(): void;
@@ -48667,6 +48674,9 @@ declare namespace $.$$ {
         log_rows(): $.$mol_paragraph[];
         log_row(time: string): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

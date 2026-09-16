@@ -151,4 +151,5 @@
 	deploy \/giper/baza/docker/autopull_and_restart.sh
 \/bog/max/app
 	include \/mol/offline/install
+	include \/bog/max/theme
 	deploy \/bog/max/assets

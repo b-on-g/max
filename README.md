@@ -25,6 +25,7 @@
 | Проверка initData | `bot/check/` | HMAC-SHA256 по алгоритму MAX, тест рядом |
 | Мини-приложение | `app/` | Интерфейс жителя на $mol: список, новая заявка, карточка |
 | Мост MAX | `bridge/` | Обёртка над `window.WebApp`: initData, платформа, ready |
+| Тема | `theme/` | Токены дизайн-системы MAX из `@maxhub/max-ui`, переложенные на переменные $mol |
 
 Стек: [$mol](https://mol.hyoo.ru) и MAM, [Гипербаза](https://github.com/giper-dev/gd) как
 локальная CRDT-база с синхронизацией, [`@maxhub/max-bot-api`](https://github.com/max-messenger/max-bot-api-client-ts)
@@ -50,7 +51,7 @@ POST /auth   { init_data: WebApp.initData, pass: <публичный ключ ж
 Адрес бота приложение берёт из своего origin: nginx перед статикой проксирует `/auth`
 и WebSocket на бота, поэтому в Docker и на VPS адрес один. На GitHub Pages адрес бота
 задаётся константой `bot_prod` в `app/app.view.tree`, для отладки его можно передать
-параметром `#!bot=https://…/`.
+параметром `#!bot=host:port` без схемы и слэшей, `$mol_state_arg` режет аргументы по `/`.
 
 ## Запуск
 
@@ -130,7 +131,7 @@ docker compose up --build
 ```sh
 cd /path/to/mam && npm start
 DEV_SKIP_VALIDATION=1 node bog/max/bot/run/-/node.js port=9097
-open 'http://localhost:9080/bog/max/app/-/#!bot=http://localhost:9097/'
+open 'http://localhost:9080/bog/max/app/-/index.html#!bot=localhost:9097'
 node bog/max/bot/run/-/node.test.js
 node bog/max/app/-/node.test.js
 ```

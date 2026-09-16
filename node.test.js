@@ -19890,7 +19890,7 @@ var $;
 			return "";
 		}
 		attr(){
-			return {...(super.attr()), "max_platform": (this.platform())};
+			return {...(super.attr()), "bog_max_platform": (this.platform())};
 		}
 		plugins(){
 			return [(this.Theme())];
@@ -19904,6 +19904,11 @@ var $;
 			(obj.tools) = () => ([(this.Sync())]);
 			(obj.body) = () => ((this.home_body()));
 			(obj.foot) = () => ([(this.New_link())]);
+			return obj;
+		}
+		Wait(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Wait_title")));
 			return obj;
 		}
 		Fail(){
@@ -19990,6 +19995,7 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Log_row"));
 	($mol_mem(($.$bog_max_app.prototype), "Log"));
 	($mol_mem(($.$bog_max_app.prototype), "Home"));
+	($mol_mem(($.$bog_max_app.prototype), "Wait"));
 	($mol_mem(($.$bog_max_app.prototype), "Fail"));
 	($mol_mem(($.$bog_max_app.prototype), "House_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Empty"));
@@ -20397,8 +20403,17 @@ var $;
                 }
                 catch (error) {
                     if ($mol_promise_like(error))
-                        return 'Подключаемся к управляющей компании…';
+                        return '';
                     return error.message;
+                }
+            }
+            waiting() {
+                try {
+                    this.session();
+                    return false;
+                }
+                catch (error) {
+                    return $mol_promise_like(error);
                 }
             }
             land() {
@@ -20430,6 +20445,8 @@ var $;
                     .reverse();
             }
             home_body() {
+                if (this.waiting())
+                    return [this.Wait()];
                 if (this.fail())
                     return [this.Fail()];
                 return [
@@ -20496,7 +20513,10 @@ var $;
                 return this.uk().Categories()?.remote_list().map(category => category.link().str) ?? [];
             }
             category_dictionary() {
-                return Object.fromEntries(this.category_options().map(link => [link, this.category_of(link).Title()?.val() ?? '']));
+                return {
+                    '': 'Выберите категорию',
+                    ...Object.fromEntries(this.category_options().map(link => [link, this.category_of(link).Title()?.val() ?? ''])),
+                };
             }
             submit_allowed() {
                 return Boolean(this.house() && this.category() && this.place().trim());
@@ -20567,6 +20587,9 @@ var $;
         ], $bog_max_app.prototype, "fail", null);
         __decorate([
             $mol_mem
+        ], $bog_max_app.prototype, "waiting", null);
+        __decorate([
+            $mol_mem
         ], $bog_max_app.prototype, "mine", null);
         __decorate([
             $mol_mem
@@ -20613,25 +20636,64 @@ var $;
         Home: {
             flex: { basis: '24rem' },
         },
+        House_title: {
+            color: $mol_theme.shade,
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Empty: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Wait: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Fail: {
+            padding: $mol_gap.block,
+            color: $mol_theme.special,
+        },
+        Rows: {
+            gap: $mol_gap.space,
+        },
         Row: {
             flex: { direction: 'column' },
-            padding: $mol_gap.block,
-            borderRadius: 'var(--mol_gap_round)',
+            gap: '4px',
+            padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
+            borderRadius: '16px',
+            background: { color: $mol_theme.card },
+            color: $mol_theme.text,
             ':hover': {
-                background: { color: $mol_theme.hover },
+                background: { color: $mol_theme.field },
             },
+        },
+        Row_title: {
+            font: { weight: 500 },
         },
         Row_status: {
             color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
         },
         Ticket_status: {
             color: $mol_theme.current,
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+            font: { weight: 500 },
+        },
+        Log: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
         },
         New_button: {
             flex: { grow: 1 },
-            justifyContent: 'center',
         },
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major]:disabled {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -27595,6 +27657,7 @@ var $;
             const app = $$.$bog_max_app.make({ $ });
             app.session = () => $mol_fail(new Error('Подпись MAX не прошла проверку'));
             $mol_assert_equal(app.fail(), 'Подпись MAX не прошла проверку');
+            $mol_assert_equal(app.waiting(), false);
             $mol_assert_equal(app.home_body(), [app.Fail()]);
         },
         'new ticket needs house, category and place'($) {

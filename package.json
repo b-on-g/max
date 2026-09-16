@@ -350,7 +350,8 @@
     "$bog_max_category",
     "$bog_max_ticket",
     "$bog_max_status",
-    "$bog_max_owner"
+    "$bog_max_owner",
+    "$bog_max_theme"
   ],
   "dependencies": {
     "autoinstall": "*",
