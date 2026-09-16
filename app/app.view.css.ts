@@ -6,6 +6,21 @@ namespace $ {
 			flex: { grow: 1, shrink: 0, basis: '24rem' },
 		},
 
+		New: {
+			flex: { grow: 0, shrink: 0, basis: '26rem' },
+		},
+
+		Ticket: {
+			flex: { grow: 0, shrink: 0, basis: '26rem' },
+		},
+
+		Max_logo: {
+			width: '1.75rem',
+			height: '1.75rem',
+			borderRadius: '0.5rem',
+			margin: { right: '0.5rem' },
+		},
+
 		New_link: {
 			display: 'flex',
 			padding: $mol_gap.block,

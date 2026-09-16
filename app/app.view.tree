@@ -14,8 +14,13 @@ $bog_max_app $mol_book2
 	placeholders /
 	Main $mol_page
 		title <= main_title \
+		Logo <= Max_logo $mol_image
+			uri \bog/max/assets/max.svg
+			title \MAX
 		tools /
 			<= Sync $giper_baza_status
+			<= Theme_toggle $bog_theme_toggle
+				theme_auto <= Theme
 		body <= main_body /
 		foot /
 			<= Nav $bog_max_nav

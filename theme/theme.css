@@ -282,3 +282,10 @@
 [bog_max_app] [mol_form_field][mol_form_field_state="bid"] [mol_select_trigger] {
 	box-shadow: inset 0 0 0 1px var(--text-negative);
 }
+
+@media (min-width: 721px) {
+	[bog_max_app] [mol_page_body_content],
+	[bog_max_app] [mol_page_head] {
+		padding-inline: max(var(--spacing-size-xl), calc((100% - 40rem) / 2));
+	}
+}
