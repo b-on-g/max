@@ -2213,6 +2213,8 @@ $bog_max_app $mol_book2
 						title @ \Новая заявка
 	Fail $mol_paragraph
 		title <= fail \
+	House_title $mol_paragraph
+		title <= house_title \
 	Empty $mol_paragraph
 		title @ \Заявок пока нет. Нажмите «Новая заявка», чтобы сообщить о проблеме в доме.
 	Rows $mol_list

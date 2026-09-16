@@ -45475,41 +45475,46 @@ declare namespace $ {
 		ReturnType< $mol_paragraph['title'] >
 	>
 	type $mol_paragraph__title_bog_max_app_63 = $mol_type_enforce<
+		ReturnType< $bog_max_app['house_title'] >
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_paragraph__title_bog_max_app_64 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_64 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_65 = $mol_type_enforce<
 		ReturnType< $bog_max_app['rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_page__title_bog_max_app_65 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_66 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_66 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_67 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_67 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_68 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__title_bog_max_app_68 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_69 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_69 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_70 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_70 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_71 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
@@ -45522,6 +45527,7 @@ declare namespace $ {
 		New_button( ): $mol_button_major
 		New_link( ): $mol_link
 		fail( ): string
+		house_title( ): string
 		row_link( id: any): string
 		row_title( id: any): string
 		Row_title( id: any): $mol_paragraph
@@ -45584,6 +45590,7 @@ declare namespace $ {
 		pages( ): readonly(any)[]
 		Home( ): $mol_page
 		Fail( ): $mol_paragraph
+		House_title( ): $mol_paragraph
 		Empty( ): $mol_paragraph
 		Rows( ): $mol_list
 		New( ): $mol_page
@@ -45617,7 +45624,7 @@ declare namespace $.$$ {
         house_of(link: string): $bog_max_house;
         category_of(link: string): $bog_max_category;
         mine(): string[];
-        home_body(): $.$mol_paragraph[] | $.$mol_list[];
+        home_body(): ($.$mol_paragraph | $.$mol_list)[];
         rows(): $.$mol_link[];
         row_link(link: string): string;
         number(link: string): number;
@@ -45632,6 +45639,7 @@ declare namespace $.$$ {
             [k: string]: string;
         };
         house(next?: string): string;
+        house_title(): string;
         category_options(): string[];
         category_dictionary(): {
             [k: string]: string;
