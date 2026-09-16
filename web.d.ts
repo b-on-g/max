@@ -48431,219 +48431,224 @@ declare namespace $ {
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_21 = $mol_type_enforce<
+	type $mol_form_field__bids_bog_max_app_21 = $mol_type_enforce<
+		ReturnType< $bog_max_app['category_bids'] >
+		,
+		ReturnType< $mol_form_field['bids'] >
+	>
+	type $mol_form_field__control_bog_max_app_22 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Category'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__hint_bog_max_app_22 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_23 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_23 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_24 = $mol_type_enforce<
 		ReturnType< $bog_max_app['place'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_24 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_25 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_25 = $mol_type_enforce<
+	type $mol_form_field__bids_bog_max_app_26 = $mol_type_enforce<
+		ReturnType< $bog_max_app['place_bids'] >
+		,
+		ReturnType< $mol_form_field['bids'] >
+	>
+	type $mol_form_field__control_bog_max_app_27 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Place'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__hint_bog_max_app_26 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_28 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_27 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_29 = $mol_type_enforce<
 		ReturnType< $bog_max_app['text'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_28 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_30 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_29 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_31 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Text'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_button_major__title_bog_max_app_30 = $mol_type_enforce<
+	type $mol_button_major__title_bog_max_app_32 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click_bog_max_app_31 = $mol_type_enforce<
+	type $mol_button_major__click_bog_max_app_33 = $mol_type_enforce<
 		ReturnType< $bog_max_app['submit'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__enabled_bog_max_app_32 = $mol_type_enforce<
+	type $mol_button_major__enabled_bog_max_app_34 = $mol_type_enforce<
 		ReturnType< $bog_max_app['submit_allowed'] >
 		,
 		ReturnType< $mol_button_major['enabled'] >
 	>
-	type $mol_form__submit_allowed_bog_max_app_33 = $mol_type_enforce<
-		ReturnType< $bog_max_app['submit_allowed'] >
-		,
-		ReturnType< $mol_form['submit_allowed'] >
-	>
-	type $mol_form__form_fields_bog_max_app_34 = $mol_type_enforce<
+	type $mol_form__form_fields_bog_max_app_35 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['form_fields'] >
 	>
-	type $mol_form__buttons_bog_max_app_35 = $mol_type_enforce<
+	type $mol_form__buttons_bog_max_app_36 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['buttons'] >
 	>
-	type $mol_link__arg_bog_max_app_36 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_37 = $mol_type_enforce<
 		({ 
 			'ticket': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_37 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_38 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_paragraph__title_bog_max_app_38 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_39 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_status'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_labeler__title_bog_max_app_39 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_40 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_40 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_41 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_41 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_42 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_42 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_43 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_43 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_44 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_44 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_45 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_45 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_46 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_46 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_47 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_47 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_48 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_48 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_49 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_49 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_50 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_50 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_51 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_51 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_52 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_52 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_53 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_53 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_54 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_54 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_55 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_paragraph__title_bog_max_app_55 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_56 = $mol_type_enforce<
 		ReturnType< $bog_max_app['log_row'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_56 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_57 = $mol_type_enforce<
 		ReturnType< $bog_max_app['log_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_page__title_bog_max_app_57 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_58 = $mol_type_enforce<
 		ReturnType< $bog_max_app['main_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_58 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_59 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_59 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_60 = $mol_type_enforce<
 		ReturnType< $bog_max_app['main_body'] >
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__foot_bog_max_app_60 = $mol_type_enforce<
+	type $mol_page__foot_bog_max_app_61 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['foot'] >
 	>
-	type $mol_paragraph__title_bog_max_app_61 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_62 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_62 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_63 = $mol_type_enforce<
 		ReturnType< $bog_max_app['fail'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_link__arg_bog_max_app_63 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_64 = $mol_type_enforce<
 		({ 
 			'screen': string,
 			'ticket': any,
@@ -48651,117 +48656,117 @@ declare namespace $ {
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_64 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_65 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_paragraph__title_bog_max_app_65 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_66 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_title'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_66 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_67 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_67 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_68 = $mol_type_enforce<
 		ReturnType< $bog_max_app['rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_search__query_bog_max_app_68 = $mol_type_enforce<
+	type $mol_search__query_bog_max_app_69 = $mol_type_enforce<
 		ReturnType< $bog_max_app['query'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__hint_bog_max_app_69 = $mol_type_enforce<
+	type $mol_search__hint_bog_max_app_70 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_paragraph__title_bog_max_app_70 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_71 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_71 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_72 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_labeler__title_bog_max_app_72 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_73 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_73 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_74 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_74 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_75 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_75 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_76 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_form_field__name_bog_max_app_76 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_77 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_77 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_78 = $mol_type_enforce<
 		ReturnType< $bog_max_app['House'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_labeler__title_bog_max_app_78 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_79 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_79 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_80 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_paragraph__title_bog_max_app_80 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_81 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_page__title_bog_max_app_81 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_82 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_82 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_83 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_83 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_84 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__title_bog_max_app_84 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_85 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_85 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_86 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_86 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_87 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_body'] >
 		,
 		ReturnType< $mol_page['body'] >
@@ -48797,12 +48802,14 @@ declare namespace $ {
 		Close_new( ): $mol_link
 		house_address( ): string
 		House_line( ): $mol_labeler
-		submit_allowed( ): boolean
+		submit_allowed( ): ReturnType< ReturnType< $bog_max_app['Form'] >['submit_allowed'] >
+		category_bids( ): readonly(string)[]
 		category_options( ): readonly(string)[]
 		category_dictionary( ): Record<string, any>
 		category( next?: string ): string
 		Category( ): $mol_select
 		Category_field( ): $mol_form_field
+		place_bids( ): readonly(string)[]
 		place( next?: string ): string
 		Place( ): $mol_string
 		Place_field( ): $mol_form_field
@@ -48921,7 +48928,8 @@ declare namespace $.$$ {
         category_dictionary(): {
             '': string;
         };
-        submit_allowed(): boolean;
+        category_bids(): string[];
+        place_bids(): string[];
         submit(): void;
         ticket_body(): ($.$mol_paragraph | $.$mol_list | $mol_labeler)[];
         ticket_title(): string;

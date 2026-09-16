@@ -19982,7 +19982,10 @@ var $;
 			return obj;
 		}
 		submit_allowed(){
-			return false;
+			return (this.Form().submit_allowed());
+		}
+		category_bids(){
+			return [];
 		}
 		category_options(){
 			return [];
@@ -20004,8 +20007,12 @@ var $;
 		Category_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Category_field_name")));
+			(obj.bids) = () => ((this.category_bids()));
 			(obj.control) = () => ((this.Category()));
 			return obj;
+		}
+		place_bids(){
+			return [];
 		}
 		place(next){
 			if(next !== undefined) return next;
@@ -20020,6 +20027,7 @@ var $;
 		Place_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Place_field_name")));
+			(obj.bids) = () => ((this.place_bids()));
 			(obj.control) = () => ((this.Place()));
 			return obj;
 		}
@@ -20052,7 +20060,6 @@ var $;
 		}
 		Form(){
 			const obj = new this.$.$mol_form();
-			(obj.submit_allowed) = () => ((this.submit_allowed()));
 			(obj.form_fields) = () => ([
 				(this.Category_field()), 
 				(this.Place_field()), 
@@ -20185,7 +20192,7 @@ var $;
 			];
 		}
 		bot_prod(){
-			return "";
+			return "https://cmyser-ru-max.91.188.212.151.ip.giper.dev/";
 		}
 		attr(){
 			return {...(super.attr()), "bog_max_platform": (this.platform())};
@@ -20952,10 +20959,15 @@ var $;
                     ...Object.fromEntries(this.category_options().map(link => [link, this.category_of(link).Title()?.val() ?? ''])),
                 };
             }
-            submit_allowed() {
-                return Boolean(this.house() && this.category() && this.place().trim());
+            category_bids() {
+                return this.category() ? [] : ['Выберите категорию'];
+            }
+            place_bids() {
+                return this.place().trim() ? [] : ['Укажите, где именно'];
             }
             submit() {
+                if (!this.submit_allowed())
+                    return;
                 const uk = this.uk();
                 const house = this.house_of(this.house());
                 const category = this.category_of(this.category());
@@ -21071,7 +21083,10 @@ var $;
         ], $bog_max_app.prototype, "category_dictionary", null);
         __decorate([
             $mol_mem
-        ], $bog_max_app.prototype, "submit_allowed", null);
+        ], $bog_max_app.prototype, "category_bids", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "place_bids", null);
         __decorate([
             $mol_action
         ], $bog_max_app.prototype, "submit", null);
@@ -21175,7 +21190,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major]:disabled {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n\n@media (max-width: 720px) {\n\t[bog_max_app] > [mol_page] {\n\t\tmin-width: 100%;\n\t}\n}\n\n[bog_max_app] > *::before,\n[bog_max_app] > *::after {\n\tdisplay: none;\n}\n\n[bog_max_app] [mol_form_field] [mol_select] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[bog_max_app] [mol_form_foot] {\n\tpadding: var(--spacing-size-xl) 0;\n}\n\n[bog_max_app] [mol_form_foot] [mol_button_major] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app_search],\n[bog_max_app_search] [mol_pop_anchor],\n[bog_max_app_search] [mol_search_query] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app] [mol_labeler_content] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app_search] {\n\talign-self: stretch;\n}\n");
+    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major]:disabled {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n\n@media (max-width: 720px) {\n\t[bog_max_app] > [mol_page] {\n\t\tmin-width: 100%;\n\t}\n}\n\n[bog_max_app] > *::before,\n[bog_max_app] > *::after {\n\tdisplay: none;\n}\n\n[bog_max_app] [mol_form_field] [mol_select] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[bog_max_app] [mol_form_foot] {\n\tpadding: var(--spacing-size-xl) 0;\n}\n\n[bog_max_app] [mol_form_foot] [mol_button_major] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app_search],\n[bog_max_app_search] [mol_pop_anchor],\n[bog_max_app_search] [mol_search_query] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app] [mol_labeler_content] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app_search] {\n\talign-self: stretch;\n}\n\n[bog_max_app] [mol_form_field_bid] {\n\tcolor: var(--text-negative);\n\tfont-size: var(--font-size-description);\n\ttext-shadow: none;\n}\n\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_string],\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_select_trigger] {\n\tbox-shadow: inset 0 0 0 1px var(--text-negative);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -28142,17 +28157,17 @@ var $;
             $mol_assert_equal(app.waiting(), false);
             $mol_assert_equal(app.main_body(), [app.Fail()]);
         },
-        'new ticket needs house, category and place'($) {
+        'empty category and place get bids'($) {
             const app = $$.$bog_max_app.make({ $ });
-            app.house = () => 'house';
-            app.category = () => 'category';
+            app.category = () => '';
             app.place = () => '  ';
-            $mol_assert_equal(app.submit_allowed(), false);
+            $mol_assert_equal(app.category_bids(), ['Выберите категорию']);
+            $mol_assert_equal(app.place_bids(), ['Укажите, где именно']);
             const ready = $$.$bog_max_app.make({ $ });
-            ready.house = () => 'house';
             ready.category = () => 'category';
             ready.place = () => 'подъезд 2';
-            $mol_assert_equal(ready.submit_allowed(), true);
+            $mol_assert_equal(ready.category_bids(), []);
+            $mol_assert_equal(ready.place_bids(), []);
         },
         'sections switch the main body'($) {
             const app = $$.$bog_max_app.make({ $ });

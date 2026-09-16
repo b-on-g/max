@@ -527,7 +527,7 @@ $mol_page $mol_view
 			sub <= foot /$mol_view
 
 $bog_max_app $mol_book2
-	bot_prod \
+	bot_prod \https://cmyser-ru-max.91.188.212.151.ip.giper.dev/
 	attr *
 		^
 		bog_max_platform <= platform \web
@@ -611,16 +611,18 @@ $bog_max_app $mol_book2
 				title @ \Дом
 				content / <= house_address \
 			<= Form $mol_form
-				submit_allowed <= submit_allowed false
+				submit_allowed => submit_allowed
 				form_fields /
 					<= Category_field $mol_form_field
 						name @ \Что случилось
+						bids <= category_bids /string
 						control <= Category $mol_select
 							options <= category_options /string
 							dictionary <= category_dictionary *
 							value? <=> category? \
 					<= Place_field $mol_form_field
 						name @ \Где
+						bids <= place_bids /string
 						control <= Place $mol_string
 							hint @ \Подъезд, этаж, квартира
 							value? <=> place? \

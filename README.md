@@ -87,6 +87,17 @@ docker compose up --build
 Версии зафиксированы в `bot/run/package.json`: `@maxhub/max-bot-api` 0.3.1, `jsdom` 29.1.1,
 `autoinstall` 0.3.1. Остальное тянет MAM из git по `.meta.tree` при сборке образа.
 
+### Прод
+
+На VPS с `caddy-docker-proxy` поверх базового compose кладётся `docker-compose.prod.yml`:
+бот без внешнего порта, nginx на `127.0.0.1:8081`, Caddy выпускает сертификат на
+`MAX_DOMAIN` по лейблу. Сейчас это `https://cmyser-ru-max.91.188.212.151.ip.giper.dev/`,
+он же прописан в `bot_prod` для сборки на GitHub Pages.
+
+```sh
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+```
+
 ## Внешние сервисы
 
 - Bot API MAX: long polling за обновлениями и отправка сообщений. Входящих соединений от MAX не нужно.
