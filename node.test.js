@@ -20054,476 +20054,6 @@ var $;
 
 
 ;
-	($.$bog_qr) = class $bog_qr extends ($.$mol_svg_root) {
-		stop_offset(id){
-			return "0%";
-		}
-		stop_color(id){
-			return "";
-		}
-		qr_view_box(){
-			return "0 0 1 1";
-		}
-		grad_x1(){
-			return "0";
-		}
-		grad_y1(){
-			return "0";
-		}
-		grad_x2(){
-			return "1";
-		}
-		grad_y2(){
-			return "1";
-		}
-		gradient_stop_list(){
-			return [];
-		}
-		Gradient(){
-			const obj = new this.$.$mol_svg();
-			(obj.dom_name) = () => ("linearGradient");
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg.prototype.attr.call(obj)), 
-				"id": (this.gradient_id()), 
-				"x1": (this.grad_x1()), 
-				"y1": (this.grad_y1()), 
-				"x2": (this.grad_x2()), 
-				"y2": (this.grad_y2())
-			});
-			(obj.sub) = () => ((this.gradient_stop_list()));
-			return obj;
-		}
-		Defs(){
-			const obj = new this.$.$mol_svg();
-			(obj.dom_name) = () => ("defs");
-			(obj.sub) = () => ([(this.Gradient())]);
-			return obj;
-		}
-		modules_d(){
-			return "";
-		}
-		Modules(){
-			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this.modules_d()));
-			(obj.attr) = () => ({...(this.$.$mol_svg_path.prototype.attr.call(obj)), "fill": (this.gradient_fill())});
-			return obj;
-		}
-		rings_d(){
-			return "";
-		}
-		Rings(){
-			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this.rings_d()));
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg_path.prototype.attr.call(obj)), 
-				"fill": (this.gradient_fill()), 
-				"fill-rule": "evenodd"
-			});
-			return obj;
-		}
-		centers_d(){
-			return "";
-		}
-		Centers(){
-			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this.centers_d()));
-			(obj.attr) = () => ({...(this.$.$mol_svg_path.prototype.attr.call(obj)), "fill": (this.gradient_fill())});
-			return obj;
-		}
-		center_x(){
-			return "0";
-		}
-		center_y(){
-			return "0";
-		}
-		center_size(){
-			return "0";
-		}
-		Center_body(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.center()));
-			return obj;
-		}
-		Center_wrap(){
-			const obj = new this.$.$mol_svg();
-			(obj.dom_name) = () => ("foreignObject");
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg.prototype.attr.call(obj)), 
-				"x": (this.center_x()), 
-				"y": (this.center_y()), 
-				"width": (this.center_size()), 
-				"height": (this.center_size())
-			});
-			(obj.sub) = () => ([(this.Center_body())]);
-			return obj;
-		}
-		uri(){
-			return "";
-		}
-		module_radius(){
-			return 0.35;
-		}
-		finder_radius(){
-			return 1.2;
-		}
-		gradient_angle(){
-			return 45;
-		}
-		error_correction(){
-			return "M";
-		}
-		quiet_zone(){
-			return 2;
-		}
-		center(){
-			return [];
-		}
-		gradient_id(){
-			return "qr-grad";
-		}
-		gradient_fill(){
-			return "url(#qr-grad)";
-		}
-		gradient_stops(){
-			return ["var(--mol_theme_special)", "var(--mol_theme_focus)"];
-		}
-		Stop(id){
-			const obj = new this.$.$mol_svg();
-			(obj.dom_name) = () => ("stop");
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg.prototype.attr.call(obj)), 
-				"offset": (this.stop_offset(id)), 
-				"stop-color": (this.stop_color(id))
-			});
-			return obj;
-		}
-		view_box(){
-			return (this.qr_view_box());
-		}
-		sub(){
-			return [
-				(this.Defs()), 
-				(this.Modules()), 
-				(this.Rings()), 
-				(this.Centers()), 
-				(this.Center_wrap())
-			];
-		}
-	};
-	($mol_mem(($.$bog_qr.prototype), "Gradient"));
-	($mol_mem(($.$bog_qr.prototype), "Defs"));
-	($mol_mem(($.$bog_qr.prototype), "Modules"));
-	($mol_mem(($.$bog_qr.prototype), "Rings"));
-	($mol_mem(($.$bog_qr.prototype), "Centers"));
-	($mol_mem(($.$bog_qr.prototype), "Center_body"));
-	($mol_mem(($.$bog_qr.prototype), "Center_wrap"));
-	($mol_mem_key(($.$bog_qr.prototype), "Stop"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    /** Dynamic sources import. */
-    class $mol_import extends $mol_object2 {
-        static module(uri) {
-            $mol_wire_solid();
-            return $mol_wire_sync(this).module_async(uri);
-        }
-        static module_async(uri) {
-            return import(uri);
-        }
-        static script(uri) {
-            $mol_wire_solid();
-            return $mol_wire_sync(this).script_async(uri);
-        }
-        static script_async(uri) {
-            const doc = $mol_dom_context.document;
-            const script = doc.createElement('script');
-            script.src = uri;
-            doc.head.appendChild(script);
-            return new Promise((done, fail) => {
-                script.onload = () => done($mol_dom_context);
-                script.onerror = () => fail(new Error(`Can not import ${uri}`));
-            });
-        }
-        static style(uri) {
-            return $mol_wire_sync(this).style_async(uri);
-        }
-        static style_async(uri) {
-            const doc = $mol_dom_context.document;
-            const style = doc.createElement('link');
-            style.rel = 'stylesheet';
-            style.href = uri;
-            doc.head.appendChild(style);
-            return new Promise((done, fail) => {
-                style.onload = () => done(style.sheet);
-                style.onerror = () => fail(new Error(`Can not import ${uri}`));
-            });
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_import, "module", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_import, "script", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_import, "style", null);
-    $.$mol_import = $mol_import;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        let grad_counter = 0;
-        class $bog_qr extends $.$bog_qr {
-            gradient_id() {
-                return 'qr-grad-' + (++grad_counter);
-            }
-            gradient_fill() {
-                return `url(#${this.gradient_id()})`;
-            }
-            grad_x1() {
-                const a = this.gradient_angle() * Math.PI / 180;
-                return String(0.5 - Math.cos(a) * 0.5);
-            }
-            grad_y1() {
-                const a = this.gradient_angle() * Math.PI / 180;
-                return String(0.5 - Math.sin(a) * 0.5);
-            }
-            grad_x2() {
-                const a = this.gradient_angle() * Math.PI / 180;
-                return String(0.5 + Math.cos(a) * 0.5);
-            }
-            grad_y2() {
-                const a = this.gradient_angle() * Math.PI / 180;
-                return String(0.5 + Math.sin(a) * 0.5);
-            }
-            gradient_stop_list() {
-                const colors = this.gradient_stops();
-                return colors.map((_, i) => this.Stop(i));
-            }
-            stop_offset(index) {
-                const colors = this.gradient_stops();
-                if (colors.length <= 1)
-                    return '0%';
-                return Math.round(index / (colors.length - 1) * 100) + '%';
-            }
-            stop_color(index) {
-                return this.gradient_stops()[index];
-            }
-            qr_lib() {
-                return $mol_import.script('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js');
-            }
-            qr_matrix() {
-                this.qr_lib();
-                const data = this.uri();
-                if (!data)
-                    return null;
-                const qr = qrcode(0, this.error_correction());
-                qr.addData(data);
-                qr.make();
-                const count = qr.getModuleCount();
-                const matrix = [];
-                for (let r = 0; r < count; r++) {
-                    matrix[r] = [];
-                    for (let c = 0; c < count; c++) {
-                        matrix[r][c] = qr.isDark(r, c);
-                    }
-                }
-                return matrix;
-            }
-            qr_view_box() {
-                const matrix = this.qr_matrix();
-                if (!matrix)
-                    return '0 0 1 1';
-                const total = matrix.length + this.quiet_zone() * 2;
-                return `0 0 ${total} ${total}`;
-            }
-            qr_paths() {
-                const matrix = this.qr_matrix();
-                if (!matrix)
-                    return { modules: '', rings: '', centers: '' };
-                const count = matrix.length;
-                const quiet = this.quiet_zone();
-                const r = this.module_radius();
-                const dark = (row, col) => row >= 0 && row < count && col >= 0 && col < count && matrix[row][col];
-                const isFinder = (row, col) => (row < 7 && col < 7) || (row < 7 && col >= count - 7) || (row >= count - 7 && col < 7);
-                const hasCenter = this.center().length > 0;
-                const centerRadius = hasCenter ? count * 0.15 : 0;
-                const centerMid = count / 2;
-                const isCenter = (row, col) => {
-                    if (!hasCenter)
-                        return false;
-                    const dx = col + 0.5 - centerMid;
-                    const dy = row + 0.5 - centerMid;
-                    return dx * dx + dy * dy < centerRadius * centerRadius;
-                };
-                let modules = '';
-                for (let row = 0; row < count; row++) {
-                    for (let col = 0; col < count; col++) {
-                        if (!matrix[row][col])
-                            continue;
-                        if (isFinder(row, col))
-                            continue;
-                        if (isCenter(row, col))
-                            continue;
-                        const x = col + quiet;
-                        const y = row + quiet;
-                        const top = dark(row - 1, col);
-                        const bottom = dark(row + 1, col);
-                        const left = dark(row, col - 1);
-                        const right = dark(row, col + 1);
-                        const alone = !top && !bottom && !left && !right;
-                        if (alone) {
-                            const cx = x + 0.5;
-                            const cy = y + 0.5;
-                            const cr = 0.5;
-                            modules += `M${cx - cr},${cy}A${cr},${cr},0,1,1,${cx + cr},${cy}A${cr},${cr},0,1,1,${cx - cr},${cy}Z`;
-                        }
-                        else {
-                            const tl = !top && !left ? r : 0;
-                            const tr = !top && !right ? r : 0;
-                            const br = !bottom && !right ? r : 0;
-                            const bl = !bottom && !left ? r : 0;
-                            modules += this.rect_path(x, y, 1, 1, tl, tr, br, bl);
-                        }
-                    }
-                }
-                const fr = this.finder_radius();
-                const finders = [
-                    [quiet, quiet],
-                    [count - 7 + quiet, quiet],
-                    [quiet, count - 7 + quiet],
-                ];
-                let rings = '';
-                let centers = '';
-                for (const [fx, fy] of finders) {
-                    rings += this.rect_path(fx, fy, 7, 7, fr, fr, fr, fr);
-                    rings += this.rect_path(fx + 1, fy + 1, 5, 5, fr * 0.7, fr * 0.7, fr * 0.7, fr * 0.7);
-                    centers += this.rect_path(fx + 2, fy + 2, 3, 3, fr * 0.5, fr * 0.5, fr * 0.5, fr * 0.5);
-                }
-                return { modules, rings, centers };
-            }
-            center_area() {
-                const matrix = this.qr_matrix();
-                if (!matrix || this.center().length === 0)
-                    return { x: 0, y: 0, size: 0 };
-                const count = matrix.length;
-                const quiet = this.quiet_zone();
-                const centerSize = count * 0.3;
-                const total = count + quiet * 2;
-                return {
-                    x: (total - centerSize) / 2,
-                    y: (total - centerSize) / 2,
-                    size: centerSize,
-                };
-            }
-            center_x() {
-                return String(this.center_area().x);
-            }
-            center_y() {
-                return String(this.center_area().y);
-            }
-            center_size() {
-                return String(this.center_area().size);
-            }
-            modules_d() {
-                return this.qr_paths().modules;
-            }
-            rings_d() {
-                return this.qr_paths().rings;
-            }
-            centers_d() {
-                return this.qr_paths().centers;
-            }
-            rect_path(x, y, w, h, tl, tr, br, bl) {
-                return [
-                    `M${x + tl},${y}`,
-                    `H${x + w - tr}`,
-                    tr ? `A${tr},${tr},0,0,1,${x + w},${y + tr}` : '',
-                    `V${y + h - br}`,
-                    br ? `A${br},${br},0,0,1,${x + w - br},${y + h}` : '',
-                    `H${x + bl}`,
-                    bl ? `A${bl},${bl},0,0,1,${x},${y + h - bl}` : '',
-                    `V${y + tl}`,
-                    tl ? `A${tl},${tl},0,0,1,${x + tl},${y}` : '',
-                    'Z',
-                ]
-                    .filter(Boolean)
-                    .join('');
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "gradient_id", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "gradient_fill", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "grad_x1", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "grad_y1", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "grad_x2", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "grad_y2", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "gradient_stop_list", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "qr_lib", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "qr_matrix", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "qr_view_box", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "qr_paths", null);
-        __decorate([
-            $mol_mem
-        ], $bog_qr.prototype, "center_area", null);
-        $$.$bog_qr = $bog_qr;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        $mol_style_define($bog_qr, {
-            width: '300px',
-            height: '300px',
-            Center_body: {
-                width: '80%',
-                height: '80%',
-                position: 'absolute',
-                top: '10%',
-                left: '10%',
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
 	($.$mol_labeler) = class $mol_labeler extends ($.$mol_list) {
 		label(){
 			return [(this.title())];
@@ -20630,6 +20160,213 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n\ttext-shadow: 0 0;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_plus) = class $mol_icon_plus extends ($.$mol_icon) {
+		path(){
+			return "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_select_list) = class $mol_select_list extends ($.$mol_view) {
+		Badges(){
+			return [];
+		}
+		badge_title(id){
+			return "badge";
+		}
+		remove(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		badge_hint(){
+			return (this.$.$mol_locale.text("$mol_select_list_badge_hint"));
+		}
+		enabled(){
+			return true;
+		}
+		drop_enabled(){
+			return (this.enabled());
+		}
+		event_select(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		align_hor(){
+			return "right";
+		}
+		options(){
+			return [];
+		}
+		options_pickable(){
+			return (this.options());
+		}
+		pick(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		option_title(id){
+			return "";
+		}
+		pick_enabled(){
+			return (this.enabled());
+		}
+		pick_hint(){
+			return (this.$.$mol_locale.text("$mol_select_list_pick_hint"));
+		}
+		filter_pattern(next){
+			return (this.Pick().filter_pattern(next));
+		}
+		Pick_icon(){
+			const obj = new this.$.$mol_icon_plus();
+			return obj;
+		}
+		Pick(){
+			const obj = new this.$.$mol_select();
+			(obj.event_select) = (id, next) => ((this.event_select(id, next)));
+			(obj.align_hor) = () => ((this.align_hor()));
+			(obj.options) = () => ((this.options_pickable()));
+			(obj.value) = (next) => ((this.pick(next)));
+			(obj.option_label) = (id) => ((this.option_title(id)));
+			(obj.trigger_enabled) = () => ((this.pick_enabled()));
+			(obj.hint) = () => ((this.pick_hint()));
+			(obj.Trigger_icon) = () => ((this.Pick_icon()));
+			return obj;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		dictionary(){
+			return {};
+		}
+		badges_list(){
+			return (this.Badges());
+		}
+		Badge(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.badge_title(id)));
+			(obj.click) = (next) => ((this.remove(id, next)));
+			(obj.hint) = () => ((this.badge_hint()));
+			(obj.enabled) = () => ((this.drop_enabled()));
+			return obj;
+		}
+		sub(){
+			return [(this.Pick()), ...(this.badges_list())];
+		}
+	};
+	($mol_mem_key(($.$mol_select_list.prototype), "remove"));
+	($mol_mem_key(($.$mol_select_list.prototype), "event_select"));
+	($mol_mem(($.$mol_select_list.prototype), "pick"));
+	($mol_mem(($.$mol_select_list.prototype), "Pick_icon"));
+	($mol_mem(($.$mol_select_list.prototype), "Pick"));
+	($mol_mem(($.$mol_select_list.prototype), "value"));
+	($mol_mem_key(($.$mol_select_list.prototype), "Badge"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Allow user to select value from various options and displays current value.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_select_demo_colors
+         */
+        class $mol_select_list extends $.$mol_select_list {
+            value(val) {
+                return super.value(val);
+            }
+            pick(key) {
+                if (!key)
+                    return '';
+                this.value([...this.value(), key]);
+                return '';
+            }
+            event_select(id, event) {
+                event?.preventDefault();
+                this.pick(id);
+            }
+            options() {
+                return Object.keys(this.dictionary());
+            }
+            options_pickable() {
+                if (!this.enabled())
+                    return [];
+                const exists = new Set(this.value());
+                return this.options().filter(key => !exists.has(key));
+            }
+            option_title(key) {
+                const value = this.dictionary()[key];
+                return value == null ? key : value;
+            }
+            badge_title(key) {
+                return this.option_title(key);
+            }
+            pick_enabled() {
+                return this.options_pickable().length > 0;
+            }
+            Badges() {
+                return this.value()
+                    .map(id => this.Badge(id))
+                    .reverse();
+            }
+            title() {
+                return this.value().map(key => this.option_title(key)).join(' + ');
+            }
+            remove(key) {
+                this.value(this.value().filter(id => id !== key));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_select_list.prototype, "pick", null);
+        __decorate([
+            $mol_mem
+        ], $mol_select_list.prototype, "options", null);
+        __decorate([
+            $mol_mem
+        ], $mol_select_list.prototype, "options_pickable", null);
+        __decorate([
+            $mol_mem
+        ], $mol_select_list.prototype, "pick_enabled", null);
+        __decorate([
+            $mol_mem
+        ], $mol_select_list.prototype, "title", null);
+        __decorate([
+            $mol_action
+        ], $mol_select_list.prototype, "remove", null);
+        $$.$mol_select_list = $mol_select_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { rem } = $mol_style_unit;
+        $mol_style_define($mol_select_list, {
+            flex: {
+                wrap: 'wrap',
+                shrink: 1,
+                grow: 1,
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -21378,6 +21115,476 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$bog_qr) = class $bog_qr extends ($.$mol_svg_root) {
+		stop_offset(id){
+			return "0%";
+		}
+		stop_color(id){
+			return "";
+		}
+		qr_view_box(){
+			return "0 0 1 1";
+		}
+		grad_x1(){
+			return "0";
+		}
+		grad_y1(){
+			return "0";
+		}
+		grad_x2(){
+			return "1";
+		}
+		grad_y2(){
+			return "1";
+		}
+		gradient_stop_list(){
+			return [];
+		}
+		Gradient(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("linearGradient");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"id": (this.gradient_id()), 
+				"x1": (this.grad_x1()), 
+				"y1": (this.grad_y1()), 
+				"x2": (this.grad_x2()), 
+				"y2": (this.grad_y2())
+			});
+			(obj.sub) = () => ((this.gradient_stop_list()));
+			return obj;
+		}
+		Defs(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("defs");
+			(obj.sub) = () => ([(this.Gradient())]);
+			return obj;
+		}
+		modules_d(){
+			return "";
+		}
+		Modules(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.modules_d()));
+			(obj.attr) = () => ({...(this.$.$mol_svg_path.prototype.attr.call(obj)), "fill": (this.gradient_fill())});
+			return obj;
+		}
+		rings_d(){
+			return "";
+		}
+		Rings(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.rings_d()));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_path.prototype.attr.call(obj)), 
+				"fill": (this.gradient_fill()), 
+				"fill-rule": "evenodd"
+			});
+			return obj;
+		}
+		centers_d(){
+			return "";
+		}
+		Centers(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.centers_d()));
+			(obj.attr) = () => ({...(this.$.$mol_svg_path.prototype.attr.call(obj)), "fill": (this.gradient_fill())});
+			return obj;
+		}
+		center_x(){
+			return "0";
+		}
+		center_y(){
+			return "0";
+		}
+		center_size(){
+			return "0";
+		}
+		Center_body(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.center()));
+			return obj;
+		}
+		Center_wrap(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("foreignObject");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"x": (this.center_x()), 
+				"y": (this.center_y()), 
+				"width": (this.center_size()), 
+				"height": (this.center_size())
+			});
+			(obj.sub) = () => ([(this.Center_body())]);
+			return obj;
+		}
+		uri(){
+			return "";
+		}
+		module_radius(){
+			return 0.35;
+		}
+		finder_radius(){
+			return 1.2;
+		}
+		gradient_angle(){
+			return 45;
+		}
+		error_correction(){
+			return "M";
+		}
+		quiet_zone(){
+			return 2;
+		}
+		center(){
+			return [];
+		}
+		gradient_id(){
+			return "qr-grad";
+		}
+		gradient_fill(){
+			return "url(#qr-grad)";
+		}
+		gradient_stops(){
+			return ["var(--mol_theme_special)", "var(--mol_theme_focus)"];
+		}
+		Stop(id){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("stop");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"offset": (this.stop_offset(id)), 
+				"stop-color": (this.stop_color(id))
+			});
+			return obj;
+		}
+		view_box(){
+			return (this.qr_view_box());
+		}
+		sub(){
+			return [
+				(this.Defs()), 
+				(this.Modules()), 
+				(this.Rings()), 
+				(this.Centers()), 
+				(this.Center_wrap())
+			];
+		}
+	};
+	($mol_mem(($.$bog_qr.prototype), "Gradient"));
+	($mol_mem(($.$bog_qr.prototype), "Defs"));
+	($mol_mem(($.$bog_qr.prototype), "Modules"));
+	($mol_mem(($.$bog_qr.prototype), "Rings"));
+	($mol_mem(($.$bog_qr.prototype), "Centers"));
+	($mol_mem(($.$bog_qr.prototype), "Center_body"));
+	($mol_mem(($.$bog_qr.prototype), "Center_wrap"));
+	($mol_mem_key(($.$bog_qr.prototype), "Stop"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    /** Dynamic sources import. */
+    class $mol_import extends $mol_object2 {
+        static module(uri) {
+            $mol_wire_solid();
+            return $mol_wire_sync(this).module_async(uri);
+        }
+        static module_async(uri) {
+            return import(uri);
+        }
+        static script(uri) {
+            $mol_wire_solid();
+            return $mol_wire_sync(this).script_async(uri);
+        }
+        static script_async(uri) {
+            const doc = $mol_dom_context.document;
+            const script = doc.createElement('script');
+            script.src = uri;
+            doc.head.appendChild(script);
+            return new Promise((done, fail) => {
+                script.onload = () => done($mol_dom_context);
+                script.onerror = () => fail(new Error(`Can not import ${uri}`));
+            });
+        }
+        static style(uri) {
+            return $mol_wire_sync(this).style_async(uri);
+        }
+        static style_async(uri) {
+            const doc = $mol_dom_context.document;
+            const style = doc.createElement('link');
+            style.rel = 'stylesheet';
+            style.href = uri;
+            doc.head.appendChild(style);
+            return new Promise((done, fail) => {
+                style.onload = () => done(style.sheet);
+                style.onerror = () => fail(new Error(`Can not import ${uri}`));
+            });
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "module", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "script", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "style", null);
+    $.$mol_import = $mol_import;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        let grad_counter = 0;
+        class $bog_qr extends $.$bog_qr {
+            gradient_id() {
+                return 'qr-grad-' + (++grad_counter);
+            }
+            gradient_fill() {
+                return `url(#${this.gradient_id()})`;
+            }
+            grad_x1() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 - Math.cos(a) * 0.5);
+            }
+            grad_y1() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 - Math.sin(a) * 0.5);
+            }
+            grad_x2() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 + Math.cos(a) * 0.5);
+            }
+            grad_y2() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 + Math.sin(a) * 0.5);
+            }
+            gradient_stop_list() {
+                const colors = this.gradient_stops();
+                return colors.map((_, i) => this.Stop(i));
+            }
+            stop_offset(index) {
+                const colors = this.gradient_stops();
+                if (colors.length <= 1)
+                    return '0%';
+                return Math.round(index / (colors.length - 1) * 100) + '%';
+            }
+            stop_color(index) {
+                return this.gradient_stops()[index];
+            }
+            qr_lib() {
+                return $mol_import.script('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js');
+            }
+            qr_matrix() {
+                this.qr_lib();
+                const data = this.uri();
+                if (!data)
+                    return null;
+                const qr = qrcode(0, this.error_correction());
+                qr.addData(data);
+                qr.make();
+                const count = qr.getModuleCount();
+                const matrix = [];
+                for (let r = 0; r < count; r++) {
+                    matrix[r] = [];
+                    for (let c = 0; c < count; c++) {
+                        matrix[r][c] = qr.isDark(r, c);
+                    }
+                }
+                return matrix;
+            }
+            qr_view_box() {
+                const matrix = this.qr_matrix();
+                if (!matrix)
+                    return '0 0 1 1';
+                const total = matrix.length + this.quiet_zone() * 2;
+                return `0 0 ${total} ${total}`;
+            }
+            qr_paths() {
+                const matrix = this.qr_matrix();
+                if (!matrix)
+                    return { modules: '', rings: '', centers: '' };
+                const count = matrix.length;
+                const quiet = this.quiet_zone();
+                const r = this.module_radius();
+                const dark = (row, col) => row >= 0 && row < count && col >= 0 && col < count && matrix[row][col];
+                const isFinder = (row, col) => (row < 7 && col < 7) || (row < 7 && col >= count - 7) || (row >= count - 7 && col < 7);
+                const hasCenter = this.center().length > 0;
+                const centerRadius = hasCenter ? count * 0.15 : 0;
+                const centerMid = count / 2;
+                const isCenter = (row, col) => {
+                    if (!hasCenter)
+                        return false;
+                    const dx = col + 0.5 - centerMid;
+                    const dy = row + 0.5 - centerMid;
+                    return dx * dx + dy * dy < centerRadius * centerRadius;
+                };
+                let modules = '';
+                for (let row = 0; row < count; row++) {
+                    for (let col = 0; col < count; col++) {
+                        if (!matrix[row][col])
+                            continue;
+                        if (isFinder(row, col))
+                            continue;
+                        if (isCenter(row, col))
+                            continue;
+                        const x = col + quiet;
+                        const y = row + quiet;
+                        const top = dark(row - 1, col);
+                        const bottom = dark(row + 1, col);
+                        const left = dark(row, col - 1);
+                        const right = dark(row, col + 1);
+                        const alone = !top && !bottom && !left && !right;
+                        if (alone) {
+                            const cx = x + 0.5;
+                            const cy = y + 0.5;
+                            const cr = 0.5;
+                            modules += `M${cx - cr},${cy}A${cr},${cr},0,1,1,${cx + cr},${cy}A${cr},${cr},0,1,1,${cx - cr},${cy}Z`;
+                        }
+                        else {
+                            const tl = !top && !left ? r : 0;
+                            const tr = !top && !right ? r : 0;
+                            const br = !bottom && !right ? r : 0;
+                            const bl = !bottom && !left ? r : 0;
+                            modules += this.rect_path(x, y, 1, 1, tl, tr, br, bl);
+                        }
+                    }
+                }
+                const fr = this.finder_radius();
+                const finders = [
+                    [quiet, quiet],
+                    [count - 7 + quiet, quiet],
+                    [quiet, count - 7 + quiet],
+                ];
+                let rings = '';
+                let centers = '';
+                for (const [fx, fy] of finders) {
+                    rings += this.rect_path(fx, fy, 7, 7, fr, fr, fr, fr);
+                    rings += this.rect_path(fx + 1, fy + 1, 5, 5, fr * 0.7, fr * 0.7, fr * 0.7, fr * 0.7);
+                    centers += this.rect_path(fx + 2, fy + 2, 3, 3, fr * 0.5, fr * 0.5, fr * 0.5, fr * 0.5);
+                }
+                return { modules, rings, centers };
+            }
+            center_area() {
+                const matrix = this.qr_matrix();
+                if (!matrix || this.center().length === 0)
+                    return { x: 0, y: 0, size: 0 };
+                const count = matrix.length;
+                const quiet = this.quiet_zone();
+                const centerSize = count * 0.3;
+                const total = count + quiet * 2;
+                return {
+                    x: (total - centerSize) / 2,
+                    y: (total - centerSize) / 2,
+                    size: centerSize,
+                };
+            }
+            center_x() {
+                return String(this.center_area().x);
+            }
+            center_y() {
+                return String(this.center_area().y);
+            }
+            center_size() {
+                return String(this.center_area().size);
+            }
+            modules_d() {
+                return this.qr_paths().modules;
+            }
+            rings_d() {
+                return this.qr_paths().rings;
+            }
+            centers_d() {
+                return this.qr_paths().centers;
+            }
+            rect_path(x, y, w, h, tl, tr, br, bl) {
+                return [
+                    `M${x + tl},${y}`,
+                    `H${x + w - tr}`,
+                    tr ? `A${tr},${tr},0,0,1,${x + w},${y + tr}` : '',
+                    `V${y + h - br}`,
+                    br ? `A${br},${br},0,0,1,${x + w - br},${y + h}` : '',
+                    `H${x + bl}`,
+                    bl ? `A${bl},${bl},0,0,1,${x},${y + h - bl}` : '',
+                    `V${y + tl}`,
+                    tl ? `A${tl},${tl},0,0,1,${x + tl},${y}` : '',
+                    'Z',
+                ]
+                    .filter(Boolean)
+                    .join('');
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "gradient_id", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "gradient_fill", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_x1", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_y1", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_x2", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_y2", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "gradient_stop_list", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_lib", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_matrix", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_view_box", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_paths", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "center_area", null);
+        $$.$bog_qr = $bog_qr;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_qr, {
+            width: '300px',
+            height: '300px',
+            Center_body: {
+                width: '80%',
+                height: '80%',
+                position: 'absolute',
+                top: '10%',
+                left: '10%',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$bog_max_app) = class $bog_max_app extends ($.$mol_book2) {
 		platform(){
 			return "web";
@@ -21538,8 +21745,44 @@ var $;
 		account_count(){
 			return "";
 		}
+		account_role(){
+			return "";
+		}
 		account_code(){
 			return "";
+		}
+		house_allowed(){
+			return (this.House_form().submit_allowed());
+		}
+		house_address_bids(){
+			return [];
+		}
+		house_address_new(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		House_address(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_House_address_hint")));
+			(obj.value) = (next) => ((this.house_address_new(next)));
+			return obj;
+		}
+		House_address_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_House_address_field_name")));
+			(obj.bids) = () => ((this.house_address_bids()));
+			(obj.control) = () => ((this.House_address()));
+			return obj;
+		}
+		house_add(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		House_submit(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_House_submit_title")));
+			(obj.click) = (next) => ((this.house_add(next)));
+			return obj;
 		}
 		status_options(){
 			return [];
@@ -21566,38 +21809,19 @@ var $;
 		admin_rows(){
 			return [(this.Admin_row(id))];
 		}
-		house_address(){
+		my_houses(){
+			return [];
+		}
+		qr_house(next){
+			if(next !== undefined) return next;
 			return "";
 		}
-		Qr_address(id){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.house_address(id)));
-			return obj;
-		}
-		qr_uri(id){
+		qr_uri(){
 			return "";
 		}
-		Qr(id){
-			const obj = new this.$.$bog_qr();
-			(obj.uri) = () => ((this.qr_uri(id)));
-			return obj;
-		}
-		Qr_link(id){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.qr_uri(id)));
-			return obj;
-		}
-		Qr_card(id){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
-				(this.Qr_address(id)), 
-				(this.Qr(id)), 
-				(this.Qr_link(id))
-			]);
-			return obj;
-		}
-		qr_rows(){
-			return [(this.Qr_card(id))];
+		qr_print(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		staff_link(){
 			return "";
@@ -21610,6 +21834,29 @@ var $;
 			const obj = new this.$.$mol_string();
 			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Staff_code_hint")));
 			(obj.value) = (next) => ((this.staff_code(next)));
+			return obj;
+		}
+		staff_role(next){
+			if(next !== undefined) return next;
+			return "dispatcher";
+		}
+		Staff_role(){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => (["dispatcher", "admin"]);
+			(obj.dictionary) = () => ({"dispatcher": (this.$.$mol_locale.text("$bog_max_app_Staff_role_dictionary_dispatcher")), "admin": (this.$.$mol_locale.text("$bog_max_app_Staff_role_dictionary_admin"))});
+			(obj.value) = (next) => ((this.staff_role(next)));
+			return obj;
+		}
+		staff_houses(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		Staff_houses(){
+			const obj = new this.$.$mol_select_list();
+			(obj.options) = () => ((this.house_options()));
+			(obj.dictionary) = () => ((this.house_dictionary()));
+			(obj.value) = (next) => ((this.staff_houses(next)));
+			(obj.pick_hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Staff_houses_pick_hint")));
 			return obj;
 		}
 		staff_add(next){
@@ -21684,7 +21931,7 @@ var $;
 		}
 		Post_house(){
 			const obj = new this.$.$mol_select();
-			(obj.options) = () => ((this.house_options()));
+			(obj.options) = () => ((this.my_houses()));
 			(obj.dictionary) = () => ((this.house_dictionary()));
 			(obj.value) = (next) => ((this.post_house(next)));
 			return obj;
@@ -21718,6 +21965,9 @@ var $;
 		}
 		new_body(){
 			return [];
+		}
+		house_address(){
+			return "";
 		}
 		submit_allowed(){
 			return (this.Form().submit_allowed());
@@ -21771,6 +22021,7 @@ var $;
 		Category_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Category_field_name")));
+			(obj.attr) = () => ({...(this.$.$mol_form_field.prototype.attr.call(obj)), "bog_max_required": "true"});
 			(obj.bids) = () => ((this.category_bids()));
 			(obj.control) = () => ((this.Category()));
 			return obj;
@@ -21810,6 +22061,7 @@ var $;
 		Place_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Place_field_name")));
+			(obj.attr) = () => ({...(this.$.$mol_form_field.prototype.attr.call(obj)), "bog_max_required": "true"});
 			(obj.bids) = () => ((this.place_bids()));
 			(obj.control) = () => ((this.Place()));
 			return obj;
@@ -21869,7 +22121,6 @@ var $;
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Submit_title")));
 			(obj.click) = (next) => ((this.submit(next)));
-			(obj.enabled) = () => ((this.submit_allowed()));
 			return obj;
 		}
 		photo_preview(){
@@ -22083,6 +22334,12 @@ var $;
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_note_title")));
 			return obj;
 		}
+		Account_role(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_role_title")));
+			(obj.content) = () => ([(this.account_role())]);
+			return obj;
+		}
 		Account_code(){
 			const obj = new this.$.$mol_labeler();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_code_title")));
@@ -22097,6 +22354,12 @@ var $;
 		Admin_title(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Admin_title_title")));
+			return obj;
+		}
+		House_form(){
+			const obj = new this.$.$mol_form();
+			(obj.form_fields) = () => ([(this.House_address_field())]);
+			(obj.buttons) = () => ([(this.House_submit())]);
 			return obj;
 		}
 		Admin_empty(){
@@ -22114,9 +22377,27 @@ var $;
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Qr_title_title")));
 			return obj;
 		}
-		Qrs(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.qr_rows()));
+		Qr_house(){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => ((this.my_houses()));
+			(obj.dictionary) = () => ((this.house_dictionary()));
+			(obj.value) = (next) => ((this.qr_house(next)));
+			return obj;
+		}
+		Qr(){
+			const obj = new this.$.$bog_qr();
+			(obj.uri) = () => ((this.qr_uri()));
+			return obj;
+		}
+		Qr_link(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.qr_uri()));
+			return obj;
+		}
+		Qr_print(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Qr_print_title")));
+			(obj.click) = (next) => ((this.qr_print(next)));
 			return obj;
 		}
 		Staff_title(){
@@ -22136,7 +22417,12 @@ var $;
 		}
 		Staff_form(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Staff_code()), (this.Staff_add())]);
+			(obj.sub) = () => ([
+				(this.Staff_code()), 
+				(this.Staff_role()), 
+				(this.Staff_houses()), 
+				(this.Staff_add())
+			]);
 			return obj;
 		}
 		Post_form(){
@@ -22291,15 +22577,22 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Post"));
 	($mol_mem(($.$bog_max_app.prototype), "house"));
 	($mol_mem(($.$bog_max_app.prototype), "House"));
+	($mol_mem(($.$bog_max_app.prototype), "house_address_new"));
+	($mol_mem(($.$bog_max_app.prototype), "House_address"));
+	($mol_mem(($.$bog_max_app.prototype), "House_address_field"));
+	($mol_mem(($.$bog_max_app.prototype), "house_add"));
+	($mol_mem(($.$bog_max_app.prototype), "House_submit"));
 	($mol_mem_key(($.$bog_max_app.prototype), "admin_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_row"));
-	($mol_mem_key(($.$bog_max_app.prototype), "Qr_address"));
-	($mol_mem_key(($.$bog_max_app.prototype), "Qr"));
-	($mol_mem_key(($.$bog_max_app.prototype), "Qr_link"));
-	($mol_mem_key(($.$bog_max_app.prototype), "Qr_card"));
+	($mol_mem(($.$bog_max_app.prototype), "qr_house"));
+	($mol_mem(($.$bog_max_app.prototype), "qr_print"));
 	($mol_mem(($.$bog_max_app.prototype), "staff_code"));
 	($mol_mem(($.$bog_max_app.prototype), "Staff_code"));
+	($mol_mem(($.$bog_max_app.prototype), "staff_role"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_role"));
+	($mol_mem(($.$bog_max_app.prototype), "staff_houses"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_houses"));
 	($mol_mem(($.$bog_max_app.prototype), "staff_add"));
 	($mol_mem(($.$bog_max_app.prototype), "Staff_add"));
 	($mol_mem(($.$bog_max_app.prototype), "post_title"));
@@ -22365,13 +22658,18 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Account_house"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_count"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_note"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_role"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_code"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_code_note"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_title"));
+	($mol_mem(($.$bog_max_app.prototype), "House_form"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_empty"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_rows"));
 	($mol_mem(($.$bog_max_app.prototype), "Qr_title"));
-	($mol_mem(($.$bog_max_app.prototype), "Qrs"));
+	($mol_mem(($.$bog_max_app.prototype), "Qr_house"));
+	($mol_mem(($.$bog_max_app.prototype), "Qr"));
+	($mol_mem(($.$bog_max_app.prototype), "Qr_link"));
+	($mol_mem(($.$bog_max_app.prototype), "Qr_print"));
 	($mol_mem(($.$bog_max_app.prototype), "Staff_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Staff_invite"));
 	($mol_mem(($.$bog_max_app.prototype), "Staff_qr"));
@@ -22757,6 +23055,7 @@ var $;
         Bindings: $giper_baza_dict_to($giper_baza_atom_text),
         Notified: $giper_baza_dict_to($giper_baza_atom_text),
         Staff: $giper_baza_dict_to($giper_baza_atom_text),
+        Duty: $giper_baza_dict_to($giper_baza_atom_text),
     }) {
         tickets() {
             return this.Tickets()?.remote_list() ?? [];
@@ -22770,36 +23069,53 @@ var $;
         house_by_code(code) {
             return this.Houses()?.remote_list().find(house => house.Code()?.val() === code) ?? null;
         }
-        staff_by(root) {
+        staff_roles(root) {
+            const roles = new Map([[root, 'admin']]);
             const staff = this.Staff();
             if (!staff)
-                return [root];
-            const trusted = new Set([root]);
-            const authors = new Map();
+                return roles;
+            const entries = [];
             for (const key of staff.keys()) {
                 const atom = staff.key(key);
                 if (!atom)
                     continue;
-                const by = [];
                 for (const unit of atom.units_of(null)) {
-                    if (atom.land().sand_decode(unit))
-                        by.push(unit.lord().str);
+                    const role = String(atom.land().sand_decode(unit) ?? '');
+                    if (role)
+                        entries.push({ lord: String(key), role, by: unit.lord().str });
                 }
-                authors.set(String(key), by);
             }
             let grown = true;
             while (grown) {
                 grown = false;
-                for (const [lord, by] of authors) {
-                    if (trusted.has(lord))
+                for (const { lord, role, by } of entries) {
+                    if (roles.has(lord))
                         continue;
-                    if (!by.some(author => trusted.has(author)))
+                    if (roles.get(by) !== 'admin')
                         continue;
-                    trusted.add(lord);
+                    roles.set(lord, role);
                     grown = true;
                 }
             }
-            return [...trusted];
+            return roles;
+        }
+        staff_by(root) {
+            return [...this.staff_roles(root).keys()];
+        }
+        duty_by(root, lord) {
+            const roles = this.staff_roles(root);
+            const all = this.Houses()?.remote_list().map(house => house.link().str) ?? [];
+            if (roles.get(lord) === 'admin')
+                return all;
+            const atom = this.Duty()?.key(lord);
+            if (!atom)
+                return [];
+            for (const unit of atom.units_of(null)) {
+                if (roles.get(unit.lord().str) !== 'admin')
+                    continue;
+                return String(atom.land().sand_decode(unit) ?? '').split(',').filter(link => all.includes(link));
+            }
+            return [];
         }
     }
     $.$bog_max_uk = $bog_max_uk;
@@ -22939,15 +23255,27 @@ var $;
             lords() {
                 return this.session().lords ?? [this.session().lord];
             }
-            staff() {
+            role() {
                 try {
-                    return this.session().role === 'staff';
+                    return this.session().role;
                 }
                 catch (error) {
                     if ($mol_promise_like(error))
                         $mol_fail_hidden(error);
-                    return false;
+                    return 'resident';
                 }
+            }
+            staff() {
+                return this.role() !== 'resident';
+            }
+            admin() {
+                return this.role() === 'admin';
+            }
+            my_houses() {
+                if (this.admin())
+                    return this.house_options();
+                const duty = this.session().duty ?? [];
+                return this.house_options().filter(link => duty.includes(link));
             }
             user_id() {
                 return String(this.session().user.id);
@@ -22991,6 +23319,7 @@ var $;
                         this.Account_house(),
                         this.Account_count(),
                         this.Account_note(),
+                        this.Account_role(),
                         this.Account_code(),
                         this.Account_code_note(),
                     ];
@@ -22998,11 +23327,17 @@ var $;
                         this.Admin_title(),
                         this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
                         this.Qr_title(),
-                        this.Qrs(),
-                        this.Staff_title(),
-                        ...this.staff_link() ? [this.Staff_invite(), this.Staff_qr()] : [],
-                        this.Staff_form(),
+                        this.Qr_house(),
+                        this.Qr(),
+                        this.Qr_link(),
+                        this.Qr_print(),
                         this.Post_form(),
+                        ...this.admin() ? [
+                            this.House_form(),
+                            this.Staff_title(),
+                            ...this.staff_link() ? [this.Staff_invite(), this.Staff_qr()] : [],
+                            this.Staff_form(),
+                        ] : [],
                     ] : [this.Fail()];
                 }
                 return [
@@ -23106,6 +23441,13 @@ var $;
             account_id() {
                 return String(this.session().user.id);
             }
+            account_role() {
+                switch (this.role()) {
+                    case 'admin': return 'Админ УК: заводит дома и сотрудников';
+                    case 'dispatcher': return `Диспетчер, домов: ${this.my_houses().length}`;
+                }
+                return 'Житель';
+            }
             account_code() {
                 return this.$.$giper_baza_auth.current().pass().lord().str;
             }
@@ -23116,8 +23458,39 @@ var $;
                 const code = this.staff_code().trim();
                 if (!code)
                     return;
-                this.uk().Staff('auto').key(code, 'auto').val('dispatcher');
+                this.uk().Staff('auto').key(code, 'auto').val(this.staff_role());
+                this.uk().Duty('auto').key(code, 'auto').val(this.staff_houses().join(','));
                 this.staff_code('');
+                this.staff_houses([]);
+            }
+            house_address_bids() {
+                return this.house_address_new().trim() ? [] : ['Нужен адрес'];
+            }
+            slug(text) {
+                const map = {
+                    а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z', и: 'i', й: 'y', к: 'k', л: 'l', м: 'm',
+                    н: 'n', о: 'o', п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'c', ч: 'ch', ш: 'sh', щ: 'sch',
+                    ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya',
+                };
+                return text.toLowerCase()
+                    .replace(/ул\.|улица|пр\.|проспект|д\.|дом|к\.|корпус|стр\./g, ' ')
+                    .split('').map(char => map[char] ?? char).join('')
+                    .replace(/[^a-z0-9]+/g, '')
+                    .slice(0, 24);
+            }
+            house_add() {
+                const address = this.house_address_new().trim();
+                if (!address)
+                    return;
+                const uk = this.uk();
+                const taken = new Set(uk.Houses()?.remote_list().map(house => house.Code()?.val() ?? '') ?? []);
+                let code = this.slug(address) || 'house';
+                while (taken.has(code))
+                    code += Math.floor(Math.random() * 10);
+                const house = uk.Houses('auto').make(null);
+                house.Address('auto').val(address);
+                house.Code('auto').val(code);
+                this.house_address_new('');
             }
             account_count() {
                 return String(this.mine().length);
@@ -23169,11 +23542,20 @@ var $;
                     ...Object.fromEntries(this.categories().map(category => [category.link().str, category.Title()?.val() ?? ''])),
                 };
             }
+            tried(next = false) {
+                return next;
+            }
+            category_valid() {
+                return this.category_options().includes(this.category());
+            }
+            place_valid() {
+                return Boolean(this.place().trim());
+            }
             category_bids() {
-                return this.category_options().includes(this.category()) ? [] : ['Выберите категорию'];
+                return !this.tried() || this.category_valid() ? [] : ['Выберите категорию'];
             }
             place_bids() {
-                return this.place().trim() ? [] : ['Укажите, где именно'];
+                return !this.tried() || this.place_valid() ? [] : ['Укажите, где именно'];
             }
             photo_pick_label() {
                 const file = this.photo_files()[0];
@@ -23225,8 +23607,10 @@ var $;
                 ];
             }
             submit() {
-                if (!this.submit_allowed())
+                if (!this.category_valid() || !this.place_valid()) {
+                    this.tried(true);
                     return;
+                }
                 const uk = this.uk();
                 const house = this.house_of(this.house());
                 const category = this.category_of(this.category());
@@ -23251,6 +23635,7 @@ var $;
                 this.entrance('');
                 this.category('');
                 this.photo_files([]);
+                this.tried(false);
                 this.$.$mol_state_arg.dict({ ...this.$.$mol_state_arg.dict(), screen: null, ticket: ticket.link().str });
             }
             ticket_link() {
@@ -23348,7 +23733,11 @@ var $;
                 return `${new $mol_time_moment(time).toString('DD.MM hh:mm')}: ${label}`;
             }
             all() {
-                return this.uk().tickets().map(ticket => ticket.link().str).reverse();
+                const houses = this.my_houses();
+                return this.uk().tickets()
+                    .filter(ticket => houses.includes(ticket.House()?.val()?.str ?? ''))
+                    .map(ticket => ticket.link().str)
+                    .reverse();
             }
             admin_rows() {
                 return this.all().map(link => this.Admin_row(link));
@@ -23368,22 +23757,41 @@ var $;
                 }
                 return this.status_of(link);
             }
-            qr_rows() {
-                return this.house_options().map(link => this.Qr_card(link));
+            qr_house(next) {
+                const houses = this.my_houses();
+                if (next !== undefined && houses.includes(next))
+                    return next;
+                return houses.includes(this.house()) ? this.house() : houses[0] ?? '';
             }
-            qr_uri(link) {
-                const code = this.house_of(link).Code()?.val() ?? '';
+            qr_uri() {
+                const code = this.house_of(this.qr_house()).Code()?.val() ?? '';
                 const bot = this.session().bot;
                 if (bot)
                     return `https://max.ru/${bot}?start=house_${code}`;
                 const location = this.$.$mol_dom_context.location;
                 return `${location.origin}${location.pathname}#!house=${code}`;
             }
+            qr_print() {
+                const svg = this.Qr().dom_node().outerHTML;
+                const address = this.house_address(this.qr_house());
+                const win = this.$.$mol_dom_context.open('', '_blank');
+                if (!win)
+                    return;
+                win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${address}</title>
+				<style>body{font-family:system-ui;text-align:center;padding:2rem} svg{width:60vmin;height:60vmin} h1{font-size:1.5rem} p{color:#555}</style></head>
+				<body><h1>${address}</h1><p>Наведите камеру, чтобы сообщить о проблеме в доме</p>${svg}<p>${this.qr_uri()}</p></body></html>`);
+                win.document.close();
+                win.focus();
+                win.print();
+            }
             post_title_bids() {
                 return this.post_title().trim() ? [] : ['Нужен заголовок'];
             }
             post_house(next) {
-                return next ?? this.house();
+                const houses = this.my_houses();
+                if (next !== undefined && houses.includes(next))
+                    return next;
+                return houses.includes(this.house()) ? this.house() : houses[0] ?? '';
             }
             post_add() {
                 if (!this.post_allowed())
@@ -23412,6 +23820,9 @@ var $;
         ], $bog_max_app.prototype, "waiting", null);
         __decorate([
             $mol_mem
+        ], $bog_max_app.prototype, "my_houses", null);
+        __decorate([
+            $mol_mem
         ], $bog_max_app.prototype, "section", null);
         __decorate([
             $mol_mem
@@ -23433,6 +23844,12 @@ var $;
         ], $bog_max_app.prototype, "staff_add", null);
         __decorate([
             $mol_mem
+        ], $bog_max_app.prototype, "house_address_bids", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "house_add", null);
+        __decorate([
+            $mol_mem
         ], $bog_max_app.prototype, "house_options", null);
         __decorate([
             $mol_mem
@@ -23449,6 +23866,9 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "category_dictionary", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "tried", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "category_bids", null);
@@ -23482,6 +23902,12 @@ var $;
         __decorate([
             $mol_mem_key
         ], $bog_max_app.prototype, "admin_status", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "qr_house", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "qr_print", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "post_title_bids", null);
@@ -23616,20 +24042,28 @@ var $;
             padding: $mol_gap.block,
             color: $mol_theme.shade,
         },
-        Qr_card: {
-            flex: { direction: 'column' },
-            align: { items: 'center' },
-            gap: $mol_gap.space,
-            padding: $mol_gap.block,
+        Qr_house: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
         },
         Qr: {
             width: '12rem',
             height: '12rem',
+            margin: { left: $mol_gap.block },
         },
         Qr_link: {
             color: $mol_theme.shade,
             font: { size: '0.75rem' },
             wordBreak: 'break-all',
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Qr_print: {
+            margin: $mol_gap.block,
+        },
+        House_form: {
+            padding: $mol_gap.block,
+        },
+        Account_role: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
         },
         Staff_title: {
             padding: $mol_gap.block,
@@ -23644,6 +24078,9 @@ var $;
             width: '10rem',
             height: '10rem',
             margin: { left: $mol_gap.block },
+        },
+        Staff_houses: {
+            flex: { wrap: 'wrap' },
         },
         Staff_form: {
             flex: { direction: 'column' },
@@ -23727,7 +24164,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major][disabled] {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n\n@media (max-width: 720px) {\n\t[bog_max_app] > [mol_page] {\n\t\tmin-width: 100%;\n\t}\n}\n\n[bog_max_app] > *::before,\n[bog_max_app] > *::after {\n\tdisplay: none;\n}\n\n[bog_max_app] [mol_form_field] [mol_select] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[bog_max_app] [mol_form_foot] {\n\tpadding: var(--spacing-size-xl) 0;\n}\n\n[bog_max_app] [mol_form_foot] [mol_button_major] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app_search],\n[bog_max_app_search] [mol_pop_anchor],\n[bog_max_app_search] [mol_search_query] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app] [mol_labeler_content] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app_search] {\n\talign-self: stretch;\n}\n\n[bog_max_app] [mol_form_field_bid] {\n\tcolor: var(--text-negative);\n\tfont-size: var(--font-size-description);\n\ttext-shadow: none;\n}\n\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_string],\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_select_trigger] {\n\tbox-shadow: inset 0 0 0 1px var(--text-negative);\n}\n\n@media (min-width: 721px) {\n\t[bog_max_app] [mol_page_body_content],\n\t[bog_max_app] [mol_page_head] {\n\t\tpadding-inline: max(var(--spacing-size-xl), calc((100% - 40rem) / 2));\n\t}\n}\n");
+    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--background-secondary);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major][disabled] {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--background-secondary);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n\n@media (max-width: 720px) {\n\t[bog_max_app] > [mol_page] {\n\t\tmin-width: 100%;\n\t}\n}\n\n[bog_max_app] > *::before,\n[bog_max_app] > *::after {\n\tdisplay: none;\n}\n\n[bog_max_app] [mol_form_field] [mol_select] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[bog_max_app] [mol_form_foot] {\n\tpadding: var(--spacing-size-xl) 0;\n}\n\n[bog_max_app] [mol_form_foot] [mol_button_major] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app_search],\n[bog_max_app_search] [mol_pop_anchor],\n[bog_max_app_search] [mol_search_query] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app] [mol_labeler_content] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app_search] {\n\talign-self: stretch;\n}\n\n[bog_max_app] [mol_form_field_bid] {\n\tcolor: var(--text-negative);\n\tfont-size: var(--font-size-description);\n\ttext-shadow: none;\n}\n\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_string],\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_select_trigger] {\n\tbox-shadow: inset 0 0 0 1px var(--text-negative);\n}\n\n@media (min-width: 721px) {\n\t[bog_max_app] [mol_page_body_content],\n\t[bog_max_app] [mol_page_head] {\n\t\tpadding-inline: max(var(--spacing-size-xl), calc((100% - 40rem) / 2));\n\t}\n}\n\n[bog_max_app] [mol_form_field][bog_max_required=\"true\"] [mol_form_field_bid]::before {\n\tcontent: '* ';\n\tcolor: var(--text-negative);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -30694,17 +31131,24 @@ var $;
             $mol_assert_equal(app.waiting(), false);
             $mol_assert_equal(app.main_body(), [app.Fail()]);
         },
-        'empty category and place get bids'($) {
+        'bids appear only after a submit attempt'($) {
+            const quiet = $$.$bog_max_app.make({ $ });
+            quiet.category_options = () => ['category'];
+            quiet.category = () => '';
+            quiet.place = () => '  ';
+            $mol_assert_equal(quiet.category_bids(), []);
             const app = $$.$bog_max_app.make({ $ });
             app.category_options = () => ['category'];
             app.category = () => '';
             app.place = () => '  ';
+            app.tried(true);
             $mol_assert_equal(app.category_bids(), ['Выберите категорию']);
             $mol_assert_equal(app.place_bids(), ['Укажите, где именно']);
             const ready = $$.$bog_max_app.make({ $ });
             ready.category_options = () => ['category'];
             ready.category = () => 'category';
             ready.place = () => 'подъезд 2';
+            ready.tried(true);
             $mol_assert_equal(ready.category_bids(), []);
             $mol_assert_equal(ready.place_bids(), []);
         },
@@ -30728,7 +31172,7 @@ var $;
             const app = $$.$bog_max_app.make({ $ });
             app.waiting = () => false;
             app.fail = () => '';
-            app.staff = () => false;
+            app.role = () => 'resident';
             app.section = () => 'admin';
             $mol_assert_equal(app.main_body(), [app.Fail()]);
         },
@@ -30736,6 +31180,11 @@ var $;
             const app = $$.$bog_max_app.make({ $ });
             app.session = () => $mol_fail(new Error('Failed to fetch'));
             $mol_assert_ok(app.fail().includes('MAX'));
+        },
+        'house code is a latin slug'($) {
+            const app = $$.$bog_max_app.make({ $ });
+            $mol_assert_equal(app.slug('ул. Пушкина, д. 10'), 'pushkina10');
+            $mol_assert_equal(app.slug('пр. Победы, д. 5, к. 2'), 'pobedy52');
         },
         'ticket page opens by arg'($) {
             const app = $$.$bog_max_app.make({ $ });

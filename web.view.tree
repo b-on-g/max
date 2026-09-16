@@ -538,68 +538,6 @@ $bog_max_nav $mol_view
 $mol_button_major $mol_button_minor
 	theme \$mol_theme_base
 
-$bog_qr $mol_svg_root
-	uri \
-	module_radius 0.35
-	finder_radius 1.2
-	gradient_angle 45
-	error_correction \M
-	quiet_zone 2
-	center /
-	gradient_id \qr-grad
-	gradient_fill \url(#qr-grad)
-	gradient_stops /
-		\var(--mol_theme_special)
-		\var(--mol_theme_focus)
-	Stop* $mol_svg
-		dom_name \stop
-		attr *
-			^
-			offset <= stop_offset* \0%
-			stop-color <= stop_color* \
-	view_box <= qr_view_box \0 0 1 1
-	sub /
-		<= Defs $mol_svg
-			dom_name \defs
-			sub /
-				<= Gradient $mol_svg
-					dom_name \linearGradient
-					attr *
-						^
-						id <= gradient_id
-						x1 <= grad_x1 \0
-						y1 <= grad_y1 \0
-						x2 <= grad_x2 \1
-						y2 <= grad_y2 \1
-					sub <= gradient_stop_list /
-		<= Modules $mol_svg_path
-			geometry <= modules_d \
-			attr *
-				^
-				fill <= gradient_fill
-		<= Rings $mol_svg_path
-			geometry <= rings_d \
-			attr *
-				^
-				fill <= gradient_fill
-				fill-rule \evenodd
-		<= Centers $mol_svg_path
-			geometry <= centers_d \
-			attr *
-				^
-				fill <= gradient_fill
-		<= Center_wrap $mol_svg
-			dom_name \foreignObject
-			attr *
-				^
-				x <= center_x \0
-				y <= center_y \0
-				width <= center_size \0
-				height <= center_size
-			sub /
-				<= Center_body $mol_view
-					sub <= center
-
 $mol_labeler $mol_list
 	rows /
 		<= Label $mol_view
@@ -620,6 +558,30 @@ $mol_form_field $mol_labeler
 		<= Bid $mol_view
 			sub / <= bid \
 	content / <= control null
+
+$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+
+$mol_select_list $mol_view
+	value? /string
+	dictionary *
+	badges_list <= Badges /$mol_view
+	Badge* $mol_button_minor
+		title <= badge_title* \badge
+		click? <=> remove*? null
+		hint <= badge_hint @ \Drop
+		enabled <= drop_enabled <= enabled true
+	sub /$mol_view
+		<= Pick $mol_select
+			event_select*? <=> event_select*? null
+			align_hor <= align_hor \right
+			options <= options_pickable <= options /string
+			value? <=> pick? \
+			option_label* <= option_title* \
+			trigger_enabled <= pick_enabled <= enabled true
+			hint <= pick_hint @ \Add..
+			filter_pattern? => filter_pattern?
+			Trigger_icon <= Pick_icon $mol_icon_plus
+		^ badges_list
 
 $mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
 
@@ -715,6 +677,68 @@ $mol_form $mol_list
 					click? <=> submit? null
 				<= Result $mol_status
 					message <= result? null
+
+$bog_qr $mol_svg_root
+	uri \
+	module_radius 0.35
+	finder_radius 1.2
+	gradient_angle 45
+	error_correction \M
+	quiet_zone 2
+	center /
+	gradient_id \qr-grad
+	gradient_fill \url(#qr-grad)
+	gradient_stops /
+		\var(--mol_theme_special)
+		\var(--mol_theme_focus)
+	Stop* $mol_svg
+		dom_name \stop
+		attr *
+			^
+			offset <= stop_offset* \0%
+			stop-color <= stop_color* \
+	view_box <= qr_view_box \0 0 1 1
+	sub /
+		<= Defs $mol_svg
+			dom_name \defs
+			sub /
+				<= Gradient $mol_svg
+					dom_name \linearGradient
+					attr *
+						^
+						id <= gradient_id
+						x1 <= grad_x1 \0
+						y1 <= grad_y1 \0
+						x2 <= grad_x2 \1
+						y2 <= grad_y2 \1
+					sub <= gradient_stop_list /
+		<= Modules $mol_svg_path
+			geometry <= modules_d \
+			attr *
+				^
+				fill <= gradient_fill
+		<= Rings $mol_svg_path
+			geometry <= rings_d \
+			attr *
+				^
+				fill <= gradient_fill
+				fill-rule \evenodd
+		<= Centers $mol_svg_path
+			geometry <= centers_d \
+			attr *
+				^
+				fill <= gradient_fill
+		<= Center_wrap $mol_svg
+			dom_name \foreignObject
+			attr *
+				^
+				x <= center_x \0
+				y <= center_y \0
+				width <= center_size \0
+				height <= center_size
+			sub /
+				<= Center_body $mol_view
+					sub <= center
 
 $mol_book2_catalog $mol_book2
 	param \
@@ -1201,8 +1225,6 @@ $mol_check_expand $mol_check
 		paddingLeft <= level_style \0px
 	checked? <=> expanded? false
 	enabled <= expandable false
-
-$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 
 $mol_drag $mol_ghost
 	event *
@@ -2502,6 +2524,9 @@ $bog_max_app $mol_book2
 		content / <= account_count \
 	Account_note $mol_paragraph
 		title @ \Дом подставляется в новые заявки. Ссылка или QR-код с кодом дома выбирает его сам.
+	Account_role $mol_labeler
+		title @ \Роль
+		content / <= account_role \
 	Account_code $mol_labeler
 		title @ \Код сотрудника
 		content / <= account_code \
@@ -2509,6 +2534,19 @@ $bog_max_app $mol_book2
 		title @ \Сообщите код диспетчеру УК, и он откроет вам раздел диспетчера.
 	Admin_title $mol_paragraph
 		title @ \Все заявки. Статус меняется здесь или через API организации.
+	House_form $mol_form
+		submit_allowed => house_allowed
+		form_fields /
+			<= House_address_field $mol_form_field
+				name @ \Новый дом
+				bids <= house_address_bids /string
+				control <= House_address $mol_string
+					hint @ \Адрес: улица, дом, корпус
+					value? <=> house_address_new? \
+		buttons /
+			<= House_submit $mol_button_major
+				title @ \Добавить дом
+				click? <=> house_add? null
 	Admin_empty $mol_paragraph
 		title @ \Заявок пока нет.
 	Admin_rows $mol_list
@@ -2521,19 +2559,20 @@ $bog_max_app $mol_book2
 						dictionary <= status_dictionary *
 						value? <=> admin_status*? \
 	Qr_title $mol_paragraph
-		title @ \QR-коды домов. Наклейте у подъезда: житель откроет бота сразу с этим домом.
-	Qrs $mol_list
-		rows <= qr_rows /
-			<= Qr_card* $mol_view
-				sub /
-					<= Qr_address* $mol_paragraph
-						title <= house_address* \
-					<= Qr* $bog_qr
-						uri <= qr_uri* \
-					<= Qr_link* $mol_paragraph
-						title <= qr_uri* \
+		title @ \QR-код дома. Наклейте у подъезда: житель откроет бота сразу с этим домом.
+	Qr_house $mol_select
+		options <= my_houses /string
+		dictionary <= house_dictionary *
+		value? <=> qr_house? \
+	Qr $bog_qr
+		uri <= qr_uri \
+	Qr_link $mol_paragraph
+		title <= qr_uri
+	Qr_print $mol_button_major
+		title @ \Распечатать QR
+		click? <=> qr_print? null
 	Staff_title $mol_paragraph
-		title @ \Коллеги. Пришлите ссылку-приглашение или введите код сотрудника из его профиля.
+		title @ \Сотрудники. Пришлите ссылку-приглашение админа или введите код сотрудника из его профиля и выберите роль.
 	Staff_invite $mol_paragraph
 		title <= staff_link \
 	Staff_qr $bog_qr
@@ -2543,8 +2582,21 @@ $bog_max_app $mol_book2
 			<= Staff_code $mol_string
 				hint @ \Код сотрудника
 				value? <=> staff_code? \
+			<= Staff_role $mol_select
+				options /
+					\dispatcher
+					\admin
+				dictionary *
+					dispatcher @ \Диспетчер
+					admin @ \Админ
+				value? <=> staff_role? \dispatcher
+			<= Staff_houses $mol_select_list
+				options <= house_options /string
+				dictionary <= house_dictionary *
+				value? <=> staff_houses? /string
+				pick_hint @ \Дома диспетчера
 			<= Staff_add $mol_button_major
-				title @ \Сделать диспетчером
+				title @ \Добавить сотрудника
 				click? <=> staff_add? null
 	Post_form $mol_form
 		submit_allowed => post_allowed
@@ -2573,7 +2625,7 @@ $bog_max_app $mol_book2
 			<= Post_house_field $mol_form_field
 				name @ \Дом
 				control <= Post_house $mol_select
-					options <= house_options /string
+					options <= my_houses /string
 					dictionary <= house_dictionary *
 					value? <=> post_house? \
 		buttons /
@@ -2605,6 +2657,9 @@ $bog_max_app $mol_book2
 					value? <=> scope? \house
 			<= Category_field $mol_form_field
 				name @ \Что случилось
+				attr *
+					^
+					bog_max_required \true
 				bids <= category_bids /string
 				control <= Category $mol_select
 					options <= category_options /string
@@ -2617,6 +2672,9 @@ $bog_max_app $mol_book2
 					value? <=> entrance? \
 			<= Place_field $mol_form_field
 				name @ \Где
+				attr *
+					^
+					bog_max_required \true
 				bids <= place_bids /string
 				control <= Place $mol_string
 					hint <= place_hint \
@@ -2641,7 +2699,6 @@ $bog_max_app $mol_book2
 			<= Submit $mol_button_major
 				title @ \Отправить заявку
 				click? <=> submit? null
-				enabled <= submit_allowed
 	Photo_preview $mol_image
 		uri <= photo_preview \
 	Similar_title $mol_paragraph
