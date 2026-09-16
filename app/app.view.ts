@@ -398,6 +398,25 @@ namespace $.$$ {
 			return this.similar().map( link => this.Row( link ) )
 		}
 
+		new_fields() {
+			return [
+				this.Scope_field(),
+				this.Category_field(),
+				... this.scope() === 'house' ? [ this.Entrance_field() ] : [],
+				this.Place_field(),
+				this.Text_field(),
+				this.Photo_field(),
+			]
+		}
+
+		place_hint() {
+			switch( this.scope() ) {
+				case 'yard': return 'Ориентир во дворе'
+				case 'city': return 'Адрес или ориентир'
+			}
+			return 'Этаж, квартира, ориентир'
+		}
+
 		new_body() {
 			return [
 				this.House_line(),
