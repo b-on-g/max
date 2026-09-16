@@ -147,6 +147,44 @@ namespace $ {
 			color: $mol_theme.shade,
 		},
 
+		Stats_title: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Orgs_title: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Stat: {
+			flex: { direction: 'column' },
+			padding: { left: $mol_gap.block, right: $mol_gap.block, bottom: $mol_gap.space },
+		},
+
+		Stat_house: {
+			font: { weight: 500 },
+		},
+
+		Stat_line: {
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
+		},
+
+		Org: {
+			flex: { direction: 'column' },
+			padding: { left: $mol_gap.block, right: $mol_gap.block, bottom: $mol_gap.space },
+		},
+
+		Org_name: {
+			font: { weight: 500 },
+		},
+
+		Org_state: {
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
+		},
+
 		Qr_house: {
 			padding: { left: $mol_gap.block, right: $mol_gap.block },
 		},

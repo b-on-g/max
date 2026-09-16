@@ -47,6 +47,7 @@ namespace $ {
 				bot: bot.bot_name(),
 				role,
 				duty: uk.duty_by( bot.lord(), pass.lord().str ),
+				integrations: bot.env_list( 'ORG_KEYS' ).map( pair => pair.split( ':' )[0] ),
 				staff_link: staff && secret ? bot.start_link( `staff_${ secret }` ) : '',
 				house: house?.link().str ?? null,
 				user: { id: checked.user.id, name },

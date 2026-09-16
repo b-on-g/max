@@ -13,6 +13,7 @@ namespace $.$$ {
 		bot: string
 		role: 'resident' | 'dispatcher' | 'admin'
 		duty: readonly string[]
+		integrations: readonly string[]
 		staff_link: string
 		house: string | null
 		user: { id: number, name: string }
@@ -191,6 +192,9 @@ namespace $.$$ {
 				case 'admin': return this.staff() ? [
 					this.Admin_title(),
 					this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
+					this.Stats_title(),
+					this.Stats(),
+					... this.admin() ? [ this.Orgs_title(), this.Orgs() ] : [],
 					this.Qr_title(),
 					this.Qr_house(),
 					this.Qr(),
@@ -695,6 +699,47 @@ namespace $.$$ {
 
 		admin_rows() {
 			return this.all().map( link => this.Admin_row( link ) )
+		}
+
+		stats_rows() {
+			return this.my_houses().map( link => this.Stat( link ) )
+		}
+
+		stat_house( link: string ) {
+			return this.house_address( link )
+		}
+
+		stat_line( link: string ) {
+			const lords = this.lords()
+			const now = new $mol_time_moment()
+			let total = 0, open = 0, overdue = 0, done = 0, voices = 0
+			for( const ticket of this.uk().tickets() ) {
+				if( ticket.House()?.val()?.str !== link ) continue
+				++ total
+				voices += ticket.voices()
+				const status = ticket.status_by( lords )
+				if( status === 'done' ) { ++ done; continue }
+				if( status === 'rejected' ) continue
+				++ open
+				const fix = ticket.fix_till()
+				if( fix && fix.valueOf() < now.valueOf() ) ++ overdue
+			}
+			return `всего ${ total }, открытых ${ open }, просрочено ${ overdue }, выполнено ${ done }, голосов соседей ${ voices }`
+		}
+
+		org_rows() {
+			return Object.keys( $bog_max_owner ).map( owner => this.Org( owner ) )
+		}
+
+		org_name( owner: string ) {
+			return $bog_max_owner[ owner as keyof typeof $bog_max_owner ] ?? owner
+		}
+
+		org_state( owner: string ) {
+			const keyed = ( this.session().integrations ?? [] ).includes( owner )
+			const seen = this.uk().org_seen( this.session().lord, owner )
+			const when = seen ? `последний запрос ${ new $mol_time_moment( seen ).toString( 'DD.MM hh:mm' ) }` : 'запросов ещё не было'
+			return keyed ? `ключ API выдан, ${ when }` : 'ключ API не выдан, заявки видны только диспетчеру'
 		}
 
 		status_options() {

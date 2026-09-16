@@ -12,7 +12,9 @@ namespace $ {
 			if( !key ) return ''
 			for( const pair of this.bot().env_list( 'ORG_KEYS' ) ) {
 				const [ owner, secret ] = pair.split( ':' )
-				if( secret === key ) return owner
+				if( secret !== key ) continue
+				this.bot().uk().Orgs( 'auto' )!.key( owner, 'auto' )!.val( new $mol_time_moment().toString() )
+				return owner
 			}
 			return ''
 		}

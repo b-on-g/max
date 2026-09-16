@@ -10,6 +10,7 @@ namespace $ {
 		Notified: $giper_baza_dict_to( $giper_baza_atom_text ),
 		Staff: $giper_baza_dict_to( $giper_baza_atom_text ),
 		Duty: $giper_baza_dict_to( $giper_baza_atom_text ),
+		Orgs: $giper_baza_dict_to( $giper_baza_atom_text ),
 	}) {
 
 		tickets() {
@@ -56,6 +57,16 @@ namespace $ {
 
 		staff_by( root: string ) {
 			return [ ... this.staff_roles( root ).keys() ]
+		}
+
+		org_seen( root: string, owner: string ) {
+			const atom = this.Orgs()?.key( owner )
+			if( !atom ) return ''
+			for( const unit of atom.units_of( null ) ) {
+				if( unit.lord().str !== root ) continue
+				return String( atom.land().sand_decode( unit ) ?? '' )
+			}
+			return ''
 		}
 
 		duty_by( root: string, lord: string ) {

@@ -131,6 +131,26 @@ $bog_max_app $mol_book2
 						options <= status_options /string
 						dictionary <= status_dictionary *
 						value? <=> admin_status*? \
+	Stats_title $mol_paragraph
+		title @ \Статистика по домам
+	Stats $mol_list
+		rows <= stats_rows /
+			<= Stat* $mol_view
+				sub /
+					<= Stat_house* $mol_paragraph
+						title <= stat_house* \
+					<= Stat_line* $mol_paragraph
+						title <= stat_line* \
+	Orgs_title $mol_paragraph
+		title @ \Интеграции организаций
+	Orgs $mol_list
+		rows <= org_rows /
+			<= Org* $mol_view
+				sub /
+					<= Org_name* $mol_paragraph
+						title <= org_name* \
+					<= Org_state* $mol_paragraph
+						title <= org_state* \
 	Qr_title $mol_paragraph
 		title @ \QR-код дома. Наклейте у подъезда: житель откроет бота сразу с этим домом.
 	Qr_house $mol_select
