@@ -359,8 +359,13 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		house_tried( next = false ) {
+			return next
+		}
+
+		@ $mol_mem
 		house_address_bids() {
-			return this.house_address_new().trim() ? [] : [ 'Нужен адрес' ]
+			return !this.house_tried() || this.house_address_new().trim() ? [] : [ 'Нужен адрес' ]
 		}
 
 		slug( text: string ) {
@@ -379,7 +384,10 @@ namespace $.$$ {
 		@ $mol_action
 		house_add() {
 			const address = this.house_address_new().trim()
-			if( !address ) return
+			if( !address ) {
+				this.house_tried( true )
+				return
+			}
 			const uk = this.uk()
 			const taken = new Set( uk.Houses()?.remote_list().map( house => house.Code()?.val() ?? '' ) ?? [] )
 			let code = this.slug( address ) || 'house'
@@ -388,6 +396,7 @@ namespace $.$$ {
 			house.Address( 'auto' )!.val( address )
 			house.Code( 'auto' )!.val( code )
 			this.house_address_new( '' )
+			this.house_tried( false )
 		}
 
 		account_count() {
@@ -791,8 +800,13 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		post_tried( next = false ) {
+			return next
+		}
+
+		@ $mol_mem
 		post_title_bids() {
-			return this.post_title().trim() ? [] : [ 'Нужен заголовок' ]
+			return !this.post_tried() || this.post_title().trim() ? [] : [ 'Нужен заголовок' ]
 		}
 
 		@ $mol_mem
@@ -804,7 +818,10 @@ namespace $.$$ {
 
 		@ $mol_action
 		post_add() {
-			if( !this.post_allowed() ) return
+			if( !this.post_title().trim() ) {
+				this.post_tried( true )
+				return
+			}
 			const uk = this.uk()
 			const house = this.house_of( this.post_house() )
 			const created = new $mol_time_moment()
@@ -816,6 +833,7 @@ namespace $.$$ {
 			post.Created( 'auto' )!.val( created )
 			this.post_title( '' )
 			this.post_text( '' )
+			this.post_tried( false )
 		}
 
 	}

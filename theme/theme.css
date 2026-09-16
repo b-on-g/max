@@ -68,9 +68,10 @@
 	--mol_theme_luma: 1;
 	--mol_theme_image: none;
 	--mol_theme_spirit: rgb(255 255 255 / 0.75);
+	--field-fill: var(--background-secondary);
 	--mol_theme_back: var(--background-surface);
 	--mol_theme_card: var(--background-card);
-	--mol_theme_field: var(--background-secondary);
+	--mol_theme_field: var(--field-fill);
 	--mol_theme_hover: var(--states-background-hovered-transparent);
 	--mol_theme_text: var(--text-primary);
 	--mol_theme_shade: var(--text-tertiary);
@@ -122,6 +123,7 @@
 	--controls-inactive: rgb(255 255 255 / 0.12);
 	--states-background-hovered-transparent: rgb(255 255 255 / 0.06);
 	--states-background-pressed-transparent: rgb(255 255 255 / 0.1);
+	--field-fill: var(--background-tertiary);
 
 	--mol_theme_luma: -1;
 	--mol_theme_image: invert(1) hue-rotate(180deg);
@@ -186,7 +188,7 @@
 
 [bog_max_app] [mol_string],
 [bog_max_app] [mol_form_field] [mol_select_trigger] {
-	background: var(--background-secondary);
+	background: var(--field-fill);
 	border-radius: var(--size-border-radius-action-large);
 	min-height: 52px;
 	padding: var(--spacing-size2xl) var(--spacing-size-xl);

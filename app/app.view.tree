@@ -225,7 +225,6 @@ $bog_max_app $mol_book2
 			<= Post_submit $mol_button_major
 				title @ \Опубликовать
 				click? <=> post_add? null
-				enabled <= post_allowed
 	New $mol_page
 		title @ \Новая заявка
 		tools /
