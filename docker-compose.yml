@@ -1,0 +1,26 @@
+services:
+
+  bot:
+    build:
+      context: .
+      target: bot
+    env_file: .env
+    ports:
+      - "9090:9090"
+    volumes:
+      - baza:/bot/.baza
+      - state:/root/.local/share/mol_state_local
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      target: app
+    ports:
+      - "8080:80"
+    depends_on:
+      - bot
+
+volumes:
+  baza:
+  state:

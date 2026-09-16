@@ -1,0 +1,34 @@
+$bog_max_app $mol_page
+	title @ \max
+	pages *
+		home <= Home $mol_page
+			title \Home
+			body /
+				<= Welcome $mol_text
+					text \
+						\# max
+						\
+						\Welcome to your new $mol app.
+	nav_options *
+		home \Home
+	Navbar $mol_switch
+		value? <=> screen? \home
+		options <= nav_options
+	tools /
+		<= Sources $mol_link_source
+			uri \https://github.com/b-on-g/max
+		<= Status $giper_baza_status
+		<= Theme_toggle $bog_theme_toggle
+			theme_auto <= Theme
+	head /
+		<= Title
+		<= Navbar
+		<= Tools
+	plugins /
+		<= Theme $bog_theme_auto
+			theme_light \$mol_theme_calm_light
+			theme_dark \$mol_theme_calm_dark
+			themes /
+				\$mol_theme_calm_light
+				\$mol_theme_calm_dark
+	body <= screen_body /
