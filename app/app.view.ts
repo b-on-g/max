@@ -105,13 +105,74 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		home_body() {
+		section() {
+			return this.$.$mol_state_arg.value( 'section' ) ?? 'tickets'
+		}
+
+		main_title() {
+			switch( this.section() ) {
+				case 'house': return 'Заявки дома'
+				case 'account': return 'Профиль'
+			}
+			return 'Мои заявки'
+		}
+
+		@ $mol_mem
+		main_body() {
 			if( this.waiting() ) return [ this.Wait() ]
 			if( this.fail() ) return [ this.Fail() ]
+			switch( this.section() ) {
+				case 'house': return [
+					this.Search(),
+					this.house_rows().length ? this.House_rows() : this.House_empty(),
+				]
+				case 'account': return [
+					this.Account_name(),
+					this.Account_id(),
+					this.Account_house(),
+					this.Account_count(),
+					this.Account_note(),
+				]
+			}
 			return [
+				this.New_link(),
 				this.House_title(),
 				this.mine().length ? this.Rows() : this.Empty(),
 			]
+		}
+
+		@ $mol_mem
+		neighbours() {
+			const house = this.house()
+			return this.uk().tickets()
+				.filter( ticket => ticket.House()?.val()?.str === house )
+				.filter( $mol_match_text( this.query(), ticket => [
+					ticket.category()?.Title()?.val() ?? '',
+					ticket.Place()?.val() ?? '',
+					ticket.Text()?.val() ?? '',
+				] ) )
+				.map( ticket => ticket.link().str )
+				.reverse()
+		}
+
+		house_rows() {
+			return this.neighbours().map( link => this.Row( link ) )
+		}
+
+		account_name() {
+			return this.session().user.name || 'Без имени'
+		}
+
+		account_id() {
+			return String( this.session().user.id )
+		}
+
+		account_count() {
+			return String( this.mine().length )
+		}
+
+		house_address() {
+			return this.house_dictionary()[ this.house() ] ?? ''
 		}
 
 		rows() {
@@ -153,7 +214,7 @@ namespace $.$$ {
 
 		pages() {
 			return [
-				this.Home(),
+				this.Main(),
 				... this.screen() === 'new' ? [ this.New() ] : [],
 				... this.ticket_link() ? [ this.Ticket() ] : [],
 			]

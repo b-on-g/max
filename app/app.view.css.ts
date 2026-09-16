@@ -2,8 +2,35 @@ namespace $ {
 
 	$mol_style_define( $bog_max_app, {
 
-		Home: {
+		Main: {
 			flex: { basis: '24rem' },
+		},
+
+		New_link: {
+			display: 'flex',
+			padding: $mol_gap.block,
+		},
+
+		Search: {
+			padding: $mol_gap.block,
+		},
+
+		Account_note: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
+		},
+
+		Account_name: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		Account_id: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		Account_count: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
 		},
 
 		House_title: {
@@ -14,6 +41,15 @@ namespace $ {
 		Empty: {
 			padding: $mol_gap.block,
 			color: $mol_theme.shade,
+		},
+
+		House_empty: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		House_rows: {
+			gap: $mol_gap.space,
 		},
 
 		Wait: {

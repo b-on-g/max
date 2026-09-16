@@ -1,0 +1,11 @@
+$bog_max_nav_item $mol_link
+	label \
+	active \off
+	Icon $mol_view
+	attr *
+		^
+		bog_max_nav_active <= active
+	sub /
+		<= Icon
+		<= Label $mol_view
+			sub / <= label

@@ -11,23 +11,25 @@ $bog_max_app $mol_book2
 				\$mol_theme_calm_light
 				\$mol_theme_calm_dark
 	pages /
-	Home $mol_page
-		title @ \Мои заявки
+	Main $mol_page
+		title <= main_title \
 		tools /
 			<= Sync $giper_baza_status
-		body <= home_body /
+		body <= main_body /
 		foot /
-			<= New_link $mol_link
-				arg *
-					screen \new
-					ticket null
-				sub /
-					<= New_button $mol_button_major
-						title @ \Новая заявка
+			<= Nav $bog_max_nav
+				section <= section \tickets
 	Wait $mol_paragraph
 		title @ \Подключаемся к управляющей компании…
 	Fail $mol_paragraph
 		title <= fail \
+	New_link $mol_link
+		arg *
+			screen \new
+			ticket null
+		sub /
+			<= New_button $mol_button_major
+				title @ \Новая заявка
 	House_title $mol_paragraph
 		title <= house_title \
 	Empty $mol_paragraph
@@ -43,6 +45,30 @@ $bog_max_app $mol_book2
 						title <= row_title* \
 					<= Row_status* $mol_paragraph
 						title <= row_status* \
+	Search $mol_search
+		query? <=> query? \
+		hint @ \Поиск по заявкам дома
+	House_empty $mol_paragraph
+		title @ \По этому дому заявок ещё нет.
+	House_rows $mol_list
+		rows <= house_rows /
+	Account_name $mol_labeler
+		title @ \Имя
+		content / <= account_name \
+	Account_id $mol_labeler
+		title @ \ID в MAX
+		content / <= account_id \
+	Account_house $mol_form_field
+		name @ \Мой дом
+		control <= House $mol_select
+			options <= house_options /string
+			dictionary <= house_dictionary *
+			value? <=> house? \
+	Account_count $mol_labeler
+		title @ \Заявок подано
+		content / <= account_count \
+	Account_note $mol_paragraph
+		title @ \Дом подставляется в новые заявки. Ссылка или QR-код с кодом дома выбирает его сам.
 	New $mol_page
 		title @ \Новая заявка
 		tools /
@@ -55,12 +81,9 @@ $bog_max_app $mol_book2
 			<= Form $mol_form
 				submit_allowed <= submit_allowed false
 				form_fields /
-					<= House_field $mol_form_field
-						name @ \Дом
-						control <= House $mol_select
-							options <= house_options /string
-							dictionary <= house_dictionary *
-							value? <=> house? \
+					<= House_line $mol_labeler
+						title @ \Дом
+						content / <= house_address \
 					<= Category_field $mol_form_field
 						name @ \Что случилось
 						control <= Category $mol_select

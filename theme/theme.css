@@ -215,3 +215,13 @@
 	font-size: var(--font-size-description);
 	line-height: var(--line-height-description);
 }
+
+[bog_max_app_main_foot] {
+	padding: 0;
+	border-top: none;
+}
+
+[bog_max_app] [mol_search] [mol_string] {
+	min-height: 44px;
+	padding: var(--spacing-size-xl);
+}
