@@ -29,6 +29,23 @@ $bog_theme_auto $mol_plugin
 	is_light_now false
 	attr * mol_theme <= theme \
 
+$mol_image $mol_view
+	dom_name \img
+	attr *any
+		^
+		src <= uri \
+		title <= hint
+		alt <= title \
+		loading <= loading \lazy
+		decoding <= decoding \async
+		crossOrigin <= cors null
+		width <= natural_width 0
+		height <= natural_height 0
+	event *any
+		load? <=> load? null
+	minimal_width 16
+	minimal_height 16
+
 $mol_ghost $mol_view
 	Sub $mol_view
 
@@ -390,6 +407,70 @@ $giper_baza_status $mol_select
 					id <= master_link \
 				<= Fail $mol_icon_sync_off
 			hint <= message <= hint \Sync status
+
+$bog_theme_picker_row $mol_button_minor
+	theme_name \
+	title <= theme_name
+	attr *
+		^
+		bog_theme_picker_row_focused <= focused_str \
+	event *
+		^
+		pointerenter?event <=> hover?event null
+
+$bog_theme_picker $mol_scroll
+	theme_auto $bog_theme_auto
+	close? null
+	query?val \
+	focused_index?val -1
+	Theme_row* $bog_theme_picker_row
+		theme_name <= theme_name* \
+		focused <= theme_focused* false
+		click?event <=> theme_select*?event null
+		hover?event <=> theme_hover*?event null
+	sub /
+		<= Content $mol_list rows /
+			<= Search $mol_string
+				value?val <=> query?val
+				hint @ \Just start typing
+			<= Theme_list $mol_list
+				rows <= theme_rows /
+	event *
+		^
+		keydown?event <=> key_down?event null
+
+$mol_icon_white_balance_sunny $mol_icon path \M3.55 19.09L4.96 20.5L6.76 18.71L5.34 17.29M12 6C8.69 6 6 8.69 6 12S8.69 18 12 18 18 15.31 18 12C18 8.68 15.31 6 12 6M20 13H23V11H20M17.24 18.71L19.04 20.5L20.45 19.09L18.66 17.29M20.45 5L19.04 3.6L17.24 5.39L18.66 6.81M13 1H11V4H13M6.76 5.39L4.96 3.6L3.55 5L5.34 6.81L6.76 5.39M1 13H4V11H1M13 20H11V23H13
+
+$mol_icon_weather_night $mol_icon path \M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.64 6.35,17.66C9.37,20.67 14.19,20.78 17.33,17.97Z
+
+$mol_icon_monitor $mol_icon path \M21,16H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10V20H8V22H16V20H14V18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z
+
+$bog_theme_toggle $mol_pop
+	theme_auto $bog_theme_auto
+	showed?val false
+	align \bottom_right
+	Anchor $mol_button_minor
+		sub /
+			<= Icon $mol_view
+		hint <= anchor_hint \Переключить тему
+		click?event <=> clicked?event null
+		event *
+			^
+			pointerdown?event <=> press_start?event null
+			pointermove?event <=> press_move?event null
+			pointerup?event <=> press_end?event null
+			pointercancel?event <=> press_cancel?event null
+			lostpointercapture?event <=> press_lost?event null
+	Icon_light $mol_icon_white_balance_sunny
+	Icon_dark $mol_icon_weather_night
+	Icon_system $mol_icon_monitor
+	bubble_content /
+		<= Backdrop $mol_view
+			event *
+				click?event <=> backdrop_click?event null
+		<= Picker $bog_theme_picker
+			theme_auto <= theme_auto
+			close? <=> picker_close? null
 
 $mol_icon_clipboard $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3
 
@@ -2249,8 +2330,13 @@ $bog_max_app $mol_book2
 	placeholders /
 	Main $mol_page
 		title <= main_title \
+		Logo <= Max_logo $mol_image
+			uri \bog/max/assets/max.svg
+			title \MAX
 		tools /
 			<= Sync $giper_baza_status
+			<= Theme_toggle $bog_theme_toggle
+				theme_auto <= Theme
 		body <= main_body /
 		foot /
 			<= Nav $bog_max_nav

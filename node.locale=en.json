@@ -28,6 +28,7 @@
 	"$bog_max_nav_Tab_account_label": "Профиль",
 	"$bog_max_nav_Tab_house_label": "Дом",
 	"$bog_max_nav_Tab_tickets_label": "Заявки",
+	"$bog_theme_picker_Search_hint": "Just start typing",
 	"$mol_form_form_invalid": "Form is not valid",
 	"$mol_form_message_done": "Saved",
 	"$mol_form_submit_title": "Save",
