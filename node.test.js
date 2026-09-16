@@ -21696,6 +21696,9 @@ var $;
 		submit_allowed(){
 			return (this.Form().submit_allowed());
 		}
+		new_fields(){
+			return [];
+		}
 		scope_options(){
 			return [];
 		}
@@ -21765,13 +21768,16 @@ var $;
 		place_bids(){
 			return [];
 		}
+		place_hint(){
+			return "";
+		}
 		place(next){
 			if(next !== undefined) return next;
 			return "";
 		}
 		Place(){
 			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Place_hint")));
+			(obj.hint) = () => ((this.place_hint()));
 			(obj.value) = (next) => ((this.place(next)));
 			return obj;
 		}
@@ -22102,6 +22108,7 @@ var $;
 		}
 		Form(){
 			const obj = new this.$.$mol_form();
+			(obj.body) = () => ((this.new_fields()));
 			(obj.form_fields) = () => ([
 				(this.Scope_field()), 
 				(this.Category_field()), 
@@ -23087,6 +23094,23 @@ var $;
             }
             similar_rows() {
                 return this.similar().map(link => this.Row(link));
+            }
+            new_fields() {
+                return [
+                    this.Scope_field(),
+                    this.Category_field(),
+                    ...this.scope() === 'house' ? [this.Entrance_field()] : [],
+                    this.Place_field(),
+                    this.Text_field(),
+                    this.Photo_field(),
+                ];
+            }
+            place_hint() {
+                switch (this.scope()) {
+                    case 'yard': return 'Ориентир во дворе';
+                    case 'city': return 'Адрес или ориентир';
+                }
+                return 'Этаж, квартира, ориентир';
             }
             new_body() {
                 return [

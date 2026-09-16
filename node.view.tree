@@ -889,6 +889,7 @@ $bog_max_app $mol_book2
 		content / <= house_address \
 	Form $mol_form
 		submit_allowed => submit_allowed
+		body <= new_fields /
 		form_fields /
 			<= Scope_field $mol_form_field
 				name @ \Где проблема
@@ -912,7 +913,7 @@ $bog_max_app $mol_book2
 				name @ \Где
 				bids <= place_bids /string
 				control <= Place $mol_string
-					hint @ \Этаж, квартира, ориентир
+					hint <= place_hint \
 					value? <=> place? \
 			<= Text_field $mol_form_field
 				name @ \Подробности
