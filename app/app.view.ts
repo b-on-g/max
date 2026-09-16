@@ -25,7 +25,7 @@ namespace $.$$ {
 
 		bot_url() {
 			const arg = this.$.$mol_state_arg.value( 'bot' )
-			if( arg ) return arg
+			if( arg ) return ( /^https?:/.test( arg ) ? arg : 'http://' + arg ).replace( /\/?$/, '/' )
 			const location = this.$.$mol_dom_context.location
 			if( /\.github\.io$/.test( location.hostname ) ) return this.bot_prod()
 			return location.origin + '/'
@@ -42,7 +42,7 @@ namespace $.$$ {
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ init_data, pass }),
 			})
-			if( response.status() !== 'success' ) $mol_fail( new Error( response.text() ) )
+			if( response.status() !== 'success' ) $mol_fail( new Error( `Бот ${ url } ответил: ${ response.text() }` ) )
 			return response.json() as $bog_max_app_session
 		}
 
@@ -74,15 +74,15 @@ namespace $.$$ {
 		}
 
 		ticket( link: string ) {
-			return this.land().Pawn( $bog_max_ticket ).Head( new $giper_baza_link( link ) )
+			return this.land().Pawn( $bog_max_ticket ).Head( new $giper_baza_link( link ).head() )
 		}
 
 		house_of( link: string ) {
-			return this.land().Pawn( $bog_max_house ).Head( new $giper_baza_link( link ) )
+			return this.land().Pawn( $bog_max_house ).Head( new $giper_baza_link( link ).head() )
 		}
 
 		category_of( link: string ) {
-			return this.land().Pawn( $bog_max_category ).Head( new $giper_baza_link( link ) )
+			return this.land().Pawn( $bog_max_category ).Head( new $giper_baza_link( link ).head() )
 		}
 
 		@ $mol_mem
@@ -97,7 +97,10 @@ namespace $.$$ {
 		@ $mol_mem
 		home_body() {
 			if( this.fail() ) return [ this.Fail() ]
-			return this.mine().length ? [ this.Rows() ] : [ this.Empty() ]
+			return [
+				this.House_title(),
+				this.mine().length ? this.Rows() : this.Empty(),
+			]
 		}
 
 		rows() {
@@ -157,7 +160,17 @@ namespace $.$$ {
 
 		@ $mol_mem
 		house( next?: string ) {
-			return next ?? this.session().house ?? this.house_options()[0] ?? ''
+			const options = this.house_options()
+			const saved = String( this.$.$mol_state_local.value( '$bog_max_house', next ) ?? '' )
+			if( options.includes( saved ) ) return saved
+			const linked = this.session().house ?? ''
+			if( options.includes( linked ) ) return linked
+			return options[0] ?? ''
+		}
+
+		house_title() {
+			const address = this.house_dictionary()[ this.house() ] ?? ''
+			return address ? `Дом: ${ address }` : ''
 		}
 
 		@ $mol_mem
