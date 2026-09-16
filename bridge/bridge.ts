@@ -12,7 +12,23 @@ namespace $ {
 			return ( this.$.$mol_dom_context as any ).WebApp ?? null
 		}
 
-		static inside() {
+		static script(): HTMLScriptElement | null {
+			return this.$.$mol_dom_context.document?.querySelector( 'script[src*="max-web-app"]' ) ?? null
+		}
+
+		static async settle( script: HTMLScriptElement ) {
+			await new Promise< void >( done => {
+				script.addEventListener( 'load', ()=> done() )
+				script.addEventListener( 'error', ()=> done() )
+				setTimeout( done, 3000 )
+			} )
+		}
+
+		@ $mol_mem
+		static loaded() {
+			if( this.app() ) return true
+			const script = this.script()
+			if( script ) $mol_wire_sync( this ).settle( script )
 			return this.app() !== null
 		}
 

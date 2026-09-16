@@ -225,3 +225,49 @@
 	min-height: 44px;
 	padding: var(--spacing-size-xl);
 }
+
+@media (max-width: 720px) {
+	[bog_max_app] > [mol_page] {
+		min-width: 100%;
+	}
+}
+
+[bog_max_app] > *::before,
+[bog_max_app] > *::after {
+	display: none;
+}
+
+[bog_max_app] [mol_form_field] [mol_select] {
+	flex: 1 1 auto;
+}
+
+[bog_max_app] [mol_form_field] [mol_select_trigger] {
+	flex: 1 1 auto;
+	justify-content: space-between;
+}
+
+[bog_max_app] [mol_form_foot] {
+	padding: var(--spacing-size-xl) 0;
+}
+
+[bog_max_app] [mol_form_foot] [mol_button_major] {
+	flex: 1 1 auto;
+}
+
+[bog_max_app_search],
+[bog_max_app_search] [mol_pop_anchor],
+[bog_max_app_search] [mol_search_query] {
+	flex: 1 1 auto;
+}
+
+[bog_max_app] [mol_labeler_label] {
+	padding-inline: var(--spacing-size-xl);
+}
+
+[bog_max_app] [mol_labeler_content] {
+	padding-inline: var(--spacing-size-xl);
+}
+
+[bog_max_app_search] {
+	align-self: stretch;
+}

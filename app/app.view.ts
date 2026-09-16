@@ -20,7 +20,20 @@ namespace $.$$ {
 		}
 
 		auto() {
+			this.pin()
 			$bog_max_bridge.ready()
+		}
+
+		pin() {
+			const yard = this.$.$giper_baza_yard
+			const url = this.bot_url()
+			const masters = yard.masters()
+			if( masters.length === 1 && masters[0] === url ) return
+			yard.masters_default.length = 0
+			yard.masters = ()=> url ? [ url ] : []
+			const live = this.$.$giper_baza_glob.yard()
+			live.master_cursor( 1 )
+			live.master_cursor( 0 )
 		}
 
 		bot_url() {
@@ -36,6 +49,7 @@ namespace $.$$ {
 			const url = this.bot_url()
 			if( !url ) $mol_fail( new Error( 'Адрес бота не задан' ) )
 			const pass = this.$.$giper_baza_auth.current().pass().toString()
+			this.$.$bog_max_bridge.loaded()
 			const init_data = $bog_max_bridge.init_data()
 			const response = this.$.$mol_fetch.response( url + 'auth', {
 				method: 'POST',
@@ -281,6 +295,21 @@ namespace $.$$ {
 			this.text( '' )
 			this.category( '' )
 			this.$.$mol_state_arg.dict({ ... this.$.$mol_state_arg.dict(), screen: null, ticket: ticket.link().str })
+		}
+
+		ticket_body() {
+			return [
+				this.Ticket_status(),
+				this.Ticket_category(),
+				this.Ticket_house(),
+				this.Ticket_place(),
+				... this.ticket_text() ? [ this.Ticket_text() ] : [],
+				this.Ticket_owner(),
+				this.Ticket_react(),
+				this.Ticket_fix(),
+				this.Ticket_basis(),
+				this.Log(),
+			]
 		}
 
 		ticket_title() {

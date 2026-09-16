@@ -11,6 +11,7 @@ $bog_max_app $mol_book2
 				\$mol_theme_calm_light
 				\$mol_theme_calm_dark
 	pages /
+	placeholders /
 	Main $mol_page
 		title <= main_title \
 		tools /
@@ -78,12 +79,12 @@ $bog_max_app $mol_book2
 				sub /
 					<= Close_new_icon $mol_icon_close
 		body /
+			<= House_line $mol_labeler
+				title @ \Дом
+				content / <= house_address \
 			<= Form $mol_form
 				submit_allowed <= submit_allowed false
 				form_fields /
-					<= House_line $mol_labeler
-						title @ \Дом
-						content / <= house_address \
 					<= Category_field $mol_form_field
 						name @ \Что случилось
 						control <= Category $mol_select
@@ -113,7 +114,7 @@ $bog_max_app $mol_book2
 					ticket null
 				sub /
 					<= Close_ticket_icon $mol_icon_close
-		body /
+		body <= ticket_body /
 			<= Ticket_status $mol_paragraph
 				title <= ticket_status \
 			<= Ticket_category $mol_labeler

@@ -3,7 +3,7 @@ namespace $ {
 	$mol_style_define( $bog_max_app, {
 
 		Main: {
-			flex: { basis: '24rem' },
+			flex: { grow: 1, shrink: 0, basis: '24rem' },
 		},
 
 		New_link: {

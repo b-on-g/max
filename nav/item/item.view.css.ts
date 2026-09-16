@@ -7,6 +7,7 @@ namespace $ {
 		gap: '2px',
 		padding: { top: '0.5rem', bottom: '0.5rem', left: '0.5rem', right: '0.5rem' },
 		minWidth: 0,
+		maxWidth: '10rem',
 		minHeight: '3.5rem',
 		borderRadius: '0.75rem',
 		color: $mol_theme.shade,
