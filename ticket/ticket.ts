@@ -1,8 +1,8 @@
 namespace $ {
 
 	export class $bog_max_ticket extends $giper_baza_dict.with({
-		House: $giper_baza_atom_link_to( ()=> $bog_max_house ),
-		Category: $giper_baza_atom_link_to( ()=> $bog_max_category ),
+		House: $giper_baza_atom_link.to( ()=> $bog_max_house ),
+		Category: $giper_baza_atom_link.to( ()=> $bog_max_category ),
 		Place: $giper_baza_atom_text,
 		Text: $giper_baza_atom_text,
 		Author: $giper_baza_atom_text,
