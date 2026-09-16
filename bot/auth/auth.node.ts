@@ -35,6 +35,7 @@ namespace $ {
 
 			msg.reply({
 				land: bot.uk_link(),
+				lord: bot.lord(),
 				house: house?.link().str ?? null,
 				user: { id: checked.user.id, name },
 			})

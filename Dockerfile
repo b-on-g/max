@@ -8,6 +8,7 @@ COPY . bog/max/
 RUN npx mam bog/max/app && npx mam bog/max/bot/run
 
 FROM nginx:alpine AS app
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/bog/max/app/- /usr/share/nginx/html
 EXPOSE 80
 

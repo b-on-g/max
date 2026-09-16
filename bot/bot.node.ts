@@ -11,6 +11,10 @@ namespace $ {
 			return this.$.$mol_env()
 		}
 
+		lord() {
+			return this.$.$giper_baza_auth.current().pass().lord().str
+		}
+
 		@ $mol_memo.method
 		auth() {
 			return $bog_max_bot_auth.make({ bot: ()=> this })
@@ -49,7 +53,7 @@ namespace $ {
 		}
 
 		message( ticket: $bog_max_ticket ) {
-			const status = ticket.Status()?.val() ?? ''
+			const status = ticket.status_by( this.lord() )
 			const label = $bog_max_status[ status as keyof typeof $bog_max_status ] ?? status
 			const lines = [ `Заявка № ${ this.uk().ticket_number( ticket ) }: ${ label }` ]
 			if( status !== 'new' ) return lines.join( '\n' )
@@ -65,16 +69,21 @@ namespace $ {
 			return lines.join( '\n' )
 		}
 
+		register( ticket: $bog_max_ticket ) {
+			ticket.Status( 'auto' )!.val( 'new' )
+			ticket.Log( 'auto' )!.key( new $mol_time_moment().toString(), 'auto' )!.val( 'new' )
+		}
+
 		@ $mol_mem
 		notified() {
 			const uk = this.uk()
 			for( const ticket of uk.tickets() ) {
-				const status = ticket.Status()?.val() ?? ''
-				if( !status ) continue
+				if( !ticket.status_by( this.lord() ) ) this.register( ticket )
+				const status = ticket.status_by( this.lord() )
 				const key = ticket.link().str
 				if( uk.Notified()?.key( key )?.val() === status ) continue
 				const author = Number( ticket.Author()?.val() ?? '' )
-				if( author ) $mol_wire_sync( this.api() ).send( author, this.message( ticket ), key )
+				if( author && this.env().BOT_TOKEN ) $mol_wire_sync( this.api() ).send( author, this.message( ticket ), key )
 				uk.Notified( 'auto' )!.key( key, 'auto' )!.val( status )
 			}
 			return uk.tickets().length
