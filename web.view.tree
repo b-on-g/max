@@ -476,6 +476,16 @@ $mol_icon_clipboard $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6
 
 $mol_icon_clipboard_text $mol_icon path \M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z
 
+$mol_icon_home $mol_icon path \M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z
+
+$mol_icon_home_city $mol_icon path \M0,21V10L7.5,5L15,10V21H10V14H5V21H0M24,2V21H17V8.93L16,8.27V6H14V6.93L10,4.27V2H24M21,14H19V16H21V14M21,10H19V12H21V10M21,6H19V8H21V6Z
+
+$mol_icon_account $mol_icon path \M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z
+
+$mol_icon_account_tie $mol_icon path \M12 3C14.21 3 16 4.79 16 7S14.21 11 12 11 8 9.21 8 7 9.79 3 12 3M16 13.54C16 14.6 15.72 17.07 13.81 19.83L13 15L13.94 13.12C13.32 13.05 12.67 13 12 13S10.68 13.05 10.06 13.12L11 15L10.19 19.83C8.28 17.07 8 14.6 8 13.54C5.61 14.24 4 15.5 4 17V21H20V17C20 15.5 18.4 14.24 16 13.54Z
+
+$mol_icon_account_circle $mol_icon path \M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z
+
 $bog_max_nav_item $mol_link
 	label \
 	active \off
@@ -488,44 +498,107 @@ $bog_max_nav_item $mol_link
 		<= Label $mol_view
 			sub / <= label
 
-$mol_icon_home $mol_icon path \M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z
-
-$mol_icon_home_city $mol_icon path \M0,21V10L7.5,5L15,10V21H10V14H5V21H0M24,2V21H17V8.93L16,8.27V6H14V6.93L10,4.27V2H24M21,14H19V16H21V14M21,10H19V12H21V10M21,6H19V8H21V6Z
-
-$mol_icon_account $mol_icon path \M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z
-
-$mol_icon_account_circle $mol_icon path \M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z
-
 $bog_max_nav $mol_view
 	section \tickets
-	sub /
-		<= Tab_tickets $bog_max_nav_item
-			arg *
-				section null
-				screen null
-				ticket null
-			label @ \Заявки
-			active <= tickets_active \off
-			Icon <= Tickets_icon $mol_icon_clipboard_text
-		<= Tab_house $bog_max_nav_item
-			arg *
-				section \house
-				screen null
-				ticket null
-			label @ \Дом
-			active <= house_active \off
-			Icon <= House_icon $mol_icon_home_city
-		<= Tab_account $bog_max_nav_item
-			arg *
-				section \account
-				screen null
-				ticket null
-			label @ \Профиль
-			active <= account_active \off
-			Icon <= Account_icon $mol_icon_account_circle
+	staff false
+	sub <= tabs /
+	Tab_tickets $bog_max_nav_item
+		arg *
+			section null
+			screen null
+			ticket null
+		label @ \Заявки
+		active <= tickets_active \off
+		Icon <= Tickets_icon $mol_icon_clipboard_text
+	Tab_house $bog_max_nav_item
+		arg *
+			section \house
+			screen null
+			ticket null
+		label @ \Дом
+		active <= house_active \off
+		Icon <= House_icon $mol_icon_home_city
+	Tab_admin $bog_max_nav_item
+		arg *
+			section \admin
+			screen null
+			ticket null
+		label @ \Диспетчер
+		active <= admin_active \off
+		Icon <= Admin_icon $mol_icon_account_tie
+	Tab_account $bog_max_nav_item
+		arg *
+			section \account
+			screen null
+			ticket null
+		label @ \Профиль
+		active <= account_active \off
+		Icon <= Account_icon $mol_icon_account_circle
 
 $mol_button_major $mol_button_minor
 	theme \$mol_theme_base
+
+$bog_qr $mol_svg_root
+	uri \
+	module_radius 0.35
+	finder_radius 1.2
+	gradient_angle 45
+	error_correction \M
+	quiet_zone 2
+	center /
+	gradient_id \qr-grad
+	gradient_fill \url(#qr-grad)
+	gradient_stops /
+		\var(--mol_theme_special)
+		\var(--mol_theme_focus)
+	Stop* $mol_svg
+		dom_name \stop
+		attr *
+			^
+			offset <= stop_offset* \0%
+			stop-color <= stop_color* \
+	view_box <= qr_view_box \0 0 1 1
+	sub /
+		<= Defs $mol_svg
+			dom_name \defs
+			sub /
+				<= Gradient $mol_svg
+					dom_name \linearGradient
+					attr *
+						^
+						id <= gradient_id
+						x1 <= grad_x1 \0
+						y1 <= grad_y1 \0
+						x2 <= grad_x2 \1
+						y2 <= grad_y2 \1
+					sub <= gradient_stop_list /
+		<= Modules $mol_svg_path
+			geometry <= modules_d \
+			attr *
+				^
+				fill <= gradient_fill
+		<= Rings $mol_svg_path
+			geometry <= rings_d \
+			attr *
+				^
+				fill <= gradient_fill
+				fill-rule \evenodd
+		<= Centers $mol_svg_path
+			geometry <= centers_d \
+			attr *
+				^
+				fill <= gradient_fill
+		<= Center_wrap $mol_svg
+			dom_name \foreignObject
+			attr *
+				^
+				x <= center_x \0
+				y <= center_y \0
+				width <= center_size \0
+				height <= center_size
+			sub /
+				<= Center_body $mol_view
+					sub <= center
 
 $mol_labeler $mol_list
 	rows /
@@ -547,6 +620,68 @@ $mol_form_field $mol_labeler
 		<= Bid $mol_view
 			sub / <= bid \
 	content / <= control null
+
+$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
+
+$mol_button_open $mol_button_minor
+	sub /
+		<= Icon $mol_icon_upload
+		<= Native $mol_button_open_native
+			files? <=> files_handled? <=> files? /File
+			accept <= accept \
+			multiple <= multiple true
+
+$mol_button_open_native $mol_view
+	dom_name \input
+	files? /File
+	attr *
+		type \file
+		accept <= accept \
+		multiple <= multiple true
+	event *
+		change? <=> picked? null
+
+$mol_page $mol_view
+	dom_name \article
+	attr *
+		^
+		tabIndex <= tabindex -1
+	sub /
+		<= Head $mol_view
+			minimal_height 64
+			dom_name \header
+			sub <= head /
+				<= Title $mol_view
+					dom_name \h1
+					sub <= title_content /
+						<= Logo null
+						<= title
+				<= Tools $mol_view
+					sub <= tools /$mol_view_content
+		<= Body $mol_scroll
+			scroll_top? => body_scroll_top?
+			sub <= body_content /
+				<= Body_content $mol_view
+					sub <= body /$mol_view
+		<= Foot $mol_view
+			dom_name \footer
+			sub <= foot /$mol_view
+
+$mol_check_list $mol_view
+	dictionary *
+	Option* $mol_check
+		checked? <=> option_checked*? false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
+		minimal_height 24
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value? \
 
 $mol_status $mol_view
 	status <= title
@@ -580,32 +715,6 @@ $mol_form $mol_list
 					click? <=> submit? null
 				<= Result $mol_status
 					message <= result? null
-
-$mol_page $mol_view
-	dom_name \article
-	attr *
-		^
-		tabIndex <= tabindex -1
-	sub /
-		<= Head $mol_view
-			minimal_height 64
-			dom_name \header
-			sub <= head /
-				<= Title $mol_view
-					dom_name \h1
-					sub <= title_content /
-						<= Logo null
-						<= title
-				<= Tools $mol_view
-					sub <= tools /$mol_view_content
-		<= Body $mol_scroll
-			scroll_top? => body_scroll_top?
-			sub <= body_content /
-				<= Body_content $mol_view
-					sub <= body /$mol_view
-		<= Foot $mol_view
-			dom_name \footer
-			sub <= foot /$mol_view
 
 $mol_book2_catalog $mol_book2
 	param \
@@ -1601,26 +1710,6 @@ $giper_baza_land_grab $mol_select
 		deny @ \🔐 Private
 	grab? null $giper_baza_rank_preset
 
-$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
-
-$mol_button_open $mol_button_minor
-	sub /
-		<= Icon $mol_icon_upload
-		<= Native $mol_button_open_native
-			files? <=> files_handled? <=> files? /File
-			accept <= accept \
-			multiple <= multiple true
-
-$mol_button_open_native $mol_view
-	dom_name \input
-	files? /File
-	attr *
-		type \file
-		accept <= accept \
-		multiple <= multiple true
-	event *
-		change? <=> picked? null
-
 $giper_baza_land_rights $mol_list
 	land $giper_baza_land
 	rows /
@@ -2341,6 +2430,7 @@ $bog_max_app $mol_book2
 		foot /
 			<= Nav $bog_max_nav
 				section <= section \tickets
+				staff <= staff false
 	Wait $mol_paragraph
 		title @ \Подключаемся к управляющей компании…
 	Fail $mol_paragraph
@@ -2367,6 +2457,15 @@ $bog_max_app $mol_book2
 						title <= row_title* \
 					<= Row_status* $mol_paragraph
 						title <= row_status* \
+	House_pick $mol_select
+		options <= house_options /string
+		dictionary <= house_dictionary *
+		value? <=> house_filter? \
+	House_tabs $mol_switch
+		value? <=> house_tab? \tickets
+		options *
+			tickets @ \Заявки
+			news @ \Новости
 	Search $mol_search
 		query? <=> query? \
 		hint @ \Поиск по заявкам дома
@@ -2374,6 +2473,18 @@ $bog_max_app $mol_book2
 		title @ \По этому дому заявок ещё нет.
 	House_rows $mol_list
 		rows <= house_rows /
+	News_empty $mol_paragraph
+		title @ \Новостей по этому дому пока нет.
+	News $mol_list
+		rows <= news_rows /
+			<= Post* $mol_view
+				sub /
+					<= Post_title* $mol_paragraph
+						title <= news_title* \
+					<= Post_when* $mol_paragraph
+						title <= news_when* \
+					<= Post_text* $mol_paragraph
+						title <= news_text* \
 	Account_name $mol_labeler
 		title @ \Имя
 		content / <= account_name \
@@ -2391,6 +2502,66 @@ $bog_max_app $mol_book2
 		content / <= account_count \
 	Account_note $mol_paragraph
 		title @ \Дом подставляется в новые заявки. Ссылка или QR-код с кодом дома выбирает его сам.
+	Admin_title $mol_paragraph
+		title @ \Все заявки. Статус меняется здесь или через API организации.
+	Admin_empty $mol_paragraph
+		title @ \Заявок пока нет.
+	Admin_rows $mol_list
+		rows <= admin_rows /
+			<= Admin_row* $mol_view
+				sub /
+					<= Row*
+					<= Admin_status* $mol_select
+						options <= status_options /string
+						dictionary <= status_dictionary *
+						value? <=> admin_status*? \
+	Qr_title $mol_paragraph
+		title @ \QR-коды домов. Наклейте у подъезда: житель откроет бота сразу с этим домом.
+	Qrs $mol_list
+		rows <= qr_rows /
+			<= Qr_card* $mol_view
+				sub /
+					<= Qr_address* $mol_paragraph
+						title <= house_address* \
+					<= Qr* $bog_qr
+						uri <= qr_uri* \
+					<= Qr_link* $mol_paragraph
+						title <= qr_uri* \
+	Post_form $mol_form
+		submit_allowed => post_allowed
+		form_fields /
+			<= Post_title_field $mol_form_field
+				name @ \Новость или отключение
+				bids <= post_title_bids /string
+				control <= Post_title_input $mol_string
+					hint @ \Заголовок
+					value? <=> post_title? \
+			<= Post_text_field $mol_form_field
+				name @ \Текст
+				control <= Post_text_input $mol_string
+					hint @ \Что, когда, что делать жителям
+					value? <=> post_text? \
+			<= Post_kind_field $mol_form_field
+				name @ \Тип
+				control <= Post_kind $mol_select
+					options /
+						\news
+						\outage
+					dictionary *
+						news @ \Новость
+						outage @ \Отключение или ремонт
+					value? <=> post_kind? \news
+			<= Post_house_field $mol_form_field
+				name @ \Дом
+				control <= Post_house $mol_select
+					options <= house_options /string
+					dictionary <= house_dictionary *
+					value? <=> post_house? \
+		buttons /
+			<= Post_submit $mol_button_major
+				title @ \Опубликовать
+				click? <=> post_add? null
+				enabled <= post_allowed
 	New $mol_page
 		title @ \Новая заявка
 		tools /
@@ -2399,36 +2570,64 @@ $bog_max_app $mol_book2
 					screen null
 				sub /
 					<= Close_new_icon $mol_icon_close
-		body /
-			<= House_line $mol_labeler
-				title @ \Дом
-				content / <= house_address \
-			<= Form $mol_form
-				submit_allowed => submit_allowed
-				form_fields /
-					<= Category_field $mol_form_field
-						name @ \Что случилось
-						bids <= category_bids /string
-						control <= Category $mol_select
-							options <= category_options /string
-							dictionary <= category_dictionary *
-							value? <=> category? \
-					<= Place_field $mol_form_field
-						name @ \Где
-						bids <= place_bids /string
-						control <= Place $mol_string
-							hint @ \Подъезд, этаж, квартира
-							value? <=> place? \
-					<= Text_field $mol_form_field
-						name @ \Подробности
-						control <= Text $mol_string
-							hint @ \Что именно не так
-							value? <=> text? \
-				buttons /
-					<= Submit $mol_button_major
-						title @ \Отправить заявку
-						click? <=> submit? null
-						enabled <= submit_allowed
+		body <= new_body /
+	House_line $mol_labeler
+		title @ \Дом
+		content / <= house_address \
+	Form $mol_form
+		submit_allowed => submit_allowed
+		form_fields /
+			<= Scope_field $mol_form_field
+				name @ \Где проблема
+				control <= Scope $mol_select
+					options <= scope_options /string
+					dictionary <= scope_dictionary *
+					value? <=> scope? \house
+			<= Category_field $mol_form_field
+				name @ \Что случилось
+				bids <= category_bids /string
+				control <= Category $mol_select
+					options <= category_options /string
+					dictionary <= category_dictionary *
+					value? <=> category? \
+			<= Entrance_field $mol_form_field
+				name @ \Подъезд
+				control <= Entrance $mol_string
+					hint @ \Номер подъезда, если важно
+					value? <=> entrance? \
+			<= Place_field $mol_form_field
+				name @ \Где
+				bids <= place_bids /string
+				control <= Place $mol_string
+					hint @ \Этаж, квартира, ориентир
+					value? <=> place? \
+			<= Text_field $mol_form_field
+				name @ \Подробности
+				control <= Text $mol_string
+					hint @ \Что именно не так
+					value? <=> text? \
+			<= Photo_field $mol_form_field
+				name @ \Фото
+				control <= Photo_row $mol_view
+					sub /
+						<= Photo_pick $mol_button_open
+							files? <=> photo_files? /File
+							accept \image/*
+							multiple false
+							hint @ \Приложить фото
+						<= Photo_name $mol_paragraph
+							title <= photo_pick_label \
+		buttons /
+			<= Submit $mol_button_major
+				title @ \Отправить заявку
+				click? <=> submit? null
+				enabled <= submit_allowed
+	Photo_preview $mol_image
+		uri <= photo_preview \
+	Similar_title $mol_paragraph
+		title @ \Похожая заявка уже есть. Поддержите её, так она поднимется выше:
+	Similar $mol_list
+		rows <= similar_rows /
 	Ticket $mol_page
 		title <= ticket_title \
 		tools /
@@ -2438,33 +2637,45 @@ $bog_max_app $mol_book2
 				sub /
 					<= Close_ticket_icon $mol_icon_close
 		body <= ticket_body /
-			<= Ticket_status $mol_paragraph
-				title <= ticket_status \
-			<= Ticket_category $mol_labeler
-				title @ \Категория
-				content / <= ticket_category \
-			<= Ticket_house $mol_labeler
-				title @ \Дом
-				content / <= ticket_house \
-			<= Ticket_place $mol_labeler
-				title @ \Где
-				content / <= ticket_place \
-			<= Ticket_text $mol_labeler
-				title @ \Подробности
-				content / <= ticket_text \
-			<= Ticket_owner $mol_labeler
-				title @ \Ответственный
-				content / <= ticket_owner \
-			<= Ticket_react $mol_labeler
-				title @ \Реакция по нормативу
-				content / <= ticket_react \
-			<= Ticket_fix $mol_labeler
-				title @ \Устранение по нормативу
-				content / <= ticket_fix \
-			<= Ticket_basis $mol_labeler
-				title @ \Основание
-				content / <= ticket_basis \
-			<= Log $mol_list
-				rows <= log_rows /
-					<= Log_row* $mol_paragraph
-						title <= log_row* \
+	Ticket_status $mol_paragraph
+		title <= ticket_status \
+	Ticket_note $mol_paragraph
+		title <= ticket_note \
+	Ticket_photo $mol_image
+		uri <= ticket_photo \
+	Ticket_category $mol_labeler
+		title @ \Категория
+		content / <= ticket_category \
+	Ticket_house $mol_labeler
+		title @ \Дом
+		content / <= ticket_house \
+	Ticket_place $mol_labeler
+		title @ \Где
+		content / <= ticket_place \
+	Ticket_text $mol_labeler
+		title @ \Подробности
+		content / <= ticket_text \
+	Ticket_owner $mol_labeler
+		title @ \Ответственный
+		content / <= ticket_owner \
+	Ticket_react $mol_labeler
+		title @ \Реакция по нормативу
+		content / <= ticket_react \
+	Ticket_fix $mol_labeler
+		title @ \Устранение по нормативу
+		content / <= ticket_fix \
+	Ticket_basis $mol_labeler
+		title @ \Основание
+		content / <= ticket_basis \
+	Voices $mol_view
+		sub /
+			<= Voices_count $mol_paragraph
+				title <= voices_text \
+			<= Voice $mol_button_major
+				title @ \Тоже беспокоит
+				click? <=> voice? null
+				enabled <= voice_allowed true
+	Log $mol_list
+		rows <= log_rows /
+			<= Log_row* $mol_paragraph
+				title <= log_row* \

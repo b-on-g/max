@@ -19752,6 +19752,66 @@ var $;
 
 
 ;
+	($.$mol_icon_home) = class $mol_icon_home extends ($.$mol_icon) {
+		path(){
+			return "M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_home_city) = class $mol_icon_home_city extends ($.$mol_icon) {
+		path(){
+			return "M0,21V10L7.5,5L15,10V21H10V14H5V21H0M24,2V21H17V8.93L16,8.27V6H14V6.93L10,4.27V2H24M21,14H19V16H21V14M21,10H19V12H21V10M21,6H19V8H21V6Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_account) = class $mol_icon_account extends ($.$mol_icon) {
+		path(){
+			return "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_account_tie) = class $mol_icon_account_tie extends ($.$mol_icon) {
+		path(){
+			return "M12 3C14.21 3 16 4.79 16 7S14.21 11 12 11 8 9.21 8 7 9.79 3 12 3M16 13.54C16 14.6 15.72 17.07 13.81 19.83L13 15L13.94 13.12C13.32 13.05 12.67 13 12 13S10.68 13.05 10.06 13.12L11 15L10.19 19.83C8.28 17.07 8 14.6 8 13.54C5.61 14.24 4 15.5 4 17V21H20V17C20 15.5 18.4 14.24 16 13.54Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_account_circle) = class $mol_icon_account_circle extends ($.$mol_icon) {
+		path(){
+			return "M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
 	($.$bog_max_nav_item) = class $bog_max_nav_item extends ($.$mol_link) {
 		Label(){
 			const obj = new this.$.$mol_view();
@@ -19824,61 +19884,46 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_icon_home) = class $mol_icon_home extends ($.$mol_icon) {
-		path(){
-			return "M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z";
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-	($.$mol_icon_home_city) = class $mol_icon_home_city extends ($.$mol_icon) {
-		path(){
-			return "M0,21V10L7.5,5L15,10V21H10V14H5V21H0M24,2V21H17V8.93L16,8.27V6H14V6.93L10,4.27V2H24M21,14H19V16H21V14M21,10H19V12H21V10M21,6H19V8H21V6Z";
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-	($.$mol_icon_account) = class $mol_icon_account extends ($.$mol_icon) {
-		path(){
-			return "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z";
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-	($.$mol_icon_account_circle) = class $mol_icon_account_circle extends ($.$mol_icon) {
-		path(){
-			return "M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z";
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
 	($.$bog_max_nav) = class $bog_max_nav extends ($.$mol_view) {
+		tabs(){
+			return [];
+		}
 		tickets_active(){
 			return "off";
 		}
 		Tickets_icon(){
 			const obj = new this.$.$mol_icon_clipboard_text();
 			return obj;
+		}
+		house_active(){
+			return "off";
+		}
+		House_icon(){
+			const obj = new this.$.$mol_icon_home_city();
+			return obj;
+		}
+		admin_active(){
+			return "off";
+		}
+		Admin_icon(){
+			const obj = new this.$.$mol_icon_account_tie();
+			return obj;
+		}
+		account_active(){
+			return "off";
+		}
+		Account_icon(){
+			const obj = new this.$.$mol_icon_account_circle();
+			return obj;
+		}
+		section(){
+			return "tickets";
+		}
+		staff(){
+			return false;
+		}
+		sub(){
+			return (this.tabs());
 		}
 		Tab_tickets(){
 			const obj = new this.$.$bog_max_nav_item();
@@ -19890,13 +19935,6 @@ var $;
 			(obj.label) = () => ((this.$.$mol_locale.text("$bog_max_nav_Tab_tickets_label")));
 			(obj.active) = () => ((this.tickets_active()));
 			(obj.Icon) = () => ((this.Tickets_icon()));
-			return obj;
-		}
-		house_active(){
-			return "off";
-		}
-		House_icon(){
-			const obj = new this.$.$mol_icon_home_city();
 			return obj;
 		}
 		Tab_house(){
@@ -19911,11 +19949,16 @@ var $;
 			(obj.Icon) = () => ((this.House_icon()));
 			return obj;
 		}
-		account_active(){
-			return "off";
-		}
-		Account_icon(){
-			const obj = new this.$.$mol_icon_account_circle();
+		Tab_admin(){
+			const obj = new this.$.$bog_max_nav_item();
+			(obj.arg) = () => ({
+				"section": "admin", 
+				"screen": null, 
+				"ticket": null
+			});
+			(obj.label) = () => ((this.$.$mol_locale.text("$bog_max_nav_Tab_admin_label")));
+			(obj.active) = () => ((this.admin_active()));
+			(obj.Icon) = () => ((this.Admin_icon()));
 			return obj;
 		}
 		Tab_account(){
@@ -19930,22 +19973,14 @@ var $;
 			(obj.Icon) = () => ((this.Account_icon()));
 			return obj;
 		}
-		section(){
-			return "tickets";
-		}
-		sub(){
-			return [
-				(this.Tab_tickets()), 
-				(this.Tab_house()), 
-				(this.Tab_account())
-			];
-		}
 	};
 	($mol_mem(($.$bog_max_nav.prototype), "Tickets_icon"));
-	($mol_mem(($.$bog_max_nav.prototype), "Tab_tickets"));
 	($mol_mem(($.$bog_max_nav.prototype), "House_icon"));
-	($mol_mem(($.$bog_max_nav.prototype), "Tab_house"));
+	($mol_mem(($.$bog_max_nav.prototype), "Admin_icon"));
 	($mol_mem(($.$bog_max_nav.prototype), "Account_icon"));
+	($mol_mem(($.$bog_max_nav.prototype), "Tab_tickets"));
+	($mol_mem(($.$bog_max_nav.prototype), "Tab_house"));
+	($mol_mem(($.$bog_max_nav.prototype), "Tab_admin"));
 	($mol_mem(($.$bog_max_nav.prototype), "Tab_account"));
 
 
@@ -19960,11 +19995,22 @@ var $;
     var $$;
     (function ($$) {
         class $bog_max_nav extends $.$bog_max_nav {
+            tabs() {
+                return [
+                    this.Tab_tickets(),
+                    this.Tab_house(),
+                    ...this.staff() ? [this.Tab_admin()] : [],
+                    this.Tab_account(),
+                ];
+            }
             tickets_active() {
                 return this.section() === 'tickets' ? 'on' : 'off';
             }
             house_active() {
                 return this.section() === 'house' ? 'on' : 'off';
+            }
+            admin_active() {
+                return this.section() === 'admin' ? 'on' : 'off';
             }
             account_active() {
                 return this.section() === 'account' ? 'on' : 'off';
@@ -20006,6 +20052,476 @@ var $;
 ;
 "use strict";
 
+
+;
+	($.$bog_qr) = class $bog_qr extends ($.$mol_svg_root) {
+		stop_offset(id){
+			return "0%";
+		}
+		stop_color(id){
+			return "";
+		}
+		qr_view_box(){
+			return "0 0 1 1";
+		}
+		grad_x1(){
+			return "0";
+		}
+		grad_y1(){
+			return "0";
+		}
+		grad_x2(){
+			return "1";
+		}
+		grad_y2(){
+			return "1";
+		}
+		gradient_stop_list(){
+			return [];
+		}
+		Gradient(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("linearGradient");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"id": (this.gradient_id()), 
+				"x1": (this.grad_x1()), 
+				"y1": (this.grad_y1()), 
+				"x2": (this.grad_x2()), 
+				"y2": (this.grad_y2())
+			});
+			(obj.sub) = () => ((this.gradient_stop_list()));
+			return obj;
+		}
+		Defs(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("defs");
+			(obj.sub) = () => ([(this.Gradient())]);
+			return obj;
+		}
+		modules_d(){
+			return "";
+		}
+		Modules(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.modules_d()));
+			(obj.attr) = () => ({...(this.$.$mol_svg_path.prototype.attr.call(obj)), "fill": (this.gradient_fill())});
+			return obj;
+		}
+		rings_d(){
+			return "";
+		}
+		Rings(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.rings_d()));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_path.prototype.attr.call(obj)), 
+				"fill": (this.gradient_fill()), 
+				"fill-rule": "evenodd"
+			});
+			return obj;
+		}
+		centers_d(){
+			return "";
+		}
+		Centers(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.centers_d()));
+			(obj.attr) = () => ({...(this.$.$mol_svg_path.prototype.attr.call(obj)), "fill": (this.gradient_fill())});
+			return obj;
+		}
+		center_x(){
+			return "0";
+		}
+		center_y(){
+			return "0";
+		}
+		center_size(){
+			return "0";
+		}
+		Center_body(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.center()));
+			return obj;
+		}
+		Center_wrap(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("foreignObject");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"x": (this.center_x()), 
+				"y": (this.center_y()), 
+				"width": (this.center_size()), 
+				"height": (this.center_size())
+			});
+			(obj.sub) = () => ([(this.Center_body())]);
+			return obj;
+		}
+		uri(){
+			return "";
+		}
+		module_radius(){
+			return 0.35;
+		}
+		finder_radius(){
+			return 1.2;
+		}
+		gradient_angle(){
+			return 45;
+		}
+		error_correction(){
+			return "M";
+		}
+		quiet_zone(){
+			return 2;
+		}
+		center(){
+			return [];
+		}
+		gradient_id(){
+			return "qr-grad";
+		}
+		gradient_fill(){
+			return "url(#qr-grad)";
+		}
+		gradient_stops(){
+			return ["var(--mol_theme_special)", "var(--mol_theme_focus)"];
+		}
+		Stop(id){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("stop");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"offset": (this.stop_offset(id)), 
+				"stop-color": (this.stop_color(id))
+			});
+			return obj;
+		}
+		view_box(){
+			return (this.qr_view_box());
+		}
+		sub(){
+			return [
+				(this.Defs()), 
+				(this.Modules()), 
+				(this.Rings()), 
+				(this.Centers()), 
+				(this.Center_wrap())
+			];
+		}
+	};
+	($mol_mem(($.$bog_qr.prototype), "Gradient"));
+	($mol_mem(($.$bog_qr.prototype), "Defs"));
+	($mol_mem(($.$bog_qr.prototype), "Modules"));
+	($mol_mem(($.$bog_qr.prototype), "Rings"));
+	($mol_mem(($.$bog_qr.prototype), "Centers"));
+	($mol_mem(($.$bog_qr.prototype), "Center_body"));
+	($mol_mem(($.$bog_qr.prototype), "Center_wrap"));
+	($mol_mem_key(($.$bog_qr.prototype), "Stop"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    /** Dynamic sources import. */
+    class $mol_import extends $mol_object2 {
+        static module(uri) {
+            $mol_wire_solid();
+            return $mol_wire_sync(this).module_async(uri);
+        }
+        static module_async(uri) {
+            return import(uri);
+        }
+        static script(uri) {
+            $mol_wire_solid();
+            return $mol_wire_sync(this).script_async(uri);
+        }
+        static script_async(uri) {
+            const doc = $mol_dom_context.document;
+            const script = doc.createElement('script');
+            script.src = uri;
+            doc.head.appendChild(script);
+            return new Promise((done, fail) => {
+                script.onload = () => done($mol_dom_context);
+                script.onerror = () => fail(new Error(`Can not import ${uri}`));
+            });
+        }
+        static style(uri) {
+            return $mol_wire_sync(this).style_async(uri);
+        }
+        static style_async(uri) {
+            const doc = $mol_dom_context.document;
+            const style = doc.createElement('link');
+            style.rel = 'stylesheet';
+            style.href = uri;
+            doc.head.appendChild(style);
+            return new Promise((done, fail) => {
+                style.onload = () => done(style.sheet);
+                style.onerror = () => fail(new Error(`Can not import ${uri}`));
+            });
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "module", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "script", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "style", null);
+    $.$mol_import = $mol_import;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        let grad_counter = 0;
+        class $bog_qr extends $.$bog_qr {
+            gradient_id() {
+                return 'qr-grad-' + (++grad_counter);
+            }
+            gradient_fill() {
+                return `url(#${this.gradient_id()})`;
+            }
+            grad_x1() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 - Math.cos(a) * 0.5);
+            }
+            grad_y1() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 - Math.sin(a) * 0.5);
+            }
+            grad_x2() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 + Math.cos(a) * 0.5);
+            }
+            grad_y2() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 + Math.sin(a) * 0.5);
+            }
+            gradient_stop_list() {
+                const colors = this.gradient_stops();
+                return colors.map((_, i) => this.Stop(i));
+            }
+            stop_offset(index) {
+                const colors = this.gradient_stops();
+                if (colors.length <= 1)
+                    return '0%';
+                return Math.round(index / (colors.length - 1) * 100) + '%';
+            }
+            stop_color(index) {
+                return this.gradient_stops()[index];
+            }
+            qr_lib() {
+                return $mol_import.script('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js');
+            }
+            qr_matrix() {
+                this.qr_lib();
+                const data = this.uri();
+                if (!data)
+                    return null;
+                const qr = qrcode(0, this.error_correction());
+                qr.addData(data);
+                qr.make();
+                const count = qr.getModuleCount();
+                const matrix = [];
+                for (let r = 0; r < count; r++) {
+                    matrix[r] = [];
+                    for (let c = 0; c < count; c++) {
+                        matrix[r][c] = qr.isDark(r, c);
+                    }
+                }
+                return matrix;
+            }
+            qr_view_box() {
+                const matrix = this.qr_matrix();
+                if (!matrix)
+                    return '0 0 1 1';
+                const total = matrix.length + this.quiet_zone() * 2;
+                return `0 0 ${total} ${total}`;
+            }
+            qr_paths() {
+                const matrix = this.qr_matrix();
+                if (!matrix)
+                    return { modules: '', rings: '', centers: '' };
+                const count = matrix.length;
+                const quiet = this.quiet_zone();
+                const r = this.module_radius();
+                const dark = (row, col) => row >= 0 && row < count && col >= 0 && col < count && matrix[row][col];
+                const isFinder = (row, col) => (row < 7 && col < 7) || (row < 7 && col >= count - 7) || (row >= count - 7 && col < 7);
+                const hasCenter = this.center().length > 0;
+                const centerRadius = hasCenter ? count * 0.15 : 0;
+                const centerMid = count / 2;
+                const isCenter = (row, col) => {
+                    if (!hasCenter)
+                        return false;
+                    const dx = col + 0.5 - centerMid;
+                    const dy = row + 0.5 - centerMid;
+                    return dx * dx + dy * dy < centerRadius * centerRadius;
+                };
+                let modules = '';
+                for (let row = 0; row < count; row++) {
+                    for (let col = 0; col < count; col++) {
+                        if (!matrix[row][col])
+                            continue;
+                        if (isFinder(row, col))
+                            continue;
+                        if (isCenter(row, col))
+                            continue;
+                        const x = col + quiet;
+                        const y = row + quiet;
+                        const top = dark(row - 1, col);
+                        const bottom = dark(row + 1, col);
+                        const left = dark(row, col - 1);
+                        const right = dark(row, col + 1);
+                        const alone = !top && !bottom && !left && !right;
+                        if (alone) {
+                            const cx = x + 0.5;
+                            const cy = y + 0.5;
+                            const cr = 0.5;
+                            modules += `M${cx - cr},${cy}A${cr},${cr},0,1,1,${cx + cr},${cy}A${cr},${cr},0,1,1,${cx - cr},${cy}Z`;
+                        }
+                        else {
+                            const tl = !top && !left ? r : 0;
+                            const tr = !top && !right ? r : 0;
+                            const br = !bottom && !right ? r : 0;
+                            const bl = !bottom && !left ? r : 0;
+                            modules += this.rect_path(x, y, 1, 1, tl, tr, br, bl);
+                        }
+                    }
+                }
+                const fr = this.finder_radius();
+                const finders = [
+                    [quiet, quiet],
+                    [count - 7 + quiet, quiet],
+                    [quiet, count - 7 + quiet],
+                ];
+                let rings = '';
+                let centers = '';
+                for (const [fx, fy] of finders) {
+                    rings += this.rect_path(fx, fy, 7, 7, fr, fr, fr, fr);
+                    rings += this.rect_path(fx + 1, fy + 1, 5, 5, fr * 0.7, fr * 0.7, fr * 0.7, fr * 0.7);
+                    centers += this.rect_path(fx + 2, fy + 2, 3, 3, fr * 0.5, fr * 0.5, fr * 0.5, fr * 0.5);
+                }
+                return { modules, rings, centers };
+            }
+            center_area() {
+                const matrix = this.qr_matrix();
+                if (!matrix || this.center().length === 0)
+                    return { x: 0, y: 0, size: 0 };
+                const count = matrix.length;
+                const quiet = this.quiet_zone();
+                const centerSize = count * 0.3;
+                const total = count + quiet * 2;
+                return {
+                    x: (total - centerSize) / 2,
+                    y: (total - centerSize) / 2,
+                    size: centerSize,
+                };
+            }
+            center_x() {
+                return String(this.center_area().x);
+            }
+            center_y() {
+                return String(this.center_area().y);
+            }
+            center_size() {
+                return String(this.center_area().size);
+            }
+            modules_d() {
+                return this.qr_paths().modules;
+            }
+            rings_d() {
+                return this.qr_paths().rings;
+            }
+            centers_d() {
+                return this.qr_paths().centers;
+            }
+            rect_path(x, y, w, h, tl, tr, br, bl) {
+                return [
+                    `M${x + tl},${y}`,
+                    `H${x + w - tr}`,
+                    tr ? `A${tr},${tr},0,0,1,${x + w},${y + tr}` : '',
+                    `V${y + h - br}`,
+                    br ? `A${br},${br},0,0,1,${x + w - br},${y + h}` : '',
+                    `H${x + bl}`,
+                    bl ? `A${bl},${bl},0,0,1,${x},${y + h - bl}` : '',
+                    `V${y + tl}`,
+                    tl ? `A${tl},${tl},0,0,1,${x + tl},${y}` : '',
+                    'Z',
+                ]
+                    .filter(Boolean)
+                    .join('');
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "gradient_id", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "gradient_fill", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_x1", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_y1", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_x2", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_y2", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "gradient_stop_list", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_lib", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_matrix", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_view_box", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_paths", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "center_area", null);
+        $$.$bog_qr = $bog_qr;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_qr, {
+            width: '300px',
+            height: '300px',
+            Center_body: {
+                width: '80%',
+                height: '80%',
+                position: 'absolute',
+                top: '10%',
+                left: '10%',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 	($.$mol_labeler) = class $mol_labeler extends ($.$mol_list) {
@@ -20114,6 +20630,505 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n\ttext-shadow: 0 0;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
+		path(){
+			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
+		Icon(){
+			const obj = new this.$.$mol_icon_upload();
+			return obj;
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		files_handled(next){
+			return (this.files(next));
+		}
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		Native(){
+			const obj = new this.$.$mol_button_open_native();
+			(obj.files) = (next) => ((this.files_handled(next)));
+			(obj.accept) = () => ((this.accept()));
+			(obj.multiple) = () => ((this.multiple()));
+			return obj;
+		}
+		sub(){
+			return [(this.Icon()), (this.Native())];
+		}
+	};
+	($mol_mem(($.$mol_button_open.prototype), "Icon"));
+	($mol_mem(($.$mol_button_open.prototype), "files"));
+	($mol_mem(($.$mol_button_open.prototype), "Native"));
+	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		picked(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "input";
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		attr(){
+			return {
+				"type": "file", 
+				"accept": (this.accept()), 
+				"multiple": (this.multiple())
+			};
+		}
+		event(){
+			return {"change": (next) => (this.picked(next))};
+		}
+	};
+	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
+	($mol_mem(($.$mol_button_open_native.prototype), "files"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_open extends $.$mol_button_open {
+            files_handled(next) {
+                try {
+                    const files = this.files(next);
+                    this.status([null]);
+                    return files;
+                }
+                catch (error) {
+                    // Calling actions from catch section, if throwing promise breaks idempotency
+                    Promise.resolve().then(() => this.status([error]));
+                    $mol_fail_hidden(error);
+                }
+            }
+        }
+        $$.$mol_button_open = $mol_button_open;
+        /**
+         * File open button
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+         */
+        class $mol_button_open_native extends $.$mol_button_open_native {
+            dom_node() {
+                return super.dom_node();
+            }
+            picked() {
+                const files = this.dom_node().files;
+                if (!files || !files.length)
+                    return;
+                this.files([...files]);
+            }
+        }
+        $$.$mol_button_open_native = $mol_button_open_native;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_page) = class $mol_page extends ($.$mol_view) {
+		tabindex(){
+			return -1;
+		}
+		Logo(){
+			return null;
+		}
+		title_content(){
+			return [(this.Logo()), (this.title())];
+		}
+		Title(){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("h1");
+			(obj.sub) = () => ((this.title_content()));
+			return obj;
+		}
+		tools(){
+			return [];
+		}
+		Tools(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.tools()));
+			return obj;
+		}
+		head(){
+			return [(this.Title()), (this.Tools())];
+		}
+		Head(){
+			const obj = new this.$.$mol_view();
+			(obj.minimal_height) = () => (64);
+			(obj.dom_name) = () => ("header");
+			(obj.sub) = () => ((this.head()));
+			return obj;
+		}
+		body_scroll_top(next){
+			return (this.Body().scroll_top(next));
+		}
+		body(){
+			return [];
+		}
+		Body_content(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.body()));
+			return obj;
+		}
+		body_content(){
+			return [(this.Body_content())];
+		}
+		Body(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ((this.body_content()));
+			return obj;
+		}
+		foot(){
+			return [];
+		}
+		Foot(){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("footer");
+			(obj.sub) = () => ((this.foot()));
+			return obj;
+		}
+		dom_name(){
+			return "article";
+		}
+		attr(){
+			return {...(super.attr()), "tabIndex": (this.tabindex())};
+		}
+		sub(){
+			return [
+				(this.Head()), 
+				(this.Body()), 
+				(this.Foot())
+			];
+		}
+	};
+	($mol_mem(($.$mol_page.prototype), "Title"));
+	($mol_mem(($.$mol_page.prototype), "Tools"));
+	($mol_mem(($.$mol_page.prototype), "Head"));
+	($mol_mem(($.$mol_page.prototype), "Body_content"));
+	($mol_mem(($.$mol_page.prototype), "Body"));
+	($mol_mem(($.$mol_page.prototype), "Foot"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { per, rem } = $mol_style_unit;
+        const { hsla, blur } = $mol_style_func;
+        $mol_style_define($mol_page, {
+            display: 'flex',
+            flex: {
+                basis: 'auto',
+                direction: 'column',
+            },
+            position: 'relative',
+            alignSelf: 'stretch',
+            maxWidth: per(100),
+            maxHeight: per(100),
+            boxSizing: 'border-box',
+            color: $mol_theme.text,
+            // backdropFilter: blur( `3px` ), enforces layering
+            // zIndex: 0 ,
+            ':focus': {
+                outline: 'none',
+            },
+            Head: {
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'flex-end',
+                flex: 'none',
+                position: 'relative',
+                margin: 0,
+                minHeight: rem(4),
+                padding: $mol_gap.block,
+                background: {
+                    color: $mol_theme.card,
+                },
+                border: {
+                    radius: $mol_gap.round,
+                },
+                box: {
+                    shadow: [
+                        [0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
+                        [0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
+                    ],
+                },
+                zIndex: 2,
+                '@media': {
+                    'print': {
+                        box: {
+                            shadow: [[0, `1px`, 0, 0, hsla(0, 0, 0, .25)]],
+                        },
+                    },
+                },
+            },
+            Title: {
+                minHeight: rem(2),
+                margin: 0,
+                padding: $mol_gap.text,
+                gap: $mol_gap.text,
+                wordBreak: 'normal',
+                textShadow: '0 0',
+                font: {
+                    size: 'inherit',
+                    weight: 'normal',
+                },
+                flex: {
+                    grow: 1,
+                    shrink: 1,
+                    basis: 'auto',
+                },
+            },
+            Tools: {
+                flex: {
+                    basis: 'auto',
+                    grow: 0,
+                    shrink: 1,
+                },
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-start',
+                flexWrap: 'wrap',
+                '@media': {
+                    'print': {
+                        display: 'none',
+                    },
+                },
+            },
+            Body: {
+                flex: {
+                    grow: 1000,
+                    shrink: 1,
+                    basis: per(100),
+                },
+            },
+            Body_content: {
+                padding: $mol_gap.block,
+                minHeight: 0,
+                minWidth: 0,
+                flex: {
+                    direction: 'column',
+                    shrink: 1,
+                    grow: 1,
+                },
+                justify: {
+                    self: 'stretch',
+                },
+            },
+            Foot: {
+                display: 'flex',
+                justifyContent: 'space-between',
+                flex: 'none',
+                margin: 0,
+                background: {
+                    color: $mol_theme.card,
+                },
+                border: {
+                    radius: $mol_gap.round,
+                },
+                box: {
+                    shadow: [
+                        [0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
+                        [0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
+                    ],
+                },
+                zIndex: 1,
+                padding: $mol_gap.block,
+                ':empty': {
+                    display: 'none',
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
+		option_checked(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		option_title(id){
+			return "";
+		}
+		option_label(id){
+			return [(this.option_title(id))];
+		}
+		enabled(){
+			return true;
+		}
+		option_enabled(id){
+			return (this.enabled());
+		}
+		option_hint(id){
+			return "";
+		}
+		items(){
+			return [];
+		}
+		dictionary(){
+			return {};
+		}
+		Option(id){
+			const obj = new this.$.$mol_check();
+			(obj.checked) = (next) => ((this.option_checked(id, next)));
+			(obj.label) = () => ((this.option_label(id)));
+			(obj.enabled) = () => ((this.option_enabled(id)));
+			(obj.hint) = () => ((this.option_hint(id)));
+			(obj.minimal_height) = () => (24);
+			return obj;
+		}
+		options(){
+			return {};
+		}
+		keys(){
+			return [];
+		}
+		sub(){
+			return (this.items());
+		}
+	};
+	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
+	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * List of checkboxes
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_check_list_demo
+         */
+        class $mol_check_list extends $.$mol_check_list {
+            options() {
+                return {};
+            }
+            dictionary(next) {
+                return next ?? {};
+            }
+            option_checked(id, next) {
+                const prev = this.dictionary();
+                if (next === undefined)
+                    return prev[id] ?? null;
+                const next_rec = { ...prev, [id]: next };
+                if (next === null)
+                    delete next_rec[id];
+                return this.dictionary(next_rec)[id] ?? null;
+            }
+            keys() {
+                return Object.keys(this.options());
+            }
+            items() {
+                return this.keys().map(key => this.Option(key));
+            }
+            option_title(key) {
+                return this.options()[key] || key;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "keys", null);
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "items", null);
+        $$.$mol_check_list = $mol_check_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
+		value(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+	};
+	($mol_mem(($.$mol_switch.prototype), "value"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Buttons which switching the state
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_switch_demo
+         */
+        class $mol_switch extends $.$mol_switch {
+            value(next) {
+                return $mol_state_session.value(`${this}.value()`, next) ?? '';
+            }
+            option_checked(key, next) {
+                if (next === undefined)
+                    return this.value() == key;
+                this.value(next ? key : '');
+                return next;
+            }
+        }
+        $$.$mol_switch = $mol_switch;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -20363,230 +21378,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_page) = class $mol_page extends ($.$mol_view) {
-		tabindex(){
-			return -1;
-		}
-		Logo(){
-			return null;
-		}
-		title_content(){
-			return [(this.Logo()), (this.title())];
-		}
-		Title(){
-			const obj = new this.$.$mol_view();
-			(obj.dom_name) = () => ("h1");
-			(obj.sub) = () => ((this.title_content()));
-			return obj;
-		}
-		tools(){
-			return [];
-		}
-		Tools(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.tools()));
-			return obj;
-		}
-		head(){
-			return [(this.Title()), (this.Tools())];
-		}
-		Head(){
-			const obj = new this.$.$mol_view();
-			(obj.minimal_height) = () => (64);
-			(obj.dom_name) = () => ("header");
-			(obj.sub) = () => ((this.head()));
-			return obj;
-		}
-		body_scroll_top(next){
-			return (this.Body().scroll_top(next));
-		}
-		body(){
-			return [];
-		}
-		Body_content(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.body()));
-			return obj;
-		}
-		body_content(){
-			return [(this.Body_content())];
-		}
-		Body(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ((this.body_content()));
-			return obj;
-		}
-		foot(){
-			return [];
-		}
-		Foot(){
-			const obj = new this.$.$mol_view();
-			(obj.dom_name) = () => ("footer");
-			(obj.sub) = () => ((this.foot()));
-			return obj;
-		}
-		dom_name(){
-			return "article";
-		}
-		attr(){
-			return {...(super.attr()), "tabIndex": (this.tabindex())};
-		}
-		sub(){
-			return [
-				(this.Head()), 
-				(this.Body()), 
-				(this.Foot())
-			];
-		}
-	};
-	($mol_mem(($.$mol_page.prototype), "Title"));
-	($mol_mem(($.$mol_page.prototype), "Tools"));
-	($mol_mem(($.$mol_page.prototype), "Head"));
-	($mol_mem(($.$mol_page.prototype), "Body_content"));
-	($mol_mem(($.$mol_page.prototype), "Body"));
-	($mol_mem(($.$mol_page.prototype), "Foot"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { per, rem } = $mol_style_unit;
-        const { hsla, blur } = $mol_style_func;
-        $mol_style_define($mol_page, {
-            display: 'flex',
-            flex: {
-                basis: 'auto',
-                direction: 'column',
-            },
-            position: 'relative',
-            alignSelf: 'stretch',
-            maxWidth: per(100),
-            maxHeight: per(100),
-            boxSizing: 'border-box',
-            color: $mol_theme.text,
-            // backdropFilter: blur( `3px` ), enforces layering
-            // zIndex: 0 ,
-            ':focus': {
-                outline: 'none',
-            },
-            Head: {
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'flex-end',
-                flex: 'none',
-                position: 'relative',
-                margin: 0,
-                minHeight: rem(4),
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-                border: {
-                    radius: $mol_gap.round,
-                },
-                box: {
-                    shadow: [
-                        [0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
-                        [0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
-                    ],
-                },
-                zIndex: 2,
-                '@media': {
-                    'print': {
-                        box: {
-                            shadow: [[0, `1px`, 0, 0, hsla(0, 0, 0, .25)]],
-                        },
-                    },
-                },
-            },
-            Title: {
-                minHeight: rem(2),
-                margin: 0,
-                padding: $mol_gap.text,
-                gap: $mol_gap.text,
-                wordBreak: 'normal',
-                textShadow: '0 0',
-                font: {
-                    size: 'inherit',
-                    weight: 'normal',
-                },
-                flex: {
-                    grow: 1,
-                    shrink: 1,
-                    basis: 'auto',
-                },
-            },
-            Tools: {
-                flex: {
-                    basis: 'auto',
-                    grow: 0,
-                    shrink: 1,
-                },
-                display: 'flex',
-                justifyContent: 'flex-end',
-                alignItems: 'flex-start',
-                flexWrap: 'wrap',
-                '@media': {
-                    'print': {
-                        display: 'none',
-                    },
-                },
-            },
-            Body: {
-                flex: {
-                    grow: 1000,
-                    shrink: 1,
-                    basis: per(100),
-                },
-            },
-            Body_content: {
-                padding: $mol_gap.block,
-                minHeight: 0,
-                minWidth: 0,
-                flex: {
-                    direction: 'column',
-                    shrink: 1,
-                    grow: 1,
-                },
-                justify: {
-                    self: 'stretch',
-                },
-            },
-            Foot: {
-                display: 'flex',
-                justifyContent: 'space-between',
-                flex: 'none',
-                margin: 0,
-                background: {
-                    color: $mol_theme.card,
-                },
-                border: {
-                    radius: $mol_gap.round,
-                },
-                box: {
-                    shadow: [
-                        [0, `-0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
-                        [0, `0.5rem`, `0.5rem`, `-0.5rem`, hsla(0, 0, 0, .25)],
-                    ],
-                },
-                zIndex: 1,
-                padding: $mol_gap.block,
-                ':empty': {
-                    display: 'none',
-                },
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
 	($.$bog_max_app) = class $bog_max_app extends ($.$mol_book2) {
 		platform(){
 			return "web";
@@ -20622,9 +21413,13 @@ var $;
 		section(){
 			return "tickets";
 		}
+		staff(){
+			return false;
+		}
 		Nav(){
 			const obj = new this.$.$bog_max_nav();
 			(obj.section) = () => ((this.section()));
+			(obj.staff) = () => ((this.staff()));
 			return obj;
 		}
 		fail(){
@@ -20666,6 +21461,20 @@ var $;
 		rows(){
 			return [(this.Row(id))];
 		}
+		house_options(){
+			return [];
+		}
+		house_dictionary(){
+			return {};
+		}
+		house_filter(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		house_tab(next){
+			if(next !== undefined) return next;
+			return "tickets";
+		}
 		query(next){
 			if(next !== undefined) return next;
 			return "";
@@ -20673,17 +21482,47 @@ var $;
 		house_rows(){
 			return [];
 		}
+		news_title(id){
+			return "";
+		}
+		Post_title(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.news_title(id)));
+			return obj;
+		}
+		news_when(id){
+			return "";
+		}
+		Post_when(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.news_when(id)));
+			return obj;
+		}
+		news_text(id){
+			return "";
+		}
+		Post_text(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.news_text(id)));
+			return obj;
+		}
+		Post(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Post_title(id)), 
+				(this.Post_when(id)), 
+				(this.Post_text(id))
+			]);
+			return obj;
+		}
+		news_rows(){
+			return [(this.Post(id))];
+		}
 		account_name(){
 			return "";
 		}
 		account_id(){
 			return "";
-		}
-		house_options(){
-			return [];
-		}
-		house_dictionary(){
-			return {};
 		}
 		house(next){
 			if(next !== undefined) return next;
@@ -20699,6 +21538,148 @@ var $;
 		account_count(){
 			return "";
 		}
+		status_options(){
+			return [];
+		}
+		status_dictionary(){
+			return {};
+		}
+		admin_status(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Admin_status(id){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => ((this.status_options()));
+			(obj.dictionary) = () => ((this.status_dictionary()));
+			(obj.value) = (next) => ((this.admin_status(id, next)));
+			return obj;
+		}
+		Admin_row(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Row(id)), (this.Admin_status(id))]);
+			return obj;
+		}
+		admin_rows(){
+			return [(this.Admin_row(id))];
+		}
+		house_address(){
+			return "";
+		}
+		Qr_address(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.house_address(id)));
+			return obj;
+		}
+		qr_uri(id){
+			return "";
+		}
+		Qr(id){
+			const obj = new this.$.$bog_qr();
+			(obj.uri) = () => ((this.qr_uri(id)));
+			return obj;
+		}
+		Qr_link(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.qr_uri(id)));
+			return obj;
+		}
+		Qr_card(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Qr_address(id)), 
+				(this.Qr(id)), 
+				(this.Qr_link(id))
+			]);
+			return obj;
+		}
+		qr_rows(){
+			return [(this.Qr_card(id))];
+		}
+		post_allowed(){
+			return (this.Post_form().submit_allowed());
+		}
+		post_title_bids(){
+			return [];
+		}
+		post_title(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Post_title_input(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Post_title_input_hint")));
+			(obj.value) = (next) => ((this.post_title(next)));
+			return obj;
+		}
+		Post_title_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Post_title_field_name")));
+			(obj.bids) = () => ((this.post_title_bids()));
+			(obj.control) = () => ((this.Post_title_input()));
+			return obj;
+		}
+		post_text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Post_text_input(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Post_text_input_hint")));
+			(obj.value) = (next) => ((this.post_text(next)));
+			return obj;
+		}
+		Post_text_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Post_text_field_name")));
+			(obj.control) = () => ((this.Post_text_input()));
+			return obj;
+		}
+		post_kind(next){
+			if(next !== undefined) return next;
+			return "news";
+		}
+		Post_kind(){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => (["news", "outage"]);
+			(obj.dictionary) = () => ({"news": (this.$.$mol_locale.text("$bog_max_app_Post_kind_dictionary_news")), "outage": (this.$.$mol_locale.text("$bog_max_app_Post_kind_dictionary_outage"))});
+			(obj.value) = (next) => ((this.post_kind(next)));
+			return obj;
+		}
+		Post_kind_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Post_kind_field_name")));
+			(obj.control) = () => ((this.Post_kind()));
+			return obj;
+		}
+		post_house(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Post_house(){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => ((this.house_options()));
+			(obj.dictionary) = () => ((this.house_dictionary()));
+			(obj.value) = (next) => ((this.post_house(next)));
+			return obj;
+		}
+		Post_house_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Post_house_field_name")));
+			(obj.control) = () => ((this.Post_house()));
+			return obj;
+		}
+		post_add(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Post_submit(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Post_submit_title")));
+			(obj.click) = (next) => ((this.post_add(next)));
+			(obj.enabled) = () => ((this.post_allowed()));
+			return obj;
+		}
 		Close_new_icon(){
 			const obj = new this.$.$mol_icon_close();
 			return obj;
@@ -20709,17 +21690,34 @@ var $;
 			(obj.sub) = () => ([(this.Close_new_icon())]);
 			return obj;
 		}
-		house_address(){
-			return "";
-		}
-		House_line(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_House_line_title")));
-			(obj.content) = () => ([(this.house_address())]);
-			return obj;
+		new_body(){
+			return [];
 		}
 		submit_allowed(){
 			return (this.Form().submit_allowed());
+		}
+		scope_options(){
+			return [];
+		}
+		scope_dictionary(){
+			return {};
+		}
+		scope(next){
+			if(next !== undefined) return next;
+			return "house";
+		}
+		Scope(){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => ((this.scope_options()));
+			(obj.dictionary) = () => ((this.scope_dictionary()));
+			(obj.value) = (next) => ((this.scope(next)));
+			return obj;
+		}
+		Scope_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Scope_field_name")));
+			(obj.control) = () => ((this.Scope()));
+			return obj;
 		}
 		category_bids(){
 			return [];
@@ -20746,6 +21744,22 @@ var $;
 			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Category_field_name")));
 			(obj.bids) = () => ((this.category_bids()));
 			(obj.control) = () => ((this.Category()));
+			return obj;
+		}
+		entrance(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Entrance(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Entrance_hint")));
+			(obj.value) = (next) => ((this.entrance(next)));
+			return obj;
+		}
+		Entrance_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Entrance_field_name")));
+			(obj.control) = () => ((this.Entrance()));
 			return obj;
 		}
 		place_bids(){
@@ -20784,6 +21798,37 @@ var $;
 			(obj.control) = () => ((this.Text()));
 			return obj;
 		}
+		photo_files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		Photo_pick(){
+			const obj = new this.$.$mol_button_open();
+			(obj.files) = (next) => ((this.photo_files(next)));
+			(obj.accept) = () => ("image/*");
+			(obj.multiple) = () => (false);
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Photo_pick_hint")));
+			return obj;
+		}
+		photo_pick_label(){
+			return "";
+		}
+		Photo_name(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.photo_pick_label()));
+			return obj;
+		}
+		Photo_row(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Photo_pick()), (this.Photo_name())]);
+			return obj;
+		}
+		Photo_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Photo_field_name")));
+			(obj.control) = () => ((this.Photo_row()));
+			return obj;
+		}
 		submit(next){
 			if(next !== undefined) return next;
 			return null;
@@ -20795,15 +21840,11 @@ var $;
 			(obj.enabled) = () => ((this.submit_allowed()));
 			return obj;
 		}
-		Form(){
-			const obj = new this.$.$mol_form();
-			(obj.form_fields) = () => ([
-				(this.Category_field()), 
-				(this.Place_field()), 
-				(this.Text_field())
-			]);
-			(obj.buttons) = () => ([(this.Submit())]);
-			return obj;
+		photo_preview(){
+			return "";
+		}
+		similar_rows(){
+			return [];
 		}
 		ticket_title(){
 			return "";
@@ -20818,84 +21859,62 @@ var $;
 			(obj.sub) = () => ([(this.Close_ticket_icon())]);
 			return obj;
 		}
+		ticket_body(){
+			return [];
+		}
 		ticket_status(){
 			return "";
 		}
-		Ticket_status(){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.ticket_status()));
-			return obj;
+		ticket_note(){
+			return "";
+		}
+		ticket_photo(){
+			return "";
 		}
 		ticket_category(){
 			return "";
 		}
-		Ticket_category(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_category_title")));
-			(obj.content) = () => ([(this.ticket_category())]);
-			return obj;
-		}
 		ticket_house(){
 			return "";
-		}
-		Ticket_house(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_house_title")));
-			(obj.content) = () => ([(this.ticket_house())]);
-			return obj;
 		}
 		ticket_place(){
 			return "";
 		}
-		Ticket_place(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_place_title")));
-			(obj.content) = () => ([(this.ticket_place())]);
-			return obj;
-		}
 		ticket_text(){
 			return "";
-		}
-		Ticket_text(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_text_title")));
-			(obj.content) = () => ([(this.ticket_text())]);
-			return obj;
 		}
 		ticket_owner(){
 			return "";
 		}
-		Ticket_owner(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_owner_title")));
-			(obj.content) = () => ([(this.ticket_owner())]);
-			return obj;
-		}
 		ticket_react(){
 			return "";
-		}
-		Ticket_react(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_react_title")));
-			(obj.content) = () => ([(this.ticket_react())]);
-			return obj;
 		}
 		ticket_fix(){
 			return "";
 		}
-		Ticket_fix(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_fix_title")));
-			(obj.content) = () => ([(this.ticket_fix())]);
-			return obj;
-		}
 		ticket_basis(){
 			return "";
 		}
-		Ticket_basis(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_basis_title")));
-			(obj.content) = () => ([(this.ticket_basis())]);
+		voices_text(){
+			return "";
+		}
+		Voices_count(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.voices_text()));
+			return obj;
+		}
+		voice(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		voice_allowed(){
+			return true;
+		}
+		Voice(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Voice_title")));
+			(obj.click) = (next) => ((this.voice(next)));
+			(obj.enabled) = () => ((this.voice_allowed()));
 			return obj;
 		}
 		log_row(id){
@@ -20908,25 +21927,6 @@ var $;
 		}
 		log_rows(){
 			return [(this.Log_row(id))];
-		}
-		Log(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.log_rows()));
-			return obj;
-		}
-		ticket_body(){
-			return [
-				(this.Ticket_status()), 
-				(this.Ticket_category()), 
-				(this.Ticket_house()), 
-				(this.Ticket_place()), 
-				(this.Ticket_text()), 
-				(this.Ticket_owner()), 
-				(this.Ticket_react()), 
-				(this.Ticket_fix()), 
-				(this.Ticket_basis()), 
-				(this.Log())
-			];
 		}
 		bot_prod(){
 			return "https://cmyser-ru-max.91.188.212.151.ip.giper.dev/";
@@ -20983,6 +21983,19 @@ var $;
 			(obj.rows) = () => ((this.rows()));
 			return obj;
 		}
+		House_pick(){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => ((this.house_options()));
+			(obj.dictionary) = () => ((this.house_dictionary()));
+			(obj.value) = (next) => ((this.house_filter(next)));
+			return obj;
+		}
+		House_tabs(){
+			const obj = new this.$.$mol_switch();
+			(obj.value) = (next) => ((this.house_tab(next)));
+			(obj.options) = () => ({"tickets": (this.$.$mol_locale.text("$bog_max_app_House_tabs_options_tickets")), "news": (this.$.$mol_locale.text("$bog_max_app_House_tabs_options_news"))});
+			return obj;
+		}
 		Search(){
 			const obj = new this.$.$mol_search();
 			(obj.query) = (next) => ((this.query(next)));
@@ -20997,6 +22010,16 @@ var $;
 		House_rows(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ((this.house_rows()));
+			return obj;
+		}
+		News_empty(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_News_empty_title")));
+			return obj;
+		}
+		News(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.news_rows()));
 			return obj;
 		}
 		Account_name(){
@@ -21028,11 +22051,81 @@ var $;
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_note_title")));
 			return obj;
 		}
+		Admin_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Admin_title_title")));
+			return obj;
+		}
+		Admin_empty(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Admin_empty_title")));
+			return obj;
+		}
+		Admin_rows(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.admin_rows()));
+			return obj;
+		}
+		Qr_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Qr_title_title")));
+			return obj;
+		}
+		Qrs(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.qr_rows()));
+			return obj;
+		}
+		Post_form(){
+			const obj = new this.$.$mol_form();
+			(obj.form_fields) = () => ([
+				(this.Post_title_field()), 
+				(this.Post_text_field()), 
+				(this.Post_kind_field()), 
+				(this.Post_house_field())
+			]);
+			(obj.buttons) = () => ([(this.Post_submit())]);
+			return obj;
+		}
 		New(){
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_New_title")));
 			(obj.tools) = () => ([(this.Close_new())]);
-			(obj.body) = () => ([(this.House_line()), (this.Form())]);
+			(obj.body) = () => ((this.new_body()));
+			return obj;
+		}
+		House_line(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_House_line_title")));
+			(obj.content) = () => ([(this.house_address())]);
+			return obj;
+		}
+		Form(){
+			const obj = new this.$.$mol_form();
+			(obj.form_fields) = () => ([
+				(this.Scope_field()), 
+				(this.Category_field()), 
+				(this.Entrance_field()), 
+				(this.Place_field()), 
+				(this.Text_field()), 
+				(this.Photo_field())
+			]);
+			(obj.buttons) = () => ([(this.Submit())]);
+			return obj;
+		}
+		Photo_preview(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.photo_preview()));
+			return obj;
+		}
+		Similar_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Similar_title_title")));
+			return obj;
+		}
+		Similar(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.similar_rows()));
 			return obj;
 		}
 		Ticket(){
@@ -21040,6 +22133,79 @@ var $;
 			(obj.title) = () => ((this.ticket_title()));
 			(obj.tools) = () => ([(this.Close_ticket())]);
 			(obj.body) = () => ((this.ticket_body()));
+			return obj;
+		}
+		Ticket_status(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.ticket_status()));
+			return obj;
+		}
+		Ticket_note(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.ticket_note()));
+			return obj;
+		}
+		Ticket_photo(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.ticket_photo()));
+			return obj;
+		}
+		Ticket_category(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_category_title")));
+			(obj.content) = () => ([(this.ticket_category())]);
+			return obj;
+		}
+		Ticket_house(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_house_title")));
+			(obj.content) = () => ([(this.ticket_house())]);
+			return obj;
+		}
+		Ticket_place(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_place_title")));
+			(obj.content) = () => ([(this.ticket_place())]);
+			return obj;
+		}
+		Ticket_text(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_text_title")));
+			(obj.content) = () => ([(this.ticket_text())]);
+			return obj;
+		}
+		Ticket_owner(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_owner_title")));
+			(obj.content) = () => ([(this.ticket_owner())]);
+			return obj;
+		}
+		Ticket_react(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_react_title")));
+			(obj.content) = () => ([(this.ticket_react())]);
+			return obj;
+		}
+		Ticket_fix(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_fix_title")));
+			(obj.content) = () => ([(this.ticket_fix())]);
+			return obj;
+		}
+		Ticket_basis(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_basis_title")));
+			(obj.content) = () => ([(this.ticket_basis())]);
+			return obj;
+		}
+		Voices(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Voices_count()), (this.Voice())]);
+			return obj;
+		}
+		Log(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.log_rows()));
 			return obj;
 		}
 	};
@@ -21052,27 +22218,101 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_title"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row"));
+	($mol_mem(($.$bog_max_app.prototype), "house_filter"));
+	($mol_mem(($.$bog_max_app.prototype), "house_tab"));
 	($mol_mem(($.$bog_max_app.prototype), "query"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Post_title"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Post_when"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Post_text"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Post"));
 	($mol_mem(($.$bog_max_app.prototype), "house"));
 	($mol_mem(($.$bog_max_app.prototype), "House"));
+	($mol_mem_key(($.$bog_max_app.prototype), "admin_status"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_status"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_row"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Qr_address"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Qr"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Qr_link"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Qr_card"));
+	($mol_mem(($.$bog_max_app.prototype), "post_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_title_input"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_title_field"));
+	($mol_mem(($.$bog_max_app.prototype), "post_text"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_text_input"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_text_field"));
+	($mol_mem(($.$bog_max_app.prototype), "post_kind"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_kind"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_kind_field"));
+	($mol_mem(($.$bog_max_app.prototype), "post_house"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_house"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_house_field"));
+	($mol_mem(($.$bog_max_app.prototype), "post_add"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_new_icon"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_new"));
-	($mol_mem(($.$bog_max_app.prototype), "House_line"));
+	($mol_mem(($.$bog_max_app.prototype), "scope"));
+	($mol_mem(($.$bog_max_app.prototype), "Scope"));
+	($mol_mem(($.$bog_max_app.prototype), "Scope_field"));
 	($mol_mem(($.$bog_max_app.prototype), "category"));
 	($mol_mem(($.$bog_max_app.prototype), "Category"));
 	($mol_mem(($.$bog_max_app.prototype), "Category_field"));
+	($mol_mem(($.$bog_max_app.prototype), "entrance"));
+	($mol_mem(($.$bog_max_app.prototype), "Entrance"));
+	($mol_mem(($.$bog_max_app.prototype), "Entrance_field"));
 	($mol_mem(($.$bog_max_app.prototype), "place"));
 	($mol_mem(($.$bog_max_app.prototype), "Place"));
 	($mol_mem(($.$bog_max_app.prototype), "Place_field"));
 	($mol_mem(($.$bog_max_app.prototype), "text"));
 	($mol_mem(($.$bog_max_app.prototype), "Text"));
 	($mol_mem(($.$bog_max_app.prototype), "Text_field"));
+	($mol_mem(($.$bog_max_app.prototype), "photo_files"));
+	($mol_mem(($.$bog_max_app.prototype), "Photo_pick"));
+	($mol_mem(($.$bog_max_app.prototype), "Photo_name"));
+	($mol_mem(($.$bog_max_app.prototype), "Photo_row"));
+	($mol_mem(($.$bog_max_app.prototype), "Photo_field"));
 	($mol_mem(($.$bog_max_app.prototype), "submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Submit"));
-	($mol_mem(($.$bog_max_app.prototype), "Form"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_ticket_icon"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_ticket"));
+	($mol_mem(($.$bog_max_app.prototype), "Voices_count"));
+	($mol_mem(($.$bog_max_app.prototype), "voice"));
+	($mol_mem(($.$bog_max_app.prototype), "Voice"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Log_row"));
+	($mol_mem(($.$bog_max_app.prototype), "Main"));
+	($mol_mem(($.$bog_max_app.prototype), "Wait"));
+	($mol_mem(($.$bog_max_app.prototype), "Fail"));
+	($mol_mem(($.$bog_max_app.prototype), "New_link"));
+	($mol_mem(($.$bog_max_app.prototype), "House_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Empty"));
+	($mol_mem(($.$bog_max_app.prototype), "Rows"));
+	($mol_mem(($.$bog_max_app.prototype), "House_pick"));
+	($mol_mem(($.$bog_max_app.prototype), "House_tabs"));
+	($mol_mem(($.$bog_max_app.prototype), "Search"));
+	($mol_mem(($.$bog_max_app.prototype), "House_empty"));
+	($mol_mem(($.$bog_max_app.prototype), "House_rows"));
+	($mol_mem(($.$bog_max_app.prototype), "News_empty"));
+	($mol_mem(($.$bog_max_app.prototype), "News"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_name"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_id"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_house"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_count"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_note"));
+	($mol_mem(($.$bog_max_app.prototype), "Admin_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Admin_empty"));
+	($mol_mem(($.$bog_max_app.prototype), "Admin_rows"));
+	($mol_mem(($.$bog_max_app.prototype), "Qr_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Qrs"));
+	($mol_mem(($.$bog_max_app.prototype), "Post_form"));
+	($mol_mem(($.$bog_max_app.prototype), "New"));
+	($mol_mem(($.$bog_max_app.prototype), "House_line"));
+	($mol_mem(($.$bog_max_app.prototype), "Form"));
+	($mol_mem(($.$bog_max_app.prototype), "Photo_preview"));
+	($mol_mem(($.$bog_max_app.prototype), "Similar_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Similar"));
+	($mol_mem(($.$bog_max_app.prototype), "Ticket"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_status"));
+	($mol_mem(($.$bog_max_app.prototype), "Ticket_note"));
+	($mol_mem(($.$bog_max_app.prototype), "Ticket_photo"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_category"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_house"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_place"));
@@ -21081,25 +22321,8 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_react"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_fix"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_basis"));
-	($mol_mem_key(($.$bog_max_app.prototype), "Log_row"));
+	($mol_mem(($.$bog_max_app.prototype), "Voices"));
 	($mol_mem(($.$bog_max_app.prototype), "Log"));
-	($mol_mem(($.$bog_max_app.prototype), "Main"));
-	($mol_mem(($.$bog_max_app.prototype), "Wait"));
-	($mol_mem(($.$bog_max_app.prototype), "Fail"));
-	($mol_mem(($.$bog_max_app.prototype), "New_link"));
-	($mol_mem(($.$bog_max_app.prototype), "House_title"));
-	($mol_mem(($.$bog_max_app.prototype), "Empty"));
-	($mol_mem(($.$bog_max_app.prototype), "Rows"));
-	($mol_mem(($.$bog_max_app.prototype), "Search"));
-	($mol_mem(($.$bog_max_app.prototype), "House_empty"));
-	($mol_mem(($.$bog_max_app.prototype), "House_rows"));
-	($mol_mem(($.$bog_max_app.prototype), "Account_name"));
-	($mol_mem(($.$bog_max_app.prototype), "Account_id"));
-	($mol_mem(($.$bog_max_app.prototype), "Account_house"));
-	($mol_mem(($.$bog_max_app.prototype), "Account_count"));
-	($mol_mem(($.$bog_max_app.prototype), "Account_note"));
-	($mol_mem(($.$bog_max_app.prototype), "New"));
-	($mol_mem(($.$bog_max_app.prototype), "Ticket"));
 
 
 ;
@@ -21350,6 +22573,7 @@ var $;
     class $bog_max_category extends $giper_baza_dict.with({
         Title: $giper_baza_atom_text,
         Owner: $giper_baza_atom_text,
+        Scope: $giper_baza_atom_text,
         React: $giper_baza_atom_real,
         Fix: $giper_baza_atom_real,
         Basis: $giper_baza_atom_text,
@@ -21365,18 +22589,25 @@ var $;
     class $bog_max_ticket extends $giper_baza_dict.with({
         House: $giper_baza_atom_link.to(() => $bog_max_house),
         Category: $giper_baza_atom_link.to(() => $bog_max_category),
+        Entrance: $giper_baza_atom_text,
         Place: $giper_baza_atom_text,
         Text: $giper_baza_atom_text,
+        Photo: $giper_baza_atom_link.to(() => $giper_baza_file),
         Author: $giper_baza_atom_text,
         Status: $giper_baza_atom_text,
+        Note: $giper_baza_atom_text,
         Created: $giper_baza_atom_time,
         Log: $giper_baza_dict_to($giper_baza_atom_text),
+        Voices: $giper_baza_dict_to($giper_baza_atom_text),
     }) {
         category() {
             return this.Category()?.remote() ?? null;
         }
         house() {
             return this.House()?.remote() ?? null;
+        }
+        photo() {
+            return this.Photo()?.remote() ?? null;
         }
         react_till() {
             return this.till(this.category()?.React()?.val() ?? null);
@@ -21390,23 +22621,29 @@ var $;
                 return null;
             return created.shift({ minute: Math.round(hours * 60) });
         }
-        status_by(lord) {
-            return this.text_by(this.Status(), lord);
+        voices() {
+            return this.Voices()?.keys().length ?? 0;
         }
-        log_by(lord) {
+        status_by(lords) {
+            return this.text_by(this.Status(), lords);
+        }
+        note_by(lords) {
+            return this.text_by(this.Note(), lords);
+        }
+        log_by(lords) {
             const log = this.Log();
             if (!log)
                 return [];
             return log.keys()
-                .map(key => [String(key), this.text_by(log.key(key), lord)])
+                .map(key => [String(key), this.text_by(log.key(key), lords)])
                 .filter(([, status]) => status)
                 .sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0);
         }
-        text_by(atom, lord) {
+        text_by(atom, lords) {
             if (!atom)
                 return '';
             for (const unit of atom.units_of(null)) {
-                if (unit.lord().str !== lord)
+                if (!lords.includes(unit.lord().str))
                     continue;
                 return String(atom.land().sand_decode(unit) ?? '');
             }
@@ -21420,22 +22657,60 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $bog_max_post extends $giper_baza_dict.with({
+        Title: $giper_baza_atom_text,
+        Text: $giper_baza_atom_text,
+        Kind: $giper_baza_atom_text,
+        House: $giper_baza_atom_link.to(() => $bog_max_house),
+        Since: $giper_baza_atom_time,
+        Till: $giper_baza_atom_time,
+        Created: $giper_baza_atom_time,
+    }) {
+    }
+    $.$bog_max_post = $bog_max_post;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $bog_max_uk extends $giper_baza_dict.with({
         Title: $giper_baza_atom_text,
         Houses: $giper_baza_list_link.to(() => $bog_max_house),
         Categories: $giper_baza_list_link.to(() => $bog_max_category),
         Tickets: $giper_baza_list_link.to(() => $bog_max_ticket),
+        Posts: $giper_baza_list_link.to(() => $bog_max_post),
         Bindings: $giper_baza_dict_to($giper_baza_atom_text),
         Notified: $giper_baza_dict_to($giper_baza_atom_text),
+        Staff: $giper_baza_dict_to($giper_baza_atom_text),
     }) {
         tickets() {
             return this.Tickets()?.remote_list() ?? [];
+        }
+        posts() {
+            return this.Posts()?.remote_list() ?? [];
         }
         ticket_number(ticket) {
             return this.tickets().findIndex(item => item.link().str === ticket.link().str) + 1;
         }
         house_by_code(code) {
             return this.Houses()?.remote_list().find(house => house.Code()?.val() === code) ?? null;
+        }
+        staff_by(root) {
+            const staff = this.Staff();
+            if (!staff)
+                return [root];
+            const lords = staff.keys().map(String).filter(lord => {
+                const atom = staff.key(lord);
+                if (!atom)
+                    return false;
+                for (const unit of atom.units_of(null)) {
+                    if (unit.lord().str === root)
+                        return Boolean(atom.land().sand_decode(unit));
+                }
+                return false;
+            });
+            return [root, ...lords];
         }
     }
     $.$bog_max_uk = $bog_max_uk;
@@ -21463,6 +22738,12 @@ var $;
         ads: 'Аварийно-диспетчерская служба УК',
         rso: 'Ресурсоснабжающая организация',
         municipal: 'Муниципальная служба',
+        police: 'Участковый уполномоченный полиции',
+    };
+    $.$bog_max_scope = {
+        house: 'В доме',
+        yard: 'Во дворе',
+        city: 'В городе',
     };
 })($ || ($ = {}));
 
@@ -21514,9 +22795,9 @@ var $;
                 const url = this.bot_url();
                 if (!url)
                     $mol_fail(new Error('Адрес бота не задан'));
-                const pass = this.$.$giper_baza_auth.current().pass().toString();
                 this.$.$bog_max_bridge.loaded();
-                const init_data = $bog_max_bridge.init_data();
+                const pass = this.$.$giper_baza_auth.current().pass().toString();
+                const init_data = $bog_max_bridge.init_data() || this.dev_init_data();
                 const response = this.$.$mol_fetch.response(url + 'auth', {
                     method: 'POST',
                     headers: { 'content-type': 'application/json' },
@@ -21526,6 +22807,12 @@ var $;
                     $mol_fail(new Error(`Бот ${url} ответил: ${response.text()}`));
                 return response.json();
             }
+            dev_init_data() {
+                const id = Number(this.$.$mol_state_arg.value('user') ?? '');
+                if (!id)
+                    return '';
+                return new URLSearchParams({ user: JSON.stringify({ id, first_name: `Демо ${id}` }) }).toString();
+            }
             fail() {
                 try {
                     this.session();
@@ -21534,7 +22821,11 @@ var $;
                 catch (error) {
                     if ($mol_promise_like(error))
                         return '';
-                    return error.message;
+                    const message = error.message;
+                    if (/Failed to fetch|Load failed|NetworkError/.test(message)) {
+                        return 'Приложение работает как мини-приложение в MAX. Откройте его из чата с ботом управляющей компании.';
+                    }
+                    return message;
                 }
             }
             waiting() {
@@ -21552,8 +22843,18 @@ var $;
             uk() {
                 return this.land().Data($bog_max_uk);
             }
-            lord() {
-                return this.session().lord;
+            lords() {
+                return this.session().lords ?? [this.session().lord];
+            }
+            staff() {
+                try {
+                    return this.session().role === 'staff';
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    return false;
+                }
             }
             user_id() {
                 return String(this.session().user.id);
@@ -21567,20 +22868,14 @@ var $;
             category_of(link) {
                 return this.land().Pawn($bog_max_category).Head(new $giper_baza_link(link).head());
             }
-            mine() {
-                const user = this.user_id();
-                return this.uk().tickets()
-                    .filter(ticket => ticket.Author()?.val() === user)
-                    .map(ticket => ticket.link().str)
-                    .reverse();
-            }
             section() {
                 return this.$.$mol_state_arg.value('section') ?? 'tickets';
             }
             main_title() {
                 switch (this.section()) {
-                    case 'house': return 'Заявки дома';
+                    case 'house': return 'Дом';
                     case 'account': return 'Профиль';
+                    case 'admin': return 'Диспетчер';
                 }
                 return 'Мои заявки';
             }
@@ -21591,8 +22886,11 @@ var $;
                     return [this.Fail()];
                 switch (this.section()) {
                     case 'house': return [
-                        this.Search(),
-                        this.house_rows().length ? this.House_rows() : this.House_empty(),
+                        this.House_pick(),
+                        this.House_tabs(),
+                        ...this.house_tab() === 'news'
+                            ? [this.news_rows().length ? this.News() : this.News_empty()]
+                            : [this.Search(), this.house_rows().length ? this.House_rows() : this.House_empty()],
                     ];
                     case 'account': return [
                         this.Account_name(),
@@ -21601,6 +22899,13 @@ var $;
                         this.Account_count(),
                         this.Account_note(),
                     ];
+                    case 'admin': return this.staff() ? [
+                        this.Admin_title(),
+                        this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
+                        this.Qr_title(),
+                        this.Qrs(),
+                        this.Post_form(),
+                    ] : [this.Fail()];
                 }
                 return [
                     this.New_link(),
@@ -21608,32 +22913,12 @@ var $;
                     this.mine().length ? this.Rows() : this.Empty(),
                 ];
             }
-            neighbours() {
-                const house = this.house();
+            mine() {
+                const user = this.user_id();
                 return this.uk().tickets()
-                    .filter(ticket => ticket.House()?.val()?.str === house)
-                    .filter($mol_match_text(this.query(), ticket => [
-                    ticket.category()?.Title()?.val() ?? '',
-                    ticket.Place()?.val() ?? '',
-                    ticket.Text()?.val() ?? '',
-                ]))
+                    .filter(ticket => ticket.Author()?.val() === user)
                     .map(ticket => ticket.link().str)
                     .reverse();
-            }
-            house_rows() {
-                return this.neighbours().map(link => this.Row(link));
-            }
-            account_name() {
-                return this.session().user.name || 'Без имени';
-            }
-            account_id() {
-                return String(this.session().user.id);
-            }
-            account_count() {
-                return String(this.mine().length);
-            }
-            house_address() {
-                return this.house_dictionary()[this.house()] ?? '';
             }
             rows() {
                 return this.mine().map(link => this.Row(link));
@@ -21644,8 +22929,11 @@ var $;
             number(link) {
                 return this.uk().ticket_number(this.ticket(link));
             }
+            status_of(link) {
+                return this.ticket(link).status_by(this.lords());
+            }
             status_label(link) {
-                const status = this.ticket(link).status_by(this.lord());
+                const status = this.status_of(link);
                 if (!status)
                     return 'Отправлена, ждём регистрации';
                 return $bog_max_status[status] ?? status;
@@ -21654,21 +22942,77 @@ var $;
                 return `№ ${this.number(link)}, ${this.ticket(link).category()?.Title()?.val() ?? ''}`;
             }
             row_status(link) {
-                const fix = this.ticket(link).fix_till();
-                return this.status_label(link) + (fix ? `, до ${fix.toString('DD.MM hh:mm')}` : '');
-            }
-            screen() {
-                return this.$.$mol_state_arg.value('screen') ?? '';
-            }
-            ticket_link() {
-                return this.$.$mol_state_arg.value('ticket') ?? '';
-            }
-            pages() {
+                const ticket = this.ticket(link);
+                const fix = ticket.fix_till();
+                const voices = ticket.voices();
                 return [
-                    this.Main(),
-                    ...this.screen() === 'new' ? [this.New()] : [],
-                    ...this.ticket_link() ? [this.Ticket()] : [],
-                ];
+                    this.status_label(link),
+                    ...fix ? [`до ${fix.toString('DD.MM hh:mm')}`] : [],
+                    ...voices ? [`поддержали: ${voices}`] : [],
+                ].join(', ');
+            }
+            house_filter(next) {
+                return next ?? this.house();
+            }
+            neighbours() {
+                const house = this.house_filter();
+                return this.uk().tickets()
+                    .filter(ticket => ticket.House()?.val()?.str === house)
+                    .filter($mol_match_text(this.query(), ticket => [
+                    ticket.category()?.Title()?.val() ?? '',
+                    ticket.Entrance()?.val() ?? '',
+                    ticket.Place()?.val() ?? '',
+                    ticket.Text()?.val() ?? '',
+                ]))
+                    .map(ticket => ticket.link().str)
+                    .reverse();
+            }
+            house_rows() {
+                return this.neighbours().map(link => this.Row(link));
+            }
+            news() {
+                const house = this.house_filter();
+                return this.uk().posts()
+                    .filter(post => {
+                    const own = post.House()?.val()?.str;
+                    return !own || own === house;
+                })
+                    .map(post => post.link().str)
+                    .reverse();
+            }
+            news_rows() {
+                return this.news().map(link => this.Post(link));
+            }
+            post(link) {
+                return this.land().Pawn($bog_max_post).Head(new $giper_baza_link(link).head());
+            }
+            news_title(link) {
+                const post = this.post(link);
+                const kind = post.Kind()?.val() === 'outage' ? 'Отключение: ' : '';
+                return kind + (post.Title()?.val() ?? '');
+            }
+            news_when(link) {
+                const post = this.post(link);
+                const since = post.Since()?.val();
+                const till = post.Till()?.val();
+                if (since && till)
+                    return `с ${since.toString('DD.MM hh:mm')} до ${till.toString('DD.MM hh:mm')}`;
+                return post.Created()?.val()?.toString('DD.MM.YYYY') ?? '';
+            }
+            news_text(link) {
+                return this.post(link).Text()?.val() ?? '';
+            }
+            account_name() {
+                return this.session().user.name || 'Без имени';
+            }
+            account_id() {
+                return String(this.session().user.id);
+            }
+            account_count() {
+                return String(this.mine().length);
+            }
+            house_address(link = this.house()) {
+                return this.house_dictionary()[link] ?? '';
             }
             house_options() {
                 return this.uk().Houses()?.remote_list().map(house => house.link().str) ?? [];
@@ -21681,29 +23025,76 @@ var $;
                 const saved = String(this.$.$mol_state_local.value('$bog_max_house', next) ?? '');
                 if (options.includes(saved))
                     return saved;
+                const code = this.$.$mol_state_arg.value('house') ?? '';
+                const coded = code ? this.uk().house_by_code(code)?.link().str ?? '' : '';
+                if (options.includes(coded))
+                    return coded;
                 const linked = this.session().house ?? '';
                 if (options.includes(linked))
                     return linked;
                 return options[0] ?? '';
             }
             house_title() {
-                const address = this.house_dictionary()[this.house()] ?? '';
+                const address = this.house_address();
                 return address ? `Дом: ${address}` : '';
             }
+            scope_options() {
+                return Object.keys($bog_max_scope);
+            }
+            scope_dictionary() {
+                return $bog_max_scope;
+            }
+            categories() {
+                return this.uk().Categories()?.remote_list() ?? [];
+            }
             category_options() {
-                return this.uk().Categories()?.remote_list().map(category => category.link().str) ?? [];
+                return this.categories()
+                    .filter(category => (category.Scope()?.val() ?? 'house') === this.scope())
+                    .map(category => category.link().str);
             }
             category_dictionary() {
                 return {
                     '': 'Выберите категорию',
-                    ...Object.fromEntries(this.category_options().map(link => [link, this.category_of(link).Title()?.val() ?? ''])),
+                    ...Object.fromEntries(this.categories().map(category => [category.link().str, category.Title()?.val() ?? ''])),
                 };
             }
             category_bids() {
-                return this.category() ? [] : ['Выберите категорию'];
+                return this.category_options().includes(this.category()) ? [] : ['Выберите категорию'];
             }
             place_bids() {
                 return this.place().trim() ? [] : ['Укажите, где именно'];
+            }
+            photo_pick_label() {
+                const file = this.photo_files()[0];
+                return file ? file.name : 'Фото по желанию';
+            }
+            photo_preview() {
+                const file = this.photo_files()[0];
+                return file ? URL.createObjectURL(file) : '';
+            }
+            similar() {
+                const category = this.category();
+                const house = this.house();
+                if (!category)
+                    return [];
+                return this.uk().tickets()
+                    .filter(ticket => ticket.House()?.val()?.str === house)
+                    .filter(ticket => ticket.Category()?.val()?.str === category)
+                    .filter(ticket => !['done', 'rejected'].includes(ticket.status_by(this.lords())))
+                    .map(ticket => ticket.link().str)
+                    .reverse()
+                    .slice(0, 3);
+            }
+            similar_rows() {
+                return this.similar().map(link => this.Row(link));
+            }
+            new_body() {
+                return [
+                    this.House_line(),
+                    this.Form(),
+                    ...this.photo_preview() ? [this.Photo_preview()] : [],
+                    ...this.similar().length ? [this.Similar_title(), this.Similar()] : [],
+                ];
             }
             submit() {
                 if (!this.submit_allowed())
@@ -21712,22 +23103,46 @@ var $;
                 const house = this.house_of(this.house());
                 const category = this.category_of(this.category());
                 const author = this.user_id();
+                const file = this.photo_files()[0] ?? null;
                 const created = new $mol_time_moment();
                 const ticket = uk.Tickets('auto').make(null);
                 ticket.House('auto').remote(house);
                 ticket.Category('auto').remote(category);
+                ticket.Entrance('auto').val(this.entrance());
                 ticket.Place('auto').val(this.place());
                 ticket.Text('auto').val(this.text());
                 ticket.Author('auto').val(author);
                 ticket.Created('auto').val(created);
+                if (file) {
+                    const store = ticket.Photo('auto').ensure(null);
+                    store.blob(file);
+                    ticket.Photo('auto').remote(store);
+                }
                 this.place('');
                 this.text('');
+                this.entrance('');
                 this.category('');
+                this.photo_files([]);
                 this.$.$mol_state_arg.dict({ ...this.$.$mol_state_arg.dict(), screen: null, ticket: ticket.link().str });
+            }
+            ticket_link() {
+                return this.$.$mol_state_arg.value('ticket') ?? '';
+            }
+            screen() {
+                return this.$.$mol_state_arg.value('screen') ?? '';
+            }
+            pages() {
+                return [
+                    this.Main(),
+                    ...this.screen() === 'new' ? [this.New()] : [],
+                    ...this.ticket_link() ? [this.Ticket()] : [],
+                ];
             }
             ticket_body() {
                 return [
                     this.Ticket_status(),
+                    ...this.ticket_note() ? [this.Ticket_note()] : [],
+                    ...this.ticket_photo() ? [this.Ticket_photo()] : [],
                     this.Ticket_category(),
                     this.Ticket_house(),
                     this.Ticket_place(),
@@ -21736,8 +23151,12 @@ var $;
                     this.Ticket_react(),
                     this.Ticket_fix(),
                     this.Ticket_basis(),
+                    this.Voices(),
                     this.Log(),
                 ];
+            }
+            current() {
+                return this.ticket(this.ticket_link());
             }
             ticket_title() {
                 return `Заявка № ${this.number(this.ticket_link())}`;
@@ -21745,38 +23164,113 @@ var $;
             ticket_status() {
                 return this.status_label(this.ticket_link());
             }
+            ticket_note() {
+                return this.current().note_by(this.lords());
+            }
+            ticket_photo() {
+                const uri = this.current().photo()?.uri() ?? '';
+                return uri ? this.bot_url() + uri : '';
+            }
             ticket_category() {
-                return this.ticket(this.ticket_link()).category()?.Title()?.val() ?? '';
+                return this.current().category()?.Title()?.val() ?? '';
             }
             ticket_house() {
-                return this.ticket(this.ticket_link()).house()?.Address()?.val() ?? '';
+                return this.current().house()?.Address()?.val() ?? '';
             }
             ticket_place() {
-                return this.ticket(this.ticket_link()).Place()?.val() ?? '';
+                const ticket = this.current();
+                const entrance = ticket.Entrance()?.val() ?? '';
+                return [...entrance ? [`подъезд ${entrance}`] : [], ticket.Place()?.val() ?? ''].join(', ');
             }
             ticket_text() {
-                return this.ticket(this.ticket_link()).Text()?.val() ?? '';
+                return this.current().Text()?.val() ?? '';
             }
             ticket_owner() {
-                const owner = this.ticket(this.ticket_link()).category()?.Owner()?.val() ?? '';
+                const owner = this.current().category()?.Owner()?.val() ?? '';
                 return $bog_max_owner[owner] ?? owner;
             }
             ticket_react() {
-                return this.ticket(this.ticket_link()).react_till()?.toString('DD.MM.YYYY hh:mm') ?? 'не нормируется';
+                return this.current().react_till()?.toString('DD.MM.YYYY hh:mm') ?? 'не нормируется';
             }
             ticket_fix() {
-                return this.ticket(this.ticket_link()).fix_till()?.toString('DD.MM.YYYY hh:mm') ?? '';
+                return this.current().fix_till()?.toString('DD.MM.YYYY hh:mm') ?? '';
             }
             ticket_basis() {
-                return this.ticket(this.ticket_link()).category()?.Basis()?.val() ?? '';
+                return this.current().category()?.Basis()?.val() ?? '';
+            }
+            voices_text() {
+                const count = this.current().voices();
+                return count ? `Поддержали: ${count}` : 'Пока никто не поддержал';
+            }
+            voice_allowed() {
+                const keys = this.current().Voices()?.keys().map(String) ?? [];
+                return !keys.includes(this.user_id());
+            }
+            voice() {
+                const ticket = this.current();
+                const user = this.user_id();
+                ticket.Voices('auto').key(user, 'auto').val('1');
             }
             log_rows() {
-                return this.ticket(this.ticket_link()).log_by(this.lord()).map(([time]) => this.Log_row(time));
+                return this.current().log_by(this.lords()).map(([time]) => this.Log_row(time));
             }
             log_row(time) {
-                const status = this.ticket(this.ticket_link()).log_by(this.lord()).find(([key]) => key === time)?.[1] ?? '';
+                const status = this.current().log_by(this.lords()).find(([key]) => key === time)?.[1] ?? '';
                 const label = $bog_max_status[status] ?? status;
                 return `${new $mol_time_moment(time).toString('DD.MM hh:mm')}: ${label}`;
+            }
+            all() {
+                return this.uk().tickets().map(ticket => ticket.link().str).reverse();
+            }
+            admin_rows() {
+                return this.all().map(link => this.Admin_row(link));
+            }
+            status_options() {
+                return Object.keys($bog_max_status);
+            }
+            status_dictionary() {
+                return $bog_max_status;
+            }
+            admin_status(link, next) {
+                if (next !== undefined) {
+                    const ticket = this.ticket(link);
+                    ticket.Status('auto').val(next);
+                    ticket.Log('auto').key(new $mol_time_moment().toString(), 'auto').val(next);
+                    return next;
+                }
+                return this.status_of(link);
+            }
+            qr_rows() {
+                return this.house_options().map(link => this.Qr_card(link));
+            }
+            qr_uri(link) {
+                const code = this.house_of(link).Code()?.val() ?? '';
+                const bot = this.session().bot;
+                if (bot)
+                    return `https://max.ru/${bot}?start=house_${code}`;
+                const location = this.$.$mol_dom_context.location;
+                return `${location.origin}${location.pathname}#!house=${code}`;
+            }
+            post_title_bids() {
+                return this.post_title().trim() ? [] : ['Нужен заголовок'];
+            }
+            post_house(next) {
+                return next ?? this.house();
+            }
+            post_add() {
+                if (!this.post_allowed())
+                    return;
+                const uk = this.uk();
+                const house = this.house_of(this.post_house());
+                const created = new $mol_time_moment();
+                const post = uk.Posts('auto').make(null);
+                post.Title('auto').val(this.post_title());
+                post.Text('auto').val(this.post_text());
+                post.Kind('auto').val(this.post_kind());
+                post.House('auto').remote(house);
+                post.Created('auto').val(created);
+                this.post_title('');
+                this.post_text('');
             }
         }
         __decorate([
@@ -21790,22 +23284,22 @@ var $;
         ], $bog_max_app.prototype, "waiting", null);
         __decorate([
             $mol_mem
-        ], $bog_max_app.prototype, "mine", null);
-        __decorate([
-            $mol_mem
         ], $bog_max_app.prototype, "section", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "main_body", null);
         __decorate([
             $mol_mem
+        ], $bog_max_app.prototype, "mine", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "house_filter", null);
+        __decorate([
+            $mol_mem
         ], $bog_max_app.prototype, "neighbours", null);
         __decorate([
             $mol_mem
-        ], $bog_max_app.prototype, "screen", null);
-        __decorate([
-            $mol_mem
-        ], $bog_max_app.prototype, "ticket_link", null);
+        ], $bog_max_app.prototype, "news", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "house_options", null);
@@ -21815,6 +23309,9 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "house", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "categories", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "category_options", null);
@@ -21828,11 +23325,41 @@ var $;
             $mol_mem
         ], $bog_max_app.prototype, "place_bids", null);
         __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "photo_preview", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "similar", null);
+        __decorate([
             $mol_action
         ], $bog_max_app.prototype, "submit", null);
         __decorate([
             $mol_mem
+        ], $bog_max_app.prototype, "ticket_link", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "screen", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "voice", null);
+        __decorate([
+            $mol_mem
         ], $bog_max_app.prototype, "log_rows", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "all", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_max_app.prototype, "admin_status", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "post_title_bids", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "post_house", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "post_add", null);
         $$.$bog_max_app = $bog_max_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -21914,6 +23441,106 @@ var $;
             ':hover': {
                 background: { color: $mol_theme.field },
             },
+        },
+        Post: {
+            flex: { direction: 'column' },
+            gap: '4px',
+            padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
+            borderRadius: '16px',
+            background: { color: $mol_theme.card },
+        },
+        Post_title: {
+            font: { weight: 500 },
+        },
+        Post_when: {
+            color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
+        },
+        House_pick: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block, top: $mol_gap.block },
+        },
+        House_tabs: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Admin_title: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Admin_empty: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Admin_rows: {
+            gap: $mol_gap.space,
+        },
+        Admin_row: {
+            flex: { direction: 'column' },
+            gap: $mol_gap.space,
+            padding: { bottom: $mol_gap.block },
+        },
+        Admin_status: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Qr_title: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Qr_card: {
+            flex: { direction: 'column' },
+            align: { items: 'center' },
+            gap: $mol_gap.space,
+            padding: $mol_gap.block,
+        },
+        Qr: {
+            width: '12rem',
+            height: '12rem',
+        },
+        Qr_link: {
+            color: $mol_theme.shade,
+            font: { size: '0.75rem' },
+            wordBreak: 'break-all',
+        },
+        Post_form: {
+            padding: $mol_gap.block,
+        },
+        Photo_row: {
+            align: { items: 'center' },
+            gap: $mol_gap.space,
+        },
+        Photo_name: {
+            color: $mol_theme.shade,
+        },
+        Photo_preview: {
+            maxWidth: '100%',
+            maxHeight: '16rem',
+            objectFit: 'contain',
+            borderRadius: '16px',
+            margin: $mol_gap.block,
+        },
+        Ticket_photo: {
+            maxWidth: '100%',
+            maxHeight: '20rem',
+            objectFit: 'contain',
+            borderRadius: '16px',
+            margin: $mol_gap.block,
+        },
+        Ticket_note: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Similar_title: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Similar: {
+            gap: $mol_gap.space,
+        },
+        Voices: {
+            flex: { direction: 'column' },
+            gap: $mol_gap.space,
+            padding: $mol_gap.block,
+        },
+        Voices_count: {
+            color: $mol_theme.shade,
         },
         Row_title: {
             font: { weight: 500 },
@@ -28875,8 +30502,8 @@ var $;
             await $mol_wire_async(ops).grab();
             await $mol_wire_async(ops).write();
             const lord = $.$giper_baza_auth.current().pass().lord().str;
-            $mol_assert_equal(ops.ticket().status_by(lord), 'new');
-            $mol_assert_equal(ops.ticket().status_by('somebody'), '');
+            $mol_assert_equal(ops.ticket().status_by([lord]), 'new');
+            $mol_assert_equal(ops.ticket().status_by(['somebody']), '');
         },
     });
 })($ || ($ = {}));
@@ -28911,11 +30538,13 @@ var $;
         },
         'empty category and place get bids'($) {
             const app = $$.$bog_max_app.make({ $ });
+            app.category_options = () => ['category'];
             app.category = () => '';
             app.place = () => '  ';
             $mol_assert_equal(app.category_bids(), ['Выберите категорию']);
             $mol_assert_equal(app.place_bids(), ['Укажите, где именно']);
             const ready = $$.$bog_max_app.make({ $ });
+            ready.category_options = () => ['category'];
             ready.category = () => 'category';
             ready.place = () => 'подъезд 2';
             $mol_assert_equal(ready.category_bids(), []);
@@ -28935,7 +30564,20 @@ var $;
             app.fail = () => '';
             app.section = () => 'house';
             app.neighbours = () => [];
-            $mol_assert_equal(app.main_body(), [app.Search(), app.House_empty()]);
+            $mol_assert_equal(app.main_body(), [app.House_pick(), app.House_tabs(), app.Search(), app.House_empty()]);
+        },
+        'dispatcher section is hidden from residents'($) {
+            const app = $$.$bog_max_app.make({ $ });
+            app.waiting = () => false;
+            app.fail = () => '';
+            app.staff = () => false;
+            app.section = () => 'admin';
+            $mol_assert_equal(app.main_body(), [app.Fail()]);
+        },
+        'network failure explains that the app lives inside MAX'($) {
+            const app = $$.$bog_max_app.make({ $ });
+            app.session = () => $mol_fail(new Error('Failed to fetch'));
+            $mol_assert_ok(app.fail().includes('MAX'));
         },
         'ticket page opens by arg'($) {
             const app = $$.$bog_max_app.make({ $ });
