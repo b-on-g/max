@@ -30,8 +30,11 @@ namespace $ {
 			bot.uk_land().give( pass, $giper_baza_rank_post( 'just' ) )
 			uk.Bindings( 'auto' )!.key( String( checked.user.id ), 'auto' )!.val( pass.toString() )
 
-			const staff = bot.env_list( 'UK_STAFF' ).includes( String( checked.user.id ) )
-			if( staff ) uk.Staff( 'auto' )!.key( pass.lord().str, 'auto' )!.val( 'dispatcher' )
+			const secret = bot.env().STAFF_SECRET ?? ''
+			const invited = Boolean( secret ) && checked.start === `staff_${ secret }`
+			const listed = bot.env_list( 'UK_STAFF' ).includes( String( checked.user.id ) )
+			if( invited || listed ) uk.Staff( 'auto' )!.key( pass.lord().str, 'auto' )!.val( 'dispatcher' )
+			const staff = bot.lords().includes( pass.lord().str )
 
 			const house = checked.start ? uk.house_by_code( checked.start.replace( /^house_/, '' ) ) : null
 			const name = [ checked.user.first_name, checked.user.last_name ].filter( Boolean ).join( ' ' )
@@ -42,6 +45,7 @@ namespace $ {
 				lords: bot.lords(),
 				bot: bot.bot_name(),
 				role: staff ? 'staff' : 'resident',
+				staff_link: staff && secret ? bot.start_link( `staff_${ secret }` ) : '',
 				house: house?.link().str ?? null,
 				user: { id: checked.user.id, name },
 			})

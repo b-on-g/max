@@ -165,6 +165,39 @@ namespace $ {
 			wordBreak: 'break-all',
 		},
 
+		Staff_title: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Staff_invite: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+			wordBreak: 'break-all',
+			font: { size: '0.8125rem' },
+		},
+
+		Staff_qr: {
+			width: '10rem',
+			height: '10rem',
+			margin: { left: $mol_gap.block },
+		},
+
+		Staff_form: {
+			flex: { direction: 'column' },
+			gap: $mol_gap.space,
+			padding: $mol_gap.block,
+		},
+
+		Account_code: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		Account_code_note: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
+		},
+
 		Post_form: {
 			padding: $mol_gap.block,
 		},

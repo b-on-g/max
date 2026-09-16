@@ -97,6 +97,11 @@ $bog_max_app $mol_book2
 		content / <= account_count \
 	Account_note $mol_paragraph
 		title @ \Дом подставляется в новые заявки. Ссылка или QR-код с кодом дома выбирает его сам.
+	Account_code $mol_labeler
+		title @ \Код сотрудника
+		content / <= account_code \
+	Account_code_note $mol_paragraph
+		title @ \Сообщите код диспетчеру УК, и он откроет вам раздел диспетчера.
 	Admin_title $mol_paragraph
 		title @ \Все заявки. Статус меняется здесь или через API организации.
 	Admin_empty $mol_paragraph
@@ -122,6 +127,20 @@ $bog_max_app $mol_book2
 						uri <= qr_uri* \
 					<= Qr_link* $mol_paragraph
 						title <= qr_uri* \
+	Staff_title $mol_paragraph
+		title @ \Коллеги. Пришлите ссылку-приглашение или введите код сотрудника из его профиля.
+	Staff_invite $mol_paragraph
+		title <= staff_link \
+	Staff_qr $bog_qr
+		uri <= staff_link
+	Staff_form $mol_view
+		sub /
+			<= Staff_code $mol_string
+				hint @ \Код сотрудника
+				value? <=> staff_code? \
+			<= Staff_add $mol_button_major
+				title @ \Сделать диспетчером
+				click? <=> staff_add? null
 	Post_form $mol_form
 		submit_allowed => post_allowed
 		form_fields /

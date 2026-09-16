@@ -49,9 +49,9 @@ namespace $ {
 			return $mol_wire_sync( this.api().client().api ).getMyInfo().username ?? ''
 		}
 
-		house_link( code: string ) {
+		start_link( payload: string ) {
 			const name = this.bot_name()
-			return name ? `https://max.ru/${ name }?start=house_${ code }` : ''
+			return name ? `https://max.ru/${ name }?start=${ payload }` : ''
 		}
 
 		check( init_data: string ) {

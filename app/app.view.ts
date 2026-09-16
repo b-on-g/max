@@ -12,6 +12,7 @@ namespace $.$$ {
 		lords: readonly string[]
 		bot: string
 		role: 'resident' | 'staff'
+		staff_link: string
 		house: string | null
 		user: { id: number, name: string }
 	}
@@ -65,8 +66,12 @@ namespace $.$$ {
 
 		dev_init_data() {
 			const id = Number( this.$.$mol_state_arg.value( 'user' ) ?? '' )
-			if( !id ) return ''
-			return new URLSearchParams({ user: JSON.stringify({ id, first_name: `Демо ${ id }` }) }).toString()
+			const start = this.$.$mol_state_arg.value( 'start' ) ?? ''
+			if( !id && !start ) return ''
+			return new URLSearchParams({
+				... id ? { user: JSON.stringify({ id, first_name: `Демо ${ id }` }) } : {},
+				... start ? { start_param: start } : {},
+			}).toString()
 		}
 
 		@ $mol_mem
@@ -163,12 +168,17 @@ namespace $.$$ {
 					this.Account_house(),
 					this.Account_count(),
 					this.Account_note(),
+					this.Account_code(),
+					this.Account_code_note(),
 				]
 				case 'admin': return this.staff() ? [
 					this.Admin_title(),
 					this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
 					this.Qr_title(),
 					this.Qrs(),
+					this.Staff_title(),
+					... this.staff_link() ? [ this.Staff_invite(), this.Staff_qr() ] : [],
+					this.Staff_form(),
 					this.Post_form(),
 				] : [ this.Fail() ]
 			}
@@ -293,6 +303,22 @@ namespace $.$$ {
 
 		account_id() {
 			return String( this.session().user.id )
+		}
+
+		account_code() {
+			return this.$.$giper_baza_auth.current().pass().lord().str
+		}
+
+		staff_link() {
+			return this.session().staff_link ?? ''
+		}
+
+		@ $mol_action
+		staff_add() {
+			const code = this.staff_code().trim()
+			if( !code ) return
+			this.uk().Staff( 'auto' )!.key( code, 'auto' )!.val( 'dispatcher' )
+			this.staff_code( '' )
 		}
 
 		account_count() {

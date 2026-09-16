@@ -30,15 +30,28 @@ namespace $ {
 		staff_by( root: string ) {
 			const staff = this.Staff()
 			if( !staff ) return [ root ]
-			const lords = staff.keys().map( String ).filter( lord => {
-				const atom = staff.key( lord )
-				if( !atom ) return false
+			const trusted = new Set([ root ])
+			const authors = new Map< string, string[] >()
+			for( const key of staff.keys() ) {
+				const atom = staff.key( key )
+				if( !atom ) continue
+				const by = [] as string[]
 				for( const unit of atom.units_of( null ) ) {
-					if( unit.lord().str === root ) return Boolean( atom.land().sand_decode( unit ) )
+					if( atom.land().sand_decode( unit ) ) by.push( unit.lord().str )
 				}
-				return false
-			} )
-			return [ root, ... lords ]
+				authors.set( String( key ), by )
+			}
+			let grown = true
+			while( grown ) {
+				grown = false
+				for( const [ lord, by ] of authors ) {
+					if( trusted.has( lord ) ) continue
+					if( !by.some( author => trusted.has( author ) ) ) continue
+					trusted.add( lord )
+					grown = true
+				}
+			}
+			return [ ... trusted ]
 		}
 
 	}
