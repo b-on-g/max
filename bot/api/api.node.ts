@@ -31,6 +31,7 @@ namespace $ {
 			bot.command( 'start', ctx => ctx.reply( this.greeting(), {
 				attachments: [ this.keyboard( 'Подать заявку', '' ) ],
 			} ) )
+			bot.command( 'id', ctx => ctx.reply( `Ваш ID в MAX: ${ ctx.user?.user_id ?? '?' }. Добавьте его в UK_STAFF, чтобы открыть раздел диспетчера.` ) )
 			bot.hears( /заявк|авари|проблем|жалоб/i, ctx => ctx.reply( 'Оформить заявку можно в приложении, оно само определит ответственного и срок.', {
 				attachments: [ this.keyboard( 'Подать заявку', '' ) ],
 			} ) )
