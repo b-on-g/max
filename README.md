@@ -56,9 +56,9 @@ POST /auth   { init_data: WebApp.initData, pass: <публичный ключ ж
 Токен бота видит только бот, поэтому подпись initData проверяется там. Дальше
 мини-приложение синхронизирует ленд напрямую с ботом по WebSocket.
 
-Адрес бота приложение берёт из своего origin: nginx перед статикой проксирует `/auth`
-и WebSocket на бота, поэтому в Docker и на VPS адрес один. На GitHub Pages адрес бота
-задаётся константой `bot_prod` в `app/app.view.tree`, для отладки его можно передать
+Адрес бота приложение берёт так: на GitHub Pages это константа `bot_prod` в
+`app/app.view.tree`, в локальном Docker свой origin, потому что nginx перед статикой
+проксирует `/auth`, `/org`, файлы и WebSocket на бота. Для отладки адрес передаётся
 параметром `#!bot=host:port` без схемы и слэшей, `$mol_state_arg` режет аргументы по `/`.
 
 ## Запуск
@@ -82,7 +82,7 @@ docker compose up --build
 | `BAZA_AUTH` | Приватный ключ бота. Пусто: ключ создаётся при первом запуске и хранится в томе `state` |
 | `DEV_SKIP_VALIDATION` | `1` отключает проверку подписи для проверки без MAX. В проде `0` |
 | `BOT_NAME` | Имя бота для ссылок и QR вида `https://max.ru/<имя>?start=house_<код>`. Пусто: берётся из Bot API по токену |
-| `UK_STAFF` | ID пользователей MAX через запятую, которым доступен раздел «Диспетчер» |
+| `UK_STAFF` | ID пользователей MAX через запятую, которым доступен раздел «Диспетчер». Свой ID бот сообщает по команде `/id`, он же виден в профиле приложения |
 | `ORG_KEYS` | Ключи организаций для API вида `uk:ключ,ads:ключ,municipal:ключ` |
 
 ### Порты
@@ -99,10 +99,12 @@ docker compose up --build
 
 ### Прод
 
-На VPS с `caddy-docker-proxy` поверх базового compose кладётся `docker-compose.prod.yml`:
-бот без внешнего порта, nginx на `127.0.0.1:8081`, Caddy выпускает сертификат на
-`MAX_DOMAIN` по лейблу. Сейчас это `https://cmyser-ru-max.91.188.212.151.ip.giper.dev/`,
-он же прописан в `bot_prod` для сборки на GitHub Pages.
+Мини-приложение живёт на GitHub Pages: https://b-on-g.github.io/max/, этот адрес и указан
+в боте MAX. На VPS работает только бот: поверх базового compose кладётся
+`docker-compose.prod.yml`, который не поднимает nginx, а бота выставляет на
+`127.0.0.1:8081`, и `caddy-docker-proxy` выпускает сертификат на `MAX_DOMAIN` по лейблу.
+Сейчас это `https://cmyser-ru-max.91.188.212.151.ip.giper.dev/`, он же прописан в `bot_prod`
+приложения для сборки на Pages.
 
 ```sh
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
