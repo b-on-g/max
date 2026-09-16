@@ -93,6 +93,130 @@ namespace $ {
 			},
 		},
 
+		Post: {
+			flex: { direction: 'column' },
+			gap: '4px',
+			padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
+			borderRadius: '16px',
+			background: { color: $mol_theme.card },
+		},
+
+		Post_title: {
+			font: { weight: 500 },
+		},
+
+		Post_when: {
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
+		},
+
+		House_pick: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block, top: $mol_gap.block },
+		},
+
+		House_tabs: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		Admin_title: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Admin_empty: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Admin_rows: {
+			gap: $mol_gap.space,
+		},
+
+		Admin_row: {
+			flex: { direction: 'column' },
+			gap: $mol_gap.space,
+			padding: { bottom: $mol_gap.block },
+		},
+
+		Admin_status: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		Qr_title: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Qr_card: {
+			flex: { direction: 'column' },
+			align: { items: 'center' },
+			gap: $mol_gap.space,
+			padding: $mol_gap.block,
+		},
+
+		Qr: {
+			width: '12rem',
+			height: '12rem',
+		},
+
+		Qr_link: {
+			color: $mol_theme.shade,
+			font: { size: '0.75rem' },
+			wordBreak: 'break-all',
+		},
+
+		Post_form: {
+			padding: $mol_gap.block,
+		},
+
+		Photo_row: {
+			align: { items: 'center' },
+			gap: $mol_gap.space,
+		},
+
+		Photo_name: {
+			color: $mol_theme.shade,
+		},
+
+		Photo_preview: {
+			maxWidth: '100%',
+			maxHeight: '16rem',
+			objectFit: 'contain',
+			borderRadius: '16px',
+			margin: $mol_gap.block,
+		},
+
+		Ticket_photo: {
+			maxWidth: '100%',
+			maxHeight: '20rem',
+			objectFit: 'contain',
+			borderRadius: '16px',
+			margin: $mol_gap.block,
+		},
+
+		Ticket_note: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		Similar_title: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Similar: {
+			gap: $mol_gap.space,
+		},
+
+		Voices: {
+			flex: { direction: 'column' },
+			gap: $mol_gap.space,
+			padding: $mol_gap.block,
+		},
+
+		Voices_count: {
+			color: $mol_theme.shade,
+		},
+
 		Row_title: {
 			font: { weight: 500 },
 		},

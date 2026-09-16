@@ -30,12 +30,18 @@ namespace $ {
 			bot.uk_land().give( pass, $giper_baza_rank_post( 'just' ) )
 			uk.Bindings( 'auto' )!.key( String( checked.user.id ), 'auto' )!.val( pass.toString() )
 
-			const house = checked.start ? uk.house_by_code( checked.start ) : null
+			const staff = bot.env_list( 'UK_STAFF' ).includes( String( checked.user.id ) )
+			if( staff ) uk.Staff( 'auto' )!.key( pass.lord().str, 'auto' )!.val( 'dispatcher' )
+
+			const house = checked.start ? uk.house_by_code( checked.start.replace( /^house_/, '' ) ) : null
 			const name = [ checked.user.first_name, checked.user.last_name ].filter( Boolean ).join( ' ' )
 
 			msg.reply({
 				land: bot.uk_link(),
 				lord: bot.lord(),
+				lords: bot.lords(),
+				bot: bot.bot_name(),
+				role: staff ? 'staff' : 'resident',
 				house: house?.link().str ?? null,
 				user: { id: checked.user.id, name },
 			})

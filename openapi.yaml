@@ -1,0 +1,81 @@
+openapi: 3.1.0
+info:
+  title: Заявки в УК через MAX, API для организаций
+  version: 0.1.0
+  description: >
+    Организация (УК, АДС, РСО, муниципальная служба, участковый) получает свои заявки и меняет их статус.
+    Ключ организации задаётся в переменной ORG_KEYS бота в виде owner:ключ.
+servers:
+  - url: https://cmyser-ru-max.91.188.212.151.ip.giper.dev
+components:
+  securitySchemes:
+    org_key:
+      type: http
+      scheme: bearer
+  schemas:
+    Ticket:
+      type: object
+      required: [ link, number, status, category, owner, house, place, created ]
+      properties:
+        link: { type: string, description: Идентификатор заявки }
+        number: { type: integer }
+        status: { type: string, enum: [ new, accepted, work, done, rejected ] }
+        note: { type: string, description: Комментарий организации к статусу }
+        category: { type: string }
+        owner: { type: string, enum: [ uk, ads, rso, municipal, police ] }
+        house: { type: string }
+        entrance: { type: string }
+        place: { type: string }
+        text: { type: string }
+        photo: { type: [ string, "null" ], description: Относительный адрес файла на боте }
+        voices: { type: integer, description: Сколько жителей поддержали }
+        created: { type: [ string, "null" ], format: date-time }
+        react_till: { type: [ string, "null" ], format: date-time }
+        fix_till: { type: [ string, "null" ], format: date-time }
+        log:
+          type: array
+          items:
+            type: array
+            items: { type: string }
+            description: Пара [момент, статус]
+paths:
+  /org/tickets:
+    get:
+      summary: Заявки, адресованные организации
+      security: [ { org_key: [] } ]
+      responses:
+        '200':
+          description: Список заявок
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  owner: { type: string }
+                  tickets: { type: array, items: { $ref: '#/components/schemas/Ticket' } }
+        '401': { description: Нет или неверный ключ }
+  /org/status:
+    post:
+      summary: Сменить статус заявки
+      security: [ { org_key: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ ticket, status ]
+              properties:
+                ticket: { type: string }
+                status: { type: string, enum: [ new, accepted, work, done, rejected ] }
+                note: { type: string }
+      responses:
+        '200':
+          description: Обновлённая заявка
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Ticket' }
+        '401': { description: Нет или неверный ключ }
+        '403': { description: Заявка адресована другой организации }
+        '404': { description: Заявка не найдена }
+        '422': { description: Неверный статус или тело запроса }

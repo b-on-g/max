@@ -9,6 +9,9 @@ namespace $.$$ {
 	export type $bog_max_app_session = {
 		land: string
 		lord: string
+		lords: readonly string[]
+		bot: string
+		role: 'resident' | 'staff'
 		house: string | null
 		user: { id: number, name: string }
 	}
@@ -48,9 +51,9 @@ namespace $.$$ {
 		session(): $bog_max_app_session {
 			const url = this.bot_url()
 			if( !url ) $mol_fail( new Error( 'Адрес бота не задан' ) )
-			const pass = this.$.$giper_baza_auth.current().pass().toString()
 			this.$.$bog_max_bridge.loaded()
-			const init_data = $bog_max_bridge.init_data()
+			const pass = this.$.$giper_baza_auth.current().pass().toString()
+			const init_data = $bog_max_bridge.init_data() || this.dev_init_data()
 			const response = this.$.$mol_fetch.response( url + 'auth', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
@@ -60,6 +63,12 @@ namespace $.$$ {
 			return response.json() as $bog_max_app_session
 		}
 
+		dev_init_data() {
+			const id = Number( this.$.$mol_state_arg.value( 'user' ) ?? '' )
+			if( !id ) return ''
+			return new URLSearchParams({ user: JSON.stringify({ id, first_name: `Демо ${ id }` }) }).toString()
+		}
+
 		@ $mol_mem
 		fail() {
 			try {
@@ -67,7 +76,11 @@ namespace $.$$ {
 				return ''
 			} catch( error ) {
 				if( $mol_promise_like( error ) ) return ''
-				return ( error as Error ).message
+				const message = ( error as Error ).message
+				if( /Failed to fetch|Load failed|NetworkError/.test( message ) ) {
+					return 'Приложение работает как мини-приложение в MAX. Откройте его из чата с ботом управляющей компании.'
+				}
+				return message
 			}
 		}
 
@@ -89,8 +102,17 @@ namespace $.$$ {
 			return this.land().Data( $bog_max_uk )
 		}
 
-		lord() {
-			return this.session().lord
+		lords() {
+			return this.session().lords ?? [ this.session().lord ]
+		}
+
+		staff() {
+			try {
+				return this.session().role === 'staff'
+			} catch( error ) {
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				return false
+			}
 		}
 
 		user_id() {
@@ -110,23 +132,15 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		mine() {
-			const user = this.user_id()
-			return this.uk().tickets()
-				.filter( ticket => ticket.Author()?.val() === user )
-				.map( ticket => ticket.link().str )
-				.reverse()
-		}
-
-		@ $mol_mem
 		section() {
 			return this.$.$mol_state_arg.value( 'section' ) ?? 'tickets'
 		}
 
 		main_title() {
 			switch( this.section() ) {
-				case 'house': return 'Заявки дома'
+				case 'house': return 'Дом'
 				case 'account': return 'Профиль'
+				case 'admin': return 'Диспетчер'
 			}
 			return 'Мои заявки'
 		}
@@ -137,8 +151,11 @@ namespace $.$$ {
 			if( this.fail() ) return [ this.Fail() ]
 			switch( this.section() ) {
 				case 'house': return [
-					this.Search(),
-					this.house_rows().length ? this.House_rows() : this.House_empty(),
+					this.House_pick(),
+					this.House_tabs(),
+					... this.house_tab() === 'news'
+						? [ this.news_rows().length ? this.News() : this.News_empty() ]
+						: [ this.Search(), this.house_rows().length ? this.House_rows() : this.House_empty() ],
 				]
 				case 'account': return [
 					this.Account_name(),
@@ -147,6 +164,13 @@ namespace $.$$ {
 					this.Account_count(),
 					this.Account_note(),
 				]
+				case 'admin': return this.staff() ? [
+					this.Admin_title(),
+					this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
+					this.Qr_title(),
+					this.Qrs(),
+					this.Post_form(),
+				] : [ this.Fail() ]
 			}
 			return [
 				this.New_link(),
@@ -156,37 +180,12 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		neighbours() {
-			const house = this.house()
+		mine() {
+			const user = this.user_id()
 			return this.uk().tickets()
-				.filter( ticket => ticket.House()?.val()?.str === house )
-				.filter( $mol_match_text( this.query(), ticket => [
-					ticket.category()?.Title()?.val() ?? '',
-					ticket.Place()?.val() ?? '',
-					ticket.Text()?.val() ?? '',
-				] ) )
+				.filter( ticket => ticket.Author()?.val() === user )
 				.map( ticket => ticket.link().str )
 				.reverse()
-		}
-
-		house_rows() {
-			return this.neighbours().map( link => this.Row( link ) )
-		}
-
-		account_name() {
-			return this.session().user.name || 'Без имени'
-		}
-
-		account_id() {
-			return String( this.session().user.id )
-		}
-
-		account_count() {
-			return String( this.mine().length )
-		}
-
-		house_address() {
-			return this.house_dictionary()[ this.house() ] ?? ''
 		}
 
 		rows() {
@@ -201,8 +200,12 @@ namespace $.$$ {
 			return this.uk().ticket_number( this.ticket( link ) )
 		}
 
+		status_of( link: string ) {
+			return this.ticket( link ).status_by( this.lords() )
+		}
+
 		status_label( link: string ) {
-			const status = this.ticket( link ).status_by( this.lord() )
+			const status = this.status_of( link )
 			if( !status ) return 'Отправлена, ждём регистрации'
 			return $bog_max_status[ status as keyof typeof $bog_max_status ] ?? status
 		}
@@ -212,26 +215,92 @@ namespace $.$$ {
 		}
 
 		row_status( link: string ) {
-			const fix = this.ticket( link ).fix_till()
-			return this.status_label( link ) + ( fix ? `, до ${ fix.toString( 'DD.MM hh:mm' ) }` : '' )
-		}
-
-		@ $mol_mem
-		screen() {
-			return this.$.$mol_state_arg.value( 'screen' ) ?? ''
-		}
-
-		@ $mol_mem
-		ticket_link() {
-			return this.$.$mol_state_arg.value( 'ticket' ) ?? ''
-		}
-
-		pages() {
+			const ticket = this.ticket( link )
+			const fix = ticket.fix_till()
+			const voices = ticket.voices()
 			return [
-				this.Main(),
-				... this.screen() === 'new' ? [ this.New() ] : [],
-				... this.ticket_link() ? [ this.Ticket() ] : [],
-			]
+				this.status_label( link ),
+				... fix ? [ `до ${ fix.toString( 'DD.MM hh:mm' ) }` ] : [],
+				... voices ? [ `поддержали: ${ voices }` ] : [],
+			].join( ', ' )
+		}
+
+		@ $mol_mem
+		house_filter( next?: string ) {
+			return next ?? this.house()
+		}
+
+		@ $mol_mem
+		neighbours() {
+			const house = this.house_filter()
+			return this.uk().tickets()
+				.filter( ticket => ticket.House()?.val()?.str === house )
+				.filter( $mol_match_text( this.query(), ticket => [
+					ticket.category()?.Title()?.val() ?? '',
+					ticket.Entrance()?.val() ?? '',
+					ticket.Place()?.val() ?? '',
+					ticket.Text()?.val() ?? '',
+				] ) )
+				.map( ticket => ticket.link().str )
+				.reverse()
+		}
+
+		house_rows() {
+			return this.neighbours().map( link => this.Row( link ) )
+		}
+
+		@ $mol_mem
+		news() {
+			const house = this.house_filter()
+			return this.uk().posts()
+				.filter( post => {
+					const own = post.House()?.val()?.str
+					return !own || own === house
+				} )
+				.map( post => post.link().str )
+				.reverse()
+		}
+
+		news_rows() {
+			return this.news().map( link => this.Post( link ) )
+		}
+
+		post( link: string ) {
+			return this.land().Pawn( $bog_max_post ).Head( new $giper_baza_link( link ).head() )
+		}
+
+		news_title( link: string ) {
+			const post = this.post( link )
+			const kind = post.Kind()?.val() === 'outage' ? 'Отключение: ' : ''
+			return kind + ( post.Title()?.val() ?? '' )
+		}
+
+		news_when( link: string ) {
+			const post = this.post( link )
+			const since = post.Since()?.val()
+			const till = post.Till()?.val()
+			if( since && till ) return `с ${ since.toString( 'DD.MM hh:mm' ) } до ${ till.toString( 'DD.MM hh:mm' ) }`
+			return post.Created()?.val()?.toString( 'DD.MM.YYYY' ) ?? ''
+		}
+
+		news_text( link: string ) {
+			return this.post( link ).Text()?.val() ?? ''
+		}
+
+		account_name() {
+			return this.session().user.name || 'Без имени'
+		}
+
+		account_id() {
+			return String( this.session().user.id )
+		}
+
+		account_count() {
+			return String( this.mine().length )
+		}
+
+		house_address( link = this.house() ) {
+			return this.house_dictionary()[ link ] ?? ''
 		}
 
 		@ $mol_mem
@@ -249,37 +318,93 @@ namespace $.$$ {
 			const options = this.house_options()
 			const saved = String( this.$.$mol_state_local.value( '$bog_max_house', next ) ?? '' )
 			if( options.includes( saved ) ) return saved
+			const code = this.$.$mol_state_arg.value( 'house' ) ?? ''
+			const coded = code ? this.uk().house_by_code( code )?.link().str ?? '' : ''
+			if( options.includes( coded ) ) return coded
 			const linked = this.session().house ?? ''
 			if( options.includes( linked ) ) return linked
 			return options[0] ?? ''
 		}
 
 		house_title() {
-			const address = this.house_dictionary()[ this.house() ] ?? ''
+			const address = this.house_address()
 			return address ? `Дом: ${ address }` : ''
+		}
+
+		scope_options() {
+			return Object.keys( $bog_max_scope )
+		}
+
+		scope_dictionary() {
+			return $bog_max_scope
+		}
+
+		@ $mol_mem
+		categories() {
+			return this.uk().Categories()?.remote_list() ?? []
 		}
 
 		@ $mol_mem
 		category_options() {
-			return this.uk().Categories()?.remote_list().map( category => category.link().str ) ?? []
+			return this.categories()
+				.filter( category => ( category.Scope()?.val() ?? 'house' ) === this.scope() )
+				.map( category => category.link().str )
 		}
 
 		@ $mol_mem
 		category_dictionary() {
 			return {
 				'': 'Выберите категорию',
-				... Object.fromEntries( this.category_options().map( link => [ link, this.category_of( link ).Title()?.val() ?? '' ] ) ),
+				... Object.fromEntries( this.categories().map( category => [ category.link().str, category.Title()?.val() ?? '' ] ) ),
 			}
 		}
 
 		@ $mol_mem
 		category_bids() {
-			return this.category() ? [] : [ 'Выберите категорию' ]
+			return this.category_options().includes( this.category() ) ? [] : [ 'Выберите категорию' ]
 		}
 
 		@ $mol_mem
 		place_bids() {
 			return this.place().trim() ? [] : [ 'Укажите, где именно' ]
+		}
+
+		photo_pick_label() {
+			const file = this.photo_files()[0]
+			return file ? file.name : 'Фото по желанию'
+		}
+
+		@ $mol_mem
+		photo_preview() {
+			const file = this.photo_files()[0]
+			return file ? URL.createObjectURL( file ) : ''
+		}
+
+		@ $mol_mem
+		similar() {
+			const category = this.category()
+			const house = this.house()
+			if( !category ) return []
+			return this.uk().tickets()
+				.filter( ticket => ticket.House()?.val()?.str === house )
+				.filter( ticket => ticket.Category()?.val()?.str === category )
+				.filter( ticket => ![ 'done', 'rejected' ].includes( ticket.status_by( this.lords() ) ) )
+				.map( ticket => ticket.link().str )
+				.reverse()
+				.slice( 0, 3 )
+		}
+
+		similar_rows() {
+			return this.similar().map( link => this.Row( link ) )
+		}
+
+		new_body() {
+			return [
+				this.House_line(),
+				this.Form(),
+				... this.photo_preview() ? [ this.Photo_preview() ] : [],
+				... this.similar().length ? [ this.Similar_title(), this.Similar() ] : [],
+			]
 		}
 
 		@ $mol_action
@@ -289,23 +414,52 @@ namespace $.$$ {
 			const house = this.house_of( this.house() )
 			const category = this.category_of( this.category() )
 			const author = this.user_id()
+			const file = this.photo_files()[0] ?? null
 			const created = new $mol_time_moment()
 			const ticket = uk.Tickets( 'auto' )!.make( null )
 			ticket.House( 'auto' )!.remote( house )
 			ticket.Category( 'auto' )!.remote( category )
+			ticket.Entrance( 'auto' )!.val( this.entrance() )
 			ticket.Place( 'auto' )!.val( this.place() )
 			ticket.Text( 'auto' )!.val( this.text() )
 			ticket.Author( 'auto' )!.val( author )
 			ticket.Created( 'auto' )!.val( created )
+			if( file ) {
+				const store = ticket.Photo( 'auto' )!.ensure( null )!
+				store.blob( file )
+				ticket.Photo( 'auto' )!.remote( store )
+			}
 			this.place( '' )
 			this.text( '' )
+			this.entrance( '' )
 			this.category( '' )
+			this.photo_files( [] )
 			this.$.$mol_state_arg.dict({ ... this.$.$mol_state_arg.dict(), screen: null, ticket: ticket.link().str })
+		}
+
+		@ $mol_mem
+		ticket_link() {
+			return this.$.$mol_state_arg.value( 'ticket' ) ?? ''
+		}
+
+		@ $mol_mem
+		screen() {
+			return this.$.$mol_state_arg.value( 'screen' ) ?? ''
+		}
+
+		pages() {
+			return [
+				this.Main(),
+				... this.screen() === 'new' ? [ this.New() ] : [],
+				... this.ticket_link() ? [ this.Ticket() ] : [],
+			]
 		}
 
 		ticket_body() {
 			return [
 				this.Ticket_status(),
+				... this.ticket_note() ? [ this.Ticket_note() ] : [],
+				... this.ticket_photo() ? [ this.Ticket_photo() ] : [],
 				this.Ticket_category(),
 				this.Ticket_house(),
 				this.Ticket_place(),
@@ -314,8 +468,13 @@ namespace $.$$ {
 				this.Ticket_react(),
 				this.Ticket_fix(),
 				this.Ticket_basis(),
+				this.Voices(),
 				this.Log(),
 			]
+		}
+
+		current() {
+			return this.ticket( this.ticket_link() )
 		}
 
 		ticket_title() {
@@ -326,48 +485,142 @@ namespace $.$$ {
 			return this.status_label( this.ticket_link() )
 		}
 
+		ticket_note() {
+			return this.current().note_by( this.lords() )
+		}
+
+		ticket_photo() {
+			const uri = this.current().photo()?.uri() ?? ''
+			return uri ? this.bot_url() + uri : ''
+		}
+
 		ticket_category() {
-			return this.ticket( this.ticket_link() ).category()?.Title()?.val() ?? ''
+			return this.current().category()?.Title()?.val() ?? ''
 		}
 
 		ticket_house() {
-			return this.ticket( this.ticket_link() ).house()?.Address()?.val() ?? ''
+			return this.current().house()?.Address()?.val() ?? ''
 		}
 
 		ticket_place() {
-			return this.ticket( this.ticket_link() ).Place()?.val() ?? ''
+			const ticket = this.current()
+			const entrance = ticket.Entrance()?.val() ?? ''
+			return [ ... entrance ? [ `подъезд ${ entrance }` ] : [], ticket.Place()?.val() ?? '' ].join( ', ' )
 		}
 
 		ticket_text() {
-			return this.ticket( this.ticket_link() ).Text()?.val() ?? ''
+			return this.current().Text()?.val() ?? ''
 		}
 
 		ticket_owner() {
-			const owner = this.ticket( this.ticket_link() ).category()?.Owner()?.val() ?? ''
+			const owner = this.current().category()?.Owner()?.val() ?? ''
 			return $bog_max_owner[ owner as keyof typeof $bog_max_owner ] ?? owner
 		}
 
 		ticket_react() {
-			return this.ticket( this.ticket_link() ).react_till()?.toString( 'DD.MM.YYYY hh:mm' ) ?? 'не нормируется'
+			return this.current().react_till()?.toString( 'DD.MM.YYYY hh:mm' ) ?? 'не нормируется'
 		}
 
 		ticket_fix() {
-			return this.ticket( this.ticket_link() ).fix_till()?.toString( 'DD.MM.YYYY hh:mm' ) ?? ''
+			return this.current().fix_till()?.toString( 'DD.MM.YYYY hh:mm' ) ?? ''
 		}
 
 		ticket_basis() {
-			return this.ticket( this.ticket_link() ).category()?.Basis()?.val() ?? ''
+			return this.current().category()?.Basis()?.val() ?? ''
+		}
+
+		voices_text() {
+			const count = this.current().voices()
+			return count ? `Поддержали: ${ count }` : 'Пока никто не поддержал'
+		}
+
+		voice_allowed() {
+			const keys = this.current().Voices()?.keys().map( String ) ?? []
+			return !keys.includes( this.user_id() )
+		}
+
+		@ $mol_action
+		voice() {
+			const ticket = this.current()
+			const user = this.user_id()
+			ticket.Voices( 'auto' )!.key( user, 'auto' )!.val( '1' )
 		}
 
 		@ $mol_mem
 		log_rows() {
-			return this.ticket( this.ticket_link() ).log_by( this.lord() ).map( ([ time ])=> this.Log_row( time ) )
+			return this.current().log_by( this.lords() ).map( ([ time ])=> this.Log_row( time ) )
 		}
 
 		log_row( time: string ) {
-			const status = this.ticket( this.ticket_link() ).log_by( this.lord() ).find( ([ key ])=> key === time )?.[1] ?? ''
+			const status = this.current().log_by( this.lords() ).find( ([ key ])=> key === time )?.[1] ?? ''
 			const label = $bog_max_status[ status as keyof typeof $bog_max_status ] ?? status
 			return `${ new $mol_time_moment( time ).toString( 'DD.MM hh:mm' ) }: ${ label }`
+		}
+
+		@ $mol_mem
+		all() {
+			return this.uk().tickets().map( ticket => ticket.link().str ).reverse()
+		}
+
+		admin_rows() {
+			return this.all().map( link => this.Admin_row( link ) )
+		}
+
+		status_options() {
+			return Object.keys( $bog_max_status )
+		}
+
+		status_dictionary() {
+			return $bog_max_status
+		}
+
+		@ $mol_mem_key
+		admin_status( link: string, next?: string ) {
+			if( next !== undefined ) {
+				const ticket = this.ticket( link )
+				ticket.Status( 'auto' )!.val( next )
+				ticket.Log( 'auto' )!.key( new $mol_time_moment().toString(), 'auto' )!.val( next )
+				return next
+			}
+			return this.status_of( link )
+		}
+
+		qr_rows() {
+			return this.house_options().map( link => this.Qr_card( link ) )
+		}
+
+		qr_uri( link: string ) {
+			const code = this.house_of( link ).Code()?.val() ?? ''
+			const bot = this.session().bot
+			if( bot ) return `https://max.ru/${ bot }?start=house_${ code }`
+			const location = this.$.$mol_dom_context.location
+			return `${ location.origin }${ location.pathname }#!house=${ code }`
+		}
+
+		@ $mol_mem
+		post_title_bids() {
+			return this.post_title().trim() ? [] : [ 'Нужен заголовок' ]
+		}
+
+		@ $mol_mem
+		post_house( next?: string ) {
+			return next ?? this.house()
+		}
+
+		@ $mol_action
+		post_add() {
+			if( !this.post_allowed() ) return
+			const uk = this.uk()
+			const house = this.house_of( this.post_house() )
+			const created = new $mol_time_moment()
+			const post = uk.Posts( 'auto' )!.make( null )
+			post.Title( 'auto' )!.val( this.post_title() )
+			post.Text( 'auto' )!.val( this.post_text() )
+			post.Kind( 'auto' )!.val( this.post_kind() )
+			post.House( 'auto' )!.remote( house )
+			post.Created( 'auto' )!.val( created )
+			this.post_title( '' )
+			this.post_text( '' )
 		}
 
 	}

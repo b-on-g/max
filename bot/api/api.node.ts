@@ -31,6 +31,9 @@ namespace $ {
 			bot.command( 'start', ctx => ctx.reply( this.greeting(), {
 				attachments: [ this.keyboard( 'Подать заявку', '' ) ],
 			} ) )
+			bot.hears( /заявк|авари|проблем|жалоб/i, ctx => ctx.reply( 'Оформить заявку можно в приложении, оно само определит ответственного и срок.', {
+				attachments: [ this.keyboard( 'Подать заявку', '' ) ],
+			} ) )
 			bot.catch( error => this.$.$mol_log3_fail({ place: this, message: String( error ) }) )
 			bot.start()
 			return bot

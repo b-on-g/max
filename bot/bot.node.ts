@@ -11,8 +11,16 @@ namespace $ {
 			return this.$.$mol_env()
 		}
 
+		env_list( name: string ) {
+			return ( this.env()[ name ] ?? '' ).split( ',' ).map( item => item.trim() ).filter( Boolean )
+		}
+
 		lord() {
 			return this.$.$giper_baza_auth.current().pass().lord().str
+		}
+
+		lords() {
+			return this.uk().staff_by( this.lord() )
 		}
 
 		@ $mol_memo.method
@@ -21,11 +29,29 @@ namespace $ {
 		}
 
 		@ $mol_memo.method
+		org() {
+			return $bog_max_bot_org.make({ bot: ()=> this })
+		}
+
+		@ $mol_memo.method
 		api() {
 			return $bog_max_bot_api.make({
 				token: ()=> this.env().BOT_TOKEN ?? '',
 				app: ()=> this.env().APP_URL ?? '',
 			})
+		}
+
+		@ $mol_mem
+		bot_name() {
+			const named = this.env().BOT_NAME ?? ''
+			if( named ) return named
+			if( !this.env().BOT_TOKEN ) return ''
+			return $mol_wire_sync( this.api().client().api ).getMyInfo().username ?? ''
+		}
+
+		house_link( code: string ) {
+			const name = this.bot_name()
+			return name ? `https://max.ru/${ name }?start=house_${ code }` : ''
 		}
 
 		check( init_data: string ) {
@@ -52,11 +78,20 @@ namespace $ {
 			return this.uk_land().Data( $bog_max_uk )
 		}
 
+		ticket( link: string ) {
+			return this.uk().tickets().find( ticket => ticket.link().str === link ) ?? null
+		}
+
 		message( ticket: $bog_max_ticket ) {
-			const status = ticket.status_by( this.lord() )
+			const lords = this.lords()
+			const status = ticket.status_by( lords )
 			const label = $bog_max_status[ status as keyof typeof $bog_max_status ] ?? status
 			const lines = [ `Заявка № ${ this.uk().ticket_number( ticket ) }: ${ label }` ]
-			if( status !== 'new' ) return lines.join( '\n' )
+			const note = ticket.note_by( lords )
+			if( status !== 'new' ) {
+				if( note ) lines.push( note )
+				return lines.join( '\n' )
+			}
 			const category = ticket.category()
 			const owner = $bog_max_owner[ category?.Owner()?.val() as keyof typeof $bog_max_owner ] ?? ''
 			lines.push( `${ category?.Title()?.val() ?? '' }, ${ ticket.Place()?.val() ?? '' }` )
@@ -69,17 +104,18 @@ namespace $ {
 			return lines.join( '\n' )
 		}
 
-		register( ticket: $bog_max_ticket ) {
-			ticket.Status( 'auto' )!.val( 'new' )
-			ticket.Log( 'auto' )!.key( new $mol_time_moment().toString(), 'auto' )!.val( 'new' )
+		set_status( ticket: $bog_max_ticket, status: string, note = '' ) {
+			ticket.Status( 'auto' )!.val( status )
+			ticket.Note( 'auto' )!.val( note )
+			ticket.Log( 'auto' )!.key( new $mol_time_moment().toString(), 'auto' )!.val( status )
 		}
 
 		@ $mol_mem
 		notified() {
 			const uk = this.uk()
 			for( const ticket of uk.tickets() ) {
-				if( !ticket.status_by( this.lord() ) ) this.register( ticket )
-				const status = ticket.status_by( this.lord() )
+				if( !ticket.status_by( this.lords() ) ) this.set_status( ticket, 'new' )
+				const status = ticket.status_by( this.lords() )
 				const key = ticket.link().str
 				if( uk.Notified()?.key( key )?.val() === status ) continue
 				const author = Number( ticket.Author()?.val() ?? '' )

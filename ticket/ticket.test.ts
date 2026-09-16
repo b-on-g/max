@@ -21,8 +21,8 @@ namespace $ {
 			await $mol_wire_async( ops ).write()
 
 			const lord = $.$giper_baza_auth.current().pass().lord().str
-			$mol_assert_equal( ops.ticket().status_by( lord ), 'new' )
-			$mol_assert_equal( ops.ticket().status_by( 'somebody' ), '' )
+			$mol_assert_equal( ops.ticket().status_by([ lord ]), 'new' )
+			$mol_assert_equal( ops.ticket().status_by([ 'somebody' ]), '' )
 
 		},
 

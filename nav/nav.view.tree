@@ -1,27 +1,36 @@
 $bog_max_nav $mol_view
 	section \tickets
-	sub /
-		<= Tab_tickets $bog_max_nav_item
-			arg *
-				section null
-				screen null
-				ticket null
-			label @ \Заявки
-			active <= tickets_active \off
-			Icon <= Tickets_icon $mol_icon_clipboard_text
-		<= Tab_house $bog_max_nav_item
-			arg *
-				section \house
-				screen null
-				ticket null
-			label @ \Дом
-			active <= house_active \off
-			Icon <= House_icon $mol_icon_home_city
-		<= Tab_account $bog_max_nav_item
-			arg *
-				section \account
-				screen null
-				ticket null
-			label @ \Профиль
-			active <= account_active \off
-			Icon <= Account_icon $mol_icon_account_circle
+	staff false
+	sub <= tabs /
+	Tab_tickets $bog_max_nav_item
+		arg *
+			section null
+			screen null
+			ticket null
+		label @ \Заявки
+		active <= tickets_active \off
+		Icon <= Tickets_icon $mol_icon_clipboard_text
+	Tab_house $bog_max_nav_item
+		arg *
+			section \house
+			screen null
+			ticket null
+		label @ \Дом
+		active <= house_active \off
+		Icon <= House_icon $mol_icon_home_city
+	Tab_admin $bog_max_nav_item
+		arg *
+			section \admin
+			screen null
+			ticket null
+		label @ \Диспетчер
+		active <= admin_active \off
+		Icon <= Admin_icon $mol_icon_account_tie
+	Tab_account $bog_max_nav_item
+		arg *
+			section \account
+			screen null
+			ticket null
+		label @ \Профиль
+		active <= account_active \off
+		Icon <= Account_icon $mol_icon_account_circle
