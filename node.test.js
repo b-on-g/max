@@ -20232,8 +20232,8 @@ var $;
 var $;
 (function ($) {
     class $bog_max_ticket extends $giper_baza_dict.with({
-        House: $giper_baza_atom_link_to(() => $bog_max_house),
-        Category: $giper_baza_atom_link_to(() => $bog_max_category),
+        House: $giper_baza_atom_link.to(() => $bog_max_house),
+        Category: $giper_baza_atom_link.to(() => $bog_max_category),
         Place: $giper_baza_atom_text,
         Text: $giper_baza_atom_text,
         Author: $giper_baza_atom_text,
@@ -20291,9 +20291,9 @@ var $;
 (function ($) {
     class $bog_max_uk extends $giper_baza_dict.with({
         Title: $giper_baza_atom_text,
-        Houses: $giper_baza_list_link_to(() => $bog_max_house),
-        Categories: $giper_baza_list_link_to(() => $bog_max_category),
-        Tickets: $giper_baza_list_link_to(() => $bog_max_ticket),
+        Houses: $giper_baza_list_link.to(() => $bog_max_house),
+        Categories: $giper_baza_list_link.to(() => $bog_max_category),
+        Tickets: $giper_baza_list_link.to(() => $bog_max_ticket),
         Bindings: $giper_baza_dict_to($giper_baza_atom_text),
         Notified: $giper_baza_dict_to($giper_baza_atom_text),
     }) {
