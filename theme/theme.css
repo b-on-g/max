@@ -167,7 +167,7 @@
 	background: var(--states-button-primary-pressed);
 }
 
-[bog_max_app] [mol_button_major]:disabled {
+[bog_max_app] [mol_button_major][disabled] {
 	background: var(--states-button-primary-disabled);
 	color: var(--states-text-primary-inverse-static-disabled);
 }
