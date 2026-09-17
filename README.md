@@ -8,6 +8,12 @@
 Кто что может и все сценарии по шагам: [docs/ROLES.md](docs/ROLES.md).
 Разбор соответствия заданию глазами жюри: [docs/REVIEW.md](docs/REVIEW.md).
 Исследование проблемы, данные, метрики, масштабирование и пилот: [docs/RESEARCH.md](docs/RESEARCH.md).
+Презентация: [docs/presentation.pdf](docs/presentation.pdf), исходник `docs/presentation.html`,
+PDF собирается командой ниже.
+
+```sh
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --print-to-pdf=docs/presentation.pdf --no-pdf-header-footer "file://$PWD/docs/presentation.html"
+```
 
 ## Основной сценарий
 
