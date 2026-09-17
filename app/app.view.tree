@@ -26,6 +26,7 @@ $bog_max_app $mol_book2
 			<= Nav $bog_max_nav
 				section <= section \tickets
 				staff <= staff false
+				admin <= admin false
 	Wait $mol_paragraph
 		title @ \Подключаемся к управляющей компании…
 	Fail $mol_paragraph
@@ -106,7 +107,14 @@ $bog_max_app $mol_book2
 	Account_code_note $mol_paragraph
 		title @ \Сообщите код диспетчеру УК, и он откроет вам раздел диспетчера.
 	Admin_title $mol_paragraph
-		title @ \Все заявки. Статус меняется здесь или через API организации.
+		title @ \Последние открытые заявки. Статус меняется здесь или через API организации.
+	All_link $mol_link
+		arg *
+			screen \all
+			ticket null
+		sub /
+			<= All_button $mol_button_major
+				title <= all_title \
 	House_form $mol_form
 		submit_allowed => house_allowed
 		form_fields /
@@ -183,6 +191,8 @@ $bog_max_app $mol_book2
 					dispatcher @ \Диспетчер
 					admin @ \Админ
 				value? <=> staff_role? \dispatcher
+			<= Staff_houses_label $mol_paragraph
+				title @ \Дома диспетчера, добавьте плюсом:
 			<= Staff_houses $mol_select_list
 				options <= house_options /string
 				dictionary <= house_dictionary *
@@ -297,6 +307,24 @@ $bog_max_app $mol_book2
 		title @ \Похожая заявка уже есть. Поддержите её, так она поднимется выше:
 	Similar $mol_list
 		rows <= similar_rows /
+	All $mol_page
+		title @ \Все заявки
+		tools /
+			<= Close_all $mol_link
+				arg *
+					screen null
+				sub /
+					<= Close_all_icon $mol_icon_close
+		body /
+			<= All_search $mol_search
+				query? <=> all_query? \
+				hint @ \Поиск по номеру, категории, дому, месту
+			<= All_status $mol_select
+				options <= all_status_options /string
+				dictionary <= all_status_dictionary *
+				value? <=> all_status? \
+			<= All_rows $mol_list
+				rows <= all_rows /
 	Ticket $mol_page
 		title <= ticket_title \
 		tools /

@@ -258,7 +258,10 @@
 
 [bog_max_app_search],
 [bog_max_app_search] [mol_pop_anchor],
-[bog_max_app_search] [mol_search_query] {
+[bog_max_app_search] [mol_search_query],
+[bog_max_app_all_search],
+[bog_max_app_all_search] [mol_pop_anchor],
+[bog_max_app_all_search] [mol_search_query] {
 	flex: 1 1 auto;
 }
 
@@ -270,7 +273,8 @@
 	padding-inline: var(--spacing-size-xl);
 }
 
-[bog_max_app_search] {
+[bog_max_app_search],
+[bog_max_app_all_search] {
 	align-self: stretch;
 }
 

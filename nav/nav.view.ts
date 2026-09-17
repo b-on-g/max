@@ -6,7 +6,8 @@ namespace $.$$ {
 			return [
 				this.Tab_tickets(),
 				this.Tab_house(),
-				... this.staff() ? [ this.Tab_admin() ] : [],
+				... this.staff() ? [ this.Tab_dispatch() ] : [],
+				... this.admin() ? [ this.Tab_admin() ] : [],
 				this.Tab_account(),
 			]
 		}
@@ -17,6 +18,10 @@ namespace $.$$ {
 
 		house_active() {
 			return this.section() === 'house' ? 'on' : 'off'
+		}
+
+		dispatch_active() {
+			return this.section() === 'dispatch' ? 'on' : 'off'
 		}
 
 		admin_active() {

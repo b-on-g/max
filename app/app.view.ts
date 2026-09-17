@@ -162,7 +162,8 @@ namespace $.$$ {
 			switch( this.section() ) {
 				case 'house': return 'Дом'
 				case 'account': return 'Профиль'
-				case 'admin': return 'Диспетчер'
+				case 'dispatch': return 'Диспетчер'
+				case 'admin': return 'Админ'
 			}
 			return 'Мои заявки'
 		}
@@ -189,24 +190,26 @@ namespace $.$$ {
 					this.Account_code(),
 					this.Account_code_note(),
 				]
-				case 'admin': return this.staff() ? [
+				case 'dispatch': return this.staff() ? [
 					this.Admin_title(),
 					this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
+					this.All_link(),
 					this.Stats_title(),
 					this.Stats(),
-					... this.admin() ? [ this.Orgs_title(), this.Orgs() ] : [],
 					this.Qr_title(),
 					this.Qr_house(),
 					this.Qr(),
 					this.Qr_link(),
 					this.Qr_print(),
 					this.Post_form(),
-					... this.admin() ? [
-						this.House_form(),
-						this.Staff_title(),
-						... this.staff_link() ? [ this.Staff_invite(), this.Staff_qr() ] : [],
-						this.Staff_form(),
-					] : [],
+				] : [ this.Fail() ]
+				case 'admin': return this.admin() ? [
+					this.House_form(),
+					this.Staff_title(),
+					... this.staff_link() ? [ this.Staff_invite(), this.Staff_qr() ] : [],
+					this.Staff_form(),
+					this.Orgs_title(),
+					this.Orgs(),
 				] : [ this.Fail() ]
 			}
 			return [
@@ -591,6 +594,7 @@ namespace $.$$ {
 			return [
 				this.Main(),
 				... this.screen() === 'new' ? [ this.New() ] : [],
+				... this.screen() === 'all' && this.staff() ? [ this.All() ] : [],
 				... this.ticket_link() ? [ this.Ticket() ] : [],
 			]
 		}
@@ -706,8 +710,49 @@ namespace $.$$ {
 				.reverse()
 		}
 
+		@ $mol_mem
+		recent() {
+			return this.all()
+				.filter( link => ![ 'done', 'rejected' ].includes( this.status_of( link ) ) )
+				.slice( 0, 5 )
+		}
+
 		admin_rows() {
-			return this.all().map( link => this.Admin_row( link ) )
+			return this.recent().map( link => this.Admin_row( link ) )
+		}
+
+		all_title() {
+			return `Все заявки: ${ this.all().length }`
+		}
+
+		all_status_options() {
+			return [ '', ... Object.keys( $bog_max_status ) ]
+		}
+
+		all_status_dictionary() {
+			return { '': 'Любой статус', ... $bog_max_status }
+		}
+
+		@ $mol_mem
+		found() {
+			const status = this.all_status()
+			return this.all()
+				.filter( link => !status || this.status_of( link ) === status )
+				.filter( $mol_match_text( this.all_query(), link => {
+					const ticket = this.ticket( link )
+					return [
+						String( this.number( link ) ),
+						ticket.category()?.Title()?.val() ?? '',
+						ticket.house()?.Address()?.val() ?? '',
+						ticket.Entrance()?.val() ?? '',
+						ticket.Place()?.val() ?? '',
+						ticket.Text()?.val() ?? '',
+					]
+				} ) )
+		}
+
+		all_rows() {
+			return this.found().map( link => this.Admin_row( link ) )
 		}
 
 		stats_rows() {

@@ -147,6 +147,28 @@ namespace $ {
 			color: $mol_theme.shade,
 		},
 
+		All: {
+			flex: { grow: 0, shrink: 0, basis: '26rem' },
+		},
+
+		All_link: {
+			display: 'flex',
+			padding: $mol_gap.block,
+		},
+
+		All_search: {
+			padding: $mol_gap.block,
+		},
+
+		All_status: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		All_rows: {
+			gap: $mol_gap.space,
+			padding: { top: $mol_gap.block },
+		},
+
 		Stats_title: {
 			padding: $mol_gap.block,
 			color: $mol_theme.shade,
@@ -229,6 +251,11 @@ namespace $ {
 			width: '10rem',
 			height: '10rem',
 			margin: { left: $mol_gap.block },
+		},
+
+		Staff_houses_label: {
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
 		},
 
 		Staff_houses: {

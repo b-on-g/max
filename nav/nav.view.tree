@@ -1,6 +1,7 @@
 $bog_max_nav $mol_view
 	section \tickets
 	staff false
+	admin false
 	sub <= tabs /
 	Tab_tickets $bog_max_nav_item
 		arg *
@@ -18,14 +19,22 @@ $bog_max_nav $mol_view
 		label @ \Дом
 		active <= house_active \off
 		Icon <= House_icon $mol_icon_home_city
+	Tab_dispatch $bog_max_nav_item
+		arg *
+			section \dispatch
+			screen null
+			ticket null
+		label @ \Диспетчер
+		active <= dispatch_active \off
+		Icon <= Dispatch_icon $mol_icon_account_tie
 	Tab_admin $bog_max_nav_item
 		arg *
 			section \admin
 			screen null
 			ticket null
-		label @ \Диспетчер
+		label @ \Админ
 		active <= admin_active \off
-		Icon <= Admin_icon $mol_icon_account_tie
+		Icon <= Admin_icon $mol_icon_account_cog
 	Tab_account $bog_max_nav_item
 		arg *
 			section \account

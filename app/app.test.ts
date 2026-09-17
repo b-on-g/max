@@ -55,6 +55,8 @@ namespace $ {
 			app.waiting = ()=> false
 			app.fail = ()=> ''
 			app.role = ()=> 'resident'
+			app.section = ()=> 'dispatch'
+			$mol_assert_equal( app.main_body(), [ app.Fail() ] )
 			app.section = ()=> 'admin'
 			$mol_assert_equal( app.main_body(), [ app.Fail() ] )
 		},
