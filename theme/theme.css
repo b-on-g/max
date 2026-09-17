@@ -68,7 +68,7 @@
 	--mol_theme_luma: 1;
 	--mol_theme_image: none;
 	--mol_theme_spirit: rgb(255 255 255 / 0.75);
-	--field-fill: var(--background-secondary);
+	--field-fill: var(--background-primary);
 	--mol_theme_back: var(--background-surface);
 	--mol_theme_card: var(--background-card);
 	--mol_theme_field: var(--field-fill);
@@ -128,6 +128,16 @@
 	--mol_theme_luma: -1;
 	--mol_theme_image: invert(1) hue-rotate(180deg);
 	--mol_theme_spirit: rgb(0 0 0 / 0.75);
+}
+
+[bog_max_app] > [mol_page] {
+	background: var(--background-surface);
+}
+
+[bog_max_app_row],
+[bog_max_app_post],
+[bog_max_app_summary] {
+	background: var(--background-card);
 }
 
 [bog_max_app] [mol_page_head] {

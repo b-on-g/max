@@ -86,10 +86,9 @@ namespace $ {
 			gap: '4px',
 			padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
 			borderRadius: '16px',
-			background: { color: $mol_theme.card },
 			color: $mol_theme.text,
 			':hover': {
-				background: { color: $mol_theme.field },
+				background: { color: $mol_theme.hover },
 			},
 		},
 
@@ -98,7 +97,6 @@ namespace $ {
 			gap: '4px',
 			padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
 			borderRadius: '16px',
-			background: { color: $mol_theme.card },
 		},
 
 		Post_title: {
@@ -169,9 +167,69 @@ namespace $ {
 			padding: { top: $mol_gap.block },
 		},
 
-		Stats_title: {
+		Stats: {
+			flex: { grow: 0, shrink: 0, basis: '26rem' },
+		},
+
+		Stats_link: {
+			display: 'flex',
+			padding: $mol_gap.block,
+		},
+
+		Stats_period: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block, top: $mol_gap.block },
+			flex: { wrap: 'wrap' },
+		},
+
+		Stats_house_pick: {
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
+		Stats_summary: {
+			flex: { wrap: 'wrap' },
+			gap: $mol_gap.space,
+			padding: $mol_gap.block,
+		},
+
+		Summary: {
+			flex: { direction: 'column', grow: 1, basis: '40%' },
+			padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
+			borderRadius: '16px',
+			boxSizing: 'border-box',
+		},
+
+		Summary_value: {
+			font: { size: '1.5rem', weight: 600 },
+			lineHeight: '2rem',
+		},
+
+		Summary_label: {
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
+		},
+
+		Stats_owners_title: {
 			padding: $mol_gap.block,
 			color: $mol_theme.shade,
+		},
+
+		Stats_houses_title: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Owner_stat: {
+			flex: { direction: 'column' },
+			padding: { left: $mol_gap.block, right: $mol_gap.block, bottom: $mol_gap.space },
+		},
+
+		Owner_stat_name: {
+			font: { weight: 500 },
+		},
+
+		Owner_stat_line: {
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
 		},
 
 		Orgs_title: {

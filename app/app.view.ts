@@ -194,8 +194,6 @@ namespace $.$$ {
 					this.Admin_title(),
 					this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
 					this.All_link(),
-					this.Stats_title(),
-					this.Stats(),
 					this.Qr_title(),
 					this.Qr_house(),
 					this.Qr(),
@@ -204,6 +202,7 @@ namespace $.$$ {
 					this.Post_form(),
 				] : [ this.Fail() ]
 				case 'admin': return this.admin() ? [
+					this.Stats_link(),
 					this.House_form(),
 					this.Staff_title(),
 					... this.staff_link() ? [ this.Staff_invite(), this.Staff_qr() ] : [],
@@ -595,6 +594,7 @@ namespace $.$$ {
 				this.Main(),
 				... this.screen() === 'new' ? [ this.New() ] : [],
 				... this.screen() === 'all' && this.staff() ? [ this.All() ] : [],
+				... this.screen() === 'stats' && this.admin() ? [ this.Stats() ] : [],
 				... this.ticket_link() ? [ this.Ticket() ] : [],
 			]
 		}
@@ -755,8 +755,103 @@ namespace $.$$ {
 			return this.found().map( link => this.Admin_row( link ) )
 		}
 
+		stats_house_options() {
+			return [ '', ... this.house_options() ]
+		}
+
+		stats_house_dictionary() {
+			return { '': 'Все дома', ... this.house_dictionary() }
+		}
+
+		@ $mol_mem
+		stats_since() {
+			const period = this.stats_period()
+			if( period === 'all' ) return null
+			return new $mol_time_moment().shift({ day: -Number( period ) })
+		}
+
+		@ $mol_mem
+		stats_tickets() {
+			const since = this.stats_since()
+			const house = this.stats_house()
+			return this.uk().tickets()
+				.filter( ticket => !house || ticket.House()?.val()?.str === house )
+				.filter( ticket => !since || ( ticket.Created()?.val()?.valueOf() ?? 0 ) >= since.valueOf() )
+				.map( ticket => ticket.link().str )
+		}
+
+		measure( links: readonly string[] ) {
+			const lords = this.lords()
+			const now = new $mol_time_moment()
+			let open = 0, overdue = 0, done = 0, voices = 0, reacted = 0, react_hours = 0
+			for( const link of links ) {
+				const ticket = this.ticket( link )
+				voices += ticket.voices()
+				const status = ticket.status_by( lords )
+				const log = ticket.log_by( lords )
+				const created = ticket.Created()?.val()
+				const moved = log.find( ([ , state ])=> state !== 'new' )?.[0]
+				if( created && moved ) {
+					++ reacted
+					react_hours += ( new $mol_time_moment( moved ).valueOf() - created.valueOf() ) / 3600000
+				}
+				if( status === 'done' ) { ++ done; continue }
+				if( status === 'rejected' ) continue
+				++ open
+				const fix = ticket.fix_till()
+				if( fix && fix.valueOf() < now.valueOf() ) ++ overdue
+			}
+			return { total: links.length, open, overdue, done, voices, react: reacted ? react_hours / reacted : null }
+		}
+
+		hours( value: number | null ) {
+			if( value === null ) return 'нет данных'
+			if( value < 1 ) return `${ Math.round( value * 60 ) } мин`
+			if( value < 48 ) return `${ Math.round( value ) } ч`
+			return `${ Math.round( value / 24 ) } дн`
+		}
+
+		@ $mol_mem
+		summary() {
+			const m = this.measure( this.stats_tickets() )
+			return [
+				[ 'total', String( m.total ), 'заявок за период' ],
+				[ 'open', String( m.open ), 'открытых' ],
+				[ 'overdue', String( m.overdue ), 'просрочено по нормативу' ],
+				[ 'done', String( m.done ), 'выполнено' ],
+				[ 'react', this.hours( m.react ), 'среднее время до реакции' ],
+				[ 'voices', String( m.voices ), 'голосов соседей' ],
+			] as const
+		}
+
+		summary_rows() {
+			return this.summary().map( ([ id ])=> this.Summary( id ) )
+		}
+
+		summary_value( id: string ) {
+			return this.summary().find( ([ key ])=> key === id )?.[1] ?? ''
+		}
+
+		summary_label( id: string ) {
+			return this.summary().find( ([ key ])=> key === id )?.[2] ?? ''
+		}
+
+		owner_stat_rows() {
+			return Object.keys( $bog_max_owner ).map( owner => this.Owner_stat( owner ) )
+		}
+
+		owner_stat_name( owner: string ) {
+			return $bog_max_owner[ owner as keyof typeof $bog_max_owner ] ?? owner
+		}
+
+		owner_stat_line( owner: string ) {
+			const links = this.stats_tickets().filter( link => this.ticket( link ).category()?.Owner()?.val() === owner )
+			const m = this.measure( links )
+			return `всего ${ m.total }, открытых ${ m.open }, просрочено ${ m.overdue }, выполнено ${ m.done }, реакция ${ this.hours( m.react ) }`
+		}
+
 		stats_rows() {
-			return this.my_houses().map( link => this.Stat( link ) )
+			return this.house_options().map( link => this.Stat( link ) )
 		}
 
 		stat_house( link: string ) {
@@ -764,21 +859,9 @@ namespace $.$$ {
 		}
 
 		stat_line( link: string ) {
-			const lords = this.lords()
-			const now = new $mol_time_moment()
-			let total = 0, open = 0, overdue = 0, done = 0, voices = 0
-			for( const ticket of this.uk().tickets() ) {
-				if( ticket.House()?.val()?.str !== link ) continue
-				++ total
-				voices += ticket.voices()
-				const status = ticket.status_by( lords )
-				if( status === 'done' ) { ++ done; continue }
-				if( status === 'rejected' ) continue
-				++ open
-				const fix = ticket.fix_till()
-				if( fix && fix.valueOf() < now.valueOf() ) ++ overdue
-			}
-			return `всего ${ total }, открытых ${ open }, просрочено ${ overdue }, выполнено ${ done }, голосов соседей ${ voices }`
+			const links = this.stats_tickets().filter( item => this.ticket( item ).House()?.val()?.str === link )
+			const m = this.measure( links )
+			return `всего ${ m.total }, открытых ${ m.open }, просрочено ${ m.overdue }, выполнено ${ m.done }, голосов соседей ${ m.voices }`
 		}
 
 		org_rows() {
