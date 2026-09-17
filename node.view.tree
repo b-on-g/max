@@ -570,6 +570,22 @@ $mol_form_field $mol_labeler
 			sub / <= bid \
 	content / <= control null
 
+$mol_check_list $mol_view
+	dictionary *
+	Option* $mol_check
+		checked? <=> option_checked*? false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
+		minimal_height 24
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value? \
+
 $mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 
 $mol_select_list $mol_view
@@ -639,22 +655,6 @@ $mol_page $mol_view
 		<= Foot $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
-
-$mol_check_list $mol_view
-	dictionary *
-	Option* $mol_check
-		checked? <=> option_checked*? false
-		label <= option_label* /
-			<= option_title* \
-		enabled <= option_enabled* <= enabled true
-		hint <= option_hint* \
-		minimal_height 24
-	options *
-	keys /string
-	sub <= items /$mol_check
-
-$mol_switch $mol_check_list
-	value? \
 
 $mol_status $mol_view
 	status <= title
@@ -892,16 +892,61 @@ $bog_max_app $mol_book2
 						options <= status_options /string
 						dictionary <= status_dictionary *
 						value? <=> admin_status*? \
-	Stats_title $mol_paragraph
-		title @ \Статистика по домам
-	Stats $mol_list
-		rows <= stats_rows /
-			<= Stat* $mol_view
+	Stats_link $mol_link
+		arg *
+			screen \stats
+			ticket null
+		sub /
+			<= Stats_button $mol_button_major
+				title @ \Статистика по домам
+	Stats $mol_page
+		title @ \Статистика
+		tools /
+			<= Close_stats $mol_link
+				arg *
+					screen null
 				sub /
-					<= Stat_house* $mol_paragraph
-						title <= stat_house* \
-					<= Stat_line* $mol_paragraph
-						title <= stat_line* \
+					<= Close_stats_icon $mol_icon_close
+		body /
+			<= Stats_period $mol_switch
+				value? <=> stats_period? \30
+				options *
+					7 @ \7 дней
+					30 @ \30 дней
+					90 @ \90 дней
+					all @ \Всё время
+			<= Stats_house_pick $mol_select
+				options <= stats_house_options /string
+				dictionary <= stats_house_dictionary *
+				value? <=> stats_house? \
+			<= Stats_summary $mol_view
+				sub <= summary_rows /
+			<= Stats_owners_title $mol_paragraph
+				title @ \По ответственным
+			<= Stats_owners $mol_list
+				rows <= owner_stat_rows /
+			<= Stats_houses_title $mol_paragraph
+				title @ \По домам
+			<= Stats_houses $mol_list
+				rows <= stats_rows /
+	Summary* $mol_view
+		sub /
+			<= Summary_value* $mol_paragraph
+				title <= summary_value* \
+			<= Summary_label* $mol_paragraph
+				title <= summary_label* \
+	Owner_stat* $mol_view
+		sub /
+			<= Owner_stat_name* $mol_paragraph
+				title <= owner_stat_name* \
+			<= Owner_stat_line* $mol_paragraph
+				title <= owner_stat_line* \
+	Stat* $mol_view
+		sub /
+			<= Stat_house* $mol_paragraph
+				title <= stat_house* \
+			<= Stat_line* $mol_paragraph
+				title <= stat_line* \
 	Orgs_title $mol_paragraph
 		title @ \Интеграции организаций
 	Orgs $mol_list

@@ -18883,6 +18883,152 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
+		option_checked(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		option_title(id){
+			return "";
+		}
+		option_label(id){
+			return [(this.option_title(id))];
+		}
+		enabled(){
+			return true;
+		}
+		option_enabled(id){
+			return (this.enabled());
+		}
+		option_hint(id){
+			return "";
+		}
+		items(){
+			return [];
+		}
+		dictionary(){
+			return {};
+		}
+		Option(id){
+			const obj = new this.$.$mol_check();
+			(obj.checked) = (next) => ((this.option_checked(id, next)));
+			(obj.label) = () => ((this.option_label(id)));
+			(obj.enabled) = () => ((this.option_enabled(id)));
+			(obj.hint) = () => ((this.option_hint(id)));
+			(obj.minimal_height) = () => (24);
+			return obj;
+		}
+		options(){
+			return {};
+		}
+		keys(){
+			return [];
+		}
+		sub(){
+			return (this.items());
+		}
+	};
+	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
+	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * List of checkboxes
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_check_list_demo
+         */
+        class $mol_check_list extends $.$mol_check_list {
+            options() {
+                return {};
+            }
+            dictionary(next) {
+                return next ?? {};
+            }
+            option_checked(id, next) {
+                const prev = this.dictionary();
+                if (next === undefined)
+                    return prev[id] ?? null;
+                const next_rec = { ...prev, [id]: next };
+                if (next === null)
+                    delete next_rec[id];
+                return this.dictionary(next_rec)[id] ?? null;
+            }
+            keys() {
+                return Object.keys(this.options());
+            }
+            items() {
+                return this.keys().map(key => this.Option(key));
+            }
+            option_title(key) {
+                return this.options()[key] || key;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "keys", null);
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "items", null);
+        $$.$mol_check_list = $mol_check_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
+		value(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+	};
+	($mol_mem(($.$mol_switch.prototype), "value"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Buttons which switching the state
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_switch_demo
+         */
+        class $mol_switch extends $.$mol_switch {
+            value(next) {
+                return $mol_state_session.value(`${this}.value()`, next) ?? '';
+            }
+            option_checked(key, next) {
+                if (next === undefined)
+                    return this.value() == key;
+                this.value(next ? key : '');
+                return next;
+            }
+        }
+        $$.$mol_switch = $mol_switch;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$mol_icon_plus) = class $mol_icon_plus extends ($.$mol_icon) {
 		path(){
 			return "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z";
@@ -19439,152 +19585,6 @@ var $;
                 },
             },
         });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
-		option_checked(id, next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		option_title(id){
-			return "";
-		}
-		option_label(id){
-			return [(this.option_title(id))];
-		}
-		enabled(){
-			return true;
-		}
-		option_enabled(id){
-			return (this.enabled());
-		}
-		option_hint(id){
-			return "";
-		}
-		items(){
-			return [];
-		}
-		dictionary(){
-			return {};
-		}
-		Option(id){
-			const obj = new this.$.$mol_check();
-			(obj.checked) = (next) => ((this.option_checked(id, next)));
-			(obj.label) = () => ((this.option_label(id)));
-			(obj.enabled) = () => ((this.option_enabled(id)));
-			(obj.hint) = () => ((this.option_hint(id)));
-			(obj.minimal_height) = () => (24);
-			return obj;
-		}
-		options(){
-			return {};
-		}
-		keys(){
-			return [];
-		}
-		sub(){
-			return (this.items());
-		}
-	};
-	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
-	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * List of checkboxes
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_check_list_demo
-         */
-        class $mol_check_list extends $.$mol_check_list {
-            options() {
-                return {};
-            }
-            dictionary(next) {
-                return next ?? {};
-            }
-            option_checked(id, next) {
-                const prev = this.dictionary();
-                if (next === undefined)
-                    return prev[id] ?? null;
-                const next_rec = { ...prev, [id]: next };
-                if (next === null)
-                    delete next_rec[id];
-                return this.dictionary(next_rec)[id] ?? null;
-            }
-            keys() {
-                return Object.keys(this.options());
-            }
-            items() {
-                return this.keys().map(key => this.Option(key));
-            }
-            option_title(key) {
-                return this.options()[key] || key;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "keys", null);
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "items", null);
-        $$.$mol_check_list = $mol_check_list;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
-		value(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-	};
-	($mol_mem(($.$mol_switch.prototype), "value"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Buttons which switching the state
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_switch_demo
-         */
-        class $mol_switch extends $.$mol_switch {
-            value(next) {
-                return $mol_state_session.value(`${this}.value()`, next) ?? '';
-            }
-            option_checked(key, next) {
-                if (next === undefined)
-                    return this.value() == key;
-                this.value(next ? key : '');
-                return next;
-            }
-        }
-        $$.$mol_switch = $mol_switch;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -32319,6 +32319,119 @@ var $;
 		admin_rows(){
 			return [(this.Admin_row(id))];
 		}
+		Stats_button(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Stats_button_title")));
+			return obj;
+		}
+		Close_stats_icon(){
+			const obj = new this.$.$mol_icon_close();
+			return obj;
+		}
+		Close_stats(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({"screen": null});
+			(obj.sub) = () => ([(this.Close_stats_icon())]);
+			return obj;
+		}
+		stats_period(next){
+			if(next !== undefined) return next;
+			return "30";
+		}
+		Stats_period(){
+			const obj = new this.$.$mol_switch();
+			(obj.value) = (next) => ((this.stats_period(next)));
+			(obj.options) = () => ({
+				"7": (this.$.$mol_locale.text("$bog_max_app_Stats_period_options_7")), 
+				"30": (this.$.$mol_locale.text("$bog_max_app_Stats_period_options_30")), 
+				"90": (this.$.$mol_locale.text("$bog_max_app_Stats_period_options_90")), 
+				"all": (this.$.$mol_locale.text("$bog_max_app_Stats_period_options_all"))
+			});
+			return obj;
+		}
+		stats_house_options(){
+			return [];
+		}
+		stats_house_dictionary(){
+			return {};
+		}
+		stats_house(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Stats_house_pick(){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => ((this.stats_house_options()));
+			(obj.dictionary) = () => ((this.stats_house_dictionary()));
+			(obj.value) = (next) => ((this.stats_house(next)));
+			return obj;
+		}
+		summary_rows(){
+			return [];
+		}
+		Stats_summary(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.summary_rows()));
+			return obj;
+		}
+		Stats_owners_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Stats_owners_title_title")));
+			return obj;
+		}
+		owner_stat_rows(){
+			return [];
+		}
+		Stats_owners(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.owner_stat_rows()));
+			return obj;
+		}
+		Stats_houses_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Stats_houses_title_title")));
+			return obj;
+		}
+		stats_rows(){
+			return [];
+		}
+		Stats_houses(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.stats_rows()));
+			return obj;
+		}
+		summary_value(id){
+			return "";
+		}
+		Summary_value(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.summary_value(id)));
+			return obj;
+		}
+		summary_label(id){
+			return "";
+		}
+		Summary_label(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.summary_label(id)));
+			return obj;
+		}
+		owner_stat_name(id){
+			return "";
+		}
+		Owner_stat_name(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.owner_stat_name(id)));
+			return obj;
+		}
+		owner_stat_line(id){
+			return "";
+		}
+		Owner_stat_line(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.owner_stat_line(id)));
+			return obj;
+		}
 		stat_house(id){
 			return "";
 		}
@@ -32334,14 +32447,6 @@ var $;
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ((this.stat_line(id)));
 			return obj;
-		}
-		Stat(id){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Stat_house(id)), (this.Stat_line(id))]);
-			return obj;
-		}
-		stats_rows(){
-			return [(this.Stat(id))];
 		}
 		org_name(id){
 			return "";
@@ -32985,14 +33090,40 @@ var $;
 			(obj.rows) = () => ((this.admin_rows()));
 			return obj;
 		}
-		Stats_title(){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Stats_title_title")));
+		Stats_link(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({"screen": "stats", "ticket": null});
+			(obj.sub) = () => ([(this.Stats_button())]);
 			return obj;
 		}
 		Stats(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.stats_rows()));
+			const obj = new this.$.$mol_page();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Stats_title")));
+			(obj.tools) = () => ([(this.Close_stats())]);
+			(obj.body) = () => ([
+				(this.Stats_period()), 
+				(this.Stats_house_pick()), 
+				(this.Stats_summary()), 
+				(this.Stats_owners_title()), 
+				(this.Stats_owners()), 
+				(this.Stats_houses_title()), 
+				(this.Stats_houses())
+			]);
+			return obj;
+		}
+		Summary(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Summary_value(id)), (this.Summary_label(id))]);
+			return obj;
+		}
+		Owner_stat(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Owner_stat_name(id)), (this.Owner_stat_line(id))]);
+			return obj;
+		}
+		Stat(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Stat_house(id)), (this.Stat_line(id))]);
 			return obj;
 		}
 		Orgs_title(){
@@ -33231,9 +33362,24 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "admin_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_row"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_button"));
+	($mol_mem(($.$bog_max_app.prototype), "Close_stats_icon"));
+	($mol_mem(($.$bog_max_app.prototype), "Close_stats"));
+	($mol_mem(($.$bog_max_app.prototype), "stats_period"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_period"));
+	($mol_mem(($.$bog_max_app.prototype), "stats_house"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_house_pick"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_summary"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_owners_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_owners"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_houses_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_houses"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Summary_value"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Summary_label"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Owner_stat_name"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Owner_stat_line"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Stat_house"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Stat_line"));
-	($mol_mem_key(($.$bog_max_app.prototype), "Stat"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Org_name"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Org_state"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Org"));
@@ -33326,8 +33472,11 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "House_form"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_empty"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_rows"));
-	($mol_mem(($.$bog_max_app.prototype), "Stats_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Stats_link"));
 	($mol_mem(($.$bog_max_app.prototype), "Stats"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Summary"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Owner_stat"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Stat"));
 	($mol_mem(($.$bog_max_app.prototype), "Orgs_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Orgs"));
 	($mol_mem(($.$bog_max_app.prototype), "Qr_title"));
@@ -34395,8 +34544,6 @@ var $;
                         this.Admin_title(),
                         this.admin_rows().length ? this.Admin_rows() : this.Admin_empty(),
                         this.All_link(),
-                        this.Stats_title(),
-                        this.Stats(),
                         this.Qr_title(),
                         this.Qr_house(),
                         this.Qr(),
@@ -34405,6 +34552,7 @@ var $;
                         this.Post_form(),
                     ] : [this.Fail()];
                     case 'admin': return this.admin() ? [
+                        this.Stats_link(),
                         this.House_form(),
                         this.Staff_title(),
                         ...this.staff_link() ? [this.Staff_invite(), this.Staff_qr()] : [],
@@ -34728,6 +34876,7 @@ var $;
                     this.Main(),
                     ...this.screen() === 'new' ? [this.New()] : [],
                     ...this.screen() === 'all' && this.staff() ? [this.All()] : [],
+                    ...this.screen() === 'stats' && this.admin() ? [this.Stats()] : [],
                     ...this.ticket_link() ? [this.Ticket()] : [],
                 ];
             }
@@ -34855,22 +35004,41 @@ var $;
             all_rows() {
                 return this.found().map(link => this.Admin_row(link));
             }
-            stats_rows() {
-                return this.my_houses().map(link => this.Stat(link));
+            stats_house_options() {
+                return ['', ...this.house_options()];
             }
-            stat_house(link) {
-                return this.house_address(link);
+            stats_house_dictionary() {
+                return { '': 'Все дома', ...this.house_dictionary() };
             }
-            stat_line(link) {
+            stats_since() {
+                const period = this.stats_period();
+                if (period === 'all')
+                    return null;
+                return new $mol_time_moment().shift({ day: -Number(period) });
+            }
+            stats_tickets() {
+                const since = this.stats_since();
+                const house = this.stats_house();
+                return this.uk().tickets()
+                    .filter(ticket => !house || ticket.House()?.val()?.str === house)
+                    .filter(ticket => !since || (ticket.Created()?.val()?.valueOf() ?? 0) >= since.valueOf())
+                    .map(ticket => ticket.link().str);
+            }
+            measure(links) {
                 const lords = this.lords();
                 const now = new $mol_time_moment();
-                let total = 0, open = 0, overdue = 0, done = 0, voices = 0;
-                for (const ticket of this.uk().tickets()) {
-                    if (ticket.House()?.val()?.str !== link)
-                        continue;
-                    ++total;
+                let open = 0, overdue = 0, done = 0, voices = 0, reacted = 0, react_hours = 0;
+                for (const link of links) {
+                    const ticket = this.ticket(link);
                     voices += ticket.voices();
                     const status = ticket.status_by(lords);
+                    const log = ticket.log_by(lords);
+                    const created = ticket.Created()?.val();
+                    const moved = log.find(([, state]) => state !== 'new')?.[0];
+                    if (created && moved) {
+                        ++reacted;
+                        react_hours += (new $mol_time_moment(moved).valueOf() - created.valueOf()) / 3600000;
+                    }
                     if (status === 'done') {
                         ++done;
                         continue;
@@ -34882,7 +35050,58 @@ var $;
                     if (fix && fix.valueOf() < now.valueOf())
                         ++overdue;
                 }
-                return `всего ${total}, открытых ${open}, просрочено ${overdue}, выполнено ${done}, голосов соседей ${voices}`;
+                return { total: links.length, open, overdue, done, voices, react: reacted ? react_hours / reacted : null };
+            }
+            hours(value) {
+                if (value === null)
+                    return 'нет данных';
+                if (value < 1)
+                    return `${Math.round(value * 60)} мин`;
+                if (value < 48)
+                    return `${Math.round(value)} ч`;
+                return `${Math.round(value / 24)} дн`;
+            }
+            summary() {
+                const m = this.measure(this.stats_tickets());
+                return [
+                    ['total', String(m.total), 'заявок за период'],
+                    ['open', String(m.open), 'открытых'],
+                    ['overdue', String(m.overdue), 'просрочено по нормативу'],
+                    ['done', String(m.done), 'выполнено'],
+                    ['react', this.hours(m.react), 'среднее время до реакции'],
+                    ['voices', String(m.voices), 'голосов соседей'],
+                ];
+            }
+            summary_rows() {
+                return this.summary().map(([id]) => this.Summary(id));
+            }
+            summary_value(id) {
+                return this.summary().find(([key]) => key === id)?.[1] ?? '';
+            }
+            summary_label(id) {
+                return this.summary().find(([key]) => key === id)?.[2] ?? '';
+            }
+            owner_stat_rows() {
+                return Object.keys($bog_max_owner).map(owner => this.Owner_stat(owner));
+            }
+            owner_stat_name(owner) {
+                return $bog_max_owner[owner] ?? owner;
+            }
+            owner_stat_line(owner) {
+                const links = this.stats_tickets().filter(link => this.ticket(link).category()?.Owner()?.val() === owner);
+                const m = this.measure(links);
+                return `всего ${m.total}, открытых ${m.open}, просрочено ${m.overdue}, выполнено ${m.done}, реакция ${this.hours(m.react)}`;
+            }
+            stats_rows() {
+                return this.house_options().map(link => this.Stat(link));
+            }
+            stat_house(link) {
+                return this.house_address(link);
+            }
+            stat_line(link) {
+                const links = this.stats_tickets().filter(item => this.ticket(item).House()?.val()?.str === link);
+                const m = this.measure(links);
+                return `всего ${m.total}, открытых ${m.open}, просрочено ${m.overdue}, выполнено ${m.done}, голосов соседей ${m.voices}`;
             }
             org_rows() {
                 return Object.keys($bog_max_owner).map(owner => this.Org(owner));
@@ -35069,6 +35288,15 @@ var $;
             $mol_mem
         ], $bog_max_app.prototype, "found", null);
         __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "stats_since", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "stats_tickets", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "summary", null);
+        __decorate([
             $mol_mem_key
         ], $bog_max_app.prototype, "admin_status", null);
         __decorate([
@@ -35165,10 +35393,9 @@ var $;
             gap: '4px',
             padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
             borderRadius: '16px',
-            background: { color: $mol_theme.card },
             color: $mol_theme.text,
             ':hover': {
-                background: { color: $mol_theme.field },
+                background: { color: $mol_theme.hover },
             },
         },
         Post: {
@@ -35176,7 +35403,6 @@ var $;
             gap: '4px',
             padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
             borderRadius: '16px',
-            background: { color: $mol_theme.card },
         },
         Post_title: {
             font: { weight: 500 },
@@ -35231,9 +35457,57 @@ var $;
             gap: $mol_gap.space,
             padding: { top: $mol_gap.block },
         },
-        Stats_title: {
+        Stats: {
+            flex: { grow: 0, shrink: 0, basis: '26rem' },
+        },
+        Stats_link: {
+            display: 'flex',
+            padding: $mol_gap.block,
+        },
+        Stats_period: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block, top: $mol_gap.block },
+            flex: { wrap: 'wrap' },
+        },
+        Stats_house_pick: {
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
+        },
+        Stats_summary: {
+            flex: { wrap: 'wrap' },
+            gap: $mol_gap.space,
+            padding: $mol_gap.block,
+        },
+        Summary: {
+            flex: { direction: 'column', grow: 1, basis: '40%' },
+            padding: { top: $mol_gap.block, bottom: $mol_gap.block, left: '16px', right: '16px' },
+            borderRadius: '16px',
+            boxSizing: 'border-box',
+        },
+        Summary_value: {
+            font: { size: '1.5rem', weight: 600 },
+            lineHeight: '2rem',
+        },
+        Summary_label: {
+            color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
+        },
+        Stats_owners_title: {
             padding: $mol_gap.block,
             color: $mol_theme.shade,
+        },
+        Stats_houses_title: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Owner_stat: {
+            flex: { direction: 'column' },
+            padding: { left: $mol_gap.block, right: $mol_gap.block, bottom: $mol_gap.space },
+        },
+        Owner_stat_name: {
+            font: { weight: 500 },
+        },
+        Owner_stat_line: {
+            color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
         },
         Orgs_title: {
             padding: $mol_gap.block,
@@ -35387,7 +35661,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--field-fill: var(--background-secondary);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--field-fill);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\t--field-fill: var(--background-tertiary);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major][disabled] {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--field-fill);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n\n@media (max-width: 720px) {\n\t[bog_max_app] > [mol_page] {\n\t\tmin-width: 100%;\n\t}\n}\n\n[bog_max_app] > *::before,\n[bog_max_app] > *::after {\n\tdisplay: none;\n}\n\n[bog_max_app] [mol_form_field] [mol_select] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[bog_max_app] [mol_form_foot] {\n\tpadding: var(--spacing-size-xl) 0;\n}\n\n[bog_max_app] [mol_form_foot] [mol_button_major] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app_search],\n[bog_max_app_search] [mol_pop_anchor],\n[bog_max_app_search] [mol_search_query],\n[bog_max_app_all_search],\n[bog_max_app_all_search] [mol_pop_anchor],\n[bog_max_app_all_search] [mol_search_query] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app] [mol_labeler_content] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app_search],\n[bog_max_app_all_search] {\n\talign-self: stretch;\n}\n\n[bog_max_app] [mol_form_field_bid] {\n\tcolor: var(--text-negative);\n\tfont-size: var(--font-size-description);\n\ttext-shadow: none;\n}\n\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_string],\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_select_trigger] {\n\tbox-shadow: inset 0 0 0 1px var(--text-negative);\n}\n\n@media (min-width: 721px) {\n\t[bog_max_app] [mol_page_body_content],\n\t[bog_max_app] [mol_page_head] {\n\t\tpadding-inline: max(var(--spacing-size-xl), calc((100% - 40rem) / 2));\n\t}\n}\n\n[bog_max_app] [mol_form_field][bog_max_required=\"true\"] [mol_form_field_bid]::before {\n\tcontent: '* ';\n\tcolor: var(--text-negative);\n}\n");
+    $mol_style_attach("bog/max/theme/theme.css", "[bog_max_app] {\n\t--font: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n\t--family-base: -apple-system, system-ui, \"Helvetica Neue\", Roboto, sans-serif;\n\n\t--font-size-title: 1.0625rem;\n\t--line-height-title: 1.5rem;\n\t--font-weight-title: 600;\n\t--font-size-body: 1rem;\n\t--line-height-body: 1.25rem;\n\t--font-weight-body: 400;\n\t--font-weight-body-strong: 500;\n\t--font-size-detail: 0.9375rem;\n\t--line-height-detail: 1.25rem;\n\t--font-size-description: 0.8125rem;\n\t--line-height-description: 1rem;\n\t--font-size-label: 0.75rem;\n\t--line-height-label: 1rem;\n\t--font-size-action-medium: 1rem;\n\t--line-height-action-medium: 1.25rem;\n\t--font-weight-action-medium: 500;\n\t--letter-spacing-body: 0rem;\n\n\t--spacing-size-xs: 4px;\n\t--spacing-size-s: 6px;\n\t--spacing-size-m: 8px;\n\t--spacing-size-l: 10px;\n\t--spacing-size-xl: 12px;\n\t--spacing-size2xl: 16px;\n\t--spacing-size3xl: 20px;\n\t--size-border-radius-action-medium: 12px;\n\t--size-border-radius-action-large: 16px;\n\t--size-border-radius-button-medium: 16px;\n\t--size-border-radius-semantic-border-radius-card: 16px;\n\t--r-1652: 16px;\n\n\t--background-surface: rgb(237 238 242);\n\t--background-primary: rgb(255 255 255);\n\t--background-secondary: rgb(245 247 250);\n\t--background-tertiary: rgb(9 9 9 / 0.05);\n\t--background-card: rgb(255 255 255);\n\t--icon-primary: rgb(6 7 8 / 0.84);\n\t--icon-tertiary: rgb(6 7 8 / 0.48);\n\t--icon-mute: rgb(6 7 8 / 0.28);\n\t--icon-themed: rgb(0 122 255);\n\t--icon-positive: rgb(26 190 67);\n\t--icon-negative: rgb(255 48 60);\n\t--text-primary: rgb(6 7 8);\n\t--text-secondary: rgb(6 7 8 / 0.68);\n\t--text-tertiary: rgb(6 7 8 / 0.52);\n\t--text-primary-inverse-static: rgb(255 255 255);\n\t--text-themed: rgb(0 122 255);\n\t--text-negative: rgb(255 48 60);\n\t--divider-primary: rgb(12 13 14 / 0.16);\n\t--divider-secondary: rgb(12 13 14 / 0.06);\n\t--button-primary: rgb(0 122 255);\n\t--button-secondary: rgb(233 235 241);\n\t--button-secondary-contrast: rgb(32 54 110 / 0.1);\n\t--button-negative: rgb(255 48 60);\n\t--controls-active: rgb(0 122 255);\n\t--controls-inactive: rgb(9 9 9 / 0.08);\n\t--states-button-primary-hover: rgb(71 159 255);\n\t--states-button-primary-pressed: rgb(0 110 229);\n\t--states-button-primary-disabled: rgb(0 122 255 / 0.48);\n\t--states-text-primary-inverse-static-disabled: rgb(255 255 255 / 0.72);\n\t--states-background-hovered-transparent: rgb(13 13 13 / 0.04);\n\t--states-background-pressed-transparent: rgb(13 13 13 / 0.08);\n\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgb(255 255 255 / 0.75);\n\t--field-fill: var(--background-primary);\n\t--mol_theme_back: var(--background-surface);\n\t--mol_theme_card: var(--background-card);\n\t--mol_theme_field: var(--field-fill);\n\t--mol_theme_hover: var(--states-background-hovered-transparent);\n\t--mol_theme_text: var(--text-primary);\n\t--mol_theme_shade: var(--text-tertiary);\n\t--mol_theme_line: var(--divider-primary);\n\t--mol_theme_focus: var(--controls-active);\n\t--mol_theme_control: var(--text-themed);\n\t--mol_theme_current: var(--text-themed);\n\t--mol_theme_special: var(--text-negative);\n\t--mol_gap_block: var(--spacing-size-xl);\n\t--mol_gap_space: var(--spacing-size-s);\n\t--mol_gap_text: var(--spacing-size-m) var(--spacing-size-xl);\n\t--mol_gap_round: var(--size-border-radius-action-medium);\n\n\tfont-family: var(--family-base);\n\tfont-size: var(--font-size-body);\n\tline-height: var(--line-height-body);\n\tletter-spacing: var(--letter-spacing-body);\n\ttext-rendering: optimizeLegibility;\n\t-webkit-font-smoothing: antialiased;\n}\n\n[bog_max_app][bog_max_platform=\"ios\"] {\n\t--letter-spacing-body: -0.019375rem;\n}\n\n[bog_max_app][bog_max_platform=\"android\"] {\n\t--letter-spacing-body: 0.009375rem;\n}\n\n[bog_max_app][mol_theme='$mol_theme_calm_dark'] {\n\t--background-surface: rgb(15 15 18);\n\t--background-primary: rgb(23 24 28);\n\t--background-secondary: rgb(37 38 45);\n\t--background-tertiary: rgb(255 255 255 / 0.09);\n\t--background-card: rgb(37 38 45);\n\t--icon-primary: rgb(255 255 255);\n\t--icon-tertiary: rgb(255 255 255 / 0.52);\n\t--icon-mute: rgb(255 255 255 / 0.36);\n\t--icon-positive: rgb(43 198 68);\n\t--icon-negative: rgb(206 66 87);\n\t--text-primary: rgb(255 255 255);\n\t--text-secondary: rgb(255 255 255 / 0.8);\n\t--text-tertiary: rgb(255 255 255 / 0.64);\n\t--text-negative: rgb(206 66 87);\n\t--divider-primary: rgb(255 255 255 / 0.12);\n\t--divider-secondary: rgb(255 255 255 / 0.06);\n\t--button-secondary: rgb(44 45 52);\n\t--button-secondary-contrast: rgb(255 255 255 / 0.12);\n\t--controls-inactive: rgb(255 255 255 / 0.12);\n\t--states-background-hovered-transparent: rgb(255 255 255 / 0.06);\n\t--states-background-pressed-transparent: rgb(255 255 255 / 0.1);\n\t--field-fill: var(--background-tertiary);\n\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgb(0 0 0 / 0.75);\n}\n\n[bog_max_app] > [mol_page] {\n\tbackground: var(--background-surface);\n}\n\n[bog_max_app_row],\n[bog_max_app_post],\n[bog_max_app_summary] {\n\tbackground: var(--background-card);\n}\n\n[bog_max_app] [mol_page_head] {\n\tbackground: var(--background-primary);\n\tbox-shadow: none;\n\tborder-bottom: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_page_title] {\n\tfont-size: var(--font-size-title);\n\tline-height: var(--line-height-title);\n\tfont-weight: var(--font-weight-title);\n}\n\n[bog_max_app] [mol_page_foot] {\n\tbackground: var(--background-primary);\n\tpadding: var(--spacing-size-xl) var(--spacing-size2xl);\n\tbox-shadow: none;\n\tborder-top: 1px solid var(--divider-secondary);\n}\n\n[bog_max_app] [mol_button_major] {\n\tbackground: var(--button-primary);\n\tcolor: var(--text-primary-inverse-static);\n\tborder-radius: var(--size-border-radius-button-medium);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size3xl);\n\tjustify-content: center;\n\tfont-size: var(--font-size-action-medium);\n\tline-height: var(--line-height-action-medium);\n\tfont-weight: var(--font-weight-action-medium);\n}\n\n[bog_max_app] [mol_button_major]:hover {\n\tbackground: var(--states-button-primary-hover);\n}\n\n[bog_max_app] [mol_button_major]:active {\n\tbackground: var(--states-button-primary-pressed);\n}\n\n[bog_max_app] [mol_button_major][disabled] {\n\tbackground: var(--states-button-primary-disabled);\n\tcolor: var(--states-text-primary-inverse-static-disabled);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_label] {\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n\tcolor: var(--text-tertiary);\n\tmin-height: 0;\n\tpadding: var(--spacing-size-m) var(--spacing-size-xl) var(--spacing-size-xs);\n}\n\n[bog_max_app] [mol_form_field] [mol_labeler_content] {\n\tpadding: 0;\n}\n\n[bog_max_app] [mol_string],\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tbackground: var(--field-fill);\n\tborder-radius: var(--size-border-radius-action-large);\n\tmin-height: 52px;\n\tpadding: var(--spacing-size2xl) var(--spacing-size-xl);\n\tbox-shadow: none;\n\tcolor: var(--text-primary);\n\tflex: 1 1 auto;\n\talign-items: center;\n}\n\n[bog_max_app] [mol_string]:hover,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:hover {\n\tbox-shadow: inset 0 0 0 1px var(--divider-primary);\n}\n\n[bog_max_app] [mol_string]:focus,\n[bog_max_app] [mol_form_field] [mol_select_trigger]:focus {\n\tbox-shadow: inset 0 0 0 1px var(--controls-active);\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] [mol_pick_trigger_icon] {\n\tcolor: var(--icon-mute);\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tcolor: var(--text-tertiary);\n\tfont-size: var(--font-size-description);\n\tline-height: var(--line-height-description);\n}\n\n[bog_max_app_main_foot] {\n\tpadding: 0;\n\tborder-top: none;\n}\n\n[bog_max_app] [mol_search] [mol_string] {\n\tmin-height: 44px;\n\tpadding: var(--spacing-size-xl);\n}\n\n@media (max-width: 720px) {\n\t[bog_max_app] > [mol_page] {\n\t\tmin-width: 100%;\n\t}\n}\n\n[bog_max_app] > *::before,\n[bog_max_app] > *::after {\n\tdisplay: none;\n}\n\n[bog_max_app] [mol_form_field] [mol_select] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_form_field] [mol_select_trigger] {\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[bog_max_app] [mol_form_foot] {\n\tpadding: var(--spacing-size-xl) 0;\n}\n\n[bog_max_app] [mol_form_foot] [mol_button_major] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app_search],\n[bog_max_app_search] [mol_pop_anchor],\n[bog_max_app_search] [mol_search_query],\n[bog_max_app_all_search],\n[bog_max_app_all_search] [mol_pop_anchor],\n[bog_max_app_all_search] [mol_search_query] {\n\tflex: 1 1 auto;\n}\n\n[bog_max_app] [mol_labeler_label] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app] [mol_labeler_content] {\n\tpadding-inline: var(--spacing-size-xl);\n}\n\n[bog_max_app_search],\n[bog_max_app_all_search] {\n\talign-self: stretch;\n}\n\n[bog_max_app] [mol_form_field_bid] {\n\tcolor: var(--text-negative);\n\tfont-size: var(--font-size-description);\n\ttext-shadow: none;\n}\n\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_string],\n[bog_max_app] [mol_form_field][mol_form_field_state=\"bid\"] [mol_select_trigger] {\n\tbox-shadow: inset 0 0 0 1px var(--text-negative);\n}\n\n@media (min-width: 721px) {\n\t[bog_max_app] [mol_page_body_content],\n\t[bog_max_app] [mol_page_head] {\n\t\tpadding-inline: max(var(--spacing-size-xl), calc((100% - 40rem) / 2));\n\t}\n}\n\n[bog_max_app] [mol_form_field][bog_max_required=\"true\"] [mol_form_field_bid]::before {\n\tcontent: '* ';\n\tcolor: var(--text-negative);\n}\n");
 })($ || ($ = {}));
 
 
