@@ -35364,7 +35364,7 @@ var $;
         },
         House_title: {
             color: $mol_theme.shade,
-            padding: { left: $mol_gap.block, right: $mol_gap.block },
+            padding: { left: $mol_gap.block, right: $mol_gap.block, bottom: $mol_gap.block },
         },
         Empty: {
             padding: $mol_gap.block,
