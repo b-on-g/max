@@ -50,6 +50,7 @@ namespace $ {
 				integrations: bot.env_list( 'ORG_KEYS' ).map( pair => pair.split( ':' )[0] ),
 				staff_link: staff && secret ? bot.start_link( `staff_${ secret }` ) : '',
 				house: house?.link().str ?? null,
+				text: $bog_max_bot_api.text_of( checked.start ),
 				user: {
 					id: checked.user.id,
 					name,

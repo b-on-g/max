@@ -31,6 +31,18 @@ namespace $ {
 			$mol_assert_equal( api.mentioned( message( 'эй', 'chat', [ { type: 'user_mention', from: 0, length: 2 } ] ), {} ), false )
 		},
 
+		'plain text becomes a ticket question'() {
+			const api = $bog_max_bot_api.make({})
+			const me = { user_id: 5, username: 'demo_uk_bot' }
+			$mol_assert_equal( api.problem( message( ' @demo_uk_bot, течёт  кран ', 'chat' ), me ), 'течёт кран' )
+			$mol_assert_equal( api.problem( message( '/help', 'dialog' ), me ), '' )
+			$mol_assert_equal( api.question( 'течёт кран' ), 'Создать заявку по проблеме: «течёт кран»?' )
+			const payload = $bog_max_bot_api.text_payload( 'течёт кран в подъезде №3' )
+			$mol_assert_ok( /^t_[\w-]+$/.test( payload ) )
+			$mol_assert_equal( $bog_max_bot_api.text_of( payload ), 'течёт кран в подъезде №3' )
+			$mol_assert_equal( $bog_max_bot_api.text_of( 'house_abc' ), '' )
+		},
+
 		'command list matches the handlers'() {
 			const api = $bog_max_bot_api.make({})
 			$mol_assert_equal( api.commands().map( command => command.name ), [ 'start', 'help', 'id' ] )

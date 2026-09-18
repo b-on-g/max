@@ -16,6 +16,7 @@ namespace $.$$ {
 		integrations: readonly string[]
 		staff_link: string
 		house: string | null
+		text?: string
 		user: { id: number, name: string, username?: string, photo?: string }
 	}
 
@@ -28,6 +29,24 @@ namespace $.$$ {
 		auto() {
 			this.pin()
 			$bog_max_bridge.ready()
+			this.chat_text_open()
+		}
+
+		@ $mol_mem
+		chat_text_used( next = false ) {
+			return next
+		}
+
+		chat_text_open() {
+			if( this.waiting() || this.fail() ) return
+			if( !this.session().text || this.chat_text_used() ) return
+			this.chat_text_used( true )
+			this.$.$mol_state_arg.dict({ ... this.$.$mol_state_arg.dict(), screen: 'new', ticket: null })
+		}
+
+		@ $mol_mem
+		text( next?: string ) {
+			return next ?? this.session().text ?? ''
 		}
 
 		pin() {

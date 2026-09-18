@@ -68,17 +68,61 @@ namespace $ {
 			]])
 		}
 
+		static text_payload( text: string ) {
+			return 't_' + Buffer.from( text.trim().slice( 0, 300 ) ).toString( 'base64url' )
+		}
+
+		static text_of( payload: string ) {
+			if( !payload.startsWith( 't_' ) ) return ''
+			return Buffer.from( payload.slice( 2 ), 'base64url' ).toString()
+		}
+
+		problem( message: $bog_max_bot_api_message, me: $bog_max_bot_api_me ) {
+			let text = message.body.text ?? ''
+			if( me.username ) text = text.replace( new RegExp( '@' + me.username + '\\b,?', 'gi' ), '' )
+			text = text.replace( /\s+/g, ' ' ).trim()
+			if( text.startsWith( '/' ) ) return ''
+			return text
+		}
+
+		question( text: string ) {
+			return `Создать заявку по проблеме: «${ text }»?`
+		}
+
+		declined() {
+			return 'Хорошо, заявку не создаём. Когда понадобится, опишите проблему одним сообщением или нажмите /start.'
+		}
+
+		confirm( text: string, inside = true ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
+			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
+			const payload = $bog_max_bot_api.text_payload( text )
+			return Keyboard.inlineKeyboard([[
+				inside
+					? Keyboard.button.openApp( 'Да', this.app(), undefined, payload )
+					: Keyboard.button.link( 'Да', this.app() + '#!start=' + payload ),
+				Keyboard.button.callback( 'Нет', 'no' ),
+			]])
+		}
+
 		unbound( error: unknown ) {
 			return /Link not found/.test( String( error ) )
 		}
 
-		async answer( ctx: $bog_max_bot_api_context, text: string, button: string, payload: string ): Promise< unknown > {
+		async answer( ctx: $bog_max_bot_api_context, text: string, keys: ( inside: boolean )=> ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > ): Promise< unknown > {
 			try {
-				return await ctx.reply( text, { attachments: [ this.keyboard( button, payload ) ] } )
+				return await ctx.reply( text, { attachments: [ keys( true ) ] } )
 			} catch( error ) {
 				if( !this.unbound( error ) ) throw error
-				return await ctx.reply( text, { attachments: [ this.keyboard( button, payload, false ) ] } )
+				return await ctx.reply( text, { attachments: [ keys( false ) ] } )
 			}
+		}
+
+		invite( ctx: $bog_max_bot_api_context, text: string, payload: string ) {
+			return this.answer( ctx, text, inside => this.keyboard( 'Подать заявку', payload, inside ) )
+		}
+
+		ask( ctx: $bog_max_bot_api_context, text: string ) {
+			return this.answer( ctx, this.question( text ), inside => this.confirm( text, inside ) )
 		}
 
 		@ $mol_memo.method
@@ -86,14 +130,19 @@ namespace $ {
 			const { Bot } = $node[ '@maxhub/max-bot-api' ]
 			const bot = new Bot( this.token() )
 			const fail = ( error: unknown )=> this.$.$mol_log3_fail({ place: this, message: String( error ) })
-			bot.on( 'bot_started', ctx => this.answer( ctx, this.greeting(), 'Подать заявку', ctx.startPayload ?? '' ) )
-			bot.on( 'bot_added', ctx => ctx.update.is_channel ? undefined : this.answer( ctx, this.greeting_chat(), 'Подать заявку', '' ) )
+			bot.on( 'bot_started', ctx => this.invite( ctx, this.greeting(), ctx.startPayload ?? '' ) )
+			bot.on( 'bot_added', ctx => ctx.update.is_channel ? undefined : this.invite( ctx, this.greeting_chat(), '' ) )
 			bot.on( 'message_created', ( ctx, next )=> this.addressed( ctx.message, ctx.botInfo ?? {} ) ? next() : undefined )
-			bot.command( 'start', ctx => this.answer( ctx, this.greeting(), 'Подать заявку', '' ) )
+			bot.command( 'start', ctx => this.invite( ctx, this.greeting(), '' ) )
 			bot.command( 'help', ctx => ctx.reply( this.help() ) )
 			bot.command( 'id', ctx => ctx.reply( `Ваш ID в MAX: ${ ctx.message?.sender?.user_id ?? '?' }` ) )
-			bot.hears( this.trigger(), ctx => this.answer( ctx, 'Оформить заявку можно в приложении, оно само определит ответственного и срок.', 'Подать заявку', '' ) )
-			bot.on( 'message_created', ctx => this.mentioned( ctx.message, ctx.botInfo ?? {} ) ? this.answer( ctx, this.help(), 'Подать заявку', '' ) : undefined )
+			bot.on( 'message_created', ctx => {
+				const me = ctx.botInfo ?? {}
+				const text = this.problem( ctx.message, me )
+				if( text ) return this.ask( ctx, text )
+				if( this.mentioned( ctx.message, me ) ) return this.invite( ctx, this.help(), '' )
+			} )
+			bot.on( 'message_callback', ctx => ctx.callback.payload === 'no' ? ctx.answerOnCallback({ message: { text: this.declined() } }) : undefined )
 			bot.catch( fail )
 			bot.api.setMyCommands( this.commands() ).catch( fail )
 			bot.start()
