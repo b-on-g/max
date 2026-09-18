@@ -18,6 +18,9 @@ EXPOSE 80
 
 FROM node:24-alpine AS bot
 WORKDIR /bot
+COPY docker/russian_trusted_root_ca.pem /usr/local/share/ca-certificates/russian_trusted_root_ca.crt
+RUN apk add --no-cache ca-certificates && update-ca-certificates
+ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/russian_trusted_root_ca.crt
 COPY --from=build /app/bog/max/bot/run/- /bot
 RUN npm install --omit=dev
 EXPOSE 9090
