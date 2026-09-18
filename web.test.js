@@ -7521,7 +7521,7 @@ var $;
             app.waiting = () => false;
             app.fail = () => '';
             app.section = () => 'account';
-            $mol_assert_equal(app.main_body()[0], app.Account_name());
+            $mol_assert_equal(app.main_body()[0], app.Account_head());
             $mol_assert_equal(app.main_title(), 'Профиль');
         },
         'house list filters neighbours by query'($) {
@@ -7531,6 +7531,23 @@ var $;
             app.section = () => 'house';
             app.neighbours = () => [];
             $mol_assert_equal(app.main_body(), [app.House_pick(), app.House_tabs(), app.Search(), app.House_empty()]);
+        },
+        'profile head shows MAX photo or a generated avatar'($) {
+            const session = {
+                land: '', lord: '', lords: [], bot: '', role: 'resident', duty: [], integrations: [], staff_link: '', house: null,
+                user: { id: 7, name: 'Демо 7', username: 'demo7', photo: '' },
+            };
+            const app = $$.$bog_max_app.make({ $ });
+            app.session = () => session;
+            $mol_assert_equal(app.account_head()[0], app.Account_avatar());
+            $mol_assert_equal(app.Account_avatar().id(), '7');
+            $mol_assert_equal(app.account_titles(), [app.Account_name(), app.Account_username()]);
+            $mol_assert_equal(app.account_username(), '@demo7');
+            const pic = $$.$bog_max_app.make({ $ });
+            pic.session = () => ({ ...session, user: { id: 7, name: 'Демо 7', photo: 'https://st.max.ru/p.jpg' } });
+            $mol_assert_equal(pic.account_head()[0], pic.Account_photo());
+            $mol_assert_equal(pic.Account_photo().uri(), 'https://st.max.ru/p.jpg');
+            $mol_assert_equal(pic.account_titles(), [pic.Account_name()]);
         },
         'dispatcher section is hidden from residents'($) {
             const app = $$.$bog_max_app.make({ $ });

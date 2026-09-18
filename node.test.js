@@ -21796,10 +21796,22 @@ var $;
 		news_rows(){
 			return [(this.Post(id))];
 		}
+		account_head(){
+			return [];
+		}
+		account_photo(){
+			return "";
+		}
 		account_name(){
 			return "";
 		}
 		account_id(){
+			return "";
+		}
+		account_titles(){
+			return [];
+		}
+		account_username(){
 			return "";
 		}
 		house(next){
@@ -22586,10 +22598,35 @@ var $;
 			(obj.rows) = () => ((this.news_rows()));
 			return obj;
 		}
+		Account_head(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.account_head()));
+			return obj;
+		}
+		Account_photo(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.account_photo()));
+			(obj.title) = () => ((this.account_name()));
+			return obj;
+		}
+		Account_avatar(){
+			const obj = new this.$.$mol_avatar();
+			(obj.id) = () => ((this.account_id()));
+			return obj;
+		}
+		Account_titles(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.account_titles()));
+			return obj;
+		}
 		Account_name(){
-			const obj = new this.$.$mol_labeler();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_name_title")));
-			(obj.content) = () => ([(this.account_name())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.account_name()));
+			return obj;
+		}
+		Account_username(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.account_username()));
 			return obj;
 		}
 		Account_id(){
@@ -23028,7 +23065,12 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "House_rows"));
 	($mol_mem(($.$bog_max_app.prototype), "News_empty"));
 	($mol_mem(($.$bog_max_app.prototype), "News"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_head"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_photo"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_avatar"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_titles"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_name"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_username"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_id"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_house"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_count"));
@@ -23711,7 +23753,7 @@ var $;
                             : [this.Search(), this.house_rows().length ? this.House_rows() : this.House_empty()],
                     ];
                     case 'account': return [
-                        this.Account_name(),
+                        this.Account_head(),
                         this.Account_id(),
                         this.Account_house(),
                         this.Account_count(),
@@ -23836,8 +23878,27 @@ var $;
             news_text(link) {
                 return this.post(link).Text()?.val() ?? '';
             }
+            account_head() {
+                return [
+                    this.account_photo() ? this.Account_photo() : this.Account_avatar(),
+                    this.Account_titles(),
+                ];
+            }
+            account_titles() {
+                return [
+                    this.Account_name(),
+                    ...this.account_username() ? [this.Account_username()] : [],
+                ];
+            }
             account_name() {
                 return this.session().user.name || 'Без имени';
+            }
+            account_username() {
+                const username = this.session().user.username ?? '';
+                return username ? '@' + username : '';
+            }
+            account_photo() {
+                return this.session().user.photo ?? '';
             }
             account_id() {
                 return String(this.session().user.id);
@@ -24533,8 +24594,34 @@ var $;
             color: $mol_theme.shade,
             font: { size: '0.8125rem' },
         },
+        Account_head: {
+            padding: $mol_gap.block,
+            gap: $mol_gap.space,
+            align: { items: 'center' },
+        },
+        Account_photo: {
+            width: '3rem',
+            height: '3rem',
+            borderRadius: '50%',
+            objectFit: 'cover',
+            flex: { shrink: 0 },
+        },
+        Account_avatar: {
+            width: '3rem',
+            height: '3rem',
+            flex: { shrink: 0 },
+            color: $mol_theme.current,
+        },
+        Account_titles: {
+            flex: { direction: 'column' },
+            minWidth: 0,
+        },
         Account_name: {
-            padding: { left: $mol_gap.block, right: $mol_gap.block },
+            font: { weight: 500 },
+        },
+        Account_username: {
+            color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
         },
         Account_id: {
             padding: { left: $mol_gap.block, right: $mol_gap.block },
@@ -31834,7 +31921,7 @@ var $;
             app.waiting = () => false;
             app.fail = () => '';
             app.section = () => 'account';
-            $mol_assert_equal(app.main_body()[0], app.Account_name());
+            $mol_assert_equal(app.main_body()[0], app.Account_head());
             $mol_assert_equal(app.main_title(), 'Профиль');
         },
         'house list filters neighbours by query'($) {
@@ -31844,6 +31931,23 @@ var $;
             app.section = () => 'house';
             app.neighbours = () => [];
             $mol_assert_equal(app.main_body(), [app.House_pick(), app.House_tabs(), app.Search(), app.House_empty()]);
+        },
+        'profile head shows MAX photo or a generated avatar'($) {
+            const session = {
+                land: '', lord: '', lords: [], bot: '', role: 'resident', duty: [], integrations: [], staff_link: '', house: null,
+                user: { id: 7, name: 'Демо 7', username: 'demo7', photo: '' },
+            };
+            const app = $$.$bog_max_app.make({ $ });
+            app.session = () => session;
+            $mol_assert_equal(app.account_head()[0], app.Account_avatar());
+            $mol_assert_equal(app.Account_avatar().id(), '7');
+            $mol_assert_equal(app.account_titles(), [app.Account_name(), app.Account_username()]);
+            $mol_assert_equal(app.account_username(), '@demo7');
+            const pic = $$.$bog_max_app.make({ $ });
+            pic.session = () => ({ ...session, user: { id: 7, name: 'Демо 7', photo: 'https://st.max.ru/p.jpg' } });
+            $mol_assert_equal(pic.account_head()[0], pic.Account_photo());
+            $mol_assert_equal(pic.Account_photo().uri(), 'https://st.max.ru/p.jpg');
+            $mol_assert_equal(pic.account_titles(), [pic.Account_name()]);
         },
         'dispatcher section is hidden from residents'($) {
             const app = $$.$bog_max_app.make({ $ });
