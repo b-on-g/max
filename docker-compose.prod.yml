@@ -1,6 +1,8 @@
 services:
 
   bot:
+    build:
+      network: host
     ports: !override
       - "127.0.0.1:8081:9090"
     labels:
@@ -10,5 +12,7 @@ services:
     restart: unless-stopped
 
   app:
+    build:
+      network: host
     deploy:
       replicas: 0
