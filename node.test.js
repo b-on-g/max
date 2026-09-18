@@ -23612,6 +23612,21 @@ var $;
             auto() {
                 this.pin();
                 $bog_max_bridge.ready();
+                this.chat_text_open();
+            }
+            chat_text_used(next = false) {
+                return next;
+            }
+            chat_text_open() {
+                if (this.waiting() || this.fail())
+                    return;
+                if (!this.session().text || this.chat_text_used())
+                    return;
+                this.chat_text_used(true);
+                this.$.$mol_state_arg.dict({ ...this.$.$mol_state_arg.dict(), screen: 'new', ticket: null });
+            }
+            text(next) {
+                return next ?? this.session().text ?? '';
             }
             pin() {
                 const yard = this.$.$giper_baza_yard;
@@ -24429,6 +24444,12 @@ var $;
                 this.post_tried(false);
             }
         }
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "chat_text_used", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "text", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "session", null);

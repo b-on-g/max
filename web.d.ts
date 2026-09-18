@@ -58684,6 +58684,7 @@ declare namespace $.$$ {
         integrations: readonly string[];
         staff_link: string;
         house: string | null;
+        text?: string;
         user: {
             id: number;
             name: string;
@@ -58694,6 +58695,9 @@ declare namespace $.$$ {
     class $bog_max_app extends $.$bog_max_app {
         platform(): string;
         auto(): void;
+        chat_text_used(next?: boolean): boolean;
+        chat_text_open(): void;
+        text(next?: string): string;
         pin(): void;
         bot_url(): string;
         session(): $bog_max_app_session;
