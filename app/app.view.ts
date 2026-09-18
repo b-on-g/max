@@ -16,7 +16,7 @@ namespace $.$$ {
 		integrations: readonly string[]
 		staff_link: string
 		house: string | null
-		user: { id: number, name: string }
+		user: { id: number, name: string, username?: string, photo?: string }
 	}
 
 	export class $bog_max_app extends $.$bog_max_app {
@@ -181,7 +181,7 @@ namespace $.$$ {
 						: [ this.Search(), this.house_rows().length ? this.House_rows() : this.House_empty() ],
 				]
 				case 'account': return [
-					this.Account_name(),
+					this.Account_head(),
 					this.Account_id(),
 					this.Account_house(),
 					this.Account_count(),
@@ -326,8 +326,31 @@ namespace $.$$ {
 			return this.post( link ).Text()?.val() ?? ''
 		}
 
+		account_head() {
+			return [
+				this.account_photo() ? this.Account_photo() : this.Account_avatar(),
+				this.Account_titles(),
+			]
+		}
+
+		account_titles() {
+			return [
+				this.Account_name(),
+				... this.account_username() ? [ this.Account_username() ] : [],
+			]
+		}
+
 		account_name() {
 			return this.session().user.name || 'Без имени'
+		}
+
+		account_username() {
+			const username = this.session().user.username ?? ''
+			return username ? '@' + username : ''
+		}
+
+		account_photo() {
+			return this.session().user.photo ?? ''
 		}
 
 		account_id() {

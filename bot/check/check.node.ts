@@ -1,9 +1,26 @@
 namespace $ {
 
+	export type $bog_max_bot_check_user = {
+		id: number
+		first_name?: string
+		last_name?: string | null
+		username?: string | null
+		language_code?: string | null
+		photo_url?: string | null
+	}
+
 	export class $bog_max_bot_check extends $mol_object {
 
-		static pairs( init_data: string ) {
-			return [ ... new URLSearchParams( init_data ).entries() ]
+		static pairs( init_data: string ): ( readonly [ string, string ] )[] {
+			const params = new URLSearchParams( init_data.replace( /^[^#]*#/, '' ) )
+			const wrapped = params.get( 'WebAppData' )
+			if( wrapped !== null ) return this.pairs( wrapped )
+			return [ ... params.entries() ]
+		}
+
+		static unique( pairs: readonly ( readonly [ string, string ] )[] ) {
+			const keys = pairs.map( ([ key ])=> key )
+			return keys.every( ( key, index )=> keys.indexOf( key ) === index )
 		}
 
 		static sign( pairs: readonly ( readonly [ string, string ] )[], token: string ) {
@@ -18,6 +35,7 @@ namespace $ {
 
 		static user( init_data: string, token: string, now = Date.now() / 1000, max_age = 3600 ) {
 			const pairs = this.pairs( init_data )
+			if( !this.unique( pairs ) ) return null
 			const hash = pairs.find( ([ key ])=> key === 'hash' )?.[1] ?? ''
 			const sign = this.sign( pairs, token )
 			if( hash.length !== sign.length ) return null
@@ -30,7 +48,7 @@ namespace $ {
 		static unsafe( init_data: string ) {
 			const pairs = this.pairs( init_data )
 			const raw = pairs.find( ([ key ])=> key === 'user' )?.[1] ?? ''
-			const user = raw ? JSON.parse( raw ) as { id: number, first_name?: string, last_name?: string } : { id: 1, first_name: 'Тестовый житель' }
+			const user = raw ? JSON.parse( raw ) as $bog_max_bot_check_user : { id: 1, first_name: 'Тестовый житель' }
 			if( !user.id ) return null
 			const start = pairs.find( ([ key ])=> key === 'start_param' )?.[1] ?? ''
 			return { user, start }

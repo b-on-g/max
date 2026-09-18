@@ -81,9 +81,19 @@ $bog_max_app $mol_book2
 						title <= news_when* \
 					<= Post_text* $mol_paragraph
 						title <= news_text* \
-	Account_name $mol_labeler
-		title @ \Имя
-		content / <= account_name \
+	Account_head $mol_view
+		sub <= account_head /
+	Account_photo $mol_image
+		uri <= account_photo \
+		title <= account_name \
+	Account_avatar $mol_avatar
+		id <= account_id \
+	Account_titles $mol_view
+		sub <= account_titles /
+	Account_name $mol_paragraph
+		title <= account_name \
+	Account_username $mol_paragraph
+		title <= account_username \
 	Account_id $mol_labeler
 		title @ \ID в MAX
 		content / <= account_id \

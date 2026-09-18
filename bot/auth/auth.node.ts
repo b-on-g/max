@@ -50,7 +50,12 @@ namespace $ {
 				integrations: bot.env_list( 'ORG_KEYS' ).map( pair => pair.split( ':' )[0] ),
 				staff_link: staff && secret ? bot.start_link( `staff_${ secret }` ) : '',
 				house: house?.link().str ?? null,
-				user: { id: checked.user.id, name },
+				user: {
+					id: checked.user.id,
+					name,
+					username: checked.user.username ?? '',
+					photo: checked.user.photo_url ?? '',
+				},
 			})
 
 		}

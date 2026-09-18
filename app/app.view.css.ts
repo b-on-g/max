@@ -36,8 +36,39 @@ namespace $ {
 			font: { size: '0.8125rem' },
 		},
 
+		Account_head: {
+			padding: $mol_gap.block,
+			gap: $mol_gap.space,
+			align: { items: 'center' },
+		},
+
+		Account_photo: {
+			width: '3rem',
+			height: '3rem',
+			borderRadius: '50%',
+			objectFit: 'cover',
+			flex: { shrink: 0 },
+		},
+
+		Account_avatar: {
+			width: '3rem',
+			height: '3rem',
+			flex: { shrink: 0 },
+			color: $mol_theme.current,
+		},
+
+		Account_titles: {
+			flex: { direction: 'column' },
+			minWidth: 0,
+		},
+
 		Account_name: {
-			padding: { left: $mol_gap.block, right: $mol_gap.block },
+			font: { weight: 500 },
+		},
+
+		Account_username: {
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
 		},
 
 		Account_id: {
