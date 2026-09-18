@@ -119,7 +119,12 @@ namespace $ {
 				const key = ticket.link().str
 				if( uk.Notified()?.key( key )?.val() === status ) continue
 				const author = Number( ticket.Author()?.val() ?? '' )
-				if( author && this.env().BOT_TOKEN ) $mol_wire_sync( this.api() ).send( author, this.message( ticket ), key )
+				if( author && this.env().BOT_TOKEN ) try {
+					$mol_wire_sync( this.api() ).send( author, this.message( ticket ), key )
+				} catch( error ) {
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					this.$.$mol_log3_fail({ place: this, ticket: key, message: String( error ) })
+				}
 				uk.Notified( 'auto' )!.key( key, 'auto' )!.val( status )
 			}
 			return uk.tickets().length
