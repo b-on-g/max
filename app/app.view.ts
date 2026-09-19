@@ -1,5 +1,7 @@
 namespace $.$$ {
 
+	$.$mol_select = $bog_max_select
+
 	$giper_baza_yard.masters_default.length = 0
 	$giper_baza_yard.masters = ()=> {
 		const url = $bog_max_app.Root( 0 ).bot_url()

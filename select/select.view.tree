@@ -1,0 +1,3 @@
+$bog_max_select $mol_select
+	Menu $bog_max_list
+		rows <= menu_content
