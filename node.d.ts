@@ -51357,23 +51357,23 @@ declare namespace $ {
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_select__options_bog_max_app_64 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_max_app_64 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_select['options'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_select__dictionary_bog_max_app_65 = $mol_type_enforce<
+	type $mol_switch__value_bog_max_app_65 = $mol_type_enforce<
+		ReturnType< $bog_max_app['staff_role'] >
+		,
+		ReturnType< $mol_switch['value'] >
+	>
+	type $mol_switch__options_bog_max_app_66 = $mol_type_enforce<
 		({ 
 			'dispatcher': string,
 			'admin': string,
 		}) 
 		,
-		ReturnType< $mol_select['dictionary'] >
-	>
-	type $mol_select__value_bog_max_app_66 = $mol_type_enforce<
-		ReturnType< $bog_max_app['staff_role'] >
-		,
-		ReturnType< $mol_select['value'] >
+		ReturnType< $mol_switch['options'] >
 	>
 	type $mol_paragraph__title_bog_max_app_67 = $mol_type_enforce<
 		string
@@ -52493,8 +52493,9 @@ declare namespace $ {
 		staff_link( ): string
 		staff_code( next?: string ): string
 		Staff_code( ): $mol_string
+		Staff_role_label( ): $mol_paragraph
 		staff_role( next?: string ): string
-		Staff_role( ): $mol_select
+		Staff_role( ): $mol_switch
 		Staff_houses_label( ): $mol_paragraph
 		staff_houses( next?: readonly(string)[] ): readonly(string)[]
 		Staff_houses( ): $mol_select_list

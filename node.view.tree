@@ -1013,14 +1013,13 @@ $bog_max_app $mol_book2
 			<= Staff_code $mol_string
 				hint @ \Код сотрудника
 				value? <=> staff_code? \
-			<= Staff_role $mol_select
-				options /
-					\dispatcher
-					\admin
-				dictionary *
+			<= Staff_role_label $mol_paragraph
+				title @ \Роль сотрудника:
+			<= Staff_role $mol_switch
+				value? <=> staff_role? \dispatcher
+				options *
 					dispatcher @ \Диспетчер
 					admin @ \Админ
-				value? <=> staff_role? \dispatcher
 			<= Staff_houses_label $mol_paragraph
 				title @ \Дома диспетчера, добавьте плюсом:
 			<= Staff_houses $mol_select_list

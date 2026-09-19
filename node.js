@@ -22144,15 +22144,19 @@ var $;
 			(obj.value) = (next) => ((this.staff_code(next)));
 			return obj;
 		}
+		Staff_role_label(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Staff_role_label_title")));
+			return obj;
+		}
 		staff_role(next){
 			if(next !== undefined) return next;
 			return "dispatcher";
 		}
 		Staff_role(){
-			const obj = new this.$.$mol_select();
-			(obj.options) = () => (["dispatcher", "admin"]);
-			(obj.dictionary) = () => ({"dispatcher": (this.$.$mol_locale.text("$bog_max_app_Staff_role_dictionary_dispatcher")), "admin": (this.$.$mol_locale.text("$bog_max_app_Staff_role_dictionary_admin"))});
+			const obj = new this.$.$mol_switch();
 			(obj.value) = (next) => ((this.staff_role(next)));
+			(obj.options) = () => ({"dispatcher": (this.$.$mol_locale.text("$bog_max_app_Staff_role_options_dispatcher")), "admin": (this.$.$mol_locale.text("$bog_max_app_Staff_role_options_admin"))});
 			return obj;
 		}
 		Staff_houses_label(){
@@ -22870,6 +22874,7 @@ var $;
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([
 				(this.Staff_code()), 
+				(this.Staff_role_label()), 
 				(this.Staff_role()), 
 				(this.Staff_houses_label()), 
 				(this.Staff_houses()), 
@@ -23080,6 +23085,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "qr_print"));
 	($mol_mem(($.$bog_max_app.prototype), "staff_code"));
 	($mol_mem(($.$bog_max_app.prototype), "Staff_code"));
+	($mol_mem(($.$bog_max_app.prototype), "Staff_role_label"));
 	($mol_mem(($.$bog_max_app.prototype), "staff_role"));
 	($mol_mem(($.$bog_max_app.prototype), "Staff_role"));
 	($mol_mem(($.$bog_max_app.prototype), "Staff_houses_label"));
