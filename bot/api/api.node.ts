@@ -105,7 +105,9 @@ namespace $ {
 		}
 
 		unbound( error: unknown ) {
-			return /Link not found/.test( String( error ) )
+			if( !/Link not found/.test( String( error ) ) ) return false
+			this.$.$mol_log3_warn({ place: this, message: `Мини-апп ${ this.app() } не привязан к боту, кнопка ушла обычной ссылкой` })
+			return true
 		}
 
 		async answer( ctx: $bog_max_bot_api_context, text: string, keys: ( inside: boolean )=> ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > ): Promise< unknown > {
