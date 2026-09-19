@@ -22371,6 +22371,11 @@ var $;
 			(obj.click) = (next) => ((this.submit(next)));
 			return obj;
 		}
+		Consent(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Consent_title")));
+			return obj;
+		}
 		photo_preview(){
 			return "";
 		}
@@ -22669,6 +22674,11 @@ var $;
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_code_note_title")));
 			return obj;
 		}
+		Account_demo(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Account_demo_title")));
+			return obj;
+		}
 		Admin_title(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Admin_title_title")));
@@ -22831,7 +22841,7 @@ var $;
 				(this.Text_field()), 
 				(this.Photo_field())
 			]);
-			(obj.buttons) = () => ([(this.Submit())]);
+			(obj.buttons) = () => ([(this.Submit()), (this.Consent())]);
 			return obj;
 		}
 		Photo_preview(){
@@ -23038,6 +23048,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Photo_field"));
 	($mol_mem(($.$bog_max_app.prototype), "submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Submit"));
+	($mol_mem(($.$bog_max_app.prototype), "Consent"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_all_icon"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_all"));
 	($mol_mem(($.$bog_max_app.prototype), "all_query"));
@@ -23078,6 +23089,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Account_role"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_code"));
 	($mol_mem(($.$bog_max_app.prototype), "Account_code_note"));
+	($mol_mem(($.$bog_max_app.prototype), "Account_demo"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_title"));
 	($mol_mem(($.$bog_max_app.prototype), "All_link"));
 	($mol_mem(($.$bog_max_app.prototype), "House_form"));
@@ -23776,6 +23788,7 @@ var $;
                         this.Account_role(),
                         this.Account_code(),
                         this.Account_code_note(),
+                        this.Account_demo(),
                     ];
                     case 'dispatch': return this.staff() ? [
                         this.Admin_title(),
