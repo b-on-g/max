@@ -360,6 +360,7 @@
     "$mol_status",
     "$mol_row",
     "$mol_labeler",
+    "$mol_icon_delete",
     "$mol_switch",
     "$mol_check_list",
     "$mol_select_list",

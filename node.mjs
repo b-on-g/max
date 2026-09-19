@@ -20239,6 +20239,18 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_icon_delete) = class $mol_icon_delete extends ($.$mol_icon) {
+		path(){
+			return "M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
 	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
 		option_checked(id, next){
 			if(next !== undefined) return next;
@@ -21884,6 +21896,49 @@ var $;
 			(obj.click) = (next) => ((this.house_add(next)));
 			return obj;
 		}
+		house_address(){
+			return "";
+		}
+		Admin_house_address(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.house_address(id)));
+			return obj;
+		}
+		house_code(id){
+			return "";
+		}
+		Admin_house_code(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.house_code(id)));
+			return obj;
+		}
+		House_remove_icon(id){
+			const obj = new this.$.$mol_icon_delete();
+			return obj;
+		}
+		house_remove(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		House_remove(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_House_remove_hint")));
+			(obj.sub) = () => ([(this.House_remove_icon(id))]);
+			(obj.click) = (next) => ((this.house_remove(id, next)));
+			return obj;
+		}
+		Admin_house(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Admin_house_address(id)), 
+				(this.Admin_house_code(id)), 
+				(this.House_remove(id))
+			]);
+			return obj;
+		}
+		admin_house_rows(){
+			return [(this.Admin_house(id))];
+		}
 		status_options(){
 			return [];
 		}
@@ -22222,9 +22277,6 @@ var $;
 		}
 		new_body(){
 			return [];
-		}
-		house_address(){
-			return "";
 		}
 		submit_allowed(){
 			return (this.Form().submit_allowed());
@@ -22705,6 +22757,16 @@ var $;
 			(obj.buttons) = () => ([(this.House_submit())]);
 			return obj;
 		}
+		Houses_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Houses_title_title")));
+			return obj;
+		}
+		Admin_houses(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.admin_house_rows()));
+			return obj;
+		}
 		Admin_empty(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Admin_empty_title")));
@@ -22984,6 +23046,12 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "House_address_field"));
 	($mol_mem(($.$bog_max_app.prototype), "house_add"));
 	($mol_mem(($.$bog_max_app.prototype), "House_submit"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house_address"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house_code"));
+	($mol_mem_key(($.$bog_max_app.prototype), "House_remove_icon"));
+	($mol_mem_key(($.$bog_max_app.prototype), "house_remove"));
+	($mol_mem_key(($.$bog_max_app.prototype), "House_remove"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house"));
 	($mol_mem_key(($.$bog_max_app.prototype), "admin_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_row"));
@@ -23102,6 +23170,8 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Admin_title"));
 	($mol_mem(($.$bog_max_app.prototype), "All_link"));
 	($mol_mem(($.$bog_max_app.prototype), "House_form"));
+	($mol_mem(($.$bog_max_app.prototype), "Houses_title"));
+	($mol_mem(($.$bog_max_app.prototype), "Admin_houses"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_empty"));
 	($mol_mem(($.$bog_max_app.prototype), "Admin_rows"));
 	($mol_mem(($.$bog_max_app.prototype), "Stats_link"));
@@ -23687,6 +23757,9 @@ var $;
                 return response.json();
             }
             dev_init_data() {
+                const raw = this.$.$mol_state_arg.value('init') ?? '';
+                if (raw)
+                    return raw;
                 const id = Number(this.$.$mol_state_arg.value('user') ?? '');
                 const start = this.$.$mol_state_arg.value('start') ?? '';
                 if (!id && !start)
@@ -23813,6 +23886,8 @@ var $;
                     case 'admin': return this.admin() ? [
                         this.Stats_link(),
                         this.House_form(),
+                        this.Houses_title(),
+                        this.Admin_houses(),
                         this.Staff_title(),
                         ...this.staff_link() ? [this.Staff_invite(), this.Staff_qr()] : [],
                         this.Staff_form(),
@@ -23996,6 +24071,15 @@ var $;
                 house.Code('auto').val(code);
                 this.house_address_new('');
                 this.house_tried(false);
+            }
+            admin_house_rows() {
+                return this.house_options().map(link => this.Admin_house(link));
+            }
+            house_code(link) {
+                return this.house_of(link).Code()?.val() ?? '';
+            }
+            house_remove(link) {
+                this.uk().Houses('auto').cut(new $giper_baza_link(link));
             }
             account_count() {
                 return String(this.mine().length);
@@ -24514,6 +24598,9 @@ var $;
         __decorate([
             $mol_action
         ], $bog_max_app.prototype, "house_add", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "house_remove", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "house_options", null);
