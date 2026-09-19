@@ -208,6 +208,7 @@ namespace $.$$ {
 					this.Account_role(),
 					this.Account_code(),
 					this.Account_code_note(),
+					this.Account_demo(),
 				]
 				case 'dispatch': return this.staff() ? [
 					this.Admin_title(),

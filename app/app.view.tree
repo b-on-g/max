@@ -116,6 +116,8 @@ $bog_max_app $mol_book2
 		content / <= account_code \
 	Account_code_note $mol_paragraph
 		title @ \Сообщите код диспетчеру УК, и он откроет вам раздел диспетчера.
+	Account_demo $mol_paragraph
+		title @ \Демо: дома, категории и нормативы смоделированы по ПП 416, 354, 170, ГОСТ 50597 и 59-ФЗ. Организации подключены через API бота, реальных систем УК нет.
 	Admin_title $mol_paragraph
 		title @ \Последние открытые заявки. Статус меняется здесь или через API организации.
 	All_link $mol_link
@@ -356,6 +358,8 @@ $bog_max_app $mol_book2
 			<= Submit $mol_button_major
 				title @ \Отправить заявку
 				click? <=> submit? null
+			<= Consent $mol_paragraph
+				title @ \Отправляя заявку, вы соглашаетесь, что имя, ID в MAX, текст и фото заявки увидят УК и ответственная организация.
 	Photo_preview $mol_image
 		uri <= photo_preview \
 	Similar_title $mol_paragraph

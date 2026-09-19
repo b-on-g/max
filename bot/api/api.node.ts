@@ -4,6 +4,7 @@ namespace $ {
 	export type $bog_max_bot_api_context = InstanceType< typeof $node[ '@maxhub/max-bot-api' ][ 'Context' ] >
 	export type $bog_max_bot_api_message = NonNullable< $bog_max_bot_api_context[ 'message' ] >
 	export type $bog_max_bot_api_me = { user_id?: number, username?: string | null }
+	export type $bog_max_bot_api_update = $bog_max_bot_api_context[ 'update' ]
 
 	export class $bog_max_bot_api extends $mol_object {
 
@@ -19,11 +20,19 @@ namespace $ {
 			return ''
 		}
 
+		hook_url() {
+			return ''
+		}
+
+		hook_secret() {
+			return ''
+		}
+
 		variant_ok = 0
 		variant_seen = false
 
 		greeting() {
-			return 'Это бот заявок в управляющую компанию. Нажмите кнопку, опишите проблему, и в ответ придёт номер заявки, ответственный и срок по нормативу.'
+			return 'Это бот заявок в управляющую компанию. Нажмите кнопку или просто опишите проблему сообщением, и в ответ придёт номер заявки, ответственный и срок по нормативу. Имя, ID в MAX и текст заявки передаются УК и ответственной организации. Дома и нормативы в демо тестовые.'
 		}
 
 		greeting_chat() {
@@ -36,7 +45,9 @@ namespace $ {
 				'/start — открыть приложение и подать заявку',
 				'/id — узнать свой ID в MAX',
 				'/help — эта подсказка',
+				'Любое другое сообщение бот предложит превратить в заявку.',
 				'В групповом чате бот отвечает на команды, упоминание и сообщения со словами «заявка», «авария», «проблема», «жалоба».',
+				'Демо: дома, категории и нормативы смоделированы по ПП 416, 354, 170, ГОСТ 50597 и 59-ФЗ.',
 			].join( '\n' )
 		}
 
@@ -164,8 +175,28 @@ namespace $ {
 			bot.on( 'message_callback', ctx => ctx.callback.payload === 'no' ? ctx.answerOnCallback({ message: { text: this.declined() } }) : undefined )
 			bot.catch( fail )
 			bot.api.setMyCommands( this.commands() ).catch( fail )
-			bot.start()
+			this.listen( bot ).catch( fail )
 			return bot
+		}
+
+		async listen( bot: $bog_max_bot_api_client ) {
+			const url = this.hook_url()
+			const { subscriptions } = await bot.api.getSubscriptions()
+			if( !url ) {
+				if( subscriptions.length ) this.$.$mol_log3_warn({ place: this, message: 'У бота есть webhook-подписка, long polling событий не получит', hint: subscriptions.map( sub => sub.url ).join( ', ' ) })
+				return bot.start()
+			}
+			for( const sub of subscriptions ) if( sub.url !== url ) await bot.api.unsubscribe({ url: sub.url })
+			await bot.api.subscribe({ url, secret: this.hook_secret() || undefined, update_types: [ 'bot_started', 'bot_added', 'message_created', 'message_callback' ] })
+			bot.botInfo = await bot.api.getMyInfo()
+			this.$.$mol_log3_done({ place: this, message: 'Webhook подписан: ' + url })
+		}
+
+		handle( update: $bog_max_bot_api_update ) {
+			const { Context } = $node[ '@maxhub/max-bot-api' ]
+			const bot = this.client()
+			const ctx = new Context( update, bot.api, bot.botInfo )
+			return bot.middleware()( ctx, ()=> Promise.resolve() ).catch( error => this.$.$mol_log3_fail({ place: this, message: String( error ) }) )
 		}
 
 		send( user: number, text: string, payload: string ): Promise< unknown > {

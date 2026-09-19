@@ -107,3 +107,5 @@ curl -s -X POST https://<бот>/org/status -H 'Authorization: Bearer <ключ>
 | `APP_URL` | Бот | Адрес мини-приложения для кнопок в чате |
 | `DEV_SKIP_VALIDATION` | Тесты | `1` пропускает проверку подписи |
 | `MAX_DOMAIN` | Прод | Домен для сертификата Caddy |
+| `WEBHOOK_URL` | Прод | Адрес `/hook` для событий MAX, без него long polling |
+| `WEBHOOK_SECRET` | Прод | Секрет заголовка `X-Max-Bot-Api-Secret` |

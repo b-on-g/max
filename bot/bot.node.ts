@@ -34,11 +34,18 @@ namespace $ {
 		}
 
 		@ $mol_memo.method
+		hook() {
+			return $bog_max_bot_hook.make({ bot: ()=> this })
+		}
+
+		@ $mol_memo.method
 		api() {
 			return $bog_max_bot_api.make({
 				token: ()=> this.env().BOT_TOKEN ?? '',
 				app: ()=> this.env().APP_URL ?? '',
 				name: ()=> this.env().BOT_NAME ?? '',
+				hook_url: ()=> this.env().WEBHOOK_URL ?? '',
+				hook_secret: ()=> this.env().WEBHOOK_SECRET ?? '',
 			})
 		}
 
