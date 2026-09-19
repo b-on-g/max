@@ -789,6 +789,9 @@ $bog_max_app $mol_book2
 		title @ \Подключаемся к управляющей компании…
 	Fail $mol_paragraph
 		title <= fail \
+	Reset $mol_button_minor
+		title @ \Сбросить локальные данные
+		click? <=> reset? null
 	New_link $mol_link
 		arg *
 			screen \new

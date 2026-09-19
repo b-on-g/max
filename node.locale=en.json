@@ -43,6 +43,7 @@
 	"$bog_max_app_Post_title_input_hint": "Заголовок",
 	"$bog_max_app_Qr_print_title": "Распечатать QR",
 	"$bog_max_app_Qr_title_title": "QR-код дома. Наклейте у подъезда: житель откроет бота сразу с этим домом.",
+	"$bog_max_app_Reset_title": "Сбросить локальные данные",
 	"$bog_max_app_Scope_field_name": "Где проблема",
 	"$bog_max_app_Search_hint": "Поиск по заявкам дома",
 	"$bog_max_app_Similar_title_title": "Похожая заявка уже есть. Поддержите её, так она поднимется выше:",

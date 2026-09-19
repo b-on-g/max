@@ -21715,6 +21715,10 @@ var $;
 		fail(){
 			return "";
 		}
+		reset(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		New_button(){
 			const obj = new this.$.$mol_button_major();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_New_button_title")));
@@ -22599,6 +22603,12 @@ var $;
 			(obj.title) = () => ((this.fail()));
 			return obj;
 		}
+		Reset(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Reset_title")));
+			(obj.click) = (next) => ((this.reset(next)));
+			return obj;
+		}
 		New_link(){
 			const obj = new this.$.$mol_link();
 			(obj.arg) = () => ({"screen": "new", "ticket": null});
@@ -23023,6 +23033,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Sync"));
 	($mol_mem(($.$bog_max_app.prototype), "Theme_toggle"));
 	($mol_mem(($.$bog_max_app.prototype), "Nav"));
+	($mol_mem(($.$bog_max_app.prototype), "reset"));
 	($mol_mem(($.$bog_max_app.prototype), "New_button"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_title"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_status"));
@@ -23139,6 +23150,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Main"));
 	($mol_mem(($.$bog_max_app.prototype), "Wait"));
 	($mol_mem(($.$bog_max_app.prototype), "Fail"));
+	($mol_mem(($.$bog_max_app.prototype), "Reset"));
 	($mol_mem(($.$bog_max_app.prototype), "New_link"));
 	($mol_mem(($.$bog_max_app.prototype), "House_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Empty"));
@@ -23701,6 +23713,7 @@ var $;
                 this.pin();
                 $bog_max_bridge.ready();
                 this.chat_text_open();
+                this.heal();
             }
             chat_text_used(next = false) {
                 return next;
@@ -23769,6 +23782,7 @@ var $;
             fail() {
                 try {
                     this.session();
+                    this.uk().Houses();
                     return '';
                 }
                 catch (error) {
@@ -23778,8 +23792,43 @@ var $;
                     if (/Failed to fetch|Load failed|NetworkError/.test(message)) {
                         return 'Приложение работает как мини-приложение в MAX. Откройте его из чата с ботом управляющей компании.';
                     }
+                    if (this.broken(message)) {
+                        return 'Локальная копия данных повреждена. Нажмите «Сбросить локальные данные», заявки и роль хранятся у бота и вернутся после перезагрузки.';
+                    }
                     return message;
                 }
+            }
+            broken(message) {
+                return /No Seal for/.test(message);
+            }
+            heal() {
+                if (this.waiting())
+                    return;
+                let message = '';
+                try {
+                    this.uk().Houses();
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        return;
+                    message = error.message;
+                }
+                if (!this.broken(message))
+                    return;
+                const last = Number(this.$.$mol_state_local.value('$bog_max_healed') ?? 0);
+                if (Date.now() - last < 60_000)
+                    return;
+                this.$.$mol_state_local.value('$bog_max_healed', Date.now());
+                this.reset();
+            }
+            reset() {
+                const win = this.$.$mol_dom_context;
+                const request = win.indexedDB.deleteDatabase('$giper_baza_mine');
+                const reload = () => win.location.reload();
+                request.onsuccess = reload;
+                request.onerror = reload;
+                request.onblocked = reload;
+                setTimeout(reload, 3000);
             }
             waiting() {
                 try {
@@ -23849,7 +23898,7 @@ var $;
                 if (this.waiting())
                     return [this.Wait()];
                 if (this.fail())
-                    return [this.Fail()];
+                    return [this.Fail(), this.Reset()];
                 switch (this.section()) {
                     case 'house': return [
                         this.House_pick(),
@@ -23868,6 +23917,7 @@ var $;
                         this.Account_code(),
                         this.Account_code_note(),
                         this.Account_demo(),
+                        this.Reset(),
                     ];
                     case 'dispatch': return this.staff() ? [
                         this.Admin_title(),
@@ -24559,6 +24609,9 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "fail", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "reset", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "waiting", null);
@@ -32020,7 +32073,14 @@ var $;
             app.session = () => $mol_fail(new Error('Подпись MAX не прошла проверку'));
             $mol_assert_equal(app.fail(), 'Подпись MAX не прошла проверку');
             $mol_assert_equal(app.waiting(), false);
-            $mol_assert_equal(app.main_body(), [app.Fail()]);
+            $mol_assert_equal(app.main_body(), [app.Fail(), app.Reset()]);
+        },
+        'broken local mirror is explained and offered a reset'($) {
+            const app = $$.$bog_max_app.make({ $ });
+            app.session = () => ({ land: '', lord: '', lords: [], bot: '', role: 'resident', duty: [], integrations: [], staff_link: '', house: null, user: { id: 1, name: '' } });
+            app.uk = () => $mol_fail(new Error('No Seal for Sand'));
+            $mol_assert_ok(app.fail().includes('Сбросить локальные данные'));
+            $mol_assert_equal(app.main_body(), [app.Fail(), app.Reset()]);
         },
         'bids appear only after a submit attempt'($) {
             const quiet = $$.$bog_max_app.make({ $ });
