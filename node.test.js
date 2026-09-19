@@ -21907,6 +21907,11 @@ var $;
 			(obj.title) = () => ((this.house_code(id)));
 			return obj;
 		}
+		Admin_house_info(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Admin_house_address(id)), (this.Admin_house_code(id))]);
+			return obj;
+		}
 		House_remove_icon(id){
 			const obj = new this.$.$mol_icon_delete();
 			return obj;
@@ -21924,11 +21929,7 @@ var $;
 		}
 		Admin_house(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
-				(this.Admin_house_address(id)), 
-				(this.Admin_house_code(id)), 
-				(this.House_remove(id))
-			]);
+			(obj.sub) = () => ([(this.Admin_house_info(id)), (this.House_remove(id))]);
 			return obj;
 		}
 		admin_house_rows(){
@@ -23055,6 +23056,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "House_submit"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house_address"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house_code"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house_info"));
 	($mol_mem_key(($.$bog_max_app.prototype), "House_remove_icon"));
 	($mol_mem_key(($.$bog_max_app.prototype), "house_remove"));
 	($mol_mem_key(($.$bog_max_app.prototype), "House_remove"));
@@ -25008,6 +25010,31 @@ var $;
         Staff_title: {
             padding: $mol_gap.block,
             color: $mol_theme.shade,
+        },
+        Houses_title: {
+            padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        Admin_house: {
+            flex: { direction: 'row' },
+            alignItems: 'center',
+            gap: $mol_gap.block,
+            padding: { left: $mol_gap.block, right: $mol_gap.space, bottom: $mol_gap.space },
+        },
+        Admin_house_info: {
+            flex: { direction: 'column', grow: 1, shrink: 1 },
+            minWidth: 0,
+        },
+        Admin_house_address: {
+            font: { weight: 500 },
+        },
+        Admin_house_code: {
+            color: $mol_theme.shade,
+            font: { size: '0.8125rem' },
+        },
+        House_remove: {
+            color: $mol_theme.shade,
+            flex: { shrink: 0 },
         },
         Staff_invite: {
             padding: { left: $mol_gap.block, right: $mol_gap.block },

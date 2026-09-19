@@ -57253,69 +57253,74 @@ declare namespace $ {
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_button_minor__hint_bog_max_app_32 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_32 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_button_minor__hint_bog_max_app_33 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__sub_bog_max_app_33 = $mol_type_enforce<
+	type $mol_button_minor__sub_bog_max_app_34 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_button_minor__click_bog_max_app_34 = $mol_type_enforce<
+	type $mol_button_minor__click_bog_max_app_35 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_remove'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_view__sub_bog_max_app_35 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_36 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_select__options_bog_max_app_36 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_37 = $mol_type_enforce<
 		ReturnType< $bog_max_app['status_options'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_37 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_38 = $mol_type_enforce<
 		ReturnType< $bog_max_app['status_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_38 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_39 = $mol_type_enforce<
 		ReturnType< $bog_max_app['admin_status'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_view__sub_bog_max_app_39 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_40 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button_major__title_bog_max_app_40 = $mol_type_enforce<
+	type $mol_button_major__title_bog_max_app_41 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_link__arg_bog_max_app_41 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_42 = $mol_type_enforce<
 		({ 
 			'screen': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_42 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_43 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_switch__value_bog_max_app_43 = $mol_type_enforce<
+	type $mol_switch__value_bog_max_app_44 = $mol_type_enforce<
 		ReturnType< $bog_max_app['stats_period'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options_bog_max_app_44 = $mol_type_enforce<
+	type $mol_switch__options_bog_max_app_45 = $mol_type_enforce<
 		({ 
 			'7': string,
 			'30': string,
@@ -57325,112 +57330,112 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_select__options_bog_max_app_45 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_46 = $mol_type_enforce<
 		ReturnType< $bog_max_app['stats_house_options'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_46 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_47 = $mol_type_enforce<
 		ReturnType< $bog_max_app['stats_house_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_47 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_48 = $mol_type_enforce<
 		ReturnType< $bog_max_app['stats_house'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_view__sub_bog_max_app_48 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_49 = $mol_type_enforce<
 		ReturnType< $bog_max_app['summary_rows'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_paragraph__title_bog_max_app_49 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_50 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_50 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_51 = $mol_type_enforce<
 		ReturnType< $bog_max_app['owner_stat_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_paragraph__title_bog_max_app_51 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_52 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_52 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_53 = $mol_type_enforce<
 		ReturnType< $bog_max_app['stats_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_paragraph__title_bog_max_app_53 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_54 = $mol_type_enforce<
 		ReturnType< $bog_max_app['summary_value'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_54 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_55 = $mol_type_enforce<
 		ReturnType< $bog_max_app['summary_label'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_55 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_56 = $mol_type_enforce<
 		ReturnType< $bog_max_app['owner_stat_name'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_56 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_57 = $mol_type_enforce<
 		ReturnType< $bog_max_app['owner_stat_line'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_57 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_58 = $mol_type_enforce<
 		ReturnType< $bog_max_app['stat_house'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_58 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_59 = $mol_type_enforce<
 		ReturnType< $bog_max_app['stat_line'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_59 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_60 = $mol_type_enforce<
 		ReturnType< $bog_max_app['org_name'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_60 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_61 = $mol_type_enforce<
 		ReturnType< $bog_max_app['org_state'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_max_app_61 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_62 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_string__hint_bog_max_app_62 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_63 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_63 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_64 = $mol_type_enforce<
 		ReturnType< $bog_max_app['staff_code'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_paragraph__title_bog_max_app_64 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_65 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_switch__value_bog_max_app_65 = $mol_type_enforce<
+	type $mol_switch__value_bog_max_app_66 = $mol_type_enforce<
 		ReturnType< $bog_max_app['staff_role'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options_bog_max_app_66 = $mol_type_enforce<
+	type $mol_switch__options_bog_max_app_67 = $mol_type_enforce<
 		({ 
 			'dispatcher': string,
 			'admin': string,
@@ -57438,92 +57443,92 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_paragraph__title_bog_max_app_67 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_68 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_select_list__options_bog_max_app_68 = $mol_type_enforce<
+	type $mol_select_list__options_bog_max_app_69 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_options'] >
 		,
 		ReturnType< $mol_select_list['options'] >
 	>
-	type $mol_select_list__dictionary_bog_max_app_69 = $mol_type_enforce<
+	type $mol_select_list__dictionary_bog_max_app_70 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_dictionary'] >
 		,
 		ReturnType< $mol_select_list['dictionary'] >
 	>
-	type $mol_select_list__value_bog_max_app_70 = $mol_type_enforce<
+	type $mol_select_list__value_bog_max_app_71 = $mol_type_enforce<
 		ReturnType< $bog_max_app['staff_houses'] >
 		,
 		ReturnType< $mol_select_list['value'] >
 	>
-	type $mol_select_list__pick_hint_bog_max_app_71 = $mol_type_enforce<
+	type $mol_select_list__pick_hint_bog_max_app_72 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_select_list['pick_hint'] >
 	>
-	type $mol_button_major__title_bog_max_app_72 = $mol_type_enforce<
+	type $mol_button_major__title_bog_max_app_73 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click_bog_max_app_73 = $mol_type_enforce<
+	type $mol_button_major__click_bog_max_app_74 = $mol_type_enforce<
 		ReturnType< $bog_max_app['staff_add'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_string__hint_bog_max_app_74 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_75 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_75 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_76 = $mol_type_enforce<
 		ReturnType< $bog_max_app['post_title'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_76 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_77 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__bids_bog_max_app_77 = $mol_type_enforce<
+	type $mol_form_field__bids_bog_max_app_78 = $mol_type_enforce<
 		ReturnType< $bog_max_app['post_title_bids'] >
 		,
 		ReturnType< $mol_form_field['bids'] >
 	>
-	type $mol_form_field__control_bog_max_app_78 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_79 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Post_title_input'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__hint_bog_max_app_79 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_80 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_80 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_81 = $mol_type_enforce<
 		ReturnType< $bog_max_app['post_text'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_81 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_82 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_82 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_83 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Post_text_input'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_select__options_bog_max_app_83 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_84 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_84 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_85 = $mol_type_enforce<
 		({ 
 			'news': string,
 			'outage': string,
@@ -57531,382 +57536,382 @@ declare namespace $ {
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_85 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_86 = $mol_type_enforce<
 		ReturnType< $bog_max_app['post_kind'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_86 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_87 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_87 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_88 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Post_kind'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_select__options_bog_max_app_88 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_89 = $mol_type_enforce<
 		ReturnType< $bog_max_app['my_houses'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_89 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_90 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_90 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_91 = $mol_type_enforce<
 		ReturnType< $bog_max_app['post_house'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_91 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_92 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_92 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_93 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Post_house'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_button_major__title_bog_max_app_93 = $mol_type_enforce<
+	type $mol_button_major__title_bog_max_app_94 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click_bog_max_app_94 = $mol_type_enforce<
+	type $mol_button_major__click_bog_max_app_95 = $mol_type_enforce<
 		ReturnType< $bog_max_app['post_add'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_link__arg_bog_max_app_95 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_96 = $mol_type_enforce<
 		({ 
 			'screen': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_96 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_97 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_select__options_bog_max_app_97 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_98 = $mol_type_enforce<
 		ReturnType< $bog_max_app['scope_options'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_98 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_99 = $mol_type_enforce<
 		ReturnType< $bog_max_app['scope_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_99 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_100 = $mol_type_enforce<
 		ReturnType< $bog_max_app['scope'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_100 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_101 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_101 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_102 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Scope'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_select__options_bog_max_app_102 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_103 = $mol_type_enforce<
 		ReturnType< $bog_max_app['category_options'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_103 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_104 = $mol_type_enforce<
 		ReturnType< $bog_max_app['category_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_104 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_105 = $mol_type_enforce<
 		ReturnType< $bog_max_app['category'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_105 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_106 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__attr_bog_max_app_106 = $mol_type_enforce<
+	type $mol_form_field__attr_bog_max_app_107 = $mol_type_enforce<
 		({ 
 			'bog_max_required': string,
 		})  & ReturnType< $mol_form_field['attr'] >
 		,
 		ReturnType< $mol_form_field['attr'] >
 	>
-	type $mol_form_field__bids_bog_max_app_107 = $mol_type_enforce<
+	type $mol_form_field__bids_bog_max_app_108 = $mol_type_enforce<
 		ReturnType< $bog_max_app['category_bids'] >
 		,
 		ReturnType< $mol_form_field['bids'] >
 	>
-	type $mol_form_field__control_bog_max_app_108 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_109 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Category'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__hint_bog_max_app_109 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_110 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_110 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_111 = $mol_type_enforce<
 		ReturnType< $bog_max_app['entrance'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_111 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_112 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_112 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_113 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Entrance'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__hint_bog_max_app_113 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_114 = $mol_type_enforce<
 		ReturnType< $bog_max_app['place_hint'] >
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_114 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_115 = $mol_type_enforce<
 		ReturnType< $bog_max_app['place'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_115 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_116 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__attr_bog_max_app_116 = $mol_type_enforce<
+	type $mol_form_field__attr_bog_max_app_117 = $mol_type_enforce<
 		({ 
 			'bog_max_required': string,
 		})  & ReturnType< $mol_form_field['attr'] >
 		,
 		ReturnType< $mol_form_field['attr'] >
 	>
-	type $mol_form_field__bids_bog_max_app_117 = $mol_type_enforce<
+	type $mol_form_field__bids_bog_max_app_118 = $mol_type_enforce<
 		ReturnType< $bog_max_app['place_bids'] >
 		,
 		ReturnType< $mol_form_field['bids'] >
 	>
-	type $mol_form_field__control_bog_max_app_118 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_119 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Place'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_string__hint_bog_max_app_119 = $mol_type_enforce<
+	type $mol_string__hint_bog_max_app_120 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_string__value_bog_max_app_120 = $mol_type_enforce<
+	type $mol_string__value_bog_max_app_121 = $mol_type_enforce<
 		ReturnType< $bog_max_app['text'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_form_field__name_bog_max_app_121 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_122 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_122 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_123 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Text'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_button_open__files_bog_max_app_123 = $mol_type_enforce<
+	type $mol_button_open__files_bog_max_app_124 = $mol_type_enforce<
 		ReturnType< $bog_max_app['photo_files'] >
 		,
 		ReturnType< $mol_button_open['files'] >
 	>
-	type $mol_button_open__accept_bog_max_app_124 = $mol_type_enforce<
+	type $mol_button_open__accept_bog_max_app_125 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_open['accept'] >
 	>
-	type $mol_button_open__multiple_bog_max_app_125 = $mol_type_enforce<
+	type $mol_button_open__multiple_bog_max_app_126 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_button_open['multiple'] >
 	>
-	type $mol_button_open__hint_bog_max_app_126 = $mol_type_enforce<
+	type $mol_button_open__hint_bog_max_app_127 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_open['hint'] >
 	>
-	type $mol_paragraph__title_bog_max_app_127 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_128 = $mol_type_enforce<
 		ReturnType< $bog_max_app['photo_pick_label'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_max_app_128 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_129 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_form_field__name_bog_max_app_129 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_130 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_130 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_131 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Photo_row'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_button_major__title_bog_max_app_131 = $mol_type_enforce<
+	type $mol_button_major__title_bog_max_app_132 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click_bog_max_app_132 = $mol_type_enforce<
+	type $mol_button_major__click_bog_max_app_133 = $mol_type_enforce<
 		ReturnType< $bog_max_app['submit'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_paragraph__title_bog_max_app_133 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_134 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_link__arg_bog_max_app_134 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_135 = $mol_type_enforce<
 		({ 
 			'screen': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_135 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_136 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_search__query_bog_max_app_136 = $mol_type_enforce<
+	type $mol_search__query_bog_max_app_137 = $mol_type_enforce<
 		ReturnType< $bog_max_app['all_query'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__hint_bog_max_app_137 = $mol_type_enforce<
+	type $mol_search__hint_bog_max_app_138 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_select__options_bog_max_app_138 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_139 = $mol_type_enforce<
 		ReturnType< $bog_max_app['all_status_options'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_139 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_140 = $mol_type_enforce<
 		ReturnType< $bog_max_app['all_status_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_140 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_141 = $mol_type_enforce<
 		ReturnType< $bog_max_app['all_status'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_list__rows_bog_max_app_141 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_142 = $mol_type_enforce<
 		ReturnType< $bog_max_app['all_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_link__arg_bog_max_app_142 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_143 = $mol_type_enforce<
 		({ 
 			'ticket': any,
 		}) 
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_143 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_144 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_paragraph__title_bog_max_app_144 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_145 = $mol_type_enforce<
 		ReturnType< $bog_max_app['voices_text'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_button_major__title_bog_max_app_145 = $mol_type_enforce<
+	type $mol_button_major__title_bog_max_app_146 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click_bog_max_app_146 = $mol_type_enforce<
+	type $mol_button_major__click_bog_max_app_147 = $mol_type_enforce<
 		ReturnType< $bog_max_app['voice'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_button_major__enabled_bog_max_app_147 = $mol_type_enforce<
+	type $mol_button_major__enabled_bog_max_app_148 = $mol_type_enforce<
 		ReturnType< $bog_max_app['voice_allowed'] >
 		,
 		ReturnType< $mol_button_major['enabled'] >
 	>
-	type $mol_paragraph__title_bog_max_app_148 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_149 = $mol_type_enforce<
 		ReturnType< $bog_max_app['log_row'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_page__title_bog_max_app_149 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_150 = $mol_type_enforce<
 		ReturnType< $bog_max_app['main_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__Logo_bog_max_app_150 = $mol_type_enforce<
+	type $mol_page__Logo_bog_max_app_151 = $mol_type_enforce<
 		ReturnType< $bog_max_app['Max_logo'] >
 		,
 		ReturnType< $mol_page['Logo'] >
 	>
-	type $mol_page__tools_bog_max_app_151 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_152 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_152 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_153 = $mol_type_enforce<
 		ReturnType< $bog_max_app['main_body'] >
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__foot_bog_max_app_153 = $mol_type_enforce<
+	type $mol_page__foot_bog_max_app_154 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['foot'] >
 	>
-	type $mol_paragraph__title_bog_max_app_154 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_155 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_155 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_156 = $mol_type_enforce<
 		ReturnType< $bog_max_app['fail'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_button_minor__title_bog_max_app_156 = $mol_type_enforce<
+	type $mol_button_minor__title_bog_max_app_157 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__click_bog_max_app_157 = $mol_type_enforce<
+	type $mol_button_minor__click_bog_max_app_158 = $mol_type_enforce<
 		ReturnType< $bog_max_app['reset'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_link__arg_bog_max_app_158 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_159 = $mol_type_enforce<
 		({ 
 			'screen': string,
 			'ticket': any,
@@ -57914,47 +57919,47 @@ declare namespace $ {
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_159 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_160 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_paragraph__title_bog_max_app_160 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_161 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_title'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_161 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_162 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_162 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_163 = $mol_type_enforce<
 		ReturnType< $bog_max_app['rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_select__options_bog_max_app_163 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_164 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_options'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_164 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_165 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_165 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_166 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_filter'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_switch__value_bog_max_app_166 = $mol_type_enforce<
+	type $mol_switch__value_bog_max_app_167 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_tab'] >
 		,
 		ReturnType< $mol_switch['value'] >
 	>
-	type $mol_switch__options_bog_max_app_167 = $mol_type_enforce<
+	type $mol_switch__options_bog_max_app_168 = $mol_type_enforce<
 		({ 
 			'tickets': string,
 			'news': string,
@@ -57962,130 +57967,125 @@ declare namespace $ {
 		,
 		ReturnType< $mol_switch['options'] >
 	>
-	type $mol_search__query_bog_max_app_168 = $mol_type_enforce<
+	type $mol_search__query_bog_max_app_169 = $mol_type_enforce<
 		ReturnType< $bog_max_app['query'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__hint_bog_max_app_169 = $mol_type_enforce<
+	type $mol_search__hint_bog_max_app_170 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_paragraph__title_bog_max_app_170 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_171 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_171 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_172 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_paragraph__title_bog_max_app_172 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_173 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_173 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_174 = $mol_type_enforce<
 		ReturnType< $bog_max_app['news_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__sub_bog_max_app_174 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_175 = $mol_type_enforce<
 		ReturnType< $bog_max_app['account_head'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_image__uri_bog_max_app_175 = $mol_type_enforce<
+	type $mol_image__uri_bog_max_app_176 = $mol_type_enforce<
 		ReturnType< $bog_max_app['account_photo'] >
 		,
 		ReturnType< $mol_image['uri'] >
 	>
-	type $mol_image__title_bog_max_app_176 = $mol_type_enforce<
+	type $mol_image__title_bog_max_app_177 = $mol_type_enforce<
 		ReturnType< $bog_max_app['account_name'] >
 		,
 		ReturnType< $mol_image['title'] >
 	>
-	type $mol_avatar__id_bog_max_app_177 = $mol_type_enforce<
+	type $mol_avatar__id_bog_max_app_178 = $mol_type_enforce<
 		ReturnType< $bog_max_app['account_id'] >
 		,
 		ReturnType< $mol_avatar['id'] >
 	>
-	type $mol_view__sub_bog_max_app_178 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_179 = $mol_type_enforce<
 		ReturnType< $bog_max_app['account_titles'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_paragraph__title_bog_max_app_179 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_180 = $mol_type_enforce<
 		ReturnType< $bog_max_app['account_name'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_180 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_181 = $mol_type_enforce<
 		ReturnType< $bog_max_app['account_username'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_labeler__title_bog_max_app_181 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_182 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_182 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_183 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_form_field__name_bog_max_app_183 = $mol_type_enforce<
+	type $mol_form_field__name_bog_max_app_184 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__control_bog_max_app_184 = $mol_type_enforce<
+	type $mol_form_field__control_bog_max_app_185 = $mol_type_enforce<
 		ReturnType< $bog_max_app['House'] >
 		,
 		ReturnType< $mol_form_field['control'] >
 	>
-	type $mol_labeler__title_bog_max_app_185 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_186 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_186 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_187 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_paragraph__title_bog_max_app_187 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_188 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_labeler__title_bog_max_app_188 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_189 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_189 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_190 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_190 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_191 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_191 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_192 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
-	>
-	type $mol_paragraph__title_bog_max_app_192 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
 	>
 	type $mol_paragraph__title_bog_max_app_193 = $mol_type_enforce<
 		string
@@ -58097,7 +58097,12 @@ declare namespace $ {
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_link__arg_bog_max_app_195 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_195 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_link__arg_bog_max_app_196 = $mol_type_enforce<
 		({ 
 			'screen': string,
 			'ticket': any,
@@ -58105,42 +58110,42 @@ declare namespace $ {
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_196 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_197 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_form__form_fields_bog_max_app_197 = $mol_type_enforce<
+	type $mol_form__form_fields_bog_max_app_198 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['form_fields'] >
 	>
-	type $mol_form__buttons_bog_max_app_198 = $mol_type_enforce<
+	type $mol_form__buttons_bog_max_app_199 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['buttons'] >
 	>
-	type $mol_paragraph__title_bog_max_app_199 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_200 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_200 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_201 = $mol_type_enforce<
 		ReturnType< $bog_max_app['admin_house_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_paragraph__title_bog_max_app_201 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_202 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_202 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_203 = $mol_type_enforce<
 		ReturnType< $bog_max_app['admin_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_link__arg_bog_max_app_203 = $mol_type_enforce<
+	type $mol_link__arg_bog_max_app_204 = $mol_type_enforce<
 		({ 
 			'screen': string,
 			'ticket': any,
@@ -58148,30 +58153,25 @@ declare namespace $ {
 		,
 		ReturnType< $mol_link['arg'] >
 	>
-	type $mol_link__sub_bog_max_app_204 = $mol_type_enforce<
+	type $mol_link__sub_bog_max_app_205 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
-	type $mol_page__title_bog_max_app_205 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_206 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_206 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_207 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_207 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_208 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
-	>
-	type $mol_view__sub_bog_max_app_208 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
 	>
 	type $mol_view__sub_bog_max_app_209 = $mol_type_enforce<
 		readonly(any)[]
@@ -58183,272 +58183,277 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_paragraph__title_bog_max_app_211 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_211 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_paragraph__title_bog_max_app_212 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_212 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_213 = $mol_type_enforce<
 		ReturnType< $bog_max_app['org_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_paragraph__title_bog_max_app_213 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_214 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_select__options_bog_max_app_214 = $mol_type_enforce<
+	type $mol_select__options_bog_max_app_215 = $mol_type_enforce<
 		ReturnType< $bog_max_app['my_houses'] >
 		,
 		ReturnType< $mol_select['options'] >
 	>
-	type $mol_select__dictionary_bog_max_app_215 = $mol_type_enforce<
+	type $mol_select__dictionary_bog_max_app_216 = $mol_type_enforce<
 		ReturnType< $bog_max_app['house_dictionary'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_select__value_bog_max_app_216 = $mol_type_enforce<
+	type $mol_select__value_bog_max_app_217 = $mol_type_enforce<
 		ReturnType< $bog_max_app['qr_house'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $bog_qr__uri_bog_max_app_217 = $mol_type_enforce<
+	type $bog_qr__uri_bog_max_app_218 = $mol_type_enforce<
 		ReturnType< $bog_max_app['qr_uri'] >
 		,
 		ReturnType< $bog_qr['uri'] >
 	>
-	type $mol_paragraph__title_bog_max_app_218 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_219 = $mol_type_enforce<
 		ReturnType< $bog_max_app['qr_uri'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_button_major__title_bog_max_app_219 = $mol_type_enforce<
+	type $mol_button_major__title_bog_max_app_220 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_major['title'] >
 	>
-	type $mol_button_major__click_bog_max_app_220 = $mol_type_enforce<
+	type $mol_button_major__click_bog_max_app_221 = $mol_type_enforce<
 		ReturnType< $bog_max_app['qr_print'] >
 		,
 		ReturnType< $mol_button_major['click'] >
 	>
-	type $mol_paragraph__title_bog_max_app_221 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_222 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_222 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_223 = $mol_type_enforce<
 		ReturnType< $bog_max_app['staff_link'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $bog_qr__uri_bog_max_app_223 = $mol_type_enforce<
+	type $bog_qr__uri_bog_max_app_224 = $mol_type_enforce<
 		ReturnType< $bog_max_app['staff_link'] >
 		,
 		ReturnType< $bog_qr['uri'] >
 	>
-	type $mol_view__sub_bog_max_app_224 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_225 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_form__form_fields_bog_max_app_225 = $mol_type_enforce<
+	type $mol_form__form_fields_bog_max_app_226 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['form_fields'] >
 	>
-	type $mol_form__buttons_bog_max_app_226 = $mol_type_enforce<
+	type $mol_form__buttons_bog_max_app_227 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['buttons'] >
 	>
-	type $mol_page__title_bog_max_app_227 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_228 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_228 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_229 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_229 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_230 = $mol_type_enforce<
 		ReturnType< $bog_max_app['new_body'] >
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_labeler__title_bog_max_app_230 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_231 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_231 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_232 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_form__body_bog_max_app_232 = $mol_type_enforce<
+	type $mol_form__body_bog_max_app_233 = $mol_type_enforce<
 		ReturnType< $bog_max_app['new_fields'] >
 		,
 		ReturnType< $mol_form['body'] >
 	>
-	type $mol_form__form_fields_bog_max_app_233 = $mol_type_enforce<
+	type $mol_form__form_fields_bog_max_app_234 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['form_fields'] >
 	>
-	type $mol_form__buttons_bog_max_app_234 = $mol_type_enforce<
+	type $mol_form__buttons_bog_max_app_235 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['buttons'] >
 	>
-	type $mol_image__uri_bog_max_app_235 = $mol_type_enforce<
+	type $mol_image__uri_bog_max_app_236 = $mol_type_enforce<
 		ReturnType< $bog_max_app['photo_preview'] >
 		,
 		ReturnType< $mol_image['uri'] >
 	>
-	type $mol_paragraph__title_bog_max_app_236 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_237 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_max_app_237 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_238 = $mol_type_enforce<
 		ReturnType< $bog_max_app['similar_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_page__title_bog_max_app_238 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_239 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_239 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_240 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_240 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_241 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_page__title_bog_max_app_241 = $mol_type_enforce<
+	type $mol_page__title_bog_max_app_242 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_title'] >
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__tools_bog_max_app_242 = $mol_type_enforce<
+	type $mol_page__tools_bog_max_app_243 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['tools'] >
 	>
-	type $mol_page__body_bog_max_app_243 = $mol_type_enforce<
+	type $mol_page__body_bog_max_app_244 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_body'] >
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_paragraph__title_bog_max_app_244 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_245 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_status'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_paragraph__title_bog_max_app_245 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_max_app_246 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_note'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_image__uri_bog_max_app_246 = $mol_type_enforce<
+	type $mol_image__uri_bog_max_app_247 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_photo'] >
 		,
 		ReturnType< $mol_image['uri'] >
 	>
-	type $mol_labeler__title_bog_max_app_247 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_248 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_248 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_249 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_249 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_250 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_250 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_251 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_251 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_252 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_252 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_253 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_253 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_254 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_254 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_255 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_255 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_256 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_256 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_257 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_257 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_258 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_258 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_259 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_259 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_260 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_260 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_261 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_261 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_262 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_262 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_263 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_view__sub_bog_max_app_263 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_264 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_list__rows_bog_max_app_264 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_265 = $mol_type_enforce<
 		ReturnType< $bog_max_app['log_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
@@ -58514,6 +58519,7 @@ declare namespace $ {
 		Admin_house_address( id: any): $mol_paragraph
 		house_code( id: any): string
 		Admin_house_code( id: any): $mol_paragraph
+		Admin_house_info( id: any): $mol_view
 		House_remove_icon( id: any): $mol_icon_delete
 		house_remove( id: any, next?: any ): any
 		House_remove( id: any): $mol_button_minor

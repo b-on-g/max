@@ -907,10 +907,12 @@ $bog_max_app $mol_book2
 		rows <= admin_house_rows /
 			<= Admin_house* $mol_view
 				sub /
-					<= Admin_house_address* $mol_paragraph
-						title <= house_address* \
-					<= Admin_house_code* $mol_paragraph
-						title <= house_code* \
+					<= Admin_house_info* $mol_view
+						sub /
+							<= Admin_house_address* $mol_paragraph
+								title <= house_address* \
+							<= Admin_house_code* $mol_paragraph
+								title <= house_code* \
 					<= House_remove* $mol_button_minor
 						hint @ \Удалить дом
 						sub /
