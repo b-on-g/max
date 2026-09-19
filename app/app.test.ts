@@ -7,7 +7,15 @@ namespace $ {
 			app.session = ()=> $mol_fail( new Error( 'Подпись MAX не прошла проверку' ) )
 			$mol_assert_equal( app.fail(), 'Подпись MAX не прошла проверку' )
 			$mol_assert_equal( app.waiting(), false )
-			$mol_assert_equal( app.main_body(), [ app.Fail() ] )
+			$mol_assert_equal( app.main_body(), [ app.Fail(), app.Reset() ] )
+		},
+
+		'broken local mirror is explained and offered a reset'( $ ) {
+			const app = $$.$bog_max_app.make({ $ })
+			app.session = ()=> ({ land: '', lord: '', lords: [], bot: '', role: 'resident', duty: [], integrations: [], staff_link: '', house: null, user: { id: 1, name: '' } })
+			app.uk = ()=> $mol_fail( new Error( 'No Seal for Sand' ) )
+			$mol_assert_ok( app.fail().includes( 'Сбросить локальные данные' ) )
+			$mol_assert_equal( app.main_body(), [ app.Fail(), app.Reset() ] )
 		},
 
 		'bids appear only after a submit attempt'( $ ) {

@@ -30,6 +30,7 @@ namespace $.$$ {
 			this.pin()
 			$bog_max_bridge.ready()
 			this.chat_text_open()
+			this.heal()
 		}
 
 		@ $mol_mem
@@ -101,6 +102,7 @@ namespace $.$$ {
 		fail() {
 			try {
 				this.session()
+				this.uk().Houses()
 				return ''
 			} catch( error ) {
 				if( $mol_promise_like( error ) ) return ''
@@ -108,8 +110,42 @@ namespace $.$$ {
 				if( /Failed to fetch|Load failed|NetworkError/.test( message ) ) {
 					return 'Приложение работает как мини-приложение в MAX. Откройте его из чата с ботом управляющей компании.'
 				}
+				if( this.broken( message ) ) {
+					return 'Локальная копия данных повреждена. Нажмите «Сбросить локальные данные», заявки и роль хранятся у бота и вернутся после перезагрузки.'
+				}
 				return message
 			}
+		}
+
+		broken( message: string ) {
+			return /No Seal for/.test( message )
+		}
+
+		heal() {
+			if( this.waiting() ) return
+			let message = ''
+			try {
+				this.uk().Houses()
+			} catch( error ) {
+				if( $mol_promise_like( error ) ) return
+				message = ( error as Error ).message
+			}
+			if( !this.broken( message ) ) return
+			const last = Number( this.$.$mol_state_local.value( '$bog_max_healed' ) ?? 0 )
+			if( Date.now() - last < 60_000 ) return
+			this.$.$mol_state_local.value( '$bog_max_healed', Date.now() )
+			this.reset()
+		}
+
+		@ $mol_action
+		reset() {
+			const win = this.$.$mol_dom_context
+			const request = win.indexedDB.deleteDatabase( '$giper_baza_mine' )
+			const reload = ()=> win.location.reload()
+			request.onsuccess = reload
+			request.onerror = reload
+			request.onblocked = reload
+			setTimeout( reload, 3000 )
 		}
 
 		@ $mol_mem
@@ -192,7 +228,7 @@ namespace $.$$ {
 		@ $mol_mem
 		main_body() {
 			if( this.waiting() ) return [ this.Wait() ]
-			if( this.fail() ) return [ this.Fail() ]
+			if( this.fail() ) return [ this.Fail(), this.Reset() ]
 			switch( this.section() ) {
 				case 'house': return [
 					this.House_pick(),
@@ -211,6 +247,7 @@ namespace $.$$ {
 					this.Account_code(),
 					this.Account_code_note(),
 					this.Account_demo(),
+					this.Reset(),
 				]
 				case 'dispatch': return this.staff() ? [
 					this.Admin_title(),
