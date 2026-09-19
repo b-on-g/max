@@ -140,6 +140,21 @@ $bog_max_app $mol_book2
 			<= House_submit $mol_button_major
 				title @ \Добавить дом
 				click? <=> house_add? null
+	Houses_title $mol_paragraph
+		title @ \Дома УК. Удаление убирает дом из списков, заявки по нему остаются.
+	Admin_houses $mol_list
+		rows <= admin_house_rows /
+			<= Admin_house* $mol_view
+				sub /
+					<= Admin_house_address* $mol_paragraph
+						title <= house_address* \
+					<= Admin_house_code* $mol_paragraph
+						title <= house_code* \
+					<= House_remove* $mol_button_minor
+						hint @ \Удалить дом
+						sub /
+							<= House_remove_icon* $mol_icon_delete
+						click? <=> house_remove*? null
 	Admin_empty $mol_paragraph
 		title @ \Заявок пока нет.
 	Admin_rows $mol_list

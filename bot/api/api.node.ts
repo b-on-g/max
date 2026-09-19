@@ -181,13 +181,13 @@ namespace $ {
 
 		async listen( bot: $bog_max_bot_api_client ) {
 			const url = this.hook_url()
-			const { subscriptions } = await bot.api.getSubscriptions()
+			const subscriptions = await bot.api.getSubscriptions()
 			if( !url ) {
 				if( subscriptions.length ) this.$.$mol_log3_warn({ place: this, message: 'У бота есть webhook-подписка, long polling событий не получит', hint: subscriptions.map( sub => sub.url ).join( ', ' ) })
 				return bot.start()
 			}
-			for( const sub of subscriptions ) if( sub.url !== url ) await bot.api.unsubscribe({ url: sub.url })
-			await bot.api.subscribe({ url, secret: this.hook_secret() || undefined, update_types: [ 'bot_started', 'bot_added', 'message_created', 'message_callback' ] })
+			for( const sub of subscriptions ) if( sub.url !== url ) await bot.api.unsubscribe( sub.url )
+			await bot.api.subscribe( url, this.hook_secret() || undefined, [ 'bot_started', 'bot_added', 'message_created', 'message_callback' ] )
 			bot.botInfo = await bot.api.getMyInfo()
 			this.$.$mol_log3_done({ place: this, message: 'Webhook подписан: ' + url })
 		}
@@ -196,7 +196,7 @@ namespace $ {
 			const { Context } = $node[ '@maxhub/max-bot-api' ]
 			const bot = this.client()
 			const ctx = new Context( update, bot.api, bot.botInfo )
-			return bot.middleware()( ctx, ()=> Promise.resolve() ).catch( error => this.$.$mol_log3_fail({ place: this, message: String( error ) }) )
+			return Promise.resolve( bot.middleware()( ctx, ()=> Promise.resolve() ) ).catch( ( error: unknown )=> this.$.$mol_log3_fail({ place: this, message: String( error ) }) )
 		}
 
 		send( user: number, text: string, payload: string ): Promise< unknown > {

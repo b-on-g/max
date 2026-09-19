@@ -86,6 +86,8 @@ namespace $.$$ {
 		}
 
 		dev_init_data() {
+			const raw = this.$.$mol_state_arg.value( 'init' ) ?? ''
+			if( raw ) return raw
 			const id = Number( this.$.$mol_state_arg.value( 'user' ) ?? '' )
 			const start = this.$.$mol_state_arg.value( 'start' ) ?? ''
 			if( !id && !start ) return ''
@@ -224,6 +226,8 @@ namespace $.$$ {
 				case 'admin': return this.admin() ? [
 					this.Stats_link(),
 					this.House_form(),
+					this.Houses_title(),
+					this.Admin_houses(),
 					this.Staff_title(),
 					... this.staff_link() ? [ this.Staff_invite(), this.Staff_qr() ] : [],
 					this.Staff_form(),
@@ -442,6 +446,19 @@ namespace $.$$ {
 			house.Code( 'auto' )!.val( code )
 			this.house_address_new( '' )
 			this.house_tried( false )
+		}
+
+		admin_house_rows() {
+			return this.house_options().map( link => this.Admin_house( link ) )
+		}
+
+		house_code( link: string ) {
+			return this.house_of( link ).Code()?.val() ?? ''
+		}
+
+		@ $mol_action
+		house_remove( link: string ) {
+			this.uk().Houses( 'auto' )!.cut( new $giper_baza_link( link ) )
 		}
 
 		account_count() {
