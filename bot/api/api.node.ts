@@ -20,6 +20,7 @@ namespace $ {
 		}
 
 		variant_ok = 0
+		variant_seen = false
 
 		greeting() {
 			return 'Это бот заявок в управляющую компанию. Нажмите кнопку, опишите проблему, и в ответ придёт номер заявки, ответственный и срок по нормативу.'
@@ -65,7 +66,7 @@ namespace $ {
 			return this.mentioned( message, me )
 		}
 
-		open( text: string, payload: string, variant: number ) {
+		open( text: string, payload: string, variant: number ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'button' ][ 'openApp' ] > | ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'button' ][ 'link' ] > {
 			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
 			if( variant === 0 ) return Keyboard.button.openApp( text, this.name() || this.app(), undefined, payload || undefined )
 			if( variant === 1 ) return Keyboard.button.openApp( text, this.app(), undefined, payload || undefined )
@@ -118,8 +119,9 @@ namespace $ {
 			for( let variant = this.variant_ok; ; ++ variant ) {
 				try {
 					const result = await send( variant )
-					if( variant !== this.variant_ok && variant < 2 ) {
-						this.variant_ok = variant
+					if( !this.variant_seen || variant !== this.variant_ok ) {
+						this.variant_seen = true
+						if( variant < 2 ) this.variant_ok = variant
 						this.$.$mol_log3_rise({ place: this, message: 'Кнопка мини-аппа принята, вариант ' + variant })
 					}
 					return result
