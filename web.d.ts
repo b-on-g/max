@@ -42994,6 +42994,34 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+
+	export class $bog_max_list extends $mol_list {
+	}
+	
+}
+
+//# sourceMappingURL=list.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_max_list extends $.$bog_max_list {
+        view_window(next?: [number, number]): [number, number];
+    }
+}
+
+declare namespace $ {
+
+	type $bog_max_list__rows_bog_max_select_1 = $mol_type_enforce<
+		ReturnType< $bog_max_select['menu_content'] >
+		,
+		ReturnType< $bog_max_list['rows'] >
+	>
+	export class $bog_max_select extends $mol_select {
+		Menu( ): $bog_max_list
+	}
+	
+}
+
+//# sourceMappingURL=select.view.tree.d.ts.map
+declare namespace $ {
     type $bog_max_bridge_app = {
         initData: string;
         platform: string;

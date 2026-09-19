@@ -2870,3 +2870,9 @@ $bog_max_app $mol_book2
 		rows <= log_rows /
 			<= Log_row* $mol_paragraph
 				title <= log_row* \
+
+$bog_max_list $mol_list
+
+$bog_max_select $mol_select
+	Menu $bog_max_list
+		rows <= menu_content

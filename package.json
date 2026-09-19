@@ -370,6 +370,8 @@
     "$mol_page",
     "$bog_qr",
     "$mol_import",
+    "$bog_max_select",
+    "$bog_max_list",
     "$bog_max_bridge",
     "$mol_fetch",
     "$mol_error_enriched",

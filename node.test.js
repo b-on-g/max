@@ -23226,6 +23226,44 @@ var $;
 
 
 ;
+	($.$bog_max_list) = class $bog_max_list extends ($.$mol_list) {};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_max_list extends $.$bog_max_list {
+            view_window(next) {
+                return [0, this.rows().length];
+            }
+        }
+        $$.$bog_max_list = $bog_max_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_max_select) = class $bog_max_select extends ($.$mol_select) {
+		Menu(){
+			const obj = new this.$.$bog_max_list();
+			(obj.rows) = () => ((this.menu_content()));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_max_select.prototype), "Menu"));
+
+
+;
+"use strict";
+
+
+;
 "use strict";
 var $;
 (function ($) {
@@ -23702,6 +23740,7 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        $.$mol_select = $bog_max_select;
         $giper_baza_yard.masters_default.length = 0;
         $giper_baza_yard.masters = () => {
             const url = $bog_max_app.Root(0).bot_url();
