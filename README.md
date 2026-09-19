@@ -9,6 +9,8 @@
 Кто что может и все сценарии по шагам: [docs/ROLES.md](docs/ROLES.md).
 Разбор соответствия заданию глазами жюри: [docs/REVIEW.md](docs/REVIEW.md).
 Исследование проблемы, данные, метрики, масштабирование и пилот: [docs/RESEARCH.md](docs/RESEARCH.md).
+Сценарий показа жюри и ответы на вопросы: [docs/DEMO.md](docs/DEMO.md).
+Расшифровки вебинаров: `docs/Вебинар.txt` (первый, 20 минут), `docs/Вебинар-2-и-QA.txt` (второй с экспертами и QA, полностью).
 Презентация: [docs/presentation.pdf](docs/presentation.pdf), исходник `docs/presentation.html`,
 PDF собирается командой ниже.
 
