@@ -330,6 +330,37 @@ namespace $ {
 			color: $mol_theme.shade,
 		},
 
+		Houses_title: {
+			padding: $mol_gap.block,
+			color: $mol_theme.shade,
+		},
+
+		Admin_house: {
+			flex: { direction: 'row' },
+			alignItems: 'center',
+			gap: $mol_gap.block,
+			padding: { left: $mol_gap.block, right: $mol_gap.space, bottom: $mol_gap.space },
+		},
+
+		Admin_house_info: {
+			flex: { direction: 'column', grow: 1, shrink: 1 },
+			minWidth: 0,
+		},
+
+		Admin_house_address: {
+			font: { weight: 500 },
+		},
+
+		Admin_house_code: {
+			color: $mol_theme.shade,
+			font: { size: '0.8125rem' },
+		},
+
+		House_remove: {
+			color: $mol_theme.shade,
+			flex: { shrink: 0 },
+		},
+
 		Staff_invite: {
 			padding: { left: $mol_gap.block, right: $mol_gap.block },
 			wordBreak: 'break-all',
