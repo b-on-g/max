@@ -106,7 +106,7 @@ namespace $ {
 
 		unbound( error: unknown ) {
 			if( !/Link not found/.test( String( error ) ) ) return false
-			this.$.$mol_log3_warn({ place: this, message: `Мини-апп ${ this.app() } не привязан к боту, кнопка ушла обычной ссылкой` })
+			this.$.$mol_log3_warn({ place: this, message: 'Мини-апп не привязан к боту, кнопка ушла обычной ссылкой', hint: 'MAX для бизнеса → Чат-боты → бот → Настройки → ссылка мини-приложения ' + this.app() })
 			return true
 		}
 
