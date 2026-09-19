@@ -38,6 +38,7 @@ namespace $ {
 			return $bog_max_bot_api.make({
 				token: ()=> this.env().BOT_TOKEN ?? '',
 				app: ()=> this.env().APP_URL ?? '',
+				name: ()=> this.env().BOT_NAME ?? '',
 			})
 		}
 

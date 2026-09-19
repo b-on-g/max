@@ -15,6 +15,12 @@ namespace $ {
 			return ''
 		}
 
+		name() {
+			return ''
+		}
+
+		variant_ok = 0
+
 		greeting() {
 			return 'Это бот заявок в управляющую компанию. Нажмите кнопку, опишите проблему, и в ответ придёт номер заявки, ответственный и срок по нормативу.'
 		}
@@ -59,13 +65,16 @@ namespace $ {
 			return this.mentioned( message, me )
 		}
 
-		keyboard( text: string, payload: string, inside = true ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
+		open( text: string, payload: string, variant: number ) {
 			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
-			return Keyboard.inlineKeyboard([[
-				inside
-					? Keyboard.button.openApp( text, this.app(), undefined, payload || undefined )
-					: Keyboard.button.link( text, this.app() + ( payload ? '#!start=' + encodeURIComponent( payload ) : '' ) ),
-			]])
+			if( variant === 0 ) return Keyboard.button.openApp( text, this.name() || this.app(), undefined, payload || undefined )
+			if( variant === 1 ) return Keyboard.button.openApp( text, this.app(), undefined, payload || undefined )
+			return Keyboard.button.link( text, this.app() + ( payload ? '#!start=' + encodeURIComponent( payload ) : '' ) )
+		}
+
+		keyboard( text: string, payload: string, variant = 0 ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
+			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
+			return Keyboard.inlineKeyboard([[ this.open( text, payload, variant ) ]])
 		}
 
 		static text_payload( text: string ) {
@@ -93,38 +102,44 @@ namespace $ {
 			return 'Хорошо, заявку не создаём. Когда понадобится, опишите проблему одним сообщением или нажмите /start.'
 		}
 
-		confirm( text: string, inside = true ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
+		confirm( text: string, variant = 0 ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
 			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
-			const payload = $bog_max_bot_api.text_payload( text )
 			return Keyboard.inlineKeyboard([[
-				inside
-					? Keyboard.button.openApp( 'Да', this.app(), undefined, payload )
-					: Keyboard.button.link( 'Да', this.app() + '#!start=' + payload ),
+				this.open( 'Да', $bog_max_bot_api.text_payload( text ), variant ),
 				Keyboard.button.callback( 'Нет', 'no' ),
 			]])
 		}
 
 		unbound( error: unknown ) {
-			if( !/Link not found/.test( String( error ) ) ) return false
-			this.$.$mol_log3_warn({ place: this, message: 'Мини-апп не привязан к боту, кнопка ушла обычной ссылкой', hint: 'MAX для бизнеса → Чат-боты → бот → Настройки → ссылка мини-приложения ' + this.app() })
-			return true
+			return /Link not found/.test( String( error ) )
 		}
 
-		async answer( ctx: $bog_max_bot_api_context, text: string, keys: ( inside: boolean )=> ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > ): Promise< unknown > {
-			try {
-				return await ctx.reply( text, { attachments: [ keys( true ) ] } )
-			} catch( error ) {
-				if( !this.unbound( error ) ) throw error
-				return await ctx.reply( text, { attachments: [ keys( false ) ] } )
+		async deliver( send: ( variant: number )=> Promise< unknown > ): Promise< unknown > {
+			for( let variant = this.variant_ok; ; ++ variant ) {
+				try {
+					const result = await send( variant )
+					if( variant !== this.variant_ok && variant < 2 ) {
+						this.variant_ok = variant
+						this.$.$mol_log3_rise({ place: this, message: 'Кнопка мини-аппа принята, вариант ' + variant })
+					}
+					return result
+				} catch( error ) {
+					if( variant >= 2 || !this.unbound( error ) ) throw error
+					if( variant === 1 ) this.$.$mol_log3_warn({ place: this, message: 'Мини-апп не привязан к боту, кнопка ушла обычной ссылкой', hint: 'MAX для бизнеса → Чат-боты → бот → Настройки → ссылка мини-приложения ' + this.app() })
+				}
 			}
 		}
 
+		answer( ctx: $bog_max_bot_api_context, text: string, keys: ( variant: number )=> ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > ): Promise< unknown > {
+			return this.deliver( variant => ctx.reply( text, { attachments: [ keys( variant ) ] } ) )
+		}
+
 		invite( ctx: $bog_max_bot_api_context, text: string, payload: string ) {
-			return this.answer( ctx, text, inside => this.keyboard( 'Подать заявку', payload, inside ) )
+			return this.answer( ctx, text, variant => this.keyboard( 'Подать заявку', payload, variant ) )
 		}
 
 		ask( ctx: $bog_max_bot_api_context, text: string ) {
-			return this.answer( ctx, this.question( text ), inside => this.confirm( text, inside ) )
+			return this.answer( ctx, this.question( text ), variant => this.confirm( text, variant ) )
 		}
 
 		@ $mol_memo.method
@@ -151,13 +166,8 @@ namespace $ {
 			return bot
 		}
 
-		async send( user: number, text: string, payload: string ): Promise< unknown > {
-			try {
-				return await this.client().api.sendMessageToUser( user, text, { attachments: [ this.keyboard( 'Открыть заявку', payload ) ] } )
-			} catch( error ) {
-				if( !this.unbound( error ) ) throw error
-				return await this.client().api.sendMessageToUser( user, text, { attachments: [ this.keyboard( 'Открыть заявку', payload, false ) ] } )
-			}
+		send( user: number, text: string, payload: string ): Promise< unknown > {
+			return this.deliver( variant => this.client().api.sendMessageToUser( user, text, { attachments: [ this.keyboard( 'Открыть заявку', payload, variant ) ] } ) )
 		}
 
 	}
