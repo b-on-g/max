@@ -7536,6 +7536,7 @@ var $;
             app.waiting = () => false;
             app.fail = () => '';
             app.section = () => 'house';
+            app.house = () => 'h1';
             app.neighbours = () => [];
             $mol_assert_equal(app.main_body(), [app.House_pick(), app.House_tabs(), app.Search(), app.House_empty()]);
         },
@@ -7570,6 +7571,16 @@ var $;
             const app = $$.$bog_max_app.make({ $ });
             app.session = () => $mol_fail(new Error('Failed to fetch'));
             $mol_assert_ok(app.fail().includes('MAX'));
+        },
+        'resident without a house sees the QR hint'($) {
+            const app = $$.$bog_max_app.make({ $ });
+            app.session = () => ({ land: '', lord: '', lords: [], bot: '', role: 'resident', duty: [], integrations: [], staff_link: '', house: null, user: { id: 1, name: '' } });
+            app.uk = () => ({ Houses: () => null });
+            app.house_options = () => ['h1', 'h2'];
+            app.mine = () => [];
+            $mol_assert_equal(app.house(), '');
+            $mol_assert_equal(app.main_body(), [app.House_missing()]);
+            $mol_assert_equal(app.new_body(), [app.House_missing()]);
         },
         'house code is a latin slug'($) {
             const app = $$.$bog_max_app.make({ $ });

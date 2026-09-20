@@ -20130,6 +20130,18 @@ var $;
 
 
 ;
+	($.$mol_icon_camera) = class $mol_icon_camera extends ($.$mol_icon) {
+		path(){
+			return "M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
 	($.$mol_labeler) = class $mol_labeler extends ($.$mol_list) {
 		label(){
 			return [(this.title())];
@@ -21736,6 +21748,15 @@ var $;
 		house_title(){
 			return "";
 		}
+		House_missing_icon(){
+			const obj = new this.$.$mol_icon_camera();
+			return obj;
+		}
+		House_missing_text(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_House_missing_text_title")));
+			return obj;
+		}
 		row_link(id){
 			return "";
 		}
@@ -22630,6 +22651,11 @@ var $;
 			(obj.title) = () => ((this.house_title()));
 			return obj;
 		}
+		House_missing(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.House_missing_icon()), (this.House_missing_text())]);
+			return obj;
+		}
 		Empty(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Empty_title")));
@@ -23045,6 +23071,8 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Nav"));
 	($mol_mem(($.$bog_max_app.prototype), "reset"));
 	($mol_mem(($.$bog_max_app.prototype), "New_button"));
+	($mol_mem(($.$bog_max_app.prototype), "House_missing_icon"));
+	($mol_mem(($.$bog_max_app.prototype), "House_missing_text"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_title"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row"));
@@ -23164,6 +23192,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Reset"));
 	($mol_mem(($.$bog_max_app.prototype), "New_link"));
 	($mol_mem(($.$bog_max_app.prototype), "House_title"));
+	($mol_mem(($.$bog_max_app.prototype), "House_missing"));
 	($mol_mem(($.$bog_max_app.prototype), "Empty"));
 	($mol_mem(($.$bog_max_app.prototype), "Rows"));
 	($mol_mem(($.$bog_max_app.prototype), "House_pick"));
@@ -23950,7 +23979,7 @@ var $;
                 if (this.fail())
                     return [this.Fail(), this.Reset()];
                 switch (this.section()) {
-                    case 'house': return [
+                    case 'house': return !this.house() ? [this.House_pick(), this.House_missing()] : [
                         this.House_pick(),
                         this.House_tabs(),
                         ...this.house_tab() === 'news'
@@ -23993,9 +24022,8 @@ var $;
                     ] : [this.Fail()];
                 }
                 return [
-                    this.New_link(),
-                    this.House_title(),
-                    this.mine().length ? this.Rows() : this.Empty(),
+                    ...this.house() ? [this.New_link(), this.House_title()] : [this.House_missing()],
+                    ...this.mine().length ? [this.Rows()] : this.house() ? [this.Empty()] : [],
                 ];
             }
             mine() {
@@ -24202,7 +24230,9 @@ var $;
                 const linked = this.session().house ?? '';
                 if (options.includes(linked))
                     return linked;
-                return options[0] ?? '';
+                if (this.staff())
+                    return this.my_houses()[0] ?? '';
+                return '';
             }
             house_title() {
                 const address = this.house_address();
@@ -24285,6 +24315,8 @@ var $;
                 return 'Этаж, квартира, ориентир';
             }
             new_body() {
+                if (!this.house())
+                    return [this.House_missing()];
                 return [
                     this.House_line(),
                     this.Form(),
@@ -25057,6 +25089,24 @@ var $;
         },
         Staff_title: {
             padding: $mol_gap.block,
+            color: $mol_theme.shade,
+        },
+        House_missing: {
+            flex: { direction: 'row' },
+            alignItems: 'center',
+            gap: $mol_gap.block,
+            margin: { left: $mol_gap.block, right: $mol_gap.block },
+            padding: $mol_gap.block,
+            borderRadius: '16px',
+            background: { color: $mol_theme.card },
+        },
+        House_missing_icon: {
+            flex: { shrink: 0 },
+            width: '2rem',
+            height: '2rem',
+            color: $mol_theme.control,
+        },
+        House_missing_text: {
             color: $mol_theme.shade,
         },
         Houses_title: {

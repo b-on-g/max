@@ -20,6 +20,7 @@
 	"$bog_max_app_House_address_hint": "Адрес: улица, дом, корпус",
 	"$bog_max_app_House_empty_title": "По этому дому заявок ещё нет.",
 	"$bog_max_app_House_line_title": "Дом",
+	"$bog_max_app_House_missing_text_title": "Дом не подключён. Отсканируйте камерой QR-код на подъезде или откройте ссылку от вашей УК, и дом подставится сам.",
 	"$bog_max_app_House_remove_hint": "Удалить дом",
 	"$bog_max_app_House_submit_title": "Добавить дом",
 	"$bog_max_app_House_tabs_options_news": "Новости",
