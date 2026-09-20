@@ -330,6 +330,27 @@ namespace $ {
 			color: $mol_theme.shade,
 		},
 
+		House_missing: {
+			flex: { direction: 'row' },
+			alignItems: 'center',
+			gap: $mol_gap.block,
+			margin: { left: $mol_gap.block, right: $mol_gap.block },
+			padding: $mol_gap.block,
+			borderRadius: '16px',
+			background: { color: $mol_theme.card },
+		},
+
+		House_missing_icon: {
+			flex: { shrink: 0 },
+			width: '2rem',
+			height: '2rem',
+			color: $mol_theme.control,
+		},
+
+		House_missing_text: {
+			color: $mol_theme.shade,
+		},
+
 		Houses_title: {
 			padding: $mol_gap.block,
 			color: $mol_theme.shade,

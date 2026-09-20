@@ -43,6 +43,11 @@ $bog_max_app $mol_book2
 				title @ \Новая заявка
 	House_title $mol_paragraph
 		title <= house_title \
+	House_missing $mol_view
+		sub /
+			<= House_missing_icon $mol_icon_camera
+			<= House_missing_text $mol_paragraph
+				title @ \Дом не подключён. Отсканируйте камерой QR-код на подъезде или откройте ссылку от вашей УК, и дом подставится сам.
 	Empty $mol_paragraph
 		title @ \Заявок пока нет. Нажмите «Новая заявка», чтобы сообщить о проблеме в доме.
 	Rows $mol_list

@@ -232,7 +232,7 @@ namespace $.$$ {
 			if( this.waiting() ) return [ this.Wait() ]
 			if( this.fail() ) return [ this.Fail(), this.Reset() ]
 			switch( this.section() ) {
-				case 'house': return [
+				case 'house': return !this.house() ? [ this.House_pick(), this.House_missing() ] : [
 					this.House_pick(),
 					this.House_tabs(),
 					... this.house_tab() === 'news'
@@ -275,9 +275,8 @@ namespace $.$$ {
 				] : [ this.Fail() ]
 			}
 			return [
-				this.New_link(),
-				this.House_title(),
-				this.mine().length ? this.Rows() : this.Empty(),
+				... this.house() ? [ this.New_link(), this.House_title() ] : [ this.House_missing() ],
+				... this.mine().length ? [ this.Rows() ] : this.house() ? [ this.Empty() ] : [],
 			]
 		}
 
@@ -528,7 +527,8 @@ namespace $.$$ {
 			if( options.includes( coded ) ) return coded
 			const linked = this.session().house ?? ''
 			if( options.includes( linked ) ) return linked
-			return options[0] ?? ''
+			if( this.staff() ) return this.my_houses()[0] ?? ''
+			return ''
 		}
 
 		house_title() {
@@ -636,6 +636,7 @@ namespace $.$$ {
 		}
 
 		new_body() {
+			if( !this.house() ) return [ this.House_missing() ]
 			return [
 				this.House_line(),
 				this.Form(),
