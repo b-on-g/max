@@ -152,6 +152,8 @@ QR на подъезд.
 - [ГОСТ Р 50597-2017](https://legalacts.ru/doc/gost-r-50597-2017-natsionalnyi-standart-rossiiskoi-federatsii-dorogi-avtomobilnye/)
 - [Минстрой: 68 тысяч организаций управляют МКД, РИА Недвижимость, 14.05.2026](https://realty.ria.ru/20260514/mkd-2092402758.html)
 - [Госжилинспекция РТ: жалоб на ЖКУ стало на 41,2% больше, Республика Татарстан, 16.07.2026](https://rt-online.ru/news/tatarstancy-stali-na-412-cashhe-otpravliat-zaloby-na-kacestvo-zku-v-2026-godu-544952)
+- [Реестр управляющих организаций Татарстана, агрегатор gosjkh.ru по данным ГЖИ РТ: 14 287 МКД, 1 197 организаций](https://gosjkh.ru/company/respublika-tatarstan)
+- [Портал Казани, раздел ЖКХ: 5,7 тыс. МКД, 131 УК ведёт 83,5% домов](https://kzn.ru/napravleniya-raboty/zhkkh/)
 - [Бизнес Online: с начала года число жалоб на ЖКХ выросло почти на 40%](https://www.business-gazeta.ru/news/711051)
 - [CNews: рейтинг регионов по работе в Платформе обратной связи за 2025 год](https://www.cnews.ru/news/line/2026-02-10_opublikovan_rejting_regionov)
 - [Ярославская область в топе регионов по ПОС, 2,7 тысячи обращений в жилнадзор](https://cheremuha.com/2026/04/14/yaroslavskaya-oblast-v-tope-regionov-po-rabote-platformy-obratnoj-svyazi.html)
