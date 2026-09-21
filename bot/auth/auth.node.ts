@@ -28,7 +28,18 @@ namespace $ {
 
 			const uk = bot.uk()
 			bot.uk_land().give( pass, $giper_baza_rank_post( 'just' ) )
-			uk.Bindings( 'auto' )!.key( String( checked.user.id ), 'auto' )!.val( pass.toString() )
+			const id = String( checked.user.id )
+			const lord = pass.lord().str
+			const prev_lord = bot.lord_of( uk.Bindings()?.key( id )?.val() ?? '' )
+			if( prev_lord && prev_lord !== lord ) {
+				const prev_role = uk.staff_roles( bot.lord() ).get( prev_lord )
+				if( prev_role && prev_role !== 'resident' ) {
+					uk.Staff( 'auto' )!.key( lord, 'auto' )!.val( prev_role )
+					const prev_duty = uk.Duty()?.key( prev_lord )?.val() ?? ''
+					if( prev_duty ) uk.Duty( 'auto' )!.key( lord, 'auto' )!.val( prev_duty )
+				}
+			}
+			uk.Bindings( 'auto' )!.key( id, 'auto' )!.val( pass.toString() )
 
 			const secret = bot.env().STAFF_SECRET ?? ''
 			const invited = Boolean( secret ) && checked.start === `staff_${ secret }`

@@ -23,6 +23,15 @@ namespace $ {
 			return this.uk().staff_by( this.lord() )
 		}
 
+		lord_of( pass: string ) {
+			if( !pass ) return ''
+			try {
+				return $giper_baza_auth_pass.from( pass ).lord().str
+			} catch {
+				return ''
+			}
+		}
+
 		@ $mol_memo.method
 		auth() {
 			return $bog_max_bot_auth.make({ bot: ()=> this })
