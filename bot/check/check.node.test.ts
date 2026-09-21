@@ -63,6 +63,13 @@ namespace $ {
 			$mol_assert_equal( $bog_max_bot_check.user( data, token, 1000 + 3601 ), null )
 		},
 
+		'demo ids pass without a signature, real ids do not'() {
+			$mol_assert_equal( $bog_max_bot_check.demo( 'user=' + encodeURIComponent( JSON.stringify({ id: 7 }) ) )?.user.id, 7 )
+			$mol_assert_equal( $bog_max_bot_check.demo( '' )?.user.id, 1 )
+			$mol_assert_equal( $bog_max_bot_check.demo( 'user=' + encodeURIComponent( JSON.stringify({ id: 386222222 }) ) ), null )
+			$mol_assert_equal( $bog_max_bot_check.demo( 'user=' + encodeURIComponent( JSON.stringify({ id: 7 }) ) + '&hash=00' ), null )
+		},
+
 		'unsafe mode falls back to test resident'() {
 			$mol_assert_equal( $bog_max_bot_check.unsafe( '' ), {
 				user: { id: 1, first_name: 'Тестовый житель' },

@@ -73,7 +73,7 @@ namespace $ {
 
 		check( init_data: string ) {
 			if( this.env().DEV_SKIP_VALIDATION === '1' ) return $bog_max_bot_check.unsafe( init_data )
-			return $bog_max_bot_check.user( init_data, this.env().BOT_TOKEN ?? '' )
+			return $bog_max_bot_check.user( init_data, this.env().BOT_TOKEN ?? '' ) ?? $bog_max_bot_check.demo( init_data )
 		}
 
 		@ $mol_mem

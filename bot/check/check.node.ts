@@ -45,6 +45,17 @@ namespace $ {
 			return this.unsafe( init_data )
 		}
 
+		static demo_max = 1000
+
+		static demo( init_data: string ) {
+			const pairs = this.pairs( init_data )
+			if( pairs.some( ([ key ])=> key === 'hash' ) ) return null
+			const checked = this.unsafe( init_data )
+			if( !checked ) return null
+			if( !Number.isInteger( checked.user.id ) || checked.user.id <= 0 || checked.user.id >= this.demo_max ) return null
+			return checked
+		}
+
 		static unsafe( init_data: string ) {
 			const pairs = this.pairs( init_data )
 			const raw = pairs.find( ([ key ])=> key === 'user' )?.[1] ?? ''

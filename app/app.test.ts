@@ -105,6 +105,17 @@ namespace $ {
 			$mol_assert_equal( app.new_body(), [ app.House_missing() ] )
 		},
 
+		'author cannot support own ticket'( $ ) {
+			const app = $$.$bog_max_app.make({ $ })
+			app.user_id = ()=> '7'
+			app.current = ()=> ({ Author: ()=> ({ val: ()=> '7' }), Voices: ()=> null, voices: ()=> 0 }) as any
+			$mol_assert_equal( app.voice_allowed(), false )
+			$mol_assert_equal( app.voices_text(), 'Ваша заявка, поддержать могут соседи' )
+			app.current = ()=> ({ Author: ()=> ({ val: ()=> '8' }), Voices: ()=> null, voices: ()=> 2 }) as any
+			$mol_assert_equal( app.voice_allowed(), true )
+			$mol_assert_equal( app.voices_text(), 'Поддержали: 2' )
+		},
+
 		'house code is a latin slug'( $ ) {
 			const app = $$.$bog_max_app.make({ $ })
 			$mol_assert_equal( app.slug( 'ул. Пушкина, д. 10' ), 'pushkina10' )
