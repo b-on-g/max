@@ -35383,13 +35383,22 @@ var $;
             }
             voices_text() {
                 const count = this.current().voices();
+                if (this.own())
+                    return count ? `Ваша заявка, поддержали: ${count}` : 'Ваша заявка, поддержать могут соседи';
                 return count ? `Поддержали: ${count}` : 'Пока никто не поддержал';
             }
+            own() {
+                return this.current().Author()?.val() === this.user_id();
+            }
             voice_allowed() {
+                if (this.own())
+                    return false;
                 const keys = this.current().Voices()?.keys().map(String) ?? [];
                 return !keys.includes(this.user_id());
             }
             voice() {
+                if (!this.voice_allowed())
+                    return;
                 const ticket = this.current();
                 const user = this.user_id();
                 ticket.Voices('auto').key(user, 'auto').val('1');

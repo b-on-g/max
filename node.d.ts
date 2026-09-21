@@ -52873,6 +52873,7 @@ declare namespace $.$$ {
         ticket_fix(): string;
         ticket_basis(): string;
         voices_text(): string;
+        own(): boolean;
         voice_allowed(): boolean;
         voice(): void;
         log_rows(): $.$mol_paragraph[];

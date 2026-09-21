@@ -24424,13 +24424,22 @@ var $;
             }
             voices_text() {
                 const count = this.current().voices();
+                if (this.own())
+                    return count ? `Ваша заявка, поддержали: ${count}` : 'Ваша заявка, поддержать могут соседи';
                 return count ? `Поддержали: ${count}` : 'Пока никто не поддержал';
             }
+            own() {
+                return this.current().Author()?.val() === this.user_id();
+            }
             voice_allowed() {
+                if (this.own())
+                    return false;
                 const keys = this.current().Voices()?.keys().map(String) ?? [];
                 return !keys.includes(this.user_id());
             }
             voice() {
+                if (!this.voice_allowed())
+                    return;
                 const ticket = this.current();
                 const user = this.user_id();
                 ticket.Voices('auto').key(user, 'auto').val('1');
@@ -32277,6 +32286,16 @@ var $;
             $mol_assert_equal(app.house(), '');
             $mol_assert_equal(app.main_body(), [app.House_missing()]);
             $mol_assert_equal(app.new_body(), [app.House_missing()]);
+        },
+        'author cannot support own ticket'($) {
+            const app = $$.$bog_max_app.make({ $ });
+            app.user_id = () => '7';
+            app.current = () => ({ Author: () => ({ val: () => '7' }), Voices: () => null, voices: () => 0 });
+            $mol_assert_equal(app.voice_allowed(), false);
+            $mol_assert_equal(app.voices_text(), 'Ваша заявка, поддержать могут соседи');
+            app.current = () => ({ Author: () => ({ val: () => '8' }), Voices: () => null, voices: () => 2 });
+            $mol_assert_equal(app.voice_allowed(), true);
+            $mol_assert_equal(app.voices_text(), 'Поддержали: 2');
         },
         'house code is a latin slug'($) {
             const app = $$.$bog_max_app.make({ $ });
