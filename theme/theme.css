@@ -310,3 +310,8 @@
 	content: '* ';
 	color: var(--text-negative);
 }
+
+[bog_max_app] [mol_select_bubble_pane] {
+	max-height: 60vh;
+	flex: 0 0 auto;
+}
