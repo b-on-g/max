@@ -18,7 +18,9 @@ namespace $ {
 			const update = msg.data()
 			if( !update || typeof update !== 'object' || !( 'update_type' in update ) ) return msg.reply( 'Ожидается Update от MAX', { code: 422 } )
 			msg.reply( 'OK' )
-			bot.api().handle( update as $bog_max_bot_api_update )
+			const typed = update as $bog_max_bot_api_update
+			this.$.$mol_log3_rise({ place: this, message: 'Событие MAX: ' + typed.update_type })
+			bot.api().handle( typed )
 		}
 
 	}
