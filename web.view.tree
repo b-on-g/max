@@ -2598,8 +2598,14 @@ $bog_max_app $mol_book2
 						dictionary <= status_dictionary *
 						value? <=> admin_status*? \
 					<= Admin_note* $mol_string
-						hint @ \Причина отклонения, её увидит житель
+						hint @ \Причина, её увидит житель
 						value? <=> admin_note*? \
+					<= Admin_owner* $mol_select
+						options <= owner_options /string
+						dictionary <= owner_dictionary *
+						value? <=> admin_owner*? \
+					<= Admin_alarm* $mol_paragraph
+						title <= admin_alarm* \
 	Stats_link $mol_link
 		arg *
 			screen \stats
@@ -2905,6 +2911,14 @@ $bog_max_app $mol_book2
 	Ticket_owner $mol_labeler
 		title @ \Ответственный
 		content / <= ticket_owner \
+	Ticket_alarm $mol_view
+		sub /
+			<= Ticket_alarm_text $mol_paragraph
+				title <= ticket_alarm_text \
+			<= Alarm $mol_button_minor
+				title @ \Эскалировать
+				click? <=> alarm? null
+				enabled <= alarm_allowed true
 	Ticket_react $mol_labeler
 		title @ \Реакция по нормативу
 		content / <= ticket_react \

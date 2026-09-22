@@ -21987,11 +21987,38 @@ var $;
 			(obj.value) = (next) => ((this.admin_note(id, next)));
 			return obj;
 		}
+		owner_options(){
+			return [];
+		}
+		owner_dictionary(){
+			return {};
+		}
+		admin_owner(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Admin_owner(id){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => ((this.owner_options()));
+			(obj.dictionary) = () => ((this.owner_dictionary()));
+			(obj.value) = (next) => ((this.admin_owner(id, next)));
+			return obj;
+		}
+		admin_alarm(id){
+			return "";
+		}
+		Admin_alarm(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.admin_alarm(id)));
+			return obj;
+		}
 		admin_row_sub(id){
 			return [
 				(this.Row(id)), 
 				(this.Admin_status(id)), 
-				(this.Admin_note(id))
+				(this.Admin_note(id)), 
+				(this.Admin_owner(id)), 
+				(this.Admin_alarm(id))
 			];
 		}
 		Admin_row(id){
@@ -22677,6 +22704,28 @@ var $;
 		ticket_owner(){
 			return "";
 		}
+		ticket_alarm_text(){
+			return "";
+		}
+		Ticket_alarm_text(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.ticket_alarm_text()));
+			return obj;
+		}
+		alarm(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		alarm_allowed(){
+			return true;
+		}
+		Alarm(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Alarm_title")));
+			(obj.click) = (next) => ((this.alarm(next)));
+			(obj.enabled) = () => ((this.alarm_allowed()));
+			return obj;
+		}
 		ticket_react(){
 			return "";
 		}
@@ -23160,6 +23209,11 @@ var $;
 			(obj.content) = () => ([(this.ticket_owner())]);
 			return obj;
 		}
+		Ticket_alarm(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Ticket_alarm_text()), (this.Alarm())]);
+			return obj;
+		}
 		Ticket_react(){
 			const obj = new this.$.$mol_labeler();
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_react_title")));
@@ -23227,6 +23281,9 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "admin_note"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_note"));
+	($mol_mem_key(($.$bog_max_app.prototype), "admin_owner"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_owner"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_alarm"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_row"));
 	($mol_mem(($.$bog_max_app.prototype), "Stats_button"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_stats_icon"));
@@ -23323,6 +23380,9 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_image_pic"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_image"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_video"));
+	($mol_mem(($.$bog_max_app.prototype), "Ticket_alarm_text"));
+	($mol_mem(($.$bog_max_app.prototype), "alarm"));
+	($mol_mem(($.$bog_max_app.prototype), "Alarm"));
 	($mol_mem(($.$bog_max_app.prototype), "Voices_count"));
 	($mol_mem(($.$bog_max_app.prototype), "voice"));
 	($mol_mem(($.$bog_max_app.prototype), "Voice"));
@@ -23398,6 +23458,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_place"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_text"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_owner"));
+	($mol_mem(($.$bog_max_app.prototype), "Ticket_alarm"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_react"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_fix"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_basis"));
@@ -23715,6 +23776,8 @@ var $;
         Author: $giper_baza_atom_text,
         Status: $giper_baza_atom_text,
         Note: $giper_baza_atom_text,
+        Owner: $giper_baza_atom_text,
+        Alarm: $giper_baza_atom_text,
         Created: $giper_baza_atom_time,
         Log: $giper_baza_dict_to($giper_baza_atom_text),
         Voices: $giper_baza_dict_to($giper_baza_atom_text),
@@ -23755,6 +23818,38 @@ var $;
         }
         note_by(lords) {
             return this.text_by(this.Note(), lords);
+        }
+        owner_by(lords) {
+            return this.text_by(this.Owner(), lords) || (this.category()?.Owner()?.val() ?? '');
+        }
+        owner_before(lords) {
+            let prev = this.category()?.Owner()?.val() ?? '';
+            let current = prev;
+            for (const [, value] of this.log_by(lords)) {
+                const moved = /^(?:to|back):(.+)$/.exec(value);
+                if (!moved)
+                    continue;
+                prev = current;
+                current = moved[1];
+            }
+            return prev;
+        }
+        alarmed() {
+            const alarm = this.Alarm()?.val() ?? '';
+            if (!alarm)
+                return '';
+            const author = this.Author()?.val() ?? '';
+            for (const unit of this.Alarm().units_of(null)) {
+                if (unit.lord().str !== this.author_lord())
+                    continue;
+                return String(this.Alarm().land().sand_decode(unit) ?? '');
+            }
+            return author ? alarm : '';
+        }
+        author_lord() {
+            for (const unit of this.Author()?.units_of(null) ?? [])
+                return unit.lord().str;
+            return '';
         }
         log_by(lords) {
             const log = this.Log();
@@ -23903,6 +23998,7 @@ var $;
         work: 'В работе',
         done: 'Выполнена',
         rejected: 'Отклонена',
+        escalated: 'Эскалирована руководству УК',
     };
 })($ || ($ = {}));
 
@@ -24598,6 +24694,7 @@ var $;
                     this.Ticket_place(),
                     ...this.ticket_text() ? [this.Ticket_text()] : [],
                     this.Ticket_owner(),
+                    ...this.own() && (this.overdue() || this.current().alarmed()) ? [this.Ticket_alarm()] : [],
                     this.Ticket_react(),
                     this.Ticket_fix(),
                     this.Ticket_basis(),
@@ -24653,9 +24750,57 @@ var $;
             ticket_text() {
                 return this.current().Text()?.val() ?? '';
             }
-            ticket_owner() {
-                const owner = this.current().category()?.Owner()?.val() ?? '';
+            owner_label(owner) {
                 return $bog_max_owner[owner] ?? owner;
+            }
+            ticket_owner() {
+                const ticket = this.current();
+                const owner = ticket.owner_by(this.lords());
+                const base = ticket.category()?.Owner()?.val() ?? '';
+                const label = this.owner_label(owner);
+                return owner === base ? label : `${label}, передана от: ${this.owner_label(base)}`;
+            }
+            owner_options() {
+                return Object.keys($bog_max_owner);
+            }
+            owner_dictionary() {
+                return $bog_max_owner;
+            }
+            admin_owner(link, next) {
+                const ticket = this.ticket(link);
+                if (next !== undefined && next !== ticket.owner_by(this.lords())) {
+                    ticket.Owner('auto').val(next);
+                    ticket.Log('auto').key(new $mol_time_moment().toString(), 'auto').val('to:' + next);
+                    return next;
+                }
+                return ticket.owner_by(this.lords());
+            }
+            admin_alarm(link) {
+                const alarm = this.ticket(link).alarmed();
+                return alarm ? `Житель просит эскалации с ${new $mol_time_moment(alarm).toOffset().toString('DD.MM hh:mm')}` : '';
+            }
+            overdue() {
+                const ticket = this.current();
+                const fix = ticket.fix_till();
+                if (!fix)
+                    return false;
+                if (['done', 'rejected', 'escalated'].includes(ticket.status_by(this.lords())))
+                    return false;
+                return fix.valueOf() < Date.now();
+            }
+            alarm_allowed() {
+                return this.own() && this.overdue() && !this.current().alarmed();
+            }
+            ticket_alarm_text() {
+                const alarm = this.current().alarmed();
+                if (alarm)
+                    return 'Эскалация запрошена, руководство УК увидит заявку первой.';
+                return 'Срок по нормативу прошёл. Можно эскалировать заявку руководству УК.';
+            }
+            alarm() {
+                if (!this.alarm_allowed())
+                    return;
+                this.current().Alarm('auto').val(new $mol_time_moment().toString());
             }
             ticket_react() {
                 return this.current().react_till()?.toOffset().toString('DD.MM.YYYY hh:mm') ?? 'не нормируется';
@@ -24688,12 +24833,21 @@ var $;
                 const user = this.user_id();
                 ticket.Voices('auto').key(user, 'auto').val('1');
             }
+            log_label(value) {
+                const to = /^to:(.+)$/.exec(value)?.[1];
+                if (to)
+                    return `Передана: ${this.owner_label(to)}`;
+                const back = /^back:(.+)$/.exec(value)?.[1];
+                if (back)
+                    return `Передача оспорена, отвечает: ${this.owner_label(back)}`;
+                return $bog_max_status[value] ?? value;
+            }
             log_rows() {
                 return this.current().log_by(this.lords()).map(([time]) => this.Log_row(time));
             }
             log_row(time) {
                 const status = this.current().log_by(this.lords()).find(([key]) => key === time)?.[1] ?? '';
-                const label = $bog_max_status[status] ?? status;
+                const label = this.log_label(status);
                 return `${new $mol_time_moment(time).toOffset().toString('DD.MM hh:mm')}: ${label}`;
             }
             all() {
@@ -24704,9 +24858,9 @@ var $;
                     .reverse();
             }
             recent() {
-                return this.all()
-                    .filter(link => !['done', 'rejected'].includes(this.status_of(link)))
-                    .slice(0, 5);
+                const open = this.all().filter(link => !['done', 'rejected'].includes(this.status_of(link)));
+                const urgent = open.filter(link => this.ticket(link).alarmed() || this.status_of(link) === 'escalated');
+                return [...urgent, ...open.filter(link => !urgent.includes(link))].slice(0, 5);
             }
             admin_rows() {
                 return this.recent().map(link => this.Admin_row(link));
@@ -24823,7 +24977,7 @@ var $;
                 return $bog_max_owner[owner] ?? owner;
             }
             owner_stat_line(owner) {
-                const links = this.stats_tickets().filter(link => this.ticket(link).category()?.Owner()?.val() === owner);
+                const links = this.stats_tickets().filter(link => this.ticket(link).owner_by(this.lords()) === owner);
                 const m = this.measure(links);
                 return `всего ${m.total}, открытых ${m.open}, просрочено ${m.overdue}, выполнено ${m.done}, реакция ${this.hours(m.react)}`;
             }
@@ -24859,8 +25013,10 @@ var $;
             admin_row_sub(link) {
                 return [
                     this.Row(link),
+                    ...this.admin_alarm(link) ? [this.Admin_alarm(link)] : [],
                     this.Admin_status(link),
-                    ...this.status_of(link) === 'rejected' ? [this.Admin_note(link)] : [],
+                    this.Admin_owner(link),
+                    ...['rejected', 'escalated'].includes(this.status_of(link)) || this.ticket(link).owner_by(this.lords()) !== (this.ticket(link).category()?.Owner()?.val() ?? '') ? [this.Admin_note(link)] : [],
                 ];
             }
             admin_note(link, next) {
@@ -25047,6 +25203,12 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "screen", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_max_app.prototype, "admin_owner", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "alarm", null);
         __decorate([
             $mol_action
         ], $bog_max_app.prototype, "voice", null);
@@ -25504,6 +25666,25 @@ var $;
         },
         Admin_note: {
             margin: { left: '16px', right: '16px', bottom: $mol_gap.space },
+        },
+        Admin_owner: {
+            margin: { left: '16px', right: '16px' },
+        },
+        Admin_alarm: {
+            color: $mol_theme.focus,
+            font: { size: '0.8125rem', weight: 500 },
+            padding: { left: '16px', right: '16px' },
+        },
+        Ticket_alarm: {
+            flex: { direction: 'column' },
+            gap: $mol_gap.space,
+            margin: $mol_gap.block,
+            padding: $mol_gap.block,
+            borderRadius: '16px',
+            background: { color: $mol_theme.card },
+        },
+        Ticket_alarm_text: {
+            color: $mol_theme.shade,
         },
         Ticket_note: {
             padding: { left: $mol_gap.block, right: $mol_gap.block },
