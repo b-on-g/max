@@ -432,10 +432,14 @@ namespace $ {
 			color: $mol_theme.shade,
 		},
 
+		Photo_box: {
+			flex: { direction: 'column' },
+			gap: $mol_gap.space,
+		},
+
 		Photo_previews: {
 			flex: { direction: 'row', wrap: 'wrap' },
 			gap: $mol_gap.space,
-			padding: { left: $mol_gap.block, right: $mol_gap.block },
 		},
 
 		Photo_item: {

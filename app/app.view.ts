@@ -699,7 +699,6 @@ namespace $.$$ {
 			if( !this.house_options().length ) return [ this.House_missing() ]
 			return [
 				this.Form(),
-				... this.photo_files().length ? [ this.Photo_previews() ] : [],
 				... this.similar().length ? [ this.Similar_title(), this.Similar() ] : [],
 			]
 		}

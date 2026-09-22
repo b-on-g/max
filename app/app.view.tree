@@ -380,42 +380,44 @@ $bog_max_app $mol_book2
 					value? <=> text? \
 			<= Photo_field $mol_form_field
 				name @ \Фото
-				control <= Photo_row $mol_view
+				control <= Photo_box $mol_view
 					sub /
-						<= Photo_pick $mol_button_open
-							files? <=> photo_picked? /File
-							accept \image/*,video/*
-							multiple true
-							hint @ \Приложить фото или видео
-						<= Photo_name $mol_paragraph
-							title <= photo_pick_label \
+						<= Photo_row $mol_view
+							sub /
+								<= Photo_pick $mol_button_open
+									files? <=> photo_picked? /File
+									accept \image/*,video/*
+									multiple true
+									hint @ \Приложить фото или видео
+								<= Photo_name $mol_paragraph
+									title <= photo_pick_label \
+						<= Photo_previews $mol_view
+							sub <= photo_previews /
 		buttons /
 			<= Submit $mol_button_major
 				title @ \Отправить заявку
 				click? <=> submit? null
 			<= Consent $mol_paragraph
 				title @ \Отправляя заявку, вы соглашаетесь, что имя, ID в MAX, текст и фото заявки увидят УК и ответственная организация.
-	Photo_previews $mol_view
-		sub <= photo_previews /
-			<= Photo_item* $mol_view
-				sub <= photo_item_sub* /
-					<= Photo_open* $mol_link
+	Photo_item* $mol_view
+		sub <= photo_item_sub* /
+			<= Photo_open* $mol_link
+				uri <= photo_url* \
+				target \_blank
+				sub /
+					<= Photo_thumb* $mol_image
 						uri <= photo_url* \
-						target \_blank
-						sub /
-							<= Photo_thumb* $mol_image
-								uri <= photo_url* \
-					<= Photo_video* $mol_view
-						dom_name \video
-						attr *
-							src <= photo_url* \
-							controls \true
-							playsinline \true
-					<= Photo_drop* $mol_button_minor
-						hint @ \Убрать
-						sub /
-							<= Photo_drop_icon* $mol_icon_close
-						click? <=> photo_drop*? null
+			<= Photo_video* $mol_view
+				dom_name \video
+				attr *
+					src <= photo_url* \
+					controls \true
+					playsinline \true
+			<= Photo_drop* $mol_button_minor
+				hint @ \Убрать
+				sub /
+					<= Photo_drop_icon* $mol_icon_close
+				click? <=> photo_drop*? null
 	Similar_title $mol_paragraph
 		title @ \Похожая заявка уже есть. Поддержите её, так она поднимется выше:
 	Similar $mol_list
