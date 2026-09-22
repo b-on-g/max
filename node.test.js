@@ -21782,7 +21782,7 @@ var $;
 		house_dictionary(){
 			return {};
 		}
-		house_filter(next){
+		house(next){
 			if(next !== undefined) return next;
 			return "";
 		}
@@ -21849,10 +21849,6 @@ var $;
 			return [];
 		}
 		account_username(){
-			return "";
-		}
-		house(next){
-			if(next !== undefined) return next;
 			return "";
 		}
 		House(){
@@ -21937,6 +21933,14 @@ var $;
 			const obj = new this.$.$mol_icon_delete();
 			return obj;
 		}
+		house_remove_title(id){
+			return "";
+		}
+		House_remove_label(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.house_remove_title(id)));
+			return obj;
+		}
 		house_remove(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -21944,7 +21948,7 @@ var $;
 		House_remove(id){
 			const obj = new this.$.$mol_button_minor();
 			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_House_remove_hint")));
-			(obj.sub) = () => ([(this.House_remove_icon(id))]);
+			(obj.sub) = () => ([(this.House_remove_icon(id)), (this.House_remove_label(id))]);
 			(obj.click) = (next) => ((this.house_remove(id, next)));
 			return obj;
 		}
@@ -21973,9 +21977,26 @@ var $;
 			(obj.value) = (next) => ((this.admin_status(id, next)));
 			return obj;
 		}
+		admin_note(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Admin_note(id){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Admin_note_hint")));
+			(obj.value) = (next) => ((this.admin_note(id, next)));
+			return obj;
+		}
+		admin_row_sub(id){
+			return [
+				(this.Row(id)), 
+				(this.Admin_status(id)), 
+				(this.Admin_note(id))
+			];
+		}
 		Admin_row(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row(id)), (this.Admin_status(id))]);
+			(obj.sub) = () => ((this.admin_row_sub(id)));
 			return obj;
 		}
 		admin_rows(){
@@ -22305,6 +22326,19 @@ var $;
 		new_fields(){
 			return [];
 		}
+		House_new(){
+			const obj = new this.$.$mol_select();
+			(obj.options) = () => ((this.house_options()));
+			(obj.dictionary) = () => ((this.house_dictionary()));
+			(obj.value) = (next) => ((this.house(next)));
+			return obj;
+		}
+		House_field(){
+			const obj = new this.$.$mol_form_field();
+			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_House_field_name")));
+			(obj.control) = () => ((this.House_new()));
+			return obj;
+		}
 		scope_options(){
 			return [];
 		}
@@ -22412,15 +22446,15 @@ var $;
 			(obj.control) = () => ((this.Text()));
 			return obj;
 		}
-		photo_files(next){
+		photo_picked(next){
 			if(next !== undefined) return next;
 			return [];
 		}
 		Photo_pick(){
 			const obj = new this.$.$mol_button_open();
-			(obj.files) = (next) => ((this.photo_files(next)));
-			(obj.accept) = () => ("image/*");
-			(obj.multiple) = () => (false);
+			(obj.files) = (next) => ((this.photo_picked(next)));
+			(obj.accept) = () => ("image/*,video/*");
+			(obj.multiple) = () => (true);
 			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Photo_pick_hint")));
 			return obj;
 		}
@@ -22458,8 +22492,60 @@ var $;
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Consent_title")));
 			return obj;
 		}
-		photo_preview(){
+		photo_url(id){
 			return "";
+		}
+		Photo_thumb(id){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.photo_url(id)));
+			return obj;
+		}
+		Photo_open(id){
+			const obj = new this.$.$mol_link();
+			(obj.uri) = () => ((this.photo_url(id)));
+			(obj.target) = () => ("_blank");
+			(obj.sub) = () => ([(this.Photo_thumb(id))]);
+			return obj;
+		}
+		Photo_video(id){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("video");
+			(obj.attr) = () => ({
+				"src": (this.photo_url(id)), 
+				"controls": "true", 
+				"playsinline": "true"
+			});
+			return obj;
+		}
+		Photo_drop_icon(id){
+			const obj = new this.$.$mol_icon_close();
+			return obj;
+		}
+		photo_drop(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Photo_drop(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Photo_drop_hint")));
+			(obj.sub) = () => ([(this.Photo_drop_icon(id))]);
+			(obj.click) = (next) => ((this.photo_drop(id, next)));
+			return obj;
+		}
+		photo_item_sub(id){
+			return [
+				(this.Photo_open(id)), 
+				(this.Photo_video(id)), 
+				(this.Photo_drop(id))
+			];
+		}
+		Photo_item(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.photo_item_sub(id)));
+			return obj;
+		}
+		photo_previews(){
+			return [(this.Photo_item(id))];
 		}
 		similar_rows(){
 			return [];
@@ -22531,8 +22617,33 @@ var $;
 		ticket_note(){
 			return "";
 		}
-		ticket_photo(){
+		ticket_media_url(id){
 			return "";
+		}
+		Ticket_image_pic(id){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.ticket_media_url(id)));
+			return obj;
+		}
+		Ticket_image(id){
+			const obj = new this.$.$mol_link();
+			(obj.uri) = () => ((this.ticket_media_url(id)));
+			(obj.target) = () => ("_blank");
+			(obj.sub) = () => ([(this.Ticket_image_pic(id))]);
+			return obj;
+		}
+		Ticket_video(id){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("video");
+			(obj.attr) = () => ({
+				"src": (this.ticket_media_url(id)), 
+				"controls": "true", 
+				"playsinline": "true"
+			});
+			return obj;
+		}
+		ticket_media(){
+			return [(this.Ticket_image(id)), (this.Ticket_video(id))];
 		}
 		ticket_category(){
 			return "";
@@ -22661,7 +22772,7 @@ var $;
 			const obj = new this.$.$mol_select();
 			(obj.options) = () => ((this.house_options()));
 			(obj.dictionary) = () => ((this.house_dictionary()));
-			(obj.value) = (next) => ((this.house_filter(next)));
+			(obj.value) = (next) => ((this.house(next)));
 			return obj;
 		}
 		House_tabs(){
@@ -22938,6 +23049,7 @@ var $;
 			const obj = new this.$.$mol_form();
 			(obj.body) = () => ((this.new_fields()));
 			(obj.form_fields) = () => ([
+				(this.House_field()), 
 				(this.Scope_field()), 
 				(this.Category_field()), 
 				(this.Entrance_field()), 
@@ -22948,9 +23060,9 @@ var $;
 			(obj.buttons) = () => ([(this.Submit()), (this.Consent())]);
 			return obj;
 		}
-		Photo_preview(){
-			const obj = new this.$.$mol_image();
-			(obj.uri) = () => ((this.photo_preview()));
+		Photo_previews(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.photo_previews()));
 			return obj;
 		}
 		Similar_title(){
@@ -22991,9 +23103,9 @@ var $;
 			(obj.title) = () => ((this.ticket_note()));
 			return obj;
 		}
-		Ticket_photo(){
-			const obj = new this.$.$mol_image();
-			(obj.uri) = () => ((this.ticket_photo()));
+		Ticket_media(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.ticket_media()));
 			return obj;
 		}
 		Ticket_category(){
@@ -23067,14 +23179,13 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_title"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Row"));
-	($mol_mem(($.$bog_max_app.prototype), "house_filter"));
+	($mol_mem(($.$bog_max_app.prototype), "house"));
 	($mol_mem(($.$bog_max_app.prototype), "house_tab"));
 	($mol_mem(($.$bog_max_app.prototype), "query"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Post_title"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Post_when"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Post_text"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Post"));
-	($mol_mem(($.$bog_max_app.prototype), "house"));
 	($mol_mem(($.$bog_max_app.prototype), "House"));
 	($mol_mem(($.$bog_max_app.prototype), "All_button"));
 	($mol_mem(($.$bog_max_app.prototype), "house_address_new"));
@@ -23086,11 +23197,14 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house_code"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house_info"));
 	($mol_mem_key(($.$bog_max_app.prototype), "House_remove_icon"));
+	($mol_mem_key(($.$bog_max_app.prototype), "House_remove_label"));
 	($mol_mem_key(($.$bog_max_app.prototype), "house_remove"));
 	($mol_mem_key(($.$bog_max_app.prototype), "House_remove"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_house"));
 	($mol_mem_key(($.$bog_max_app.prototype), "admin_status"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_status"));
+	($mol_mem_key(($.$bog_max_app.prototype), "admin_note"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Admin_note"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Admin_row"));
 	($mol_mem(($.$bog_max_app.prototype), "Stats_button"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_stats_icon"));
@@ -23141,6 +23255,8 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Post_submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_new_icon"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_new"));
+	($mol_mem(($.$bog_max_app.prototype), "House_new"));
+	($mol_mem(($.$bog_max_app.prototype), "House_field"));
 	($mol_mem(($.$bog_max_app.prototype), "scope"));
 	($mol_mem(($.$bog_max_app.prototype), "Scope"));
 	($mol_mem(($.$bog_max_app.prototype), "Scope_field"));
@@ -23156,7 +23272,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "text"));
 	($mol_mem(($.$bog_max_app.prototype), "Text"));
 	($mol_mem(($.$bog_max_app.prototype), "Text_field"));
-	($mol_mem(($.$bog_max_app.prototype), "photo_files"));
+	($mol_mem(($.$bog_max_app.prototype), "photo_picked"));
 	($mol_mem(($.$bog_max_app.prototype), "Photo_pick"));
 	($mol_mem(($.$bog_max_app.prototype), "Photo_name"));
 	($mol_mem(($.$bog_max_app.prototype), "Photo_row"));
@@ -23164,6 +23280,13 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Consent"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Photo_thumb"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Photo_open"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Photo_video"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Photo_drop_icon"));
+	($mol_mem_key(($.$bog_max_app.prototype), "photo_drop"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Photo_drop"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Photo_item"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_all_icon"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_all"));
 	($mol_mem(($.$bog_max_app.prototype), "all_query"));
@@ -23173,6 +23296,9 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "All_rows"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_ticket_icon"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_ticket"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_image_pic"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_image"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_video"));
 	($mol_mem(($.$bog_max_app.prototype), "Voices_count"));
 	($mol_mem(($.$bog_max_app.prototype), "voice"));
 	($mol_mem(($.$bog_max_app.prototype), "Voice"));
@@ -23234,14 +23360,14 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "New"));
 	($mol_mem(($.$bog_max_app.prototype), "House_line"));
 	($mol_mem(($.$bog_max_app.prototype), "Form"));
-	($mol_mem(($.$bog_max_app.prototype), "Photo_preview"));
+	($mol_mem(($.$bog_max_app.prototype), "Photo_previews"));
 	($mol_mem(($.$bog_max_app.prototype), "Similar_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Similar"));
 	($mol_mem(($.$bog_max_app.prototype), "All"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_status"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_note"));
-	($mol_mem(($.$bog_max_app.prototype), "Ticket_photo"));
+	($mol_mem(($.$bog_max_app.prototype), "Ticket_media"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_category"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_house"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_place"));
@@ -23560,6 +23686,7 @@ var $;
         Place: $giper_baza_atom_text,
         Text: $giper_baza_atom_text,
         Photo: $giper_baza_atom_link.to(() => $giper_baza_file),
+        Photos: $giper_baza_list_link.to(() => $giper_baza_file),
         Author: $giper_baza_atom_text,
         Status: $giper_baza_atom_text,
         Note: $giper_baza_atom_text,
@@ -23575,6 +23702,13 @@ var $;
         }
         photo() {
             return this.Photo()?.remote() ?? null;
+        }
+        photos() {
+            const list = this.Photos()?.remote_list() ?? [];
+            if (list.length)
+                return list;
+            const one = this.photo();
+            return one ? [one] : [];
         }
         react_till() {
             return this.till(this.category()?.React()?.val() ?? null);
@@ -23755,7 +23889,7 @@ var $;
     $.$bog_max_scope = {
         house: 'В доме',
         yard: 'Во дворе',
-        city: 'В городе',
+        city: 'В районе',
     };
 })($ || ($ = {}));
 
@@ -24051,15 +24185,12 @@ var $;
                 const voices = ticket.voices();
                 return [
                     this.status_label(link),
-                    ...fix ? [`до ${fix.toString('DD.MM hh:mm')}`] : [],
+                    ...fix ? [`до ${fix.toOffset().toString('DD.MM hh:mm')}`] : [],
                     ...voices ? [`поддержали: ${voices}`] : [],
                 ].join(', ');
             }
-            house_filter(next) {
-                return next ?? this.house();
-            }
             neighbours() {
-                const house = this.house_filter();
+                const house = this.house();
                 return this.uk().tickets()
                     .filter(ticket => ticket.House()?.val()?.str === house)
                     .filter($mol_match_text(this.query(), ticket => [
@@ -24075,7 +24206,7 @@ var $;
                 return this.neighbours().map(link => this.Row(link));
             }
             news() {
-                const house = this.house_filter();
+                const house = this.house();
                 return this.uk().posts()
                     .filter(post => {
                     const own = post.House()?.val()?.str;
@@ -24100,7 +24231,7 @@ var $;
                 const since = post.Since()?.val();
                 const till = post.Till()?.val();
                 if (since && till)
-                    return `с ${since.toString('DD.MM hh:mm')} до ${till.toString('DD.MM hh:mm')}`;
+                    return `с ${since.toOffset().toString('DD.MM hh:mm')} до ${till.toOffset().toString('DD.MM hh:mm')}`;
                 return post.Created()?.val()?.toString('DD.MM.YYYY') ?? '';
             }
             news_text(link) {
@@ -24194,7 +24325,18 @@ var $;
             house_code(link) {
                 return this.house_of(link).Code()?.val() ?? '';
             }
+            house_removing(next = '') {
+                return next;
+            }
+            house_remove_title(link) {
+                return this.house_removing() === link ? 'Точно удалить?' : '';
+            }
             house_remove(link) {
+                if (this.house_removing() !== link) {
+                    this.house_removing(link);
+                    return;
+                }
+                this.house_removing('');
                 this.uk().Houses('auto').cut(new $giper_baza_link(link));
             }
             account_count() {
@@ -24243,6 +24385,10 @@ var $;
                     .filter(category => (category.Scope()?.val() ?? 'house') === this.scope())
                     .map(category => category.link().str);
             }
+            category(next) {
+                const value = next ?? '';
+                return this.category_options().includes(value) ? value : '';
+            }
             category_dictionary() {
                 return {
                     '': 'Выберите категорию',
@@ -24264,13 +24410,47 @@ var $;
             place_bids() {
                 return !this.tried() || this.place_valid() ? [] : ['Укажите, где именно'];
             }
-            photo_pick_label() {
-                const file = this.photo_files()[0];
-                return file ? file.name : 'Фото по желанию';
+            photo_limit() {
+                return 5;
             }
-            photo_preview() {
-                const file = this.photo_files()[0];
+            photo_files(next) {
+                return next ?? [];
+            }
+            photo_picked(next) {
+                if (next?.length)
+                    this.photo_files([...this.photo_files(), ...next].slice(0, this.photo_limit()));
+                return [];
+            }
+            photo_pick_label() {
+                const count = this.photo_files().length;
+                if (!count)
+                    return 'Фото или видео по желанию';
+                return count < this.photo_limit() ? `Файлов: ${count}, можно ещё ${this.photo_limit() - count}` : `Файлов: ${count}, это максимум`;
+            }
+            photo_key(file) {
+                return `${file.name}:${file.size}:${file.lastModified}`;
+            }
+            photo_file(key) {
+                return this.photo_files().find(file => this.photo_key(file) === key) ?? null;
+            }
+            photo_previews() {
+                return this.photo_files().map(file => this.Photo_item(this.photo_key(file)));
+            }
+            photo_url(key) {
+                const file = this.photo_file(key);
                 return file ? URL.createObjectURL(file) : '';
+            }
+            photo_is_video(key) {
+                return this.photo_file(key)?.type.startsWith('video/') ?? false;
+            }
+            photo_item_sub(key) {
+                return [
+                    this.photo_is_video(key) ? this.Photo_video(key) : this.Photo_open(key),
+                    this.Photo_drop(key),
+                ];
+            }
+            photo_drop(key) {
+                this.photo_files(this.photo_files().filter(file => this.photo_key(file) !== key));
             }
             similar() {
                 const category = this.category();
@@ -24290,6 +24470,7 @@ var $;
             }
             new_fields() {
                 return [
+                    this.House_field(),
                     this.Scope_field(),
                     this.Category_field(),
                     ...this.scope() === 'house' ? [this.Entrance_field()] : [],
@@ -24306,12 +24487,11 @@ var $;
                 return 'Этаж, квартира, ориентир';
             }
             new_body() {
-                if (!this.house())
+                if (!this.house_options().length)
                     return [this.House_missing()];
                 return [
-                    this.House_line(),
                     this.Form(),
-                    ...this.photo_preview() ? [this.Photo_preview()] : [],
+                    ...this.photo_files().length ? [this.Photo_previews()] : [],
                     ...this.similar().length ? [this.Similar_title(), this.Similar()] : [],
                 ];
             }
@@ -24324,7 +24504,7 @@ var $;
                 const house = this.house_of(this.house());
                 const category = this.category_of(this.category());
                 const author = this.user_id();
-                const file = this.photo_files()[0] ?? null;
+                const files = this.photo_files();
                 const created = new $mol_time_moment();
                 const ticket = uk.Tickets('auto').make(null);
                 ticket.House('auto').remote(house);
@@ -24334,9 +24514,13 @@ var $;
                 ticket.Text('auto').val(this.text());
                 ticket.Author('auto').val(author);
                 ticket.Created('auto').val(created);
-                if (file) {
-                    const store = ticket.Photo('auto').ensure(null);
+                for (const file of files) {
+                    const store = ticket.Photos('auto').make(null);
                     store.blob(file);
+                }
+                if (files.length) {
+                    const store = ticket.Photo('auto').ensure(null);
+                    store.blob(files[0]);
                     ticket.Photo('auto').remote(store);
                 }
                 this.place('');
@@ -24366,7 +24550,7 @@ var $;
                 return [
                     this.Ticket_status(),
                     ...this.ticket_note() ? [this.Ticket_note()] : [],
-                    ...this.ticket_photo() ? [this.Ticket_photo()] : [],
+                    ...this.ticket_media().length ? [this.Ticket_media()] : [],
                     this.Ticket_category(),
                     this.Ticket_house(),
                     this.Ticket_place(),
@@ -24395,6 +24579,16 @@ var $;
                 const uri = this.current().photo()?.uri() ?? '';
                 return uri ? this.bot_url() + uri : '';
             }
+            ticket_media() {
+                return this.current().photos().map(file => {
+                    const link = file.link().str;
+                    return file.type().startsWith('video/') ? this.Ticket_video(link) : this.Ticket_image(link);
+                });
+            }
+            ticket_media_url(link) {
+                const file = this.current().photos().find(file => file.link().str === link);
+                return file ? this.bot_url() + file.uri() : '';
+            }
             ticket_category() {
                 return this.current().category()?.Title()?.val() ?? '';
             }
@@ -24414,10 +24608,10 @@ var $;
                 return $bog_max_owner[owner] ?? owner;
             }
             ticket_react() {
-                return this.current().react_till()?.toString('DD.MM.YYYY hh:mm') ?? 'не нормируется';
+                return this.current().react_till()?.toOffset().toString('DD.MM.YYYY hh:mm') ?? 'не нормируется';
             }
             ticket_fix() {
-                return this.current().fix_till()?.toString('DD.MM.YYYY hh:mm') ?? '';
+                return this.current().fix_till()?.toOffset().toString('DD.MM.YYYY hh:mm') ?? '';
             }
             ticket_basis() {
                 return this.current().category()?.Basis()?.val() ?? '';
@@ -24450,7 +24644,7 @@ var $;
             log_row(time) {
                 const status = this.current().log_by(this.lords()).find(([key]) => key === time)?.[1] ?? '';
                 const label = $bog_max_status[status] ?? status;
-                return `${new $mol_time_moment(time).toString('DD.MM hh:mm')}: ${label}`;
+                return `${new $mol_time_moment(time).toOffset().toString('DD.MM hh:mm')}: ${label}`;
             }
             all() {
                 const houses = this.my_houses();
@@ -24612,6 +24806,19 @@ var $;
             status_dictionary() {
                 return $bog_max_status;
             }
+            admin_row_sub(link) {
+                return [
+                    this.Row(link),
+                    this.Admin_status(link),
+                    ...this.status_of(link) === 'rejected' ? [this.Admin_note(link)] : [],
+                ];
+            }
+            admin_note(link, next) {
+                const ticket = this.ticket(link);
+                if (next !== undefined)
+                    ticket.Note('auto').val(next);
+                return ticket.note_by(this.lords());
+            }
             admin_status(link, next) {
                 if (next !== undefined) {
                     const ticket = this.ticket(link);
@@ -24711,9 +24918,6 @@ var $;
         ], $bog_max_app.prototype, "mine", null);
         __decorate([
             $mol_mem
-        ], $bog_max_app.prototype, "house_filter", null);
-        __decorate([
-            $mol_mem
         ], $bog_max_app.prototype, "neighbours", null);
         __decorate([
             $mol_mem
@@ -24730,6 +24934,9 @@ var $;
         __decorate([
             $mol_action
         ], $bog_max_app.prototype, "house_add", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "house_removing", null);
         __decorate([
             $mol_action
         ], $bog_max_app.prototype, "house_remove", null);
@@ -24750,6 +24957,9 @@ var $;
         ], $bog_max_app.prototype, "category_options", null);
         __decorate([
             $mol_mem
+        ], $bog_max_app.prototype, "category", null);
+        __decorate([
+            $mol_mem
         ], $bog_max_app.prototype, "category_dictionary", null);
         __decorate([
             $mol_mem
@@ -24762,7 +24972,16 @@ var $;
         ], $bog_max_app.prototype, "place_bids", null);
         __decorate([
             $mol_mem
-        ], $bog_max_app.prototype, "photo_preview", null);
+        ], $bog_max_app.prototype, "photo_files", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "photo_picked", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_max_app.prototype, "photo_url", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "photo_drop", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "similar", null);
@@ -24801,7 +25020,10 @@ var $;
         ], $bog_max_app.prototype, "summary", null);
         __decorate([
             $mol_mem_key
-        ], $bog_max_app.prototype, "admin_status", null);
+        ], $bog_max_app.prototype, "admin_row_sub", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_max_app.prototype, "admin_note", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "qr_house", null);
@@ -25174,19 +25396,54 @@ var $;
         Photo_name: {
             color: $mol_theme.shade,
         },
-        Photo_preview: {
-            maxWidth: '100%',
-            maxHeight: '16rem',
-            objectFit: 'contain',
-            borderRadius: '16px',
-            margin: $mol_gap.block,
+        Photo_previews: {
+            flex: { direction: 'row', wrap: 'wrap' },
+            gap: $mol_gap.space,
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
         },
-        Ticket_photo: {
+        Photo_item: {
+            position: 'relative',
+            flex: { direction: 'column' },
+        },
+        Photo_thumb: {
+            width: '6rem',
+            height: '6rem',
+            objectFit: 'cover',
+            borderRadius: '12px',
+        },
+        Photo_video: {
+            width: '9rem',
+            height: '6rem',
+            borderRadius: '12px',
+            background: { color: 'black' },
+        },
+        Photo_drop: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            background: { color: $mol_theme.card },
+            borderRadius: '999px',
+            padding: '2px',
+        },
+        Ticket_media: {
+            flex: { direction: 'row', wrap: 'wrap' },
+            gap: $mol_gap.space,
+            padding: $mol_gap.block,
+        },
+        Ticket_image_pic: {
             maxWidth: '100%',
-            maxHeight: '20rem',
+            maxHeight: '14rem',
             objectFit: 'contain',
-            borderRadius: '16px',
-            margin: $mol_gap.block,
+            borderRadius: '12px',
+        },
+        Ticket_video: {
+            maxWidth: '100%',
+            maxHeight: '14rem',
+            borderRadius: '12px',
+            background: { color: 'black' },
+        },
+        Admin_note: {
+            margin: { left: '16px', right: '16px', bottom: $mol_gap.space },
         },
         Ticket_note: {
             padding: { left: $mol_gap.block, right: $mol_gap.block },
@@ -32285,6 +32542,7 @@ var $;
             app.mine = () => [];
             $mol_assert_equal(app.house(), '');
             $mol_assert_equal(app.main_body(), [app.House_missing()]);
+            app.house_options = () => [];
             $mol_assert_equal(app.new_body(), [app.House_missing()]);
         },
         'author cannot support own ticket'($) {
