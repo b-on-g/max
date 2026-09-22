@@ -34778,8 +34778,11 @@ var $;
         posts() {
             return this.Posts()?.remote_list() ?? [];
         }
+        numbers() {
+            return new Map(this.tickets().map((item, index) => [item.link().str, index + 1]));
+        }
         ticket_number(ticket) {
-            return this.tickets().findIndex(item => item.link().str === ticket.link().str) + 1;
+            return this.numbers().get(ticket.link().str) ?? 0;
         }
         house_by_code(code) {
             return this.Houses()?.remote_list().find(house => house.Code()?.val() === code) ?? null;
@@ -34844,6 +34847,9 @@ var $;
             return [];
         }
     }
+    __decorate([
+        $mol_mem
+    ], $bog_max_uk.prototype, "numbers", null);
     $.$bog_max_uk = $bog_max_uk;
 })($ || ($ = {}));
 

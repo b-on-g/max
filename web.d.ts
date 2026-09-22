@@ -57839,6 +57839,7 @@ declare namespace $ {
     export class $bog_max_uk extends $bog_max_uk_base {
         tickets(): readonly $bog_max_ticket[];
         posts(): readonly $bog_max_post[];
+        numbers(): Map<string, number>;
         ticket_number(ticket: $bog_max_ticket): number;
         house_by_code(code: string): $bog_max_house | null;
         staff_roles(root: string): Map<string, string>;
