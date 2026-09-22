@@ -5,6 +5,8 @@ namespace $ {
 
 	if( process.env.BAZA_AUTH ) $giper_baza_auth.embryos.push( process.env.BAZA_AUTH )
 
+	$.$giper_baza_mine = $bog_max_bot_mine
+
 	export class $bog_max_bot extends $giper_baza_app_node {
 
 		env() {
