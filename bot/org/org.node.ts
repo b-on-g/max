@@ -59,6 +59,15 @@ namespace $ {
 			return this.bot().ticket( link )?.category()?.Owner()?.val() ?? ''
 		}
 
+		owners() {
+			return this.bot().env_list( 'ORG_KEYS' ).map( pair => pair.split( ':' )[0] ).filter( Boolean )
+		}
+
+		@ $mol_mem
+		warm() {
+			return this.owners().map( owner => this.tickets_of( owner ).length )
+		}
+
 		@ $mol_mem_key
 		tickets_of( owner: string ) {
 			return this.bot().uk().tickets()

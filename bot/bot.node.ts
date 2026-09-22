@@ -138,7 +138,7 @@ namespace $ {
 				const key = ticket.link().str
 				if( uk.Notified()?.key( key )?.val() === status ) continue
 				const author = Number( ticket.Author()?.val() ?? '' )
-				if( author && this.env().BOT_TOKEN ) try {
+				if( author >= $bog_max_bot_check.demo_max && this.env().BOT_TOKEN ) try {
 					$mol_wire_sync( this.api() ).send( author, this.message( ticket ), key )
 				} catch( error ) {
 					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
@@ -153,6 +153,7 @@ namespace $ {
 			super._auto()
 			if( this.env().BOT_TOKEN ) this.api().client()
 			this.notified()
+			this.org().warm()
 		}
 
 	}
