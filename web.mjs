@@ -33041,10 +33041,23 @@ var $;
 			(obj.sub) = () => ([(this.Photo_pick()), (this.Photo_name())]);
 			return obj;
 		}
+		photo_previews(){
+			return [];
+		}
+		Photo_previews(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.photo_previews()));
+			return obj;
+		}
+		Photo_box(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Photo_row()), (this.Photo_previews())]);
+			return obj;
+		}
 		Photo_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ((this.$.$mol_locale.text("$bog_max_app_Photo_field_name")));
-			(obj.control) = () => ((this.Photo_row()));
+			(obj.control) = () => ((this.Photo_box()));
 			return obj;
 		}
 		submit(next){
@@ -33108,14 +33121,6 @@ var $;
 				(this.Photo_video(id)), 
 				(this.Photo_drop(id))
 			];
-		}
-		Photo_item(id){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.photo_item_sub(id)));
-			return obj;
-		}
-		photo_previews(){
-			return [(this.Photo_item(id))];
 		}
 		similar_rows(){
 			return [];
@@ -33630,9 +33635,9 @@ var $;
 			(obj.buttons) = () => ([(this.Submit()), (this.Consent())]);
 			return obj;
 		}
-		Photo_previews(){
+		Photo_item(id){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.photo_previews()));
+			(obj.sub) = () => ((this.photo_item_sub(id)));
 			return obj;
 		}
 		Similar_title(){
@@ -33846,6 +33851,8 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Photo_pick"));
 	($mol_mem(($.$bog_max_app.prototype), "Photo_name"));
 	($mol_mem(($.$bog_max_app.prototype), "Photo_row"));
+	($mol_mem(($.$bog_max_app.prototype), "Photo_previews"));
+	($mol_mem(($.$bog_max_app.prototype), "Photo_box"));
 	($mol_mem(($.$bog_max_app.prototype), "Photo_field"));
 	($mol_mem(($.$bog_max_app.prototype), "submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Submit"));
@@ -33856,7 +33863,6 @@ var $;
 	($mol_mem_key(($.$bog_max_app.prototype), "Photo_drop_icon"));
 	($mol_mem_key(($.$bog_max_app.prototype), "photo_drop"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Photo_drop"));
-	($mol_mem_key(($.$bog_max_app.prototype), "Photo_item"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_all_icon"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_all"));
 	($mol_mem(($.$bog_max_app.prototype), "all_query"));
@@ -33930,7 +33936,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "New"));
 	($mol_mem(($.$bog_max_app.prototype), "House_line"));
 	($mol_mem(($.$bog_max_app.prototype), "Form"));
-	($mol_mem(($.$bog_max_app.prototype), "Photo_previews"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Photo_item"));
 	($mol_mem(($.$bog_max_app.prototype), "Similar_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Similar"));
 	($mol_mem(($.$bog_max_app.prototype), "All"));
@@ -35450,7 +35456,6 @@ var $;
                     return [this.House_missing()];
                 return [
                     this.Form(),
-                    ...this.photo_files().length ? [this.Photo_previews()] : [],
                     ...this.similar().length ? [this.Similar_title(), this.Similar()] : [],
                 ];
             }
@@ -36355,10 +36360,13 @@ var $;
         Photo_name: {
             color: $mol_theme.shade,
         },
+        Photo_box: {
+            flex: { direction: 'column' },
+            gap: $mol_gap.space,
+        },
         Photo_previews: {
             flex: { direction: 'row', wrap: 'wrap' },
             gap: $mol_gap.space,
-            padding: { left: $mol_gap.block, right: $mol_gap.block },
         },
         Photo_item: {
             position: 'relative',
