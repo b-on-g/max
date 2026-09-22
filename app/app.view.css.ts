@@ -490,6 +490,11 @@ namespace $ {
 			background: { color: 'black' },
 		},
 
+		Ticket_uploading: {
+			color: $mol_theme.shade,
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
+		},
+
 		Admin_note: {
 			margin: { left: '16px', right: '16px', bottom: $mol_gap.space },
 		},

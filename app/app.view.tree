@@ -451,6 +451,8 @@ $bog_max_app $mol_book2
 		body <= ticket_body /
 	Ticket_status $mol_paragraph
 		title <= ticket_status \
+	Ticket_uploading $mol_paragraph
+		title @ \Фото и видео отправляются, не закрывайте приложение несколько секунд.
 	Ticket_note $mol_paragraph
 		title <= ticket_note \
 	Ticket_media $mol_view

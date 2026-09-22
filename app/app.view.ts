@@ -723,6 +723,7 @@ namespace $.$$ {
 			ticket.Text( 'auto' )!.val( this.text() )
 			ticket.Author( 'auto' )!.val( author )
 			ticket.Created( 'auto' )!.val( created )
+			if( files.length ) this.sent_files_at( Date.now() )
 			for( const file of files ) {
 				const store = ticket.Photos( 'auto' )!.make( null )
 				store.blob( file )
@@ -739,6 +740,17 @@ namespace $.$$ {
 			this.photo_files( [] )
 			this.tried( false )
 			this.$.$mol_state_arg.dict({ ... this.$.$mol_state_arg.dict(), screen: null, ticket: ticket.link().str })
+		}
+
+		@ $mol_mem
+		sent_files_at( next = 0 ) {
+			return next
+		}
+
+		uploading() {
+			const at = this.sent_files_at()
+			if( !at ) return false
+			return this.$.$mol_state_time.now( 1000 ) - at < 15000
 		}
 
 		@ $mol_mem
@@ -764,6 +776,7 @@ namespace $.$$ {
 		ticket_body() {
 			return [
 				this.Ticket_status(),
+				... this.uploading() ? [ this.Ticket_uploading() ] : [],
 				... this.ticket_note() ? [ this.Ticket_note() ] : [],
 				... this.ticket_media().length ? [ this.Ticket_media() ] : [],
 				this.Ticket_category(),
