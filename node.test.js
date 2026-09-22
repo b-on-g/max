@@ -23103,6 +23103,11 @@ var $;
 			(obj.title) = () => ((this.ticket_status()));
 			return obj;
 		}
+		Ticket_uploading(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Ticket_uploading_title")));
+			return obj;
+		}
 		Ticket_note(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ((this.ticket_note()));
@@ -23372,6 +23377,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "All"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_status"));
+	($mol_mem(($.$bog_max_app.prototype), "Ticket_uploading"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_note"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_media"));
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_category"));
@@ -24519,6 +24525,8 @@ var $;
                 ticket.Text('auto').val(this.text());
                 ticket.Author('auto').val(author);
                 ticket.Created('auto').val(created);
+                if (files.length)
+                    this.sent_files_at(Date.now());
                 for (const file of files) {
                     const store = ticket.Photos('auto').make(null);
                     store.blob(file);
@@ -24535,6 +24543,15 @@ var $;
                 this.photo_files([]);
                 this.tried(false);
                 this.$.$mol_state_arg.dict({ ...this.$.$mol_state_arg.dict(), screen: null, ticket: ticket.link().str });
+            }
+            sent_files_at(next = 0) {
+                return next;
+            }
+            uploading() {
+                const at = this.sent_files_at();
+                if (!at)
+                    return false;
+                return this.$.$mol_state_time.now(1000) - at < 15000;
             }
             ticket_link() {
                 return this.$.$mol_state_arg.value('ticket') ?? '';
@@ -24554,6 +24571,7 @@ var $;
             ticket_body() {
                 return [
                     this.Ticket_status(),
+                    ...this.uploading() ? [this.Ticket_uploading()] : [],
                     ...this.ticket_note() ? [this.Ticket_note()] : [],
                     ...this.ticket_media().length ? [this.Ticket_media()] : [],
                     this.Ticket_category(),
@@ -24993,6 +25011,9 @@ var $;
         __decorate([
             $mol_action
         ], $bog_max_app.prototype, "submit", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "sent_files_at", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "ticket_link", null);
@@ -25449,6 +25470,10 @@ var $;
             maxHeight: '14rem',
             borderRadius: '12px',
             background: { color: 'black' },
+        },
+        Ticket_uploading: {
+            color: $mol_theme.shade,
+            padding: { left: $mol_gap.block, right: $mol_gap.block },
         },
         Admin_note: {
             margin: { left: '16px', right: '16px', bottom: $mol_gap.space },

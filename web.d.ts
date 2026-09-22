@@ -59278,101 +59278,106 @@ declare namespace $ {
 		ReturnType< $mol_paragraph['title'] >
 	>
 	type $mol_paragraph__title_bog_max_app_273 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_paragraph__title_bog_max_app_274 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_note'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_max_app_274 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_275 = $mol_type_enforce<
 		ReturnType< $bog_max_app['ticket_media'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_labeler__title_bog_max_app_275 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_276 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_276 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_277 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_277 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_278 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_278 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_279 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_279 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_280 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_280 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_281 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_281 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_282 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_282 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_283 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_283 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_284 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_284 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_285 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_285 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_286 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_286 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_287 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_287 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_288 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_288 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_289 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_labeler__title_bog_max_app_289 = $mol_type_enforce<
+	type $mol_labeler__title_bog_max_app_290 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_labeler['title'] >
 	>
-	type $mol_labeler__content_bog_max_app_290 = $mol_type_enforce<
+	type $mol_labeler__content_bog_max_app_291 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_labeler['content'] >
 	>
-	type $mol_view__sub_bog_max_app_291 = $mol_type_enforce<
+	type $mol_view__sub_bog_max_app_292 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_list__rows_bog_max_app_292 = $mol_type_enforce<
+	type $mol_list__rows_bog_max_app_293 = $mol_type_enforce<
 		ReturnType< $bog_max_app['log_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
@@ -59679,6 +59684,7 @@ declare namespace $ {
 		All( ): $mol_page
 		Ticket( ): $mol_page
 		Ticket_status( ): $mol_paragraph
+		Ticket_uploading( ): $mol_paragraph
 		Ticket_note( ): $mol_paragraph
 		Ticket_media( ): $mol_view
 		Ticket_category( ): $mol_labeler
@@ -59821,6 +59827,8 @@ declare namespace $.$$ {
         place_hint(): "Ориентир во дворе" | "Адрес или ориентир" | "Этаж, квартира, ориентир";
         new_body(): $mol_view[] | ($.$mol_paragraph | $.$mol_list | $.$mol_form)[];
         submit(): void;
+        sent_files_at(next?: number): number;
+        uploading(): boolean;
         ticket_link(): string;
         screen(): string;
         pages(): $mol_page[];
