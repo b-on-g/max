@@ -6,6 +6,7 @@ namespace $ {
 		work: 'В работе',
 		done: 'Выполнена',
 		rejected: 'Отклонена',
+		escalated: 'Эскалирована руководству УК',
 	} as const
 
 }

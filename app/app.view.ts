@@ -784,6 +784,7 @@ namespace $.$$ {
 				this.Ticket_place(),
 				... this.ticket_text() ? [ this.Ticket_text() ] : [],
 				this.Ticket_owner(),
+				... this.own() && ( this.overdue() || this.current().alarmed() ) ? [ this.Ticket_alarm() ] : [],
 				this.Ticket_react(),
 				this.Ticket_fix(),
 				this.Ticket_basis(),
@@ -852,9 +853,64 @@ namespace $.$$ {
 			return this.current().Text()?.val() ?? ''
 		}
 
-		ticket_owner() {
-			const owner = this.current().category()?.Owner()?.val() ?? ''
+		owner_label( owner: string ) {
 			return $bog_max_owner[ owner as keyof typeof $bog_max_owner ] ?? owner
+		}
+
+		ticket_owner() {
+			const ticket = this.current()
+			const owner = ticket.owner_by( this.lords() )
+			const base = ticket.category()?.Owner()?.val() ?? ''
+			const label = this.owner_label( owner )
+			return owner === base ? label : `${ label }, передана от: ${ this.owner_label( base ) }`
+		}
+
+		owner_options() {
+			return Object.keys( $bog_max_owner )
+		}
+
+		owner_dictionary() {
+			return $bog_max_owner
+		}
+
+		@ $mol_mem_key
+		admin_owner( link: string, next?: string ) {
+			const ticket = this.ticket( link )
+			if( next !== undefined && next !== ticket.owner_by( this.lords() ) ) {
+				ticket.Owner( 'auto' )!.val( next )
+				ticket.Log( 'auto' )!.key( new $mol_time_moment().toString(), 'auto' )!.val( 'to:' + next )
+				return next
+			}
+			return ticket.owner_by( this.lords() )
+		}
+
+		admin_alarm( link: string ) {
+			const alarm = this.ticket( link ).alarmed()
+			return alarm ? `Житель просит эскалации с ${ new $mol_time_moment( alarm ).toOffset().toString( 'DD.MM hh:mm' ) }` : ''
+		}
+
+		overdue() {
+			const ticket = this.current()
+			const fix = ticket.fix_till()
+			if( !fix ) return false
+			if( [ 'done', 'rejected', 'escalated' ].includes( ticket.status_by( this.lords() ) ) ) return false
+			return fix.valueOf() < Date.now()
+		}
+
+		alarm_allowed() {
+			return this.own() && this.overdue() && !this.current().alarmed()
+		}
+
+		ticket_alarm_text() {
+			const alarm = this.current().alarmed()
+			if( alarm ) return 'Эскалация запрошена, руководство УК увидит заявку первой.'
+			return 'Срок по нормативу прошёл. Можно эскалировать заявку руководству УК.'
+		}
+
+		@ $mol_action
+		alarm() {
+			if( !this.alarm_allowed() ) return
+			this.current().Alarm( 'auto' )!.val( new $mol_time_moment().toString() )
 		}
 
 		ticket_react() {
@@ -893,6 +949,14 @@ namespace $.$$ {
 			ticket.Voices( 'auto' )!.key( user, 'auto' )!.val( '1' )
 		}
 
+		log_label( value: string ) {
+			const to = /^to:(.+)$/.exec( value )?.[1]
+			if( to ) return `Передана: ${ this.owner_label( to ) }`
+			const back = /^back:(.+)$/.exec( value )?.[1]
+			if( back ) return `Передача оспорена, отвечает: ${ this.owner_label( back ) }`
+			return $bog_max_status[ value as keyof typeof $bog_max_status ] ?? value
+		}
+
 		@ $mol_mem
 		log_rows() {
 			return this.current().log_by( this.lords() ).map( ([ time ])=> this.Log_row( time ) )
@@ -900,7 +964,7 @@ namespace $.$$ {
 
 		log_row( time: string ) {
 			const status = this.current().log_by( this.lords() ).find( ([ key ])=> key === time )?.[1] ?? ''
-			const label = $bog_max_status[ status as keyof typeof $bog_max_status ] ?? status
+			const label = this.log_label( status )
 			return `${ new $mol_time_moment( time ).toOffset().toString( 'DD.MM hh:mm' ) }: ${ label }`
 		}
 
@@ -915,9 +979,9 @@ namespace $.$$ {
 
 		@ $mol_mem
 		recent() {
-			return this.all()
-				.filter( link => ![ 'done', 'rejected' ].includes( this.status_of( link ) ) )
-				.slice( 0, 5 )
+			const open = this.all().filter( link => ![ 'done', 'rejected' ].includes( this.status_of( link ) ) )
+			const urgent = open.filter( link => this.ticket( link ).alarmed() || this.status_of( link ) === 'escalated' )
+			return [ ... urgent, ... open.filter( link => !urgent.includes( link ) ) ].slice( 0, 5 )
 		}
 
 		admin_rows() {
@@ -1048,7 +1112,7 @@ namespace $.$$ {
 		}
 
 		owner_stat_line( owner: string ) {
-			const links = this.stats_tickets().filter( link => this.ticket( link ).category()?.Owner()?.val() === owner )
+			const links = this.stats_tickets().filter( link => this.ticket( link ).owner_by( this.lords() ) === owner )
 			const m = this.measure( links )
 			return `всего ${ m.total }, открытых ${ m.open }, просрочено ${ m.overdue }, выполнено ${ m.done }, реакция ${ this.hours( m.react ) }`
 		}
@@ -1094,8 +1158,10 @@ namespace $.$$ {
 		admin_row_sub( link: string ) {
 			return [
 				this.Row( link ),
+				... this.admin_alarm( link ) ? [ this.Admin_alarm( link ) ] : [],
 				this.Admin_status( link ),
-				... this.status_of( link ) === 'rejected' ? [ this.Admin_note( link ) ] : [],
+				this.Admin_owner( link ),
+				... [ 'rejected', 'escalated' ].includes( this.status_of( link ) ) || this.ticket( link ).owner_by( this.lords() ) !== ( this.ticket( link ).category()?.Owner()?.val() ?? '' ) ? [ this.Admin_note( link ) ] : [],
 			]
 		}
 

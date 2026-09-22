@@ -11,6 +11,8 @@ namespace $ {
 		Author: $giper_baza_atom_text,
 		Status: $giper_baza_atom_text,
 		Note: $giper_baza_atom_text,
+		Owner: $giper_baza_atom_text,
+		Alarm: $giper_baza_atom_text,
 		Created: $giper_baza_atom_time,
 		Log: $giper_baza_dict_to( $giper_baza_atom_text ),
 		Voices: $giper_baza_dict_to( $giper_baza_atom_text ),
@@ -59,6 +61,38 @@ namespace $ {
 
 		note_by( lords: readonly string[] ) {
 			return this.text_by( this.Note(), lords )
+		}
+
+		owner_by( lords: readonly string[] ) {
+			return this.text_by( this.Owner(), lords ) || ( this.category()?.Owner()?.val() ?? '' )
+		}
+
+		owner_before( lords: readonly string[] ) {
+			let prev = this.category()?.Owner()?.val() ?? ''
+			let current = prev
+			for( const [ , value ] of this.log_by( lords ) ) {
+				const moved = /^(?:to|back):(.+)$/.exec( value )
+				if( !moved ) continue
+				prev = current
+				current = moved[1]
+			}
+			return prev
+		}
+
+		alarmed() {
+			const alarm = this.Alarm()?.val() ?? ''
+			if( !alarm ) return ''
+			const author = this.Author()?.val() ?? ''
+			for( const unit of this.Alarm()!.units_of( null ) ) {
+				if( unit.lord().str !== this.author_lord() ) continue
+				return String( this.Alarm()!.land().sand_decode( unit ) ?? '' )
+			}
+			return author ? alarm : ''
+		}
+
+		author_lord() {
+			for( const unit of this.Author()?.units_of( null ) ?? [] ) return unit.lord().str
+			return ''
 		}
 
 		log_by( lords: readonly string[] ) {

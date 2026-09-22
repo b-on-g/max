@@ -27,6 +27,8 @@ components:
         entrance: { type: string }
         place: { type: string }
         text: { type: string }
+        owner_default: { type: string, description: Ответственный по справочнику категории, до передач }
+        alarm: { type: [ string, "null" ], description: Время, когда житель запросил эскалацию, иначе null }
         photo: { type: [ string, "null" ], description: Относительный адрес первого файла на боте, например ?BAZA:file=<id>;name=file }
         photos: { type: array, items: { type: string }, description: Адреса всех фото и видео заявки на боте }
         voices: { type: integer, description: Сколько жителей поддержали }
@@ -80,3 +82,58 @@ paths:
         '403': { description: Заявка адресована другой организации }
         '404': { description: Заявка не найдена }
         '422': { description: Неверный статус или тело запроса }
+  /org/transfer:
+    post:
+      summary: Передать заявку другой организации с причиной
+      description: Доступно текущему ответственному. Ответственный меняется, житель получает сообщение, в логе появляется запись to:<организация>.
+      security: [ { org: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ ticket, to, reason ]
+              properties:
+                ticket: { type: string }
+                to: { type: string, enum: [ uk, ads, rso, municipal, police ] }
+                reason: { type: string }
+      responses:
+        "200": { description: Заявка после передачи, схема Ticket с полем log }
+        "403": { description: Заявка адресована другой организации }
+        "422": { description: Нет причины, неизвестная организация или передача самому себе }
+  /org/dispute:
+    post:
+      summary: Оспорить передачу, вернуть заявку прежнему ответственному
+      description: Доступно организации, которой заявка была передана последней. В логе появляется запись back:<организация>.
+      security: [ { org: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ ticket, reason ]
+              properties:
+                ticket: { type: string }
+                reason: { type: string }
+      responses:
+        "200": { description: Заявка после возврата }
+        "409": { description: Последняя запись лога не передача этой организации }
+  /org/escalate:
+    post:
+      summary: Эскалировать заявку руководству УК
+      description: Статус становится escalated, житель получает сообщение, у диспетчера заявка поднимается вверх списка.
+      security: [ { org: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ ticket, reason ]
+              properties:
+                ticket: { type: string }
+                reason: { type: string }
+      responses:
+        "200": { description: Заявка после эскалации }

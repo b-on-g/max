@@ -35,7 +35,22 @@ check "неизвестный статус" "$(code -X POST -H "Authorization: B
 check "чужая заявка или несуществующая" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" -d '{"ticket":"nope","status":"work"}' "$BOT_URL/org/status")" 404
 check "тело не JSON" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: text/plain" -d 'x' "$BOT_URL/org/status")" 422
 
-echo "5. Возврат статуса, чтобы демо-данные не портить"
+echo "5. Передача другой организации и оспаривание"
+res=$(curl -s -m 20 -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" \
+	-d "{\"ticket\":\"$ticket\",\"to\":\"rso\",\"reason\":\"Стояк общедомовой, но течь из ввода, зона РСО\"}" "$BOT_URL/org/transfer")
+owner_now=$(printf '%s' "$res" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).owner)}catch(e){console.log(s)}})')
+check "ответственный стал rso" "$owner_now" rso
+check "после передачи заявка нам уже не подчиняется" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" -d "{\"ticket\":\"$ticket\",\"status\":\"work\"}" "$BOT_URL/org/status")" 403
+if [ -n "${ORG_KEY_RSO:-}" ]; then
+	res=$(curl -s -m 20 -X POST -H "Authorization: Bearer $ORG_KEY_RSO" -H "content-type: application/json" \
+		-d "{\"ticket\":\"$ticket\",\"reason\":\"Ввод в порядке, течь внутри дома\"}" "$BOT_URL/org/dispute")
+	owner_back=$(printf '%s' "$res" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).owner)}catch(e){console.log(s)}})')
+	check "РСО оспорила, заявка вернулась" "$owner_back" "$owner"
+else
+	echo "     ORG_KEY_RSO не задан, оспаривание пропущено"
+fi
+
+echo "6. Возврат статуса, чтобы демо-данные не портить"
 curl -s -m 20 -o /dev/null -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" \
 	-d "{\"ticket\":\"$ticket\",\"status\":\"accepted\",\"note\":\"\"}" "$BOT_URL/org/status"
 

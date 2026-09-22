@@ -33,7 +33,9 @@ namespace $ {
 				status: ticket.status_by( lords ),
 				note: ticket.note_by( lords ),
 				category: category?.Title()?.val() ?? '',
-				owner: category?.Owner()?.val() ?? '',
+				owner: ticket.owner_by( lords ),
+				owner_default: category?.Owner()?.val() ?? '',
+				alarm: ticket.alarmed() || null,
 				house: ticket.house()?.Address()?.val() ?? '',
 				entrance: ticket.Entrance()?.val() ?? '',
 				place: ticket.Place()?.val() ?? '',
@@ -66,7 +68,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		owner_of( link: string ) {
-			return this.bot().ticket( link )?.category()?.Owner()?.val() ?? ''
+			return this.bot().ticket( link )?.owner_by( this.bot().lords() ) ?? ''
 		}
 
 		owners() {
@@ -81,7 +83,7 @@ namespace $ {
 		@ $mol_mem_key
 		tickets_of( owner: string ) {
 		return [ ... this.bot().ticket_map().values() ]
-				.filter( ticket => ticket.category()?.Owner()?.val() === owner )
+				.filter( ticket => this.owner_of( ticket.link().str ) === owner )
 				.map( ticket => this.dump_of( ticket.link().str ) )
 				.filter( dump => dump !== null )
 		}
@@ -96,16 +98,44 @@ namespace $ {
 		POST( msg: $mol_rest_message ) {
 			const owner = this.owner( msg )
 			if( !owner ) return msg.reply( 'Нужен заголовок Authorization: Bearer <ключ организации>', { code: 401 } )
-			if( msg.uri().pathname !== '/status' ) return msg.reply( 'Есть только GET /org/tickets и POST /org/status', { code: 404 } )
-			const body = msg.data() as null | { ticket?: string, status?: string, note?: string }
-			if( !body || typeof body !== 'object' ) return msg.reply( 'Ожидается JSON с полями ticket, status, note', { code: 422 } )
-			const status = String( body.status ?? '' )
-			if( !( status in $bog_max_status ) ) return msg.reply( `Статус один из: ${ Object.keys( $bog_max_status ).join( ', ' ) }`, { code: 422 } )
+			const path = msg.uri().pathname
+			if( ![ '/status', '/transfer', '/dispute', '/escalate' ].includes( path ) ) return msg.reply( 'Есть GET /org/tickets и POST /org/status, /org/transfer, /org/dispute, /org/escalate', { code: 404 } )
+			const body = msg.data() as null | { ticket?: string, status?: string, note?: string, to?: string, reason?: string }
+			if( !body || typeof body !== 'object' ) return msg.reply( 'Ожидается JSON с полем ticket', { code: 422 } )
 			const link = String( body.ticket ?? '' )
 			const ticket = this.bot().ticket( link )
 			if( !ticket ) return msg.reply( 'Заявка не найдена', { code: 404 } )
 			if( this.owner_of( link ) !== owner ) return msg.reply( 'Заявка адресована другой организации', { code: 403 } )
-			this.bot().set_status( ticket, status, String( body.note ?? '' ) )
+			const reason = String( body.reason ?? body.note ?? '' )
+			const lords = this.bot().lords()
+			switch( path ) {
+				case '/status': {
+					const status = String( body.status ?? '' )
+					if( !( status in $bog_max_status ) ) return msg.reply( `Статус один из: ${ Object.keys( $bog_max_status ).join( ', ' ) }`, { code: 422 } )
+					this.bot().set_status( ticket, status, reason )
+					break
+				}
+				case '/transfer': {
+					const to = String( body.to ?? '' )
+					if( !( to in $bog_max_owner ) ) return msg.reply( `Организация одна из: ${ Object.keys( $bog_max_owner ).join( ', ' ) }`, { code: 422 } )
+					if( to === owner ) return msg.reply( 'Заявка и так у вас', { code: 422 } )
+					if( !reason.trim() ) return msg.reply( 'Нужна причина передачи в поле reason', { code: 422 } )
+					this.bot().set_owner( ticket, to, reason )
+					break
+				}
+				case '/dispute': {
+					const last = ticket.log_by( lords ).at( -1 )?.[1] ?? ''
+					if( last !== 'to:' + owner ) return msg.reply( 'Оспорить можно только передачу, которая пришла к вам последней', { code: 409 } )
+					if( !reason.trim() ) return msg.reply( 'Нужна причина в поле reason', { code: 422 } )
+					this.bot().set_owner( ticket, ticket.owner_before( lords ), reason, true )
+					break
+				}
+				case '/escalate': {
+					if( !reason.trim() ) return msg.reply( 'Нужна причина в поле reason', { code: 422 } )
+					this.bot().set_status( ticket, 'escalated', reason )
+					break
+				}
+			}
 			msg.reply( this.dump_full( ticket ) )
 		}
 

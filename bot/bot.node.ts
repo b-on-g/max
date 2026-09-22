@@ -112,12 +112,14 @@ namespace $ {
 			const label = $bog_max_status[ status as keyof typeof $bog_max_status ] ?? status
 			const lines = [ `Заявка № ${ this.uk().ticket_number( ticket ) }: ${ label }` ]
 			const note = ticket.note_by( lords )
-			if( status !== 'new' ) {
+			const moved = this.moved( ticket )
+			if( moved ) lines.push( moved )
+			if( status !== 'new' || moved ) {
 				if( note ) lines.push( note )
 				return lines.join( '\n' )
 			}
 			const category = ticket.category()
-			const owner = $bog_max_owner[ category?.Owner()?.val() as keyof typeof $bog_max_owner ] ?? ''
+			const owner = $bog_max_owner[ ticket.owner_by( lords ) as keyof typeof $bog_max_owner ] ?? ''
 			lines.push( `${ category?.Title()?.val() ?? '' }, ${ ticket.Place()?.val() ?? '' }` )
 			lines.push( `Ответственный: ${ owner }` )
 			const react = ticket.react_till()
@@ -128,14 +130,34 @@ namespace $ {
 			return lines.join( '\n' )
 		}
 
-		set_status( ticket: $bog_max_ticket, status: string, note = '' ) {
-			ticket.Status( 'auto' )!.val( status )
-			ticket.Note( 'auto' )!.val( note )
+		moved( ticket: $bog_max_ticket ) {
+			const lords = this.lords()
+			const last = ticket.log_by( lords ).at( -1 )?.[1] ?? ''
+			const to = /^to:(.+)$/.exec( last )?.[1]
+			if( to ) return `Передана: ${ $bog_max_owner[ to as keyof typeof $bog_max_owner ] ?? to }`
+			const back = /^back:(.+)$/.exec( last )?.[1]
+			if( back ) return `Передача оспорена, снова отвечает: ${ $bog_max_owner[ back as keyof typeof $bog_max_owner ] ?? back }`
+			return ''
+		}
+
+		log( ticket: $bog_max_ticket, value: string ) {
 			const log = ticket.Log( 'auto' )
 			const time = new $mol_time_moment().toString()
 			const entry = log?.key( time, 'auto' ) ?? log?.key( time, 'auto' ) ?? null
-			if( entry ) entry.val( status )
-			else this.$.$mol_log3_warn({ place: this, message: 'Запись в лог статусов не создалась', hint: ticket.link().str + ' ' + status })
+			if( entry ) entry.val( value )
+			else this.$.$mol_log3_warn({ place: this, message: 'Запись в лог не создалась', hint: ticket.link().str + ' ' + value })
+		}
+
+		set_owner( ticket: $bog_max_ticket, owner: string, note = '', back = false ) {
+			ticket.Owner( 'auto' )!.val( owner )
+			ticket.Note( 'auto' )!.val( note )
+			this.log( ticket, ( back ? 'back:' : 'to:' ) + owner )
+		}
+
+		set_status( ticket: $bog_max_ticket, status: string, note = '' ) {
+			ticket.Status( 'auto' )!.val( status )
+			ticket.Note( 'auto' )!.val( note )
+			this.log( ticket, status )
 		}
 
 		@ $mol_mem
@@ -143,7 +165,7 @@ namespace $ {
 			const uk = this.uk()
 			for( const ticket of uk.tickets() ) {
 				if( !ticket.status_by( this.lords() ) ) this.set_status( ticket, 'new' )
-				const status = ticket.status_by( this.lords() )
+				const status = ticket.status_by( this.lords() ) + '|' + ticket.owner_by( this.lords() )
 				const key = ticket.link().str
 				if( uk.Notified()?.key( key )?.val() === status ) continue
 				const author = Number( ticket.Author()?.val() ?? '' )

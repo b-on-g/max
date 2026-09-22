@@ -499,6 +499,29 @@ namespace $ {
 			margin: { left: '16px', right: '16px', bottom: $mol_gap.space },
 		},
 
+		Admin_owner: {
+			margin: { left: '16px', right: '16px' },
+		},
+
+		Admin_alarm: {
+			color: $mol_theme.focus,
+			font: { size: '0.8125rem', weight: 500 },
+			padding: { left: '16px', right: '16px' },
+		},
+
+		Ticket_alarm: {
+			flex: { direction: 'column' },
+			gap: $mol_gap.space,
+			margin: $mol_gap.block,
+			padding: $mol_gap.block,
+			borderRadius: '16px',
+			background: { color: $mol_theme.card },
+		},
+
+		Ticket_alarm_text: {
+			color: $mol_theme.shade,
+		},
+
 		Ticket_note: {
 			padding: { left: $mol_gap.block, right: $mol_gap.block },
 		},
