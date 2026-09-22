@@ -2824,6 +2824,25 @@ $bog_max_app $mol_book2
 				click? <=> submit? null
 			<= Consent $mol_paragraph
 				title @ \Отправляя заявку, вы соглашаетесь, что имя, ID в MAX, текст и фото заявки увидят УК и ответственная организация.
+	Chat_item* $mol_view
+		sub <= chat_item_sub* /
+			<= Chat_open* $mol_link
+				uri <= chat_url* \
+				target \_blank
+				sub /
+					<= Chat_thumb* $mol_image
+						uri <= chat_url* \
+			<= Chat_video* $mol_view
+				dom_name \video
+				attr *
+					src <= chat_url* \
+					controls \true
+					playsinline \true
+			<= Chat_drop* $mol_button_minor
+				hint @ \Убрать
+				sub /
+					<= Chat_drop_icon* $mol_icon_close
+				click? <=> chat_drop*? null
 	Photo_item* $mol_view
 		sub <= photo_item_sub* /
 			<= Photo_open* $mol_link

@@ -22532,6 +22532,53 @@ var $;
 			(obj.title) = () => ((this.$.$mol_locale.text("$bog_max_app_Consent_title")));
 			return obj;
 		}
+		chat_url(id){
+			return "";
+		}
+		Chat_thumb(id){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.chat_url(id)));
+			return obj;
+		}
+		Chat_open(id){
+			const obj = new this.$.$mol_link();
+			(obj.uri) = () => ((this.chat_url(id)));
+			(obj.target) = () => ("_blank");
+			(obj.sub) = () => ([(this.Chat_thumb(id))]);
+			return obj;
+		}
+		Chat_video(id){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("video");
+			(obj.attr) = () => ({
+				"src": (this.chat_url(id)), 
+				"controls": "true", 
+				"playsinline": "true"
+			});
+			return obj;
+		}
+		Chat_drop_icon(id){
+			const obj = new this.$.$mol_icon_close();
+			return obj;
+		}
+		chat_drop(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Chat_drop(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Chat_drop_hint")));
+			(obj.sub) = () => ([(this.Chat_drop_icon(id))]);
+			(obj.click) = (next) => ((this.chat_drop(id, next)));
+			return obj;
+		}
+		chat_item_sub(id){
+			return [
+				(this.Chat_open(id)), 
+				(this.Chat_video(id)), 
+				(this.Chat_drop(id))
+			];
+		}
 		photo_url(id){
 			return "";
 		}
@@ -23126,6 +23173,11 @@ var $;
 			(obj.buttons) = () => ([(this.Submit()), (this.Consent())]);
 			return obj;
 		}
+		Chat_item(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.chat_item_sub(id)));
+			return obj;
+		}
 		Photo_item(id){
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ((this.photo_item_sub(id)));
@@ -23361,6 +23413,12 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Submit"));
 	($mol_mem(($.$bog_max_app.prototype), "Consent"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Chat_thumb"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Chat_open"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Chat_video"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Chat_drop_icon"));
+	($mol_mem_key(($.$bog_max_app.prototype), "chat_drop"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Chat_drop"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Photo_thumb"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Photo_open"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Photo_video"));
@@ -23444,6 +23502,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "New"));
 	($mol_mem(($.$bog_max_app.prototype), "House_line"));
 	($mol_mem(($.$bog_max_app.prototype), "Form"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Chat_item"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Photo_item"));
 	($mol_mem(($.$bog_max_app.prototype), "Similar_title"));
 	($mol_mem(($.$bog_max_app.prototype), "Similar"));
@@ -23901,6 +23960,7 @@ var $;
         Categories: $giper_baza_list_link.to(() => $bog_max_category),
         Tickets: $giper_baza_list_link.to(() => $bog_max_ticket),
         Posts: $giper_baza_list_link.to(() => $bog_max_post),
+        Files: $giper_baza_list_link.to(() => $giper_baza_file),
         Bindings: $giper_baza_dict_to($giper_baza_atom_text),
         Notified: $giper_baza_dict_to($giper_baza_atom_text),
         Staff: $giper_baza_dict_to($giper_baza_atom_text),
@@ -24052,7 +24112,7 @@ var $;
             chat_text_open() {
                 if (this.waiting() || this.fail())
                     return;
-                if (!this.session().text || this.chat_text_used())
+                if (!(this.session().text || this.session().files?.length) || this.chat_text_used())
                     return;
                 this.chat_text_used(true);
                 this.$.$mol_state_arg.dict({ ...this.$.$mol_state_arg.dict(), screen: 'new', ticket: null });
@@ -24548,8 +24608,24 @@ var $;
                     this.photo_files([...this.photo_files(), ...next].slice(0, this.photo_limit()));
                 return [];
             }
+            chat_files(next) {
+                return next ?? this.session().files ?? [];
+            }
+            chat_file(link) {
+                return this.$.$giper_baza_glob.Pawn(new $giper_baza_link(link), $giper_baza_file);
+            }
+            chat_url(link) {
+                return `${this.bot_url()}?BAZA:file=${link};name=file`;
+            }
+            chat_item_sub(link) {
+                const video = this.chat_file(link).type().startsWith('video/');
+                return [video ? this.Chat_video(link) : this.Chat_open(link), this.Chat_drop(link)];
+            }
+            chat_drop(link) {
+                this.chat_files(this.chat_files().filter(item => item !== link));
+            }
             photo_pick_label() {
-                const count = this.photo_files().length;
+                const count = this.photo_files().length + this.chat_files().length;
                 if (!count)
                     return 'Фото или видео по желанию';
                 return count < this.photo_limit() ? `Файлов: ${count}, можно ещё ${this.photo_limit() - count}` : `Файлов: ${count}, это максимум`;
@@ -24561,7 +24637,10 @@ var $;
                 return this.photo_files().find(file => this.photo_key(file) === key) ?? null;
             }
             photo_previews() {
-                return this.photo_files().map(file => this.Photo_item(this.photo_key(file)));
+                return [
+                    ...this.chat_files().map(link => this.Chat_item(link)),
+                    ...this.photo_files().map(file => this.Photo_item(this.photo_key(file))),
+                ];
             }
             photo_url(key) {
                 const file = this.photo_file(key);
@@ -24640,6 +24719,9 @@ var $;
                 ticket.Text('auto').val(this.text());
                 ticket.Author('auto').val(author);
                 ticket.Created('auto').val(created);
+                const chat = this.chat_files();
+                for (const link of chat)
+                    ticket.Photos('auto').add(new $giper_baza_link(link));
                 if (files.length)
                     this.sent_files_at(Date.now());
                 for (const file of files) {
@@ -24651,6 +24733,10 @@ var $;
                     store.blob(files[0]);
                     ticket.Photo('auto').remote(store);
                 }
+                else if (chat.length) {
+                    ticket.Photo('auto').remote(this.chat_file(chat[0]));
+                }
+                this.chat_files([]);
                 this.place('');
                 this.text('');
                 this.entrance('');
@@ -25183,6 +25269,12 @@ var $;
             $mol_mem
         ], $bog_max_app.prototype, "photo_picked", null);
         __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "chat_files", null);
+        __decorate([
+            $mol_action
+        ], $bog_max_app.prototype, "chat_drop", null);
+        __decorate([
             $mol_mem_key
         ], $bog_max_app.prototype, "photo_url", null);
         __decorate([
@@ -25622,6 +25714,30 @@ var $;
         Photo_item: {
             position: 'relative',
             flex: { direction: 'column' },
+        },
+        Chat_item: {
+            position: 'relative',
+            flex: { direction: 'column' },
+        },
+        Chat_thumb: {
+            width: '6rem',
+            height: '6rem',
+            objectFit: 'cover',
+            borderRadius: '12px',
+        },
+        Chat_video: {
+            width: '9rem',
+            height: '6rem',
+            borderRadius: '12px',
+            background: { color: 'black' },
+        },
+        Chat_drop: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            background: { color: $mol_theme.card },
+            borderRadius: '999px',
+            padding: '2px',
         },
         Photo_thumb: {
             width: '6rem',
