@@ -13,7 +13,7 @@ namespace $ {
 			for( const pair of this.bot().env_list( 'ORG_KEYS' ) ) {
 				const [ owner, secret ] = pair.split( ':' )
 				if( secret !== key ) continue
-				this.seen( owner )
+				$mol_wire_async( this ).seen( owner )
 				return owner
 			}
 			return ''
@@ -52,12 +52,27 @@ namespace $ {
 		seen( owner: string ) {
 			const now = new $mol_time_moment()
 			const last = this.bot().uk().Orgs()?.key( owner )?.val() ?? ''
-			if( last && now.valueOf() - new $mol_time_moment( last ).valueOf() < 60_000 ) return
+			if( last && now.valueOf() - new $mol_time_moment( last ).valueOf() < 600_000 ) return
 			this.bot().uk().Orgs( 'auto' )!.key( owner, 'auto' )!.val( now.toString() )
 		}
 
 		file_uri( link?: string | null ) {
 			return link ? `?BAZA:file=${ link };name=file` : null
+		}
+
+		owners() {
+			return this.bot().env_list( 'ORG_KEYS' ).map( pair => pair.split( ':' )[0] ).filter( Boolean )
+		}
+
+		cache = new Map< string, readonly ReturnType< $bog_max_bot_org[ 'dump' ] >[] >()
+
+		@ $mol_mem
+		warm() {
+			return this.owners().map( owner => {
+				const list = this.tickets_of( owner )
+				this.cache.set( owner, list )
+				return list.length
+			} )
 		}
 
 		@ $mol_mem_key
@@ -71,28 +86,20 @@ namespace $ {
 			return this.bot().ticket( link )?.owner_by( this.bot().lords() ) ?? ''
 		}
 
-		owners() {
-			return this.bot().env_list( 'ORG_KEYS' ).map( pair => pair.split( ':' )[0] ).filter( Boolean )
-		}
-
-		@ $mol_mem
-		warm() {
-			return this.owners().map( owner => this.tickets_of( owner ).length )
-		}
-
 		@ $mol_mem_key
 		tickets_of( owner: string ) {
-		return [ ... this.bot().ticket_map().values() ]
-				.filter( ticket => this.owner_of( ticket.link().str ) === owner )
-				.map( ticket => this.dump_of( ticket.link().str ) )
-				.filter( dump => dump !== null )
+			return [ ... this.bot().ticket_map().values() ]
+				.map( ticket => ticket.link().str )
+				.filter( link => this.owner_of( link ) === owner )
+				.map( link => this.dump_of( link ) )
+				.filter( ( dump ): dump is ReturnType< $bog_max_bot_org[ 'dump' ] > => dump !== null )
 		}
 
 		GET( msg: $mol_rest_message ) {
 			const owner = this.owner( msg )
 			if( !owner ) return msg.reply( 'Нужен заголовок Authorization: Bearer <ключ организации>', { code: 401 } )
 			if( msg.uri().pathname !== '/tickets' ) return msg.reply( 'Есть только GET /org/tickets и POST /org/status', { code: 404 } )
-			msg.reply({ owner, tickets: this.tickets_of( owner ) })
+			msg.reply({ owner, tickets: this.cache.get( owner ) ?? this.tickets_of( owner ) })
 		}
 
 		POST( msg: $mol_rest_message ) {
@@ -105,14 +112,17 @@ namespace $ {
 			const link = String( body.ticket ?? '' )
 			const ticket = this.bot().ticket( link )
 			if( !ticket ) return msg.reply( 'Заявка не найдена', { code: 404 } )
-			if( this.owner_of( link ) !== owner ) return msg.reply( 'Заявка адресована другой организации', { code: 403 } )
+			const dump = this.dump_of( link )!
+			if( dump.owner !== owner ) return msg.reply( 'Заявка адресована другой организации', { code: 403 } )
 			const reason = String( body.reason ?? body.note ?? '' )
-			const lords = this.bot().lords()
+			const later = $mol_wire_async( this.bot() )
+			let after = {} as Record< string, unknown >
 			switch( path ) {
 				case '/status': {
 					const status = String( body.status ?? '' )
 					if( !( status in $bog_max_status ) ) return msg.reply( `Статус один из: ${ Object.keys( $bog_max_status ).join( ', ' ) }`, { code: 422 } )
-					this.bot().set_status( ticket, status, reason )
+					later.set_status( ticket, status, reason )
+					after = { status, note: reason }
 					break
 				}
 				case '/transfer': {
@@ -120,23 +130,27 @@ namespace $ {
 					if( !( to in $bog_max_owner ) ) return msg.reply( `Организация одна из: ${ Object.keys( $bog_max_owner ).join( ', ' ) }`, { code: 422 } )
 					if( to === owner ) return msg.reply( 'Заявка и так у вас', { code: 422 } )
 					if( !reason.trim() ) return msg.reply( 'Нужна причина передачи в поле reason', { code: 422 } )
-					this.bot().set_owner( ticket, to, reason )
+					later.set_owner( ticket, to, reason )
+					after = { owner: to, note: reason }
 					break
 				}
 				case '/dispute': {
-					const last = ticket.log_by( lords ).at( -1 )?.[1] ?? ''
+					const last = ticket.log_by( this.bot().lords() ).at( -1 )?.[1] ?? ''
 					if( last !== 'to:' + owner ) return msg.reply( 'Оспорить можно только передачу, которая пришла к вам последней', { code: 409 } )
 					if( !reason.trim() ) return msg.reply( 'Нужна причина в поле reason', { code: 422 } )
-					this.bot().set_owner( ticket, ticket.owner_before( lords ), reason, true )
+					const back = ticket.owner_before( this.bot().lords() )
+					later.set_owner( ticket, back, reason, true )
+					after = { owner: back, note: reason }
 					break
 				}
 				case '/escalate': {
 					if( !reason.trim() ) return msg.reply( 'Нужна причина в поле reason', { code: 422 } )
-					this.bot().set_status( ticket, 'escalated', reason )
+					later.set_status( ticket, 'escalated', reason )
+					after = { status: 'escalated', note: reason }
 					break
 				}
 			}
-			msg.reply( this.dump_full( ticket ) )
+			msg.reply({ ... this.dump_full( ticket ), ... after })
 		}
 
 	}

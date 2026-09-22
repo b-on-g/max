@@ -145,7 +145,7 @@ namespace $ {
 			const time = new $mol_time_moment().toString()
 			const entry = log?.key( time, 'auto' ) ?? log?.key( time, 'auto' ) ?? null
 			if( entry ) entry.val( value )
-			else this.$.$mol_log3_warn({ place: this, message: 'Запись в лог не создалась', hint: ticket.link().str + ' ' + value })
+			else this.$.$mol_log3_warn({ place: this, message: 'Запись в лог не создалась', hint: `${ ticket.link().str } ${ value } can_change=${ log?.can_change() } keys=${ log?.keys().length } has=${ log?.has( time ) } lord=${ this.lord() } pass_rank=${ String( this.uk_land().pass_rank( this.uk_land().auth().pass() ) ) }` })
 		}
 
 		set_owner( ticket: $bog_max_ticket, owner: string, note = '', back = false ) {

@@ -31,7 +31,8 @@ status=$(printf '%s' "$res" | node -e 'let s="";process.stdin.on("data",d=>s+=d)
 check "статус стал work" "$status" work
 
 echo "4. Ошибки обрабатываются"
-check "неизвестный статус" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" -d "{\"ticket\":\"$ticket\",\"status\":\"lost\"}" "$BOT_URL/org/status")" 422
+body="{\"ticket\":\"$ticket\",\"status\":\"lost\"}"
+check "неизвестный статус" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" -d "$body" "$BOT_URL/org/status")" 422
 check "чужая заявка или несуществующая" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" -d '{"ticket":"nope","status":"work"}' "$BOT_URL/org/status")" 404
 check "тело не JSON" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: text/plain" -d 'x' "$BOT_URL/org/status")" 422
 
@@ -40,7 +41,8 @@ res=$(curl -s -m 20 -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type
 	-d "{\"ticket\":\"$ticket\",\"to\":\"rso\",\"reason\":\"Стояк общедомовой, но течь из ввода, зона РСО\"}" "$BOT_URL/org/transfer")
 owner_now=$(printf '%s' "$res" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).owner)}catch(e){console.log(s)}})')
 check "ответственный стал rso" "$owner_now" rso
-check "после передачи заявка нам уже не подчиняется" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" -d "{\"ticket\":\"$ticket\",\"status\":\"work\"}" "$BOT_URL/org/status")" 403
+body="{\"ticket\":\"$ticket\",\"status\":\"work\"}"
+check "после передачи заявка нам уже не подчиняется" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" -d "$body" "$BOT_URL/org/status")" 403
 if [ -n "${ORG_KEY_RSO:-}" ]; then
 	res=$(curl -s -m 20 -X POST -H "Authorization: Bearer $ORG_KEY_RSO" -H "content-type: application/json" \
 		-d "{\"ticket\":\"$ticket\",\"reason\":\"Ввод в порядке, течь внутри дома\"}" "$BOT_URL/org/dispute")
