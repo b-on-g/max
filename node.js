@@ -22631,6 +22631,14 @@ var $;
 		ticket_note(){
 			return "";
 		}
+		ticket_item_sub(id){
+			return [];
+		}
+		Ticket_item(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.ticket_item_sub(id)));
+			return obj;
+		}
 		ticket_media_url(id){
 			return "";
 		}
@@ -22657,7 +22665,11 @@ var $;
 			return obj;
 		}
 		ticket_media(){
-			return [(this.Ticket_image(id)), (this.Ticket_video(id))];
+			return [
+				(this.Ticket_item(id)), 
+				(this.Ticket_image(id)), 
+				(this.Ticket_video(id))
+			];
 		}
 		ticket_category(){
 			return "";
@@ -23316,6 +23328,7 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "All_rows"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_ticket_icon"));
 	($mol_mem(($.$bog_max_app.prototype), "Close_ticket"));
+	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_item"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_image_pic"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_image"));
 	($mol_mem_key(($.$bog_max_app.prototype), "Ticket_video"));
@@ -24611,15 +24624,23 @@ var $;
                 const uri = this.current().photo()?.uri() ?? '';
                 return uri ? this.bot_url() + uri : '';
             }
+            ticket_media_links() {
+                const ticket = this.current();
+                const list = (ticket.Photos()?.items() ?? []).map(link => link.str);
+                if (list.length)
+                    return list;
+                const one = ticket.Photo()?.val()?.str;
+                return one ? [one] : [];
+            }
             ticket_media() {
-                return this.current().photos().map(file => {
-                    const link = file.link().str;
-                    return file.type().startsWith('video/') ? this.Ticket_video(link) : this.Ticket_image(link);
-                });
+                return this.ticket_media_links().map(link => this.Ticket_item(link));
+            }
+            ticket_item_sub(link) {
+                const file = this.$.$giper_baza_glob.Pawn(new $giper_baza_link(link), $giper_baza_file);
+                return [file.type().startsWith('video/') ? this.Ticket_video(link) : this.Ticket_image(link)];
             }
             ticket_media_url(link) {
-                const file = this.current().photos().find(file => file.link().str === link);
-                return file ? this.bot_url() + file.uri() : '';
+                return `${this.bot_url()}?BAZA:file=${link};name=file`;
             }
             ticket_category() {
                 return this.current().category()?.Title()?.val() ?? '';
