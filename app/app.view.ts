@@ -813,16 +813,25 @@ namespace $.$$ {
 			return uri ? this.bot_url() + uri : ''
 		}
 
+		ticket_media_links() {
+			const ticket = this.current()
+			const list = ( ticket.Photos()?.items() ?? [] ).map( link => link.str )
+			if( list.length ) return list
+			const one = ticket.Photo()?.val()?.str
+			return one ? [ one ] : []
+		}
+
 		ticket_media() {
-			return this.current().photos().map( file => {
-				const link = file.link().str
-				return file.type().startsWith( 'video/' ) ? this.Ticket_video( link ) : this.Ticket_image( link )
-			} )
+			return this.ticket_media_links().map( link => this.Ticket_item( link ) )
+		}
+
+		ticket_item_sub( link: string ) {
+			const file = this.$.$giper_baza_glob.Pawn( new $giper_baza_link( link ), $giper_baza_file )
+			return [ file.type().startsWith( 'video/' ) ? this.Ticket_video( link ) : this.Ticket_image( link ) ]
 		}
 
 		ticket_media_url( link: string ) {
-			const file = this.current().photos().find( file => file.link().str === link )
-			return file ? this.bot_url() + file.uri() : ''
+			return `${ this.bot_url() }?BAZA:file=${ link };name=file`
 		}
 
 		ticket_category() {

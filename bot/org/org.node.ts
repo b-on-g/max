@@ -34,7 +34,8 @@ namespace $ {
 				entrance: ticket.Entrance()?.val() ?? '',
 				place: ticket.Place()?.val() ?? '',
 				text: ticket.Text()?.val() ?? '',
-				photo: ticket.photo()?.uri() ?? null,
+				photo: this.file_uri( ticket.Photo()?.val()?.str ),
+				photos: ( ticket.Photos()?.items() ?? [] ).map( link => this.file_uri( link.str ) ),
 				voices: ticket.voices(),
 				created: ticket.Created()?.val()?.toString() ?? null,
 				react_till: ticket.react_till()?.toString() ?? null,
@@ -43,14 +44,22 @@ namespace $ {
 			}
 		}
 
+		file_uri( link?: string | null ) {
+			return link ? `?BAZA:file=${ link };name=file` : null
+		}
+
+		@ $mol_mem_key
+		tickets_of( owner: string ) {
+			return this.bot().uk().tickets()
+				.filter( ticket => ticket.category()?.Owner()?.val() === owner )
+				.map( ticket => this.dump( ticket ) )
+		}
+
 		GET( msg: $mol_rest_message ) {
 			const owner = this.owner( msg )
 			if( !owner ) return msg.reply( 'Нужен заголовок Authorization: Bearer <ключ организации>', { code: 401 } )
 			if( msg.uri().pathname !== '/tickets' ) return msg.reply( 'Есть только GET /org/tickets и POST /org/status', { code: 404 } )
-			const tickets = this.bot().uk().tickets()
-				.filter( ticket => ticket.category()?.Owner()?.val() === owner )
-				.map( ticket => this.dump( ticket ) )
-			msg.reply({ owner, tickets })
+			msg.reply({ owner, tickets: this.tickets_of( owner ) })
 		}
 
 		POST( msg: $mol_rest_message ) {

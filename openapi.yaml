@@ -27,7 +27,8 @@ components:
         entrance: { type: string }
         place: { type: string }
         text: { type: string }
-        photo: { type: [ string, "null" ], description: Относительный адрес файла на боте }
+        photo: { type: [ string, "null" ], description: Относительный адрес первого файла на боте, например ?BAZA:file=<id>;name=file }
+        photos: { type: array, items: { type: string }, description: Адреса всех фото и видео заявки на боте }
         voices: { type: integer, description: Сколько жителей поддержали }
         created: { type: [ string, "null" ], format: date-time }
         react_till: { type: [ string, "null" ], format: date-time }
