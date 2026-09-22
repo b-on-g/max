@@ -432,20 +432,62 @@ namespace $ {
 			color: $mol_theme.shade,
 		},
 
-		Photo_preview: {
-			maxWidth: '100%',
-			maxHeight: '16rem',
-			objectFit: 'contain',
-			borderRadius: '16px',
-			margin: $mol_gap.block,
+		Photo_previews: {
+			flex: { direction: 'row', wrap: 'wrap' },
+			gap: $mol_gap.space,
+			padding: { left: $mol_gap.block, right: $mol_gap.block },
 		},
 
-		Ticket_photo: {
+		Photo_item: {
+			position: 'relative',
+			flex: { direction: 'column' },
+		},
+
+		Photo_thumb: {
+			width: '6rem',
+			height: '6rem',
+			objectFit: 'cover',
+			borderRadius: '12px',
+		},
+
+		Photo_video: {
+			width: '9rem',
+			height: '6rem',
+			borderRadius: '12px',
+			background: { color: 'black' },
+		},
+
+		Photo_drop: {
+			position: 'absolute',
+			top: 0,
+			right: 0,
+			background: { color: $mol_theme.card },
+			borderRadius: '999px',
+			padding: '2px',
+		},
+
+		Ticket_media: {
+			flex: { direction: 'row', wrap: 'wrap' },
+			gap: $mol_gap.space,
+			padding: $mol_gap.block,
+		},
+
+		Ticket_image_pic: {
 			maxWidth: '100%',
-			maxHeight: '20rem',
+			maxHeight: '14rem',
 			objectFit: 'contain',
-			borderRadius: '16px',
-			margin: $mol_gap.block,
+			borderRadius: '12px',
+		},
+
+		Ticket_video: {
+			maxWidth: '100%',
+			maxHeight: '14rem',
+			borderRadius: '12px',
+			background: { color: 'black' },
+		},
+
+		Admin_note: {
+			margin: { left: '16px', right: '16px', bottom: $mol_gap.space },
 		},
 
 		Ticket_note: {

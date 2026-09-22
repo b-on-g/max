@@ -11,7 +11,7 @@ namespace $ {
 	export const $bog_max_scope = {
 		house: 'В доме',
 		yard: 'Во дворе',
-		city: 'В городе',
+		city: 'В районе',
 	} as const
 
 }

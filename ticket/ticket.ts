@@ -7,6 +7,7 @@ namespace $ {
 		Place: $giper_baza_atom_text,
 		Text: $giper_baza_atom_text,
 		Photo: $giper_baza_atom_link.to( ()=> $giper_baza_file ),
+		Photos: $giper_baza_list_link.to( ()=> $giper_baza_file ),
 		Author: $giper_baza_atom_text,
 		Status: $giper_baza_atom_text,
 		Note: $giper_baza_atom_text,
@@ -25,6 +26,13 @@ namespace $ {
 
 		photo() {
 			return this.Photo()?.remote() ?? null
+		}
+
+		photos() {
+			const list = this.Photos()?.remote_list() ?? []
+			if( list.length ) return list
+			const one = this.photo()
+			return one ? [ one ] : []
 		}
 
 		react_till() {

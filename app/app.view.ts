@@ -321,19 +321,14 @@ namespace $.$$ {
 			const voices = ticket.voices()
 			return [
 				this.status_label( link ),
-				... fix ? [ `до ${ fix.toString( 'DD.MM hh:mm' ) }` ] : [],
+				... fix ? [ `до ${ fix.toOffset().toString( 'DD.MM hh:mm' ) }` ] : [],
 				... voices ? [ `поддержали: ${ voices }` ] : [],
 			].join( ', ' )
 		}
 
 		@ $mol_mem
-		house_filter( next?: string ) {
-			return next ?? this.house()
-		}
-
-		@ $mol_mem
 		neighbours() {
-			const house = this.house_filter()
+			const house = this.house()
 			return this.uk().tickets()
 				.filter( ticket => ticket.House()?.val()?.str === house )
 				.filter( $mol_match_text( this.query(), ticket => [
@@ -352,7 +347,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		news() {
-			const house = this.house_filter()
+			const house = this.house()
 			return this.uk().posts()
 				.filter( post => {
 					const own = post.House()?.val()?.str
@@ -380,7 +375,7 @@ namespace $.$$ {
 			const post = this.post( link )
 			const since = post.Since()?.val()
 			const till = post.Till()?.val()
-			if( since && till ) return `с ${ since.toString( 'DD.MM hh:mm' ) } до ${ till.toString( 'DD.MM hh:mm' ) }`
+			if( since && till ) return `с ${ since.toOffset().toString( 'DD.MM hh:mm' ) } до ${ till.toOffset().toString( 'DD.MM hh:mm' ) }`
 			return post.Created()?.val()?.toString( 'DD.MM.YYYY' ) ?? ''
 		}
 
@@ -494,8 +489,22 @@ namespace $.$$ {
 			return this.house_of( link ).Code()?.val() ?? ''
 		}
 
+		@ $mol_mem
+		house_removing( next = '' ) {
+			return next
+		}
+
+		house_remove_title( link: string ) {
+			return this.house_removing() === link ? 'Точно удалить?' : ''
+		}
+
 		@ $mol_action
 		house_remove( link: string ) {
+			if( this.house_removing() !== link ) {
+				this.house_removing( link )
+				return
+			}
+			this.house_removing( '' )
 			this.uk().Houses( 'auto' )!.cut( new $giper_baza_link( link ) )
 		}
 
@@ -557,6 +566,12 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		category( next?: string ) {
+			const value = next ?? ''
+			return this.category_options().includes( value ) ? value : ''
+		}
+
+		@ $mol_mem
 		category_dictionary() {
 			return {
 				'': 'Выберите категорию',
@@ -587,15 +602,59 @@ namespace $.$$ {
 			return !this.tried() || this.place_valid() ? [] : [ 'Укажите, где именно' ]
 		}
 
-		photo_pick_label() {
-			const file = this.photo_files()[0]
-			return file ? file.name : 'Фото по желанию'
+		photo_limit() {
+			return 5
 		}
 
 		@ $mol_mem
-		photo_preview() {
-			const file = this.photo_files()[0]
+		photo_files( next?: readonly File[] ) {
+			return next ?? []
+		}
+
+		@ $mol_mem
+		photo_picked( next?: readonly File[] ) {
+			if( next?.length ) this.photo_files( [ ... this.photo_files(), ... next ].slice( 0, this.photo_limit() ) )
+			return [] as readonly File[]
+		}
+
+		photo_pick_label() {
+			const count = this.photo_files().length
+			if( !count ) return 'Фото или видео по желанию'
+			return count < this.photo_limit() ? `Файлов: ${ count }, можно ещё ${ this.photo_limit() - count }` : `Файлов: ${ count }, это максимум`
+		}
+
+		photo_key( file: File ) {
+			return `${ file.name }:${ file.size }:${ file.lastModified }`
+		}
+
+		photo_file( key: string ) {
+			return this.photo_files().find( file => this.photo_key( file ) === key ) ?? null
+		}
+
+		photo_previews() {
+			return this.photo_files().map( file => this.Photo_item( this.photo_key( file ) ) )
+		}
+
+		@ $mol_mem_key
+		photo_url( key: string ) {
+			const file = this.photo_file( key )
 			return file ? URL.createObjectURL( file ) : ''
+		}
+
+		photo_is_video( key: string ) {
+			return this.photo_file( key )?.type.startsWith( 'video/' ) ?? false
+		}
+
+		photo_item_sub( key: string ) {
+			return [
+				this.photo_is_video( key ) ? this.Photo_video( key ) : this.Photo_open( key ),
+				this.Photo_drop( key ),
+			]
+		}
+
+		@ $mol_action
+		photo_drop( key: string ) {
+			this.photo_files( this.photo_files().filter( file => this.photo_key( file ) !== key ) )
 		}
 
 		@ $mol_mem
@@ -618,6 +677,7 @@ namespace $.$$ {
 
 		new_fields() {
 			return [
+				this.House_field(),
 				this.Scope_field(),
 				this.Category_field(),
 				... this.scope() === 'house' ? [ this.Entrance_field() ] : [],
@@ -636,11 +696,10 @@ namespace $.$$ {
 		}
 
 		new_body() {
-			if( !this.house() ) return [ this.House_missing() ]
+			if( !this.house_options().length ) return [ this.House_missing() ]
 			return [
-				this.House_line(),
 				this.Form(),
-				... this.photo_preview() ? [ this.Photo_preview() ] : [],
+				... this.photo_files().length ? [ this.Photo_previews() ] : [],
 				... this.similar().length ? [ this.Similar_title(), this.Similar() ] : [],
 			]
 		}
@@ -655,7 +714,7 @@ namespace $.$$ {
 			const house = this.house_of( this.house() )
 			const category = this.category_of( this.category() )
 			const author = this.user_id()
-			const file = this.photo_files()[0] ?? null
+			const files = this.photo_files()
 			const created = new $mol_time_moment()
 			const ticket = uk.Tickets( 'auto' )!.make( null )
 			ticket.House( 'auto' )!.remote( house )
@@ -665,9 +724,13 @@ namespace $.$$ {
 			ticket.Text( 'auto' )!.val( this.text() )
 			ticket.Author( 'auto' )!.val( author )
 			ticket.Created( 'auto' )!.val( created )
-			if( file ) {
-				const store = ticket.Photo( 'auto' )!.ensure( null )!
+			for( const file of files ) {
+				const store = ticket.Photos( 'auto' )!.make( null )
 				store.blob( file )
+			}
+			if( files.length ) {
+				const store = ticket.Photo( 'auto' )!.ensure( null )!
+				store.blob( files[0] )
 				ticket.Photo( 'auto' )!.remote( store )
 			}
 			this.place( '' )
@@ -703,7 +766,7 @@ namespace $.$$ {
 			return [
 				this.Ticket_status(),
 				... this.ticket_note() ? [ this.Ticket_note() ] : [],
-				... this.ticket_photo() ? [ this.Ticket_photo() ] : [],
+				... this.ticket_media().length ? [ this.Ticket_media() ] : [],
 				this.Ticket_category(),
 				this.Ticket_house(),
 				this.Ticket_place(),
@@ -738,6 +801,18 @@ namespace $.$$ {
 			return uri ? this.bot_url() + uri : ''
 		}
 
+		ticket_media() {
+			return this.current().photos().map( file => {
+				const link = file.link().str
+				return file.type().startsWith( 'video/' ) ? this.Ticket_video( link ) : this.Ticket_image( link )
+			} )
+		}
+
+		ticket_media_url( link: string ) {
+			const file = this.current().photos().find( file => file.link().str === link )
+			return file ? this.bot_url() + file.uri() : ''
+		}
+
 		ticket_category() {
 			return this.current().category()?.Title()?.val() ?? ''
 		}
@@ -762,11 +837,11 @@ namespace $.$$ {
 		}
 
 		ticket_react() {
-			return this.current().react_till()?.toString( 'DD.MM.YYYY hh:mm' ) ?? 'не нормируется'
+			return this.current().react_till()?.toOffset().toString( 'DD.MM.YYYY hh:mm' ) ?? 'не нормируется'
 		}
 
 		ticket_fix() {
-			return this.current().fix_till()?.toString( 'DD.MM.YYYY hh:mm' ) ?? ''
+			return this.current().fix_till()?.toOffset().toString( 'DD.MM.YYYY hh:mm' ) ?? ''
 		}
 
 		ticket_basis() {
@@ -805,7 +880,7 @@ namespace $.$$ {
 		log_row( time: string ) {
 			const status = this.current().log_by( this.lords() ).find( ([ key ])=> key === time )?.[1] ?? ''
 			const label = $bog_max_status[ status as keyof typeof $bog_max_status ] ?? status
-			return `${ new $mol_time_moment( time ).toString( 'DD.MM hh:mm' ) }: ${ label }`
+			return `${ new $mol_time_moment( time ).toOffset().toString( 'DD.MM hh:mm' ) }: ${ label }`
 		}
 
 		@ $mol_mem
@@ -995,6 +1070,21 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
+		admin_row_sub( link: string ) {
+			return [
+				this.Row( link ),
+				this.Admin_status( link ),
+				... this.status_of( link ) === 'rejected' ? [ this.Admin_note( link ) ] : [],
+			]
+		}
+
+		@ $mol_mem_key
+		admin_note( link: string, next?: string ) {
+			const ticket = this.ticket( link )
+			if( next !== undefined ) ticket.Note( 'auto' )!.val( next )
+			return ticket.note_by( this.lords() )
+		}
+
 		admin_status( link: string, next?: string ) {
 			if( next !== undefined ) {
 				const ticket = this.ticket( link )

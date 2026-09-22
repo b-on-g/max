@@ -114,9 +114,9 @@ namespace $ {
 			lines.push( `${ category?.Title()?.val() ?? '' }, ${ ticket.Place()?.val() ?? '' }` )
 			lines.push( `Ответственный: ${ owner }` )
 			const react = ticket.react_till()
-			if( react ) lines.push( `Реакция по нормативу: до ${ react.toString( 'DD.MM hh:mm' ) }` )
+			if( react ) lines.push( `Реакция по нормативу: до ${ react.toOffset().toString( 'DD.MM hh:mm' ) }` )
 			const fix = ticket.fix_till()
-			if( fix ) lines.push( `Устранение по нормативу: до ${ fix.toString( 'DD.MM hh:mm' ) }` )
+			if( fix ) lines.push( `Устранение по нормативу: до ${ fix.toOffset().toString( 'DD.MM hh:mm' ) }` )
 			lines.push( `Основание: ${ category?.Basis()?.val() ?? '' }` )
 			return lines.join( '\n' )
 		}

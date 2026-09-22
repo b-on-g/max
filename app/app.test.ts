@@ -102,6 +102,7 @@ namespace $ {
 			app.mine = ()=> []
 			$mol_assert_equal( app.house(), '' )
 			$mol_assert_equal( app.main_body(), [ app.House_missing() ] )
+			app.house_options = ()=> []
 			$mol_assert_equal( app.new_body(), [ app.House_missing() ] )
 		},
 

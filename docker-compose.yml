@@ -5,6 +5,8 @@ services:
       context: .
       target: bot
     env_file: .env
+    environment:
+      TZ: Europe/Moscow
     ports:
       - "9090:9090"
     volumes:
