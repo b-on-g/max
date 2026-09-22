@@ -49,10 +49,23 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
+		dump_of( link: string ) {
+			const ticket = this.bot().ticket( link )
+			return ticket ? this.dump( ticket ) : null
+		}
+
+		@ $mol_mem_key
+		owner_of( link: string ) {
+			return this.bot().ticket( link )?.category()?.Owner()?.val() ?? ''
+		}
+
+		@ $mol_mem_key
 		tickets_of( owner: string ) {
 			return this.bot().uk().tickets()
-				.filter( ticket => ticket.category()?.Owner()?.val() === owner )
-				.map( ticket => this.dump( ticket ) )
+				.map( ticket => ticket.link().str )
+				.filter( link => this.owner_of( link ) === owner )
+				.map( link => this.dump_of( link ) )
+				.filter( dump => dump !== null )
 		}
 
 		GET( msg: $mol_rest_message ) {
@@ -70,11 +83,12 @@ namespace $ {
 			if( !body || typeof body !== 'object' ) return msg.reply( 'Ожидается JSON с полями ticket, status, note', { code: 422 } )
 			const status = String( body.status ?? '' )
 			if( !( status in $bog_max_status ) ) return msg.reply( `Статус один из: ${ Object.keys( $bog_max_status ).join( ', ' ) }`, { code: 422 } )
-			const ticket = this.bot().ticket( String( body.ticket ?? '' ) )
+			const link = String( body.ticket ?? '' )
+			const ticket = this.bot().ticket( link )
 			if( !ticket ) return msg.reply( 'Заявка не найдена', { code: 404 } )
-			if( ticket.category()?.Owner()?.val() !== owner ) return msg.reply( 'Заявка адресована другой организации', { code: 403 } )
+			if( this.owner_of( link ) !== owner ) return msg.reply( 'Заявка адресована другой организации', { code: 403 } )
 			this.bot().set_status( ticket, status, String( body.note ?? '' ) )
-			msg.reply( this.dump( ticket ) )
+			msg.reply( this.dump_of( link ) )
 		}
 
 	}

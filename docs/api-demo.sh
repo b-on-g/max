@@ -9,13 +9,13 @@ pass=0; fail=0
 check() {
 	if [ "$2" = "$3" ]; then pass=$((pass+1)); echo "ok   $1: $2"; else fail=$((fail+1)); echo "FAIL $1: ожидали $3, получили $2"; fi
 }
-code() { curl -s -o /dev/null -w '%{http_code}' "$@"; }
+code() { curl -s -m 20 -o /dev/null -w '%{http_code}' "$@"; }
 
 echo "1. Без ключа доступа нет"
 check "GET /org/tickets без ключа" "$(code "$BOT_URL/org/tickets")" 401
 
 echo "2. Список заявок своей организации"
-list=$(curl -s -H "Authorization: Bearer $ORG_KEY" "$BOT_URL/org/tickets")
+list=$(curl -s -m 20 -H "Authorization: Bearer $ORG_KEY" "$BOT_URL/org/tickets")
 owner=$(printf '%s' "$list" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);console.log(j.owner)})')
 count=$(printf '%s' "$list" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const j=JSON.parse(s);console.log(j.tickets.length)})')
 echo "     организация: $owner, заявок: $count"
@@ -25,7 +25,7 @@ if [ -z "$ticket" ]; then echo "     открытых заявок нет, да�
 echo "     берём заявку $ticket"
 
 echo "3. Смена статуса через API"
-res=$(curl -s -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" \
+res=$(curl -s -m 20 -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" \
 	-d "{\"ticket\":\"$ticket\",\"status\":\"work\",\"note\":\"Бригада выехала, демонстрация API\"}" "$BOT_URL/org/status")
 status=$(printf '%s' "$res" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).status)}catch(e){console.log(s)}})')
 check "статус стал work" "$status" work
@@ -36,7 +36,7 @@ check "чужая заявка или несуществующая" "$(code -X P
 check "тело не JSON" "$(code -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: text/plain" -d 'x' "$BOT_URL/org/status")" 422
 
 echo "5. Возврат статуса, чтобы демо-данные не портить"
-curl -s -o /dev/null -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" \
+curl -s -m 20 -o /dev/null -X POST -H "Authorization: Bearer $ORG_KEY" -H "content-type: application/json" \
 	-d "{\"ticket\":\"$ticket\",\"status\":\"accepted\",\"note\":\"\"}" "$BOT_URL/org/status"
 
 echo "итого: ok $pass, fail $fail"
