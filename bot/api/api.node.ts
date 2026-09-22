@@ -89,13 +89,44 @@ namespace $ {
 			return Keyboard.inlineKeyboard([[ this.open( text, payload, variant ) ]])
 		}
 
-		static text_payload( text: string ) {
-			return 't_' + Buffer.from( text.trim().slice( 0, 300 ) ).toString( 'base64url' )
+		static text_payload( text: string, files: readonly string[] = [] ) {
+			const short = text.trim().slice( 0, 300 )
+			const raw = files.length ? JSON.stringify({ t: short, f: files.slice( 0, 5 ) }) : short
+			return 't_' + Buffer.from( raw ).toString( 'base64url' )
+		}
+
+		static payload_of( payload: string ): { text: string, files: string[] } {
+			if( !payload.startsWith( 't_' ) ) return { text: '', files: [] }
+			const raw = Buffer.from( payload.slice( 2 ), 'base64url' ).toString()
+			if( raw.startsWith( '{' ) ) {
+				try {
+					const parsed = JSON.parse( raw ) as { t?: string, f?: string[] }
+					return { text: String( parsed.t ?? '' ), files: Array.isArray( parsed.f ) ? parsed.f.map( String ) : [] }
+				} catch {}
+			}
+			return { text: raw, files: [] }
 		}
 
 		static text_of( payload: string ) {
-			if( !payload.startsWith( 't_' ) ) return ''
-			return Buffer.from( payload.slice( 2 ), 'base64url' ).toString()
+			return this.payload_of( payload ).text
+		}
+
+		static files_of( payload: string ) {
+			return this.payload_of( payload ).files
+		}
+
+		media( message: $bog_max_bot_api_message ) {
+			const list = [] as { type: 'image' | 'video', url: string, token: string }[]
+			for( const item of message.body.attachments ?? [] ) {
+				if( item.type !== 'image' && item.type !== 'video' ) continue
+				const payload = item.payload as { url?: string | null, token?: string | null }
+				list.push({ type: item.type, url: String( payload.url ?? '' ), token: String( payload.token ?? '' ) })
+			}
+			return list
+		}
+
+		store(): ( items: readonly { type: 'image' | 'video', url: string, token: string }[] )=> Promise< string[] > {
+			return async ()=> []
 		}
 
 		problem( message: $bog_max_bot_api_message, me: $bog_max_bot_api_me ) {
@@ -103,6 +134,11 @@ namespace $ {
 			if( me.username ) text = text.replace( new RegExp( '@' + me.username + '\\b,?', 'gi' ), '' )
 			text = text.replace( /\s+/g, ' ' ).trim()
 			if( text.startsWith( '/' ) ) return ''
+			if( !text ) {
+				const media = this.media( message )
+				if( media.some( item => item.type === 'video' ) ) return 'Видео из чата'
+				if( media.length ) return 'Фото из чата'
+			}
 			return text
 		}
 
@@ -114,10 +150,10 @@ namespace $ {
 			return 'Хорошо, заявку не создаём. Когда понадобится, опишите проблему одним сообщением или нажмите /start.'
 		}
 
-		confirm( text: string, variant = 0 ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
+		confirm( text: string, variant = 0, files: readonly string[] = [] ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
 			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
 			return Keyboard.inlineKeyboard([[
-				this.open( 'Да', $bog_max_bot_api.text_payload( text ), variant ),
+				this.open( 'Да', $bog_max_bot_api.text_payload( text, files ), variant ),
 				Keyboard.button.callback( 'Нет', 'no' ),
 			]])
 		}
@@ -151,8 +187,17 @@ namespace $ {
 			return this.answer( ctx, text, variant => this.keyboard( 'Подать заявку', payload, variant ) )
 		}
 
-		ask( ctx: $bog_max_bot_api_context, text: string ) {
-			return this.answer( ctx, this.question( text ), variant => this.confirm( text, variant ) )
+		async ask( ctx: $bog_max_bot_api_context, text: string, media: readonly { type: 'image' | 'video', url: string, token: string }[] = [] ) {
+			let files = [] as string[]
+			if( media.length ) {
+				try {
+					files = await this.store()( media )
+				} catch( error ) {
+					this.$.$mol_log3_fail({ place: this, message: 'Файл из чата не сохранился: ' + String( error ) })
+				}
+			}
+			const question = files.length ? `${ this.question( text ) } Файлов приложится: ${ files.length }.` : this.question( text )
+			return this.answer( ctx, question, variant => this.confirm( text, variant, files ) )
 		}
 
 		@ $mol_memo.method
@@ -169,7 +214,7 @@ namespace $ {
 			bot.on( 'message_created', ctx => {
 				const me = ctx.botInfo ?? {}
 				const text = this.problem( ctx.message, me )
-				if( text ) return this.ask( ctx, text )
+				if( text ) return this.ask( ctx, text, this.media( ctx.message ) )
 				if( this.mentioned( ctx.message, me ) ) return this.invite( ctx, this.help(), '' )
 			} )
 			bot.on( 'message_callback', ctx => ctx.callback.payload === 'no' ? ctx.answerOnCallback({ message: { text: this.declined() } }) : undefined )

@@ -6,6 +6,7 @@ namespace $ {
 		Categories: $giper_baza_list_link.to( ()=> $bog_max_category ),
 		Tickets: $giper_baza_list_link.to( ()=> $bog_max_ticket ),
 		Posts: $giper_baza_list_link.to( ()=> $bog_max_post ),
+		Files: $giper_baza_list_link.to( ()=> $giper_baza_file ),
 		Bindings: $giper_baza_dict_to( $giper_baza_atom_text ),
 		Notified: $giper_baza_dict_to( $giper_baza_atom_text ),
 		Staff: $giper_baza_dict_to( $giper_baza_atom_text ),

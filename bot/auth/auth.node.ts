@@ -62,6 +62,7 @@ namespace $ {
 				staff_link: staff && secret ? bot.start_link( `staff_${ secret }` ) : '',
 				house: house?.link().str ?? null,
 				text: $bog_max_bot_api.text_of( checked.start ),
+				files: $bog_max_bot_api.files_of( checked.start ),
 				user: {
 					id: checked.user.id,
 					name,

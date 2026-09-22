@@ -25,6 +25,35 @@ namespace $ {
 			return this.uk().staff_by( this.lord() )
 		}
 
+		async store_media( items: readonly { type: 'image' | 'video', url: string, token: string }[] ) {
+			const links = [] as string[]
+			for( const item of items.slice( 0, 5 ) ) {
+				let url = item.url
+				if( item.type === 'video' && item.token ) {
+					const info = await this.api().client().api.getVideoInfo( item.token )
+					const urls = info.urls ?? {}
+					url = urls.mp4_480 ?? urls.mp4_360 ?? urls.mp4_720 ?? urls.mp4_240 ?? urls.mp4_1080 ?? urls.mp4_144 ?? url
+				}
+				if( !url ) continue
+				const response = await fetch( url )
+				if( !response.ok ) throw new Error( `Файл из MAX не скачался: ${ response.status }` )
+				const type = response.headers.get( 'content-type' )?.split( ';' )[0] || ( item.type === 'video' ? 'video/mp4' : 'image/jpeg' )
+				const bytes = new Uint8Array( await response.arrayBuffer() )
+				if( bytes.byteLength > 30 * 2**20 ) throw new Error( 'Файл больше 30 МБ' )
+				const name = ( item.type === 'video' ? 'chat-video.' : 'chat-photo.' ) + ( type.split( '/' )[1] ?? 'bin' )
+				links.push( await $mol_wire_async( this ).file_make( bytes, type, name ) )
+			}
+			return links
+		}
+
+		file_make( bytes: Uint8Array< ArrayBuffer >, type: string, name: string ) {
+			const file = this.uk().Files( 'auto' )!.make( null )
+			file.type( type )
+			file.name( name )
+			file.buffer( bytes )
+			return file.link().str
+		}
+
 		lord_of( pass: string ) {
 			if( !pass ) return ''
 			try {
@@ -57,6 +86,7 @@ namespace $ {
 				name: ()=> this.env().BOT_NAME ?? '',
 				hook_url: ()=> this.env().WEBHOOK_URL ?? '',
 				hook_secret: ()=> this.env().WEBHOOK_SECRET ?? '',
+				store: ()=> ( items: readonly { type: 'image' | 'video', url: string, token: string }[] )=> this.store_media( items ),
 			})
 		}
 

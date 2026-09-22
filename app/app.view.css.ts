@@ -447,6 +447,34 @@ namespace $ {
 			flex: { direction: 'column' },
 		},
 
+		Chat_item: {
+			position: 'relative',
+			flex: { direction: 'column' },
+		},
+
+		Chat_thumb: {
+			width: '6rem',
+			height: '6rem',
+			objectFit: 'cover',
+			borderRadius: '12px',
+		},
+
+		Chat_video: {
+			width: '9rem',
+			height: '6rem',
+			borderRadius: '12px',
+			background: { color: 'black' },
+		},
+
+		Chat_drop: {
+			position: 'absolute',
+			top: 0,
+			right: 0,
+			background: { color: $mol_theme.card },
+			borderRadius: '999px',
+			padding: '2px',
+		},
+
 		Photo_thumb: {
 			width: '6rem',
 			height: '6rem',

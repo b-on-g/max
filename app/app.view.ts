@@ -19,6 +19,7 @@ namespace $.$$ {
 		staff_link: string
 		house: string | null
 		text?: string
+		files?: readonly string[]
 		user: { id: number, name: string, username?: string, photo?: string }
 	}
 
@@ -42,7 +43,7 @@ namespace $.$$ {
 
 		chat_text_open() {
 			if( this.waiting() || this.fail() ) return
-			if( !this.session().text || this.chat_text_used() ) return
+			if( !( this.session().text || this.session().files?.length ) || this.chat_text_used() ) return
 			this.chat_text_used( true )
 			this.$.$mol_state_arg.dict({ ... this.$.$mol_state_arg.dict(), screen: 'new', ticket: null })
 		}
@@ -617,8 +618,31 @@ namespace $.$$ {
 			return [] as readonly File[]
 		}
 
+		@ $mol_mem
+		chat_files( next?: readonly string[] ) {
+			return next ?? this.session().files ?? []
+		}
+
+		chat_file( link: string ) {
+			return this.$.$giper_baza_glob.Pawn( new $giper_baza_link( link ), $giper_baza_file )
+		}
+
+		chat_url( link: string ) {
+			return `${ this.bot_url() }?BAZA:file=${ link };name=file`
+		}
+
+		chat_item_sub( link: string ) {
+			const video = this.chat_file( link ).type().startsWith( 'video/' )
+			return [ video ? this.Chat_video( link ) : this.Chat_open( link ), this.Chat_drop( link ) ]
+		}
+
+		@ $mol_action
+		chat_drop( link: string ) {
+			this.chat_files( this.chat_files().filter( item => item !== link ) )
+		}
+
 		photo_pick_label() {
-			const count = this.photo_files().length
+			const count = this.photo_files().length + this.chat_files().length
 			if( !count ) return 'Фото или видео по желанию'
 			return count < this.photo_limit() ? `Файлов: ${ count }, можно ещё ${ this.photo_limit() - count }` : `Файлов: ${ count }, это максимум`
 		}
@@ -632,7 +656,10 @@ namespace $.$$ {
 		}
 
 		photo_previews() {
-			return this.photo_files().map( file => this.Photo_item( this.photo_key( file ) ) )
+			return [
+				... this.chat_files().map( link => this.Chat_item( link ) ),
+				... this.photo_files().map( file => this.Photo_item( this.photo_key( file ) ) ),
+			]
 		}
 
 		@ $mol_mem_key
@@ -723,6 +750,8 @@ namespace $.$$ {
 			ticket.Text( 'auto' )!.val( this.text() )
 			ticket.Author( 'auto' )!.val( author )
 			ticket.Created( 'auto' )!.val( created )
+			const chat = this.chat_files()
+			for( const link of chat ) ticket.Photos( 'auto' )!.add( new $giper_baza_link( link ) )
 			if( files.length ) this.sent_files_at( Date.now() )
 			for( const file of files ) {
 				const store = ticket.Photos( 'auto' )!.make( null )
@@ -732,7 +761,10 @@ namespace $.$$ {
 				const store = ticket.Photo( 'auto' )!.ensure( null )!
 				store.blob( files[0] )
 				ticket.Photo( 'auto' )!.remote( store )
+			} else if( chat.length ) {
+				ticket.Photo( 'auto' )!.remote( this.chat_file( chat[0] ) )
 			}
+			this.chat_files( [] )
 			this.place( '' )
 			this.text( '' )
 			this.entrance( '' )

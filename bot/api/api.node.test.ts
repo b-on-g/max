@@ -41,6 +41,10 @@ namespace $ {
 			$mol_assert_ok( /^t_[\w-]+$/.test( payload ) )
 			$mol_assert_equal( $bog_max_bot_api.text_of( payload ), 'течёт кран в подъезде №3' )
 			$mol_assert_equal( $bog_max_bot_api.text_of( 'house_abc' ), '' )
+			const mixed = $bog_max_bot_api.text_payload( 'видео из чата', [ 'MdXC__a', 'MdXC__b' ] )
+			$mol_assert_equal( $bog_max_bot_api.text_of( mixed ), 'видео из чата' )
+			$mol_assert_equal( $bog_max_bot_api.files_of( mixed ), [ 'MdXC__a', 'MdXC__b' ] )
+			$mol_assert_equal( $bog_max_bot_api.files_of( payload ), [] )
 		},
 
 		'command list matches the handlers'() {
