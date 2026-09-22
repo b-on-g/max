@@ -16,6 +16,11 @@
 локально в `docs/-secret/` и в репозиторий не попадает,
 PDF собирается командой ниже.
 
+Если GitHub с сервера недоступен, образ бота собирается из готового бандла без клонов:
+`docker/bot.prebuilt.Dockerfile` плюс `bot/run/-/node.js`, `package.json` и корневой сертификат Минцифры
+копируются на сервер, там `docker build -f bot.prebuilt.Dockerfile -t max-bot:latest .` и
+`docker compose ... up -d --no-build bot`.
+
 ```sh
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --print-to-pdf=docs/presentation.pdf --no-pdf-header-footer "file://$PWD/docs/presentation.html"
 ```
