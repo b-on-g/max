@@ -13,10 +13,14 @@ namespace $ {
 			for( const pair of this.bot().env_list( 'ORG_KEYS' ) ) {
 				const [ owner, secret ] = pair.split( ':' )
 				if( secret !== key ) continue
-				this.bot().uk().Orgs( 'auto' )!.key( owner, 'auto' )!.val( new $mol_time_moment().toString() )
+				this.seen( owner )
 				return owner
 			}
 			return ''
+		}
+
+		dump_full( ticket: $bog_max_ticket ) {
+			return { ... this.dump( ticket ), log: ticket.log_by( this.bot().lords() ) }
 		}
 
 		dump( ticket: $bog_max_ticket ) {
@@ -40,8 +44,14 @@ namespace $ {
 				created: ticket.Created()?.val()?.toString() ?? null,
 				react_till: ticket.react_till()?.toString() ?? null,
 				fix_till: ticket.fix_till()?.toString() ?? null,
-				log: ticket.log_by( lords ),
 			}
+		}
+
+		seen( owner: string ) {
+			const now = new $mol_time_moment()
+			const last = this.bot().uk().Orgs()?.key( owner )?.val() ?? ''
+			if( last && now.valueOf() - new $mol_time_moment( last ).valueOf() < 60_000 ) return
+			this.bot().uk().Orgs( 'auto' )!.key( owner, 'auto' )!.val( now.toString() )
 		}
 
 		file_uri( link?: string | null ) {
@@ -70,10 +80,9 @@ namespace $ {
 
 		@ $mol_mem_key
 		tickets_of( owner: string ) {
-			return this.bot().uk().tickets()
-				.map( ticket => ticket.link().str )
-				.filter( link => this.owner_of( link ) === owner )
-				.map( link => this.dump_of( link ) )
+		return [ ... this.bot().ticket_map().values() ]
+				.filter( ticket => ticket.category()?.Owner()?.val() === owner )
+				.map( ticket => this.dump_of( ticket.link().str ) )
 				.filter( dump => dump !== null )
 		}
 
@@ -97,7 +106,7 @@ namespace $ {
 			if( !ticket ) return msg.reply( 'Заявка не найдена', { code: 404 } )
 			if( this.owner_of( link ) !== owner ) return msg.reply( 'Заявка адресована другой организации', { code: 403 } )
 			this.bot().set_status( ticket, status, String( body.note ?? '' ) )
-			msg.reply( this.dump_of( link ) )
+			msg.reply( this.dump_full( ticket ) )
 		}
 
 	}

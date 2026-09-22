@@ -21,8 +21,13 @@ namespace $ {
 			return this.Posts()?.remote_list() ?? []
 		}
 
+		@ $mol_mem
+		numbers() {
+			return new Map( this.tickets().map( ( item, index )=> [ item.link().str, index + 1 ] ) )
+		}
+
 		ticket_number( ticket: $bog_max_ticket ) {
-			return this.tickets().findIndex( item => item.link().str === ticket.link().str ) + 1
+			return this.numbers().get( ticket.link().str ) ?? 0
 		}
 
 		house_by_code( code: string ) {

@@ -97,8 +97,13 @@ namespace $ {
 			return this.uk_land().Data( $bog_max_uk )
 		}
 
+		@ $mol_mem
+		ticket_map() {
+			return new Map( this.uk().tickets().map( ticket => [ ticket.link().str, ticket ] ) )
+		}
+
 		ticket( link: string ) {
-			return this.uk().tickets().find( ticket => ticket.link().str === link ) ?? null
+			return this.ticket_map().get( link ) ?? null
 		}
 
 		message( ticket: $bog_max_ticket ) {
@@ -153,6 +158,7 @@ namespace $ {
 			super._auto()
 			if( this.env().BOT_TOKEN ) this.api().client()
 			this.notified()
+			this.org().warm()
 		}
 
 	}
