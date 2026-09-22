@@ -1684,6 +1684,7 @@ $giper_baza_pawn_dump $mol_expander
 					<= Unit_value* $giper_baza_unit_sand_dump
 						land <= land
 						sand <= unit_value* null
+						enabled <= can_change
 				pawn <= pawn_inner* $giper_baza_pawn
 
 $mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
