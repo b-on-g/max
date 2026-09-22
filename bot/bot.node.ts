@@ -153,7 +153,6 @@ namespace $ {
 			super._auto()
 			if( this.env().BOT_TOKEN ) this.api().client()
 			this.notified()
-			this.org().warm()
 		}
 
 	}
