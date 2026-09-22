@@ -131,7 +131,11 @@ namespace $ {
 		set_status( ticket: $bog_max_ticket, status: string, note = '' ) {
 			ticket.Status( 'auto' )!.val( status )
 			ticket.Note( 'auto' )!.val( note )
-			ticket.Log( 'auto' )!.key( new $mol_time_moment().toString(), 'auto' )!.val( status )
+			const log = ticket.Log( 'auto' )
+			const time = new $mol_time_moment().toString()
+			const entry = log?.key( time, 'auto' ) ?? log?.key( time, 'auto' ) ?? null
+			if( entry ) entry.val( status )
+			else this.$.$mol_log3_warn({ place: this, message: 'Запись в лог статусов не создалась', hint: ticket.link().str + ' ' + status })
 		}
 
 		@ $mol_mem
