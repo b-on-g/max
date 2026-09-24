@@ -167,7 +167,7 @@ namespace $ {
 			])
 		}
 
-		choices( options: $bog_max_bot_chat_step[ 'options' ] ) {
+		choices( options: $bog_max_bot_chat_step[ 'options' ] ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
 			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
 			return Keyboard.inlineKeyboard( options.map( option => [ Keyboard.button.callback( option.label.slice( 0, 64 ), option.payload ) ] ) )
 		}
@@ -176,18 +176,23 @@ namespace $ {
 			return null
 		}
 
+		user_of( ctx: $bog_max_bot_api_context ) {
+			const user = ctx.user as { user_id?: number } | undefined
+			return user?.user_id ?? ctx.message?.sender?.user_id ?? 0
+		}
+
 		asked = new Map< number, { text: string, files: readonly string[] } >()
 
-		async step( ctx: $bog_max_bot_api_context, step: $bog_max_bot_chat_step ) {
+		async step( ctx: $bog_max_bot_api_context, step: $bog_max_bot_chat_step ): Promise< unknown > {
 			if( step.ticket ) return this.answer( ctx, step.text, variant => this.keyboard( 'Открыть заявку', step.ticket!, variant ) )
 			const attachments = step.options.length ? [ this.choices( step.options ) ] : []
 			if( ctx.callback ) return ctx.answerOnCallback({ message: { text: step.text, attachments } })
 			return ctx.reply( step.text, { attachments } )
 		}
 
-		async callback( ctx: $bog_max_bot_api_context ) {
+		async callback( ctx: $bog_max_bot_api_context ): Promise< unknown > {
 			const payload = ctx.callback?.payload ?? ''
-			const user = ctx.user?.user_id ?? 0
+			const user = this.user_of( ctx )
 			if( payload === 'no' ) return ctx.answerOnCallback({ message: { text: this.declined() } })
 			const flow = this.flow()
 			if( !flow || !user ) return
@@ -199,9 +204,9 @@ namespace $ {
 			if( payload.startsWith( 'f:' ) ) return this.step( ctx, await flow.pick( user, payload ) )
 		}
 
-		async mine( ctx: $bog_max_bot_api_context ) {
+		async mine( ctx: $bog_max_bot_api_context ): Promise< unknown > {
 			const flow = this.flow()
-			const user = ctx.user?.user_id ?? 0
+			const user = this.user_of( ctx )
 			if( !flow || !user ) return ctx.reply( 'Список заявок сейчас недоступен.' )
 			return ctx.reply( await flow.mine( user ) )
 		}
@@ -244,7 +249,7 @@ namespace $ {
 					this.$.$mol_log3_fail({ place: this, message: 'Файл из чата не сохранился: ' + String( error ) })
 				}
 			}
-			const user = ctx.user?.user_id ?? 0
+			const user = this.user_of( ctx )
 			if( user ) this.asked.set( user, { text, files } )
 			const question = files.length ? `${ this.question( text ) } Файлов приложится: ${ files.length }.` : this.question( text )
 			return this.answer( ctx, question, variant => this.confirm( text, variant, files ) )
@@ -265,7 +270,7 @@ namespace $ {
 			bot.on( 'message_created', ctx => {
 				const me = ctx.botInfo ?? {}
 				const text = this.problem( ctx.message, me )
-				const user = ctx.user?.user_id ?? 0
+				const user = this.user_of( ctx )
 				const flow = this.flow()
 				if( text && flow && user && flow.waiting( user ) ) return flow.place( user, text ).then( step => this.step( ctx, step ) )
 				if( text ) return this.ask( ctx, text, this.media( ctx.message ) )
