@@ -14566,6 +14566,8 @@ var $;
             for (const gift of this._gift.values()) {
                 if (mine.units_persisted.has(gift))
                     continue;
+                if (!this.unit_seal(gift))
+                    continue;
                 persisting.add(gift);
                 check_lord(gift.lord());
                 check_lord(gift.mate());
@@ -14574,6 +14576,8 @@ var $;
                 for (const units of kids.values()) {
                     for (const sand of units.values()) {
                         if ($mol_wire_sync(mine.units_persisted).has(sand))
+                            continue;
+                        if (!this.unit_seal(sand))
                             continue;
                         persisting.add(sand);
                         check_lord(sand.lord());
@@ -16682,12 +16686,22 @@ var $;
         }
         lands_news = new $mol_wire_set();
         static masters_default = [];
-        static masters() {
+        static masters_seeded() {
             const all = this.$.$giper_baza_glob.Seed().peers();
             const self = this.$.$giper_baza_auth.current().pass().lord();
             const pos = all.findLastIndex(peer => peer.link().str === self.str);
             const links = all.slice(pos + 1).flatMap(peer => peer.urls());
-            return [...this.masters_default, ...links];
+            return links.length ? links : null;
+        }
+        static masters_override() {
+            const arg = this.$.$mol_state_arg.value('giper_baza_yard_masters');
+            if (arg == null)
+                return null;
+            const links = arg.split(',').filter(Boolean);
+            return links;
+        }
+        static masters() {
+            return this.masters_override() ?? this.masters_seeded() ?? this.masters_default;
         }
         master_cursor(next = 0) {
             return next;
@@ -17034,6 +17048,12 @@ var $;
     __decorate([
         $mol_mem_key
     ], $giper_baza_yard.prototype, "face_port_land", null);
+    __decorate([
+        $mol_mem
+    ], $giper_baza_yard, "masters_seeded", null);
+    __decorate([
+        $mol_mem
+    ], $giper_baza_yard, "masters_override", null);
     __decorate([
         $mol_mem
     ], $giper_baza_yard, "masters", null);
@@ -20616,6 +20636,112 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$bog_max_list) = class $bog_max_list extends ($.$mol_list) {};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_max_list extends $.$bog_max_list {
+            view_window(next) {
+                return [0, this.rows().length];
+            }
+        }
+        $$.$bog_max_list = $bog_max_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_max_select) = class $bog_max_select extends ($.$mol_select) {
+		filter_hint(){
+			return (this.$.$mol_locale.text("$bog_max_select_filter_hint"));
+		}
+		no_options_message(){
+			return (this.$.$mol_locale.text("$bog_max_select_no_options_message"));
+		}
+		Menu(){
+			const obj = new this.$.$bog_max_list();
+			(obj.rows) = () => ((this.menu_content()));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_max_select.prototype), "Menu"));
+
+
+;
+"use strict";
+
+
+;
+	($.$bog_max_pick) = class $bog_max_pick extends ($.$bog_max_select) {
+		filter_hint(){
+			return (this.$.$mol_locale.text("$bog_max_pick_filter_hint"));
+		}
+		custom(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		custom_prefix(){
+			return (this.$.$mol_locale.text("$bog_max_pick_custom_prefix"));
+		}
+	};
+	($mol_mem(($.$bog_max_pick.prototype), "custom"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_max_pick extends $.$bog_max_pick {
+            custom_id() {
+                return '…custom';
+            }
+            typed() {
+                return this.filter_pattern().trim();
+            }
+            options_filtered() {
+                const typed = this.typed();
+                const value = this.value();
+                const options = this.options()
+                    .filter($mol_match_text(this.filter_pattern(), (id) => [this.option_label(id)]))
+                    .filter(id => id !== value);
+                if (!typed)
+                    return options;
+                const same = this.options().some(id => this.option_label(id).toLowerCase() === typed.toLowerCase());
+                return same ? options : [...options, this.custom_id()];
+            }
+            option_label(id) {
+                if (id === this.custom_id())
+                    return `${this.custom_prefix()} «${this.typed()}»`;
+                return super.option_label(id);
+            }
+            event_select(id, event) {
+                if (id !== this.custom_id())
+                    return super.event_select(id, event);
+                this.custom(this.typed());
+                this.filter_pattern('');
+                this.showed(false);
+                event?.preventDefault();
+            }
+        }
+        $$.$bog_max_pick = $bog_max_pick;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
 		path(){
 			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
@@ -22385,11 +22511,16 @@ var $;
 			if(next !== undefined) return next;
 			return "house";
 		}
+		scope_custom(next){
+			if(next !== undefined) return next;
+			return "";
+		}
 		Scope(){
-			const obj = new this.$.$mol_select();
+			const obj = new this.$.$bog_max_pick();
 			(obj.options) = () => ((this.scope_options()));
 			(obj.dictionary) = () => ((this.scope_dictionary()));
 			(obj.value) = (next) => ((this.scope(next)));
+			(obj.custom) = (next) => ((this.scope_custom(next)));
 			return obj;
 		}
 		Scope_field(){
@@ -22411,11 +22542,16 @@ var $;
 			if(next !== undefined) return next;
 			return "";
 		}
+		category_custom(next){
+			if(next !== undefined) return next;
+			return "";
+		}
 		Category(){
-			const obj = new this.$.$mol_select();
+			const obj = new this.$.$bog_max_pick();
 			(obj.options) = () => ((this.category_options()));
 			(obj.dictionary) = () => ((this.category_dictionary()));
 			(obj.value) = (next) => ((this.category(next)));
+			(obj.custom) = (next) => ((this.category_custom(next)));
 			return obj;
 		}
 		Category_field(){
@@ -22489,7 +22625,7 @@ var $;
 		Photo_pick(){
 			const obj = new this.$.$mol_button_open();
 			(obj.files) = (next) => ((this.photo_picked(next)));
-			(obj.accept) = () => ("image/*,video/*");
+			(obj.accept) = () => ("image/*,video/*,.mp4,.mov,.m4v,.3gp,.webm,.mkv,.avi,.heic,.heif");
 			(obj.multiple) = () => (true);
 			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_max_app_Photo_pick_hint")));
 			return obj;
@@ -22547,6 +22683,7 @@ var $;
 		Chat_thumb(id){
 			const obj = new this.$.$mol_image();
 			(obj.uri) = () => ((this.chat_url(id)));
+			(obj.loading) = () => ("eager");
 			return obj;
 		}
 		Chat_open(id){
@@ -22594,6 +22731,7 @@ var $;
 		Photo_thumb(id){
 			const obj = new this.$.$mol_image();
 			(obj.uri) = () => ((this.photo_url(id)));
+			(obj.loading) = () => ("eager");
 			return obj;
 		}
 		Photo_open(id){
@@ -22719,6 +22857,7 @@ var $;
 		Ticket_image_pic(id){
 			const obj = new this.$.$mol_image();
 			(obj.uri) = () => ((this.ticket_media_url(id)));
+			(obj.loading) = () => ("eager");
 			return obj;
 		}
 		Ticket_image(id){
@@ -23398,9 +23537,11 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "House_new"));
 	($mol_mem(($.$bog_max_app.prototype), "House_field"));
 	($mol_mem(($.$bog_max_app.prototype), "scope"));
+	($mol_mem(($.$bog_max_app.prototype), "scope_custom"));
 	($mol_mem(($.$bog_max_app.prototype), "Scope"));
 	($mol_mem(($.$bog_max_app.prototype), "Scope_field"));
 	($mol_mem(($.$bog_max_app.prototype), "category"));
+	($mol_mem(($.$bog_max_app.prototype), "category_custom"));
 	($mol_mem(($.$bog_max_app.prototype), "Category"));
 	($mol_mem(($.$bog_max_app.prototype), "Category_field"));
 	($mol_mem(($.$bog_max_app.prototype), "entrance"));
@@ -23532,44 +23673,6 @@ var $;
 	($mol_mem(($.$bog_max_app.prototype), "Ticket_basis"));
 	($mol_mem(($.$bog_max_app.prototype), "Voices"));
 	($mol_mem(($.$bog_max_app.prototype), "Log"));
-
-
-;
-	($.$bog_max_list) = class $bog_max_list extends ($.$mol_list) {};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $bog_max_list extends $.$bog_max_list {
-            view_window(next) {
-                return [0, this.rows().length];
-            }
-        }
-        $$.$bog_max_list = $bog_max_list;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_max_select) = class $bog_max_select extends ($.$mol_select) {
-		Menu(){
-			const obj = new this.$.$bog_max_list();
-			(obj.rows) = () => ((this.menu_content()));
-			return obj;
-		}
-	};
-	($mol_mem(($.$bog_max_select.prototype), "Menu"));
-
-
-;
-"use strict";
 
 
 ;
@@ -23839,6 +23942,7 @@ var $;
         Entrance: $giper_baza_atom_text,
         Place: $giper_baza_atom_text,
         Text: $giper_baza_atom_text,
+        Topic: $giper_baza_atom_text,
         Photo: $giper_baza_atom_link.to(() => $giper_baza_file),
         Photos: $giper_baza_list_link.to(() => $giper_baza_file),
         Author: $giper_baza_atom_text,
@@ -23852,6 +23956,11 @@ var $;
     }) {
         category() {
             return this.Category()?.remote() ?? null;
+        }
+        heading() {
+            const topic = this.Topic()?.val() ?? '';
+            const category = this.category()?.Title()?.val() ?? '';
+            return topic ? `${category.replace(/^Другое.*$/, 'Другое')}: ${topic}` : category;
         }
         house() {
             return this.House()?.remote() ?? null;
@@ -24068,7 +24177,9 @@ var $;
         done: 'Выполнена',
         rejected: 'Отклонена',
         escalated: 'Эскалирована руководству УК',
+        deleted: 'Удалена как дубль или спам',
     };
+    $.$bog_max_status_closed = ['done', 'rejected', 'deleted'];
 })($ || ($ = {}));
 
 ;
@@ -24086,6 +24197,7 @@ var $;
         house: 'В доме',
         yard: 'Во дворе',
         city: 'В районе',
+        other: 'Другое место',
     };
 })($ || ($ = {}));
 
@@ -24121,7 +24233,15 @@ var $;
             chat_text_open() {
                 if (this.waiting() || this.fail())
                     return;
-                if (!(this.session().text || this.session().files?.length) || this.chat_text_used())
+                const session = this.session();
+                if (this.chat_text_used())
+                    return;
+                if (session.ticket) {
+                    this.chat_text_used(true);
+                    this.$.$mol_state_arg.dict({ ...this.$.$mol_state_arg.dict(), screen: null, ticket: session.ticket });
+                    return;
+                }
+                if (!(session.text || session.files?.length || session.open === 'new'))
                     return;
                 this.chat_text_used(true);
                 this.$.$mol_state_arg.dict({ ...this.$.$mol_state_arg.dict(), screen: 'new', ticket: null });
@@ -24373,7 +24493,7 @@ var $;
                 return $bog_max_status[status] ?? status;
             }
             row_title(link) {
-                return `№ ${this.number(link)}, ${this.ticket(link).category()?.Title()?.val() ?? ''}`;
+                return `№ ${this.number(link)}, ${this.ticket(link).heading()}`;
             }
             row_status(link) {
                 const ticket = this.ticket(link);
@@ -24390,13 +24510,14 @@ var $;
                 return this.uk().tickets()
                     .filter(ticket => ticket.House()?.val()?.str === house)
                     .filter($mol_match_text(this.query(), ticket => [
-                    ticket.category()?.Title()?.val() ?? '',
+                    ticket.heading(),
                     ticket.Entrance()?.val() ?? '',
                     ticket.Place()?.val() ?? '',
                     ticket.Text()?.val() ?? '',
                 ]))
                     .map(ticket => ticket.link().str)
-                    .reverse();
+                    .reverse()
+                    .sort((left, right) => this.ticket(right).voices() - this.ticket(left).voices());
             }
             house_rows() {
                 return this.neighbours().map(link => this.Row(link));
@@ -24577,18 +24698,49 @@ var $;
                 return this.uk().Categories()?.remote_list() ?? [];
             }
             category_options() {
+                const scope = this.scope();
                 return this.categories()
-                    .filter(category => (category.Scope()?.val() ?? 'house') === this.scope())
+                    .filter(category => scope === 'other' || (category.Scope()?.val() ?? 'house') === scope)
                     .map(category => category.link().str);
+            }
+            scope_custom(next) {
+                if (next) {
+                    this.scope('other');
+                    if (!this.place().trim())
+                        this.place(next);
+                }
+                return '';
+            }
+            topic(next) {
+                return next ?? '';
+            }
+            other_category() {
+                return this.category_options().find(link => /^Другое/.test(this.category_of(link).Title()?.val() ?? '')) ?? '';
+            }
+            topic_active() {
+                const category = this.category();
+                return Boolean(category) && category === this.other_category() ? this.topic() : '';
+            }
+            category_custom(next) {
+                if (next) {
+                    this.topic(next);
+                    this.category(this.other_category());
+                }
+                return '';
             }
             category(next) {
                 const value = next ?? '';
                 return this.category_options().includes(value) ? value : '';
             }
             category_dictionary() {
+                const topic = this.topic_active();
+                const current = this.category();
                 return {
-                    '': 'Выберите категорию',
-                    ...Object.fromEntries(this.categories().map(category => [category.link().str, category.Title()?.val() ?? ''])),
+                    '': 'Выберите категорию или впишите свою',
+                    ...Object.fromEntries(this.categories().map(category => {
+                        const link = category.link().str;
+                        return [link, topic && link === current ? `Другое: ${topic}` : category.Title()?.val() ?? ''];
+                    })),
                 };
             }
             tried(next = false) {
@@ -24612,9 +24764,18 @@ var $;
             photo_files(next) {
                 return next ?? [];
             }
+            photo_size_limit() {
+                return 30 * 2 ** 20;
+            }
+            photo_error(next) {
+                return next ?? '';
+            }
             photo_picked(next) {
-                if (next?.length)
-                    this.photo_files([...this.photo_files(), ...next].slice(0, this.photo_limit()));
+                if (!next?.length)
+                    return [];
+                const fit = next.filter(file => file.size <= this.photo_size_limit());
+                this.photo_error(fit.length < next.length ? 'Файл больше 30 МБ не прикрепится, снимите видео покороче' : '');
+                this.photo_files([...this.photo_files(), ...fit].slice(0, this.photo_limit()));
                 return [];
             }
             chat_files(next) {
@@ -24634,9 +24795,12 @@ var $;
                 this.chat_files(this.chat_files().filter(item => item !== link));
             }
             photo_pick_label() {
+                const error = this.photo_error();
+                if (error)
+                    return error;
                 const count = this.photo_files().length + this.chat_files().length;
                 if (!count)
-                    return 'Фото или видео по желанию';
+                    return 'Фото или видео по желанию, до 30 МБ';
                 return count < this.photo_limit() ? `Файлов: ${count}, можно ещё ${this.photo_limit() - count}` : `Файлов: ${count}, это максимум`;
             }
             photo_key(file) {
@@ -24697,7 +24861,8 @@ var $;
             place_hint() {
                 switch (this.scope()) {
                     case 'yard': return 'Ориентир во дворе';
-                    case 'city': return 'Адрес или ориентир';
+                    case 'city':
+                    case 'other': return 'Адрес или ориентир';
                 }
                 return 'Этаж, квартира, ориентир';
             }
@@ -24718,7 +24883,11 @@ var $;
                 const house = this.house_of(this.house());
                 const category = this.category_of(this.category());
                 const author = this.user_id();
+                const topic = this.topic_active();
                 const files = this.photo_files();
+                const buffers = files.map(file => new Uint8Array($mol_wire_sync(file).arrayBuffer()));
+                const chat = this.chat_files();
+                const chat_first = chat.length ? this.chat_file(chat[0]) : null;
                 const created = new $mol_time_moment();
                 const ticket = uk.Tickets('auto').make(null);
                 ticket.House('auto').remote(house);
@@ -24726,26 +24895,27 @@ var $;
                 ticket.Entrance('auto').val(this.entrance());
                 ticket.Place('auto').val(this.place());
                 ticket.Text('auto').val(this.text());
+                if (topic)
+                    ticket.Topic('auto').val(topic);
                 ticket.Author('auto').val(author);
                 ticket.Created('auto').val(created);
-                const chat = this.chat_files();
                 for (const link of chat)
                     ticket.Photos('auto').add(new $giper_baza_link(link));
                 if (files.length)
                     this.sent_files_at(Date.now());
-                for (const file of files) {
+                const stores = files.map((file, index) => {
                     const store = ticket.Photos('auto').make(null);
-                    store.blob(file);
-                }
-                if (files.length) {
-                    const store = ticket.Photo('auto').ensure(null);
-                    store.blob(files[0]);
-                    ticket.Photo('auto').remote(store);
-                }
-                else if (chat.length) {
-                    ticket.Photo('auto').remote(this.chat_file(chat[0]));
-                }
+                    store.buffer(buffers[index]);
+                    store.type(file.type || 'application/octet-stream');
+                    store.name(file.name);
+                    return store;
+                });
+                const first = chat_first ?? stores[0];
+                if (first)
+                    ticket.Photo('auto').remote(first);
                 this.chat_files([]);
+                this.topic('');
+                this.photo_error('');
                 this.place('');
                 this.text('');
                 this.entrance('');
@@ -24832,7 +25002,7 @@ var $;
                 return `${this.bot_url()}?BAZA:file=${link};name=file`;
             }
             ticket_category() {
-                return this.current().category()?.Title()?.val() ?? '';
+                return this.current().heading();
             }
             ticket_house() {
                 return this.current().house()?.Address()?.val() ?? '';
@@ -24910,13 +25080,20 @@ var $;
                 const count = this.current().voices();
                 if (this.own())
                     return count ? `Ваша заявка, поддержали: ${count}` : 'Ваша заявка, поддержать могут соседи';
+                if (this.closed())
+                    return count ? `Заявка закрыта, поддержали: ${count}` : 'Заявка закрыта, поддержка больше не нужна';
                 return count ? `Поддержали: ${count}` : 'Пока никто не поддержал';
             }
             own() {
                 return this.current().Author()?.val() === this.user_id();
             }
+            closed() {
+                return $bog_max_status_closed.includes(this.status_of(this.ticket_link()));
+            }
             voice_allowed() {
                 if (this.own())
+                    return false;
+                if (this.closed())
                     return false;
                 const keys = this.current().Voices()?.keys().map(String) ?? [];
                 return !keys.includes(this.user_id());
@@ -24977,7 +25154,7 @@ var $;
                     const ticket = this.ticket(link);
                     return [
                         String(this.number(link)),
-                        ticket.category()?.Title()?.val() ?? '',
+                        ticket.heading(),
                         ticket.house()?.Address()?.val() ?? '',
                         ticket.Entrance()?.val() ?? '',
                         ticket.Place()?.val() ?? '',
@@ -25258,6 +25435,15 @@ var $;
         ], $bog_max_app.prototype, "category_options", null);
         __decorate([
             $mol_mem
+        ], $bog_max_app.prototype, "scope_custom", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "topic", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "category_custom", null);
+        __decorate([
+            $mol_mem
         ], $bog_max_app.prototype, "category", null);
         __decorate([
             $mol_mem
@@ -25274,6 +25460,12 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "photo_files", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "photo_size_limit", null);
+        __decorate([
+            $mol_mem
+        ], $bog_max_app.prototype, "photo_error", null);
         __decorate([
             $mol_mem
         ], $bog_max_app.prototype, "photo_picked", null);
@@ -25769,19 +25961,31 @@ var $;
             padding: '2px',
         },
         Ticket_media: {
-            flex: { direction: 'row', wrap: 'wrap' },
+            flex: { direction: 'column' },
             gap: $mol_gap.space,
             padding: $mol_gap.block,
         },
+        Ticket_item: {
+            flex: { direction: 'column' },
+            width: '100%',
+        },
+        Ticket_image: {
+            width: '100%',
+            padding: 0,
+            justify: { content: 'center' },
+        },
         Ticket_image_pic: {
-            maxWidth: '100%',
-            maxHeight: '14rem',
+            width: '100%',
+            height: 'auto',
+            maxHeight: '24rem',
+            minHeight: '6rem',
             objectFit: 'contain',
             borderRadius: '12px',
+            background: { color: $mol_theme.back },
         },
         Ticket_video: {
-            maxWidth: '100%',
-            maxHeight: '14rem',
+            width: '100%',
+            maxHeight: '24rem',
             borderRadius: '12px',
             background: { color: 'black' },
         },

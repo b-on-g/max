@@ -617,6 +617,19 @@ $mol_select_list $mol_view
 			Trigger_icon <= Pick_icon $mol_icon_plus
 		^ badges_list
 
+$bog_max_list $mol_list
+
+$bog_max_select $mol_select
+	filter_hint @ \Поиск
+	no_options_message @ \Ничего не нашлось
+	Menu $bog_max_list
+		rows <= menu_content
+
+$bog_max_pick $bog_max_select
+	filter_hint @ \Поиск или свой вариант
+	custom? \
+	custom_prefix @ \Своё:
+
 $mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
 
 $mol_button_open $mol_button_minor
@@ -1111,20 +1124,22 @@ $bog_max_app $mol_book2
 					value? <=> house? \
 			<= Scope_field $mol_form_field
 				name @ \Где проблема
-				control <= Scope $mol_select
+				control <= Scope $bog_max_pick
 					options <= scope_options /string
 					dictionary <= scope_dictionary *
 					value? <=> scope? \house
+					custom? <=> scope_custom? \
 			<= Category_field $mol_form_field
 				name @ \Что случилось
 				attr *
 					^
 					bog_max_required \true
 				bids <= category_bids /string
-				control <= Category $mol_select
+				control <= Category $bog_max_pick
 					options <= category_options /string
 					dictionary <= category_dictionary *
 					value? <=> category? \
+					custom? <=> category_custom? \
 			<= Entrance_field $mol_form_field
 				name @ \Подъезд
 				control <= Entrance $mol_string
@@ -1145,14 +1160,14 @@ $bog_max_app $mol_book2
 					hint @ \Что именно не так
 					value? <=> text? \
 			<= Photo_field $mol_form_field
-				name @ \Фото
+				name @ \Фото и видео
 				control <= Photo_box $mol_view
 					sub /
 						<= Photo_row $mol_view
 							sub /
 								<= Photo_pick $mol_button_open
 									files? <=> photo_picked? /File
-									accept \image/*,video/*
+									accept \image/*,video/*,.mp4,.mov,.m4v,.3gp,.webm,.mkv,.avi,.heic,.heif
 									multiple true
 									hint @ \Приложить фото или видео
 								<= Photo_name $mol_paragraph
@@ -1173,6 +1188,7 @@ $bog_max_app $mol_book2
 				sub /
 					<= Chat_thumb* $mol_image
 						uri <= chat_url* \
+						loading \eager
 			<= Chat_video* $mol_view
 				dom_name \video
 				attr *
@@ -1192,6 +1208,7 @@ $bog_max_app $mol_book2
 				sub /
 					<= Photo_thumb* $mol_image
 						uri <= photo_url* \
+						loading \eager
 			<= Photo_video* $mol_view
 				dom_name \video
 				attr *
@@ -1250,6 +1267,7 @@ $bog_max_app $mol_book2
 				sub /
 					<= Ticket_image_pic* $mol_image
 						uri <= ticket_media_url* \
+						loading \eager
 			<= Ticket_video* $mol_view
 				dom_name \video
 				attr *
@@ -1300,9 +1318,3 @@ $bog_max_app $mol_book2
 		rows <= log_rows /
 			<= Log_row* $mol_paragraph
 				title <= log_row* \
-
-$bog_max_list $mol_list
-
-$bog_max_select $mol_select
-	Menu $bog_max_list
-		rows <= menu_content

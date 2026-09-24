@@ -15,6 +15,20 @@
 		<meta property="og:url" content="https://b-on-g.github.io/max/" />
 		<link rel="manifest" href="manifest.json" />
 		<script async src="https://st.max.ru/js/max-web-app.js"></script>
+		<script>
+			if( navigator.serviceWorker ) {
+				navigator.serviceWorker.register = ()=> new Promise( ()=> {} )
+				navigator.serviceWorker.getRegistrations().then( list => {
+					if( !list.length ) return
+					return Promise.all( list.map( reg => reg.unregister() ) ).then( ()=> {
+						if( !navigator.serviceWorker.controller ) return
+						try { if( sessionStorage.getItem( 'bog_max_sw_off' ) ) return; sessionStorage.setItem( 'bog_max_sw_off', '1' ) } catch {}
+						location.reload()
+					} )
+				} ).catch( ()=> {} )
+			}
+			if( self.caches ) caches.delete( '$mol_offline' ).catch( ()=> {} )
+		</script>
 	</head>
 	<body mol_view_root>
 		<div mol_view_root="$bog_max_app"></div>
