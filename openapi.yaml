@@ -19,9 +19,10 @@ components:
       properties:
         link: { type: string, description: Идентификатор заявки }
         number: { type: integer }
-        status: { type: string, enum: [ new, accepted, work, done, rejected ] }
+        status: { type: string, enum: [ new, accepted, work, done, rejected, escalated, deleted ], description: 'deleted убирает дубль или спам из списка заявок, автору бот не пишет' }
         note: { type: string, description: Комментарий организации к статусу }
         category: { type: string }
+        topic: { type: string, description: Своя формулировка жителя, если он не нашёл категорию и вписал текст сам }
         owner: { type: string, enum: [ uk, ads, rso, municipal, police ] }
         house: { type: string }
         entrance: { type: string }
@@ -70,7 +71,7 @@ paths:
               required: [ ticket, status ]
               properties:
                 ticket: { type: string }
-                status: { type: string, enum: [ new, accepted, work, done, rejected ] }
+                status: { type: string, enum: [ new, accepted, work, done, rejected, escalated, deleted ], description: 'deleted убирает дубль или спам из списка заявок, автору бот не пишет' }
                 note: { type: string }
       responses:
         '200':
