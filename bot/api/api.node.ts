@@ -5,6 +5,13 @@ namespace $ {
 	export type $bog_max_bot_api_message = NonNullable< $bog_max_bot_api_context[ 'message' ] >
 	export type $bog_max_bot_api_me = { user_id?: number, username?: string | null }
 	export type $bog_max_bot_api_update = $bog_max_bot_api_context[ 'update' ]
+	export type $bog_max_bot_api_flow = {
+		start( user: number, text: string, files: readonly string[] ): Promise< $bog_max_bot_chat_step >
+		pick( user: number, payload: string ): Promise< $bog_max_bot_chat_step >
+		waiting( user: number ): boolean
+		place( user: number, place: string ): Promise< $bog_max_bot_chat_step >
+		mine( user: number ): Promise< string >
+	}
 
 	export class $bog_max_bot_api extends $mol_object {
 
@@ -43,9 +50,10 @@ namespace $ {
 			return [
 				'Что умеет бот:',
 				'/start — открыть приложение и подать заявку',
+				'/my — мои заявки и их статусы',
 				'/id — узнать свой ID в MAX',
 				'/help — эта подсказка',
-				'Любое другое сообщение бот предложит превратить в заявку.',
+				'Любое другое сообщение бот предложит превратить в заявку: в приложении или прямо здесь, кнопками.',
 				'В групповом чате бот отвечает на команды, упоминание и сообщения со словами «заявка», «авария», «проблема», «жалоба».',
 				'Демо: дома, категории и нормативы смоделированы по ПП 416, 354, 170, ГОСТ 50597 и 59-ФЗ.',
 			].join( '\n' )
@@ -54,6 +62,7 @@ namespace $ {
 		commands(): Parameters< $bog_max_bot_api_client[ 'api' ][ 'setMyCommands' ] >[ 0 ] {
 			return [
 				{ name: 'start', description: 'Открыть приложение и подать заявку' },
+				{ name: 'my', description: 'Мои заявки' },
 				{ name: 'help', description: 'Что умеет бот' },
 				{ name: 'id', description: 'Мой ID в MAX' },
 			]
@@ -152,10 +161,49 @@ namespace $ {
 
 		confirm( text: string, variant = 0, files: readonly string[] = [] ): ReturnType< typeof $node[ '@maxhub/max-bot-api' ][ 'Keyboard' ][ 'inlineKeyboard' ] > {
 			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
-			return Keyboard.inlineKeyboard([[
-				this.open( 'Да', $bog_max_bot_api.text_payload( text, files ), variant ),
-				Keyboard.button.callback( 'Нет', 'no' ),
-			]])
+			return Keyboard.inlineKeyboard([
+				[ this.open( 'Да, в приложении', $bog_max_bot_api.text_payload( text, files ), variant ) ],
+				[ Keyboard.button.callback( 'Да, здесь в чате', 'chat' ), Keyboard.button.callback( 'Нет', 'no' ) ],
+			])
+		}
+
+		choices( options: $bog_max_bot_chat_step[ 'options' ] ) {
+			const { Keyboard } = $node[ '@maxhub/max-bot-api' ]
+			return Keyboard.inlineKeyboard( options.map( option => [ Keyboard.button.callback( option.label.slice( 0, 64 ), option.payload ) ] ) )
+		}
+
+		flow(): $bog_max_bot_api_flow | null {
+			return null
+		}
+
+		asked = new Map< number, { text: string, files: readonly string[] } >()
+
+		async step( ctx: $bog_max_bot_api_context, step: $bog_max_bot_chat_step ) {
+			if( step.ticket ) return this.answer( ctx, step.text, variant => this.keyboard( 'Открыть заявку', step.ticket!, variant ) )
+			const attachments = step.options.length ? [ this.choices( step.options ) ] : []
+			if( ctx.callback ) return ctx.answerOnCallback({ message: { text: step.text, attachments } })
+			return ctx.reply( step.text, { attachments } )
+		}
+
+		async callback( ctx: $bog_max_bot_api_context ) {
+			const payload = ctx.callback?.payload ?? ''
+			const user = ctx.user?.user_id ?? 0
+			if( payload === 'no' ) return ctx.answerOnCallback({ message: { text: this.declined() } })
+			const flow = this.flow()
+			if( !flow || !user ) return
+			if( payload === 'chat' ) {
+				const asked = this.asked.get( user )
+				if( !asked ) return ctx.answerOnCallback({ message: { text: 'Черновик заявки потерялся. Опишите проблему ещё раз одним сообщением.' } })
+				return this.step( ctx, await flow.start( user, asked.text, asked.files ) )
+			}
+			if( payload.startsWith( 'f:' ) ) return this.step( ctx, await flow.pick( user, payload ) )
+		}
+
+		async mine( ctx: $bog_max_bot_api_context ) {
+			const flow = this.flow()
+			const user = ctx.user?.user_id ?? 0
+			if( !flow || !user ) return ctx.reply( 'Список заявок сейчас недоступен.' )
+			return ctx.reply( await flow.mine( user ) )
 		}
 
 		unbound( error: unknown ) {
@@ -196,6 +244,8 @@ namespace $ {
 					this.$.$mol_log3_fail({ place: this, message: 'Файл из чата не сохранился: ' + String( error ) })
 				}
 			}
+			const user = ctx.user?.user_id ?? 0
+			if( user ) this.asked.set( user, { text, files } )
 			const question = files.length ? `${ this.question( text ) } Файлов приложится: ${ files.length }.` : this.question( text )
 			return this.answer( ctx, question, variant => this.confirm( text, variant, files ) )
 		}
@@ -205,19 +255,23 @@ namespace $ {
 			const { Bot } = $node[ '@maxhub/max-bot-api' ]
 			const bot = new Bot( this.token() )
 			const fail = ( error: unknown )=> this.$.$mol_log3_fail({ place: this, message: String( error ) })
-			bot.on( 'bot_started', ctx => this.invite( ctx, this.greeting(), ctx.startPayload ?? '' ) )
+			bot.on( 'bot_started', ctx => this.invite( ctx, this.greeting(), ctx.startPayload || 'new' ) )
 			bot.on( 'bot_added', ctx => ctx.update.is_channel ? undefined : this.invite( ctx, this.greeting_chat(), '' ) )
 			bot.on( 'message_created', ( ctx, next )=> this.addressed( ctx.message, ctx.botInfo ?? {} ) ? next() : undefined )
-			bot.command( 'start', ctx => this.invite( ctx, this.greeting(), '' ) )
+			bot.command( 'start', ctx => this.invite( ctx, this.greeting(), 'new' ) )
 			bot.command( 'help', ctx => ctx.reply( this.help() ) )
 			bot.command( 'id', ctx => ctx.reply( `Ваш ID в MAX: ${ ctx.message?.sender?.user_id ?? '?' }` ) )
+			bot.command( 'my', ctx => this.mine( ctx ) )
 			bot.on( 'message_created', ctx => {
 				const me = ctx.botInfo ?? {}
 				const text = this.problem( ctx.message, me )
+				const user = ctx.user?.user_id ?? 0
+				const flow = this.flow()
+				if( text && flow && user && flow.waiting( user ) ) return flow.place( user, text ).then( step => this.step( ctx, step ) )
 				if( text ) return this.ask( ctx, text, this.media( ctx.message ) )
 				if( this.mentioned( ctx.message, me ) ) return this.invite( ctx, this.help(), '' )
 			} )
-			bot.on( 'message_callback', ctx => ctx.callback.payload === 'no' ? ctx.answerOnCallback({ message: { text: this.declined() } }) : undefined )
+			bot.on( 'message_callback', ctx => this.callback( ctx ) )
 			bot.catch( fail )
 			bot.api.setMyCommands( this.commands() ).catch( fail )
 			this.listen( bot ).catch( fail )

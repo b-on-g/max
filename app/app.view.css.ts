@@ -499,21 +499,35 @@ namespace $ {
 		},
 
 		Ticket_media: {
-			flex: { direction: 'row', wrap: 'wrap' },
+			flex: { direction: 'column' },
 			gap: $mol_gap.space,
 			padding: $mol_gap.block,
 		},
 
+		Ticket_item: {
+			flex: { direction: 'column' },
+			width: '100%',
+		},
+
+		Ticket_image: {
+			width: '100%',
+			padding: 0,
+			justify: { content: 'center' },
+		},
+
 		Ticket_image_pic: {
-			maxWidth: '100%',
-			maxHeight: '14rem',
+			width: '100%',
+			height: 'auto',
+			maxHeight: '24rem',
+			minHeight: '6rem',
 			objectFit: 'contain',
 			borderRadius: '12px',
+			background: { color: $mol_theme.back },
 		},
 
 		Ticket_video: {
-			maxWidth: '100%',
-			maxHeight: '14rem',
+			width: '100%',
+			maxHeight: '24rem',
 			borderRadius: '12px',
 			background: { color: 'black' },
 		},

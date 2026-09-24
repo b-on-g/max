@@ -109,12 +109,22 @@ namespace $ {
 		'author cannot support own ticket'( $ ) {
 			const app = $$.$bog_max_app.make({ $ })
 			app.user_id = ()=> '7'
+			app.closed = ()=> false
 			app.current = ()=> ({ Author: ()=> ({ val: ()=> '7' }), Voices: ()=> null, voices: ()=> 0 }) as any
 			$mol_assert_equal( app.voice_allowed(), false )
 			$mol_assert_equal( app.voices_text(), 'Ваша заявка, поддержать могут соседи' )
 			app.current = ()=> ({ Author: ()=> ({ val: ()=> '8' }), Voices: ()=> null, voices: ()=> 2 }) as any
 			$mol_assert_equal( app.voice_allowed(), true )
 			$mol_assert_equal( app.voices_text(), 'Поддержали: 2' )
+		},
+
+		'closed ticket cannot be supported'( $ ) {
+			const app = $$.$bog_max_app.make({ $ })
+			app.user_id = ()=> '7'
+			app.closed = ()=> true
+			app.current = ()=> ({ Author: ()=> ({ val: ()=> '8' }), Voices: ()=> null, voices: ()=> 3 }) as any
+			$mol_assert_equal( app.voice_allowed(), false )
+			$mol_assert_equal( app.voices_text(), 'Заявка закрыта, поддержали: 3' )
 		},
 
 		'house code is a latin slug'( $ ) {

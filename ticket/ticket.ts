@@ -6,6 +6,7 @@ namespace $ {
 		Entrance: $giper_baza_atom_text,
 		Place: $giper_baza_atom_text,
 		Text: $giper_baza_atom_text,
+		Topic: $giper_baza_atom_text,
 		Photo: $giper_baza_atom_link.to( ()=> $giper_baza_file ),
 		Photos: $giper_baza_list_link.to( ()=> $giper_baza_file ),
 		Author: $giper_baza_atom_text,
@@ -20,6 +21,12 @@ namespace $ {
 
 		category() {
 			return this.Category()?.remote() ?? null
+		}
+
+		heading() {
+			const topic = this.Topic()?.val() ?? ''
+			const category = this.category()?.Title()?.val() ?? ''
+			return topic ? `${ category.replace( /^Другое.*$/, 'Другое' ) }: ${ topic }` : category
 		}
 
 		house() {

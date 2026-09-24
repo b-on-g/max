@@ -20,6 +20,8 @@ namespace $.$$ {
 		house: string | null
 		text?: string
 		files?: readonly string[]
+		open?: string
+		ticket?: string
 		user: { id: number, name: string, username?: string, photo?: string }
 	}
 
@@ -43,7 +45,14 @@ namespace $.$$ {
 
 		chat_text_open() {
 			if( this.waiting() || this.fail() ) return
-			if( !( this.session().text || this.session().files?.length ) || this.chat_text_used() ) return
+			const session = this.session()
+			if( this.chat_text_used() ) return
+			if( session.ticket ) {
+				this.chat_text_used( true )
+				this.$.$mol_state_arg.dict({ ... this.$.$mol_state_arg.dict(), screen: null, ticket: session.ticket })
+				return
+			}
+			if( !( session.text || session.files?.length || session.open === 'new' ) ) return
 			this.chat_text_used( true )
 			this.$.$mol_state_arg.dict({ ... this.$.$mol_state_arg.dict(), screen: 'new', ticket: null })
 		}
@@ -313,7 +322,7 @@ namespace $.$$ {
 		}
 
 		row_title( link: string ) {
-			return `№ ${ this.number( link ) }, ${ this.ticket( link ).category()?.Title()?.val() ?? '' }`
+			return `№ ${ this.number( link ) }, ${ this.ticket( link ).heading() }`
 		}
 
 		row_status( link: string ) {
@@ -333,13 +342,14 @@ namespace $.$$ {
 			return this.uk().tickets()
 				.filter( ticket => ticket.House()?.val()?.str === house )
 				.filter( $mol_match_text( this.query(), ticket => [
-					ticket.category()?.Title()?.val() ?? '',
+					ticket.heading(),
 					ticket.Entrance()?.val() ?? '',
 					ticket.Place()?.val() ?? '',
 					ticket.Text()?.val() ?? '',
 				] ) )
 				.map( ticket => ticket.link().str )
 				.reverse()
+				.sort( ( left, right )=> this.ticket( right ).voices() - this.ticket( left ).voices() )
 		}
 
 		house_rows() {
@@ -561,9 +571,42 @@ namespace $.$$ {
 
 		@ $mol_mem
 		category_options() {
+			const scope = this.scope()
 			return this.categories()
-				.filter( category => ( category.Scope()?.val() ?? 'house' ) === this.scope() )
+				.filter( category => scope === 'other' || ( category.Scope()?.val() ?? 'house' ) === scope )
 				.map( category => category.link().str )
+		}
+
+		@ $mol_mem
+		scope_custom( next?: string ) {
+			if( next ) {
+				this.scope( 'other' )
+				if( !this.place().trim() ) this.place( next )
+			}
+			return ''
+		}
+
+		@ $mol_mem
+		topic( next?: string ) {
+			return next ?? ''
+		}
+
+		other_category() {
+			return this.category_options().find( link => /^Другое/.test( this.category_of( link ).Title()?.val() ?? '' ) ) ?? ''
+		}
+
+		topic_active() {
+			const category = this.category()
+			return Boolean( category ) && category === this.other_category() ? this.topic() : ''
+		}
+
+		@ $mol_mem
+		category_custom( next?: string ) {
+			if( next ) {
+				this.topic( next )
+				this.category( this.other_category() )
+			}
+			return ''
 		}
 
 		@ $mol_mem
@@ -574,9 +617,14 @@ namespace $.$$ {
 
 		@ $mol_mem
 		category_dictionary() {
+			const topic = this.topic_active()
+			const current = this.category()
 			return {
-				'': 'Выберите категорию',
-				... Object.fromEntries( this.categories().map( category => [ category.link().str, category.Title()?.val() ?? '' ] ) ),
+				'': 'Выберите категорию или впишите свою',
+				... Object.fromEntries( this.categories().map( category => {
+					const link = category.link().str
+					return [ link, topic && link === current ? `Другое: ${ topic }` : category.Title()?.val() ?? '' ]
+				} ) ),
 			}
 		}
 
@@ -613,8 +661,21 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		photo_size_limit() {
+			return 30 * 2**20
+		}
+
+		@ $mol_mem
+		photo_error( next?: string ) {
+			return next ?? ''
+		}
+
+		@ $mol_mem
 		photo_picked( next?: readonly File[] ) {
-			if( next?.length ) this.photo_files( [ ... this.photo_files(), ... next ].slice( 0, this.photo_limit() ) )
+			if( !next?.length ) return [] as readonly File[]
+			const fit = next.filter( file => file.size <= this.photo_size_limit() )
+			this.photo_error( fit.length < next.length ? 'Файл больше 30 МБ не прикрепится, снимите видео покороче' : '' )
+			this.photo_files( [ ... this.photo_files(), ... fit ].slice( 0, this.photo_limit() ) )
 			return [] as readonly File[]
 		}
 
@@ -642,8 +703,10 @@ namespace $.$$ {
 		}
 
 		photo_pick_label() {
+			const error = this.photo_error()
+			if( error ) return error
 			const count = this.photo_files().length + this.chat_files().length
-			if( !count ) return 'Фото или видео по желанию'
+			if( !count ) return 'Фото или видео по желанию, до 30 МБ'
 			return count < this.photo_limit() ? `Файлов: ${ count }, можно ещё ${ this.photo_limit() - count }` : `Файлов: ${ count }, это максимум`
 		}
 
@@ -717,7 +780,8 @@ namespace $.$$ {
 		place_hint() {
 			switch( this.scope() ) {
 				case 'yard': return 'Ориентир во дворе'
-				case 'city': return 'Адрес или ориентир'
+				case 'city':
+				case 'other': return 'Адрес или ориентир'
 			}
 			return 'Этаж, квартира, ориентир'
 		}
@@ -740,7 +804,11 @@ namespace $.$$ {
 			const house = this.house_of( this.house() )
 			const category = this.category_of( this.category() )
 			const author = this.user_id()
+			const topic = this.topic_active()
 			const files = this.photo_files()
+			const buffers = files.map( file => new Uint8Array( $mol_wire_sync( file ).arrayBuffer() ) )
+			const chat = this.chat_files()
+			const chat_first = chat.length ? this.chat_file( chat[0] ) : null
 			const created = new $mol_time_moment()
 			const ticket = uk.Tickets( 'auto' )!.make( null )
 			ticket.House( 'auto' )!.remote( house )
@@ -748,23 +816,23 @@ namespace $.$$ {
 			ticket.Entrance( 'auto' )!.val( this.entrance() )
 			ticket.Place( 'auto' )!.val( this.place() )
 			ticket.Text( 'auto' )!.val( this.text() )
+			if( topic ) ticket.Topic( 'auto' )!.val( topic )
 			ticket.Author( 'auto' )!.val( author )
 			ticket.Created( 'auto' )!.val( created )
-			const chat = this.chat_files()
 			for( const link of chat ) ticket.Photos( 'auto' )!.add( new $giper_baza_link( link ) )
 			if( files.length ) this.sent_files_at( Date.now() )
-			for( const file of files ) {
+			const stores = files.map( ( file, index )=> {
 				const store = ticket.Photos( 'auto' )!.make( null )
-				store.blob( file )
-			}
-			if( files.length ) {
-				const store = ticket.Photo( 'auto' )!.ensure( null )!
-				store.blob( files[0] )
-				ticket.Photo( 'auto' )!.remote( store )
-			} else if( chat.length ) {
-				ticket.Photo( 'auto' )!.remote( this.chat_file( chat[0] ) )
-			}
+				store.buffer( buffers[ index ] )
+				store.type( file.type || 'application/octet-stream' )
+				store.name( file.name )
+				return store
+			} )
+			const first = chat_first ?? stores[0]
+			if( first ) ticket.Photo( 'auto' )!.remote( first )
 			this.chat_files( [] )
+			this.topic( '' )
+			this.photo_error( '' )
 			this.place( '' )
 			this.text( '' )
 			this.entrance( '' )
@@ -868,7 +936,7 @@ namespace $.$$ {
 		}
 
 		ticket_category() {
-			return this.current().category()?.Title()?.val() ?? ''
+			return this.current().heading()
 		}
 
 		ticket_house() {
@@ -960,6 +1028,7 @@ namespace $.$$ {
 		voices_text() {
 			const count = this.current().voices()
 			if( this.own() ) return count ? `Ваша заявка, поддержали: ${ count }` : 'Ваша заявка, поддержать могут соседи'
+			if( this.closed() ) return count ? `Заявка закрыта, поддержали: ${ count }` : 'Заявка закрыта, поддержка больше не нужна'
 			return count ? `Поддержали: ${ count }` : 'Пока никто не поддержал'
 		}
 
@@ -967,8 +1036,13 @@ namespace $.$$ {
 			return this.current().Author()?.val() === this.user_id()
 		}
 
+		closed() {
+			return $bog_max_status_closed.includes( this.status_of( this.ticket_link() ) )
+		}
+
 		voice_allowed() {
 			if( this.own() ) return false
+			if( this.closed() ) return false
 			const keys = this.current().Voices()?.keys().map( String ) ?? []
 			return !keys.includes( this.user_id() )
 		}
@@ -1041,7 +1115,7 @@ namespace $.$$ {
 					const ticket = this.ticket( link )
 					return [
 						String( this.number( link ) ),
-						ticket.category()?.Title()?.val() ?? '',
+						ticket.heading(),
 						ticket.house()?.Address()?.val() ?? '',
 						ticket.Entrance()?.val() ?? '',
 						ticket.Place()?.val() ?? '',

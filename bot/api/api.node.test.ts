@@ -49,7 +49,7 @@ namespace $ {
 
 		'command list matches the handlers'() {
 			const api = $bog_max_bot_api.make({})
-			$mol_assert_equal( api.commands().map( command => command.name ), [ 'start', 'help', 'id' ] )
+			$mol_assert_equal( api.commands().map( command => command.name ), [ 'start', 'my', 'help', 'id' ] )
 		},
 
 	})

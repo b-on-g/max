@@ -351,20 +351,22 @@ $bog_max_app $mol_book2
 					value? <=> house? \
 			<= Scope_field $mol_form_field
 				name @ \Где проблема
-				control <= Scope $mol_select
+				control <= Scope $bog_max_pick
 					options <= scope_options /string
 					dictionary <= scope_dictionary *
 					value? <=> scope? \house
+					custom? <=> scope_custom? \
 			<= Category_field $mol_form_field
 				name @ \Что случилось
 				attr *
 					^
 					bog_max_required \true
 				bids <= category_bids /string
-				control <= Category $mol_select
+				control <= Category $bog_max_pick
 					options <= category_options /string
 					dictionary <= category_dictionary *
 					value? <=> category? \
+					custom? <=> category_custom? \
 			<= Entrance_field $mol_form_field
 				name @ \Подъезд
 				control <= Entrance $mol_string
@@ -385,14 +387,14 @@ $bog_max_app $mol_book2
 					hint @ \Что именно не так
 					value? <=> text? \
 			<= Photo_field $mol_form_field
-				name @ \Фото
+				name @ \Фото и видео
 				control <= Photo_box $mol_view
 					sub /
 						<= Photo_row $mol_view
 							sub /
 								<= Photo_pick $mol_button_open
 									files? <=> photo_picked? /File
-									accept \image/*,video/*
+									accept \image/*,video/*,.mp4,.mov,.m4v,.3gp,.webm,.mkv,.avi,.heic,.heif
 									multiple true
 									hint @ \Приложить фото или видео
 								<= Photo_name $mol_paragraph
@@ -413,6 +415,7 @@ $bog_max_app $mol_book2
 				sub /
 					<= Chat_thumb* $mol_image
 						uri <= chat_url* \
+						loading \eager
 			<= Chat_video* $mol_view
 				dom_name \video
 				attr *
@@ -432,6 +435,7 @@ $bog_max_app $mol_book2
 				sub /
 					<= Photo_thumb* $mol_image
 						uri <= photo_url* \
+						loading \eager
 			<= Photo_video* $mol_view
 				dom_name \video
 				attr *
@@ -490,6 +494,7 @@ $bog_max_app $mol_book2
 				sub /
 					<= Ticket_image_pic* $mol_image
 						uri <= ticket_media_url* \
+						loading \eager
 			<= Ticket_video* $mol_view
 				dom_name \video
 				attr *

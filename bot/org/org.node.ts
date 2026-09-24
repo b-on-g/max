@@ -33,6 +33,7 @@ namespace $ {
 				status: ticket.status_by( lords ),
 				note: ticket.note_by( lords ),
 				category: category?.Title()?.val() ?? '',
+				topic: ticket.Topic()?.val() ?? '',
 				owner: ticket.owner_by( lords ),
 				owner_default: category?.Owner()?.val() ?? '',
 				alarm: ticket.alarmed() || null,

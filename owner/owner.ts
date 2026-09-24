@@ -12,6 +12,7 @@ namespace $ {
 		house: 'В доме',
 		yard: 'Во дворе',
 		city: 'В районе',
+		other: 'Другое место',
 	} as const
 
 }

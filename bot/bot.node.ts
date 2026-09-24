@@ -54,6 +54,11 @@ namespace $ {
 			return file.link().str
 		}
 
+		@ $mol_memo.method
+		chat() {
+			return $bog_max_bot_chat.make({ bot: ()=> this })
+		}
+
 		lord_of( pass: string ) {
 			if( !pass ) return ''
 			try {
@@ -87,6 +92,16 @@ namespace $ {
 				hook_url: ()=> this.env().WEBHOOK_URL ?? '',
 				hook_secret: ()=> this.env().WEBHOOK_SECRET ?? '',
 				store: ()=> ( items: readonly { type: 'image' | 'video', url: string, token: string }[] )=> this.store_media( items ),
+				flow: ()=> {
+					const chat = $mol_wire_async( this.chat() )
+					return {
+						start: ( user: number, text: string, files: readonly string[] )=> chat.start( user, text, files ),
+						pick: ( user: number, payload: string )=> chat.pick( user, payload ),
+						waiting: ( user: number )=> this.chat().waiting( user ),
+						place: async ( user: number, place: string )=> chat.placed( await chat.place( user, place ) ),
+						mine: ( user: number )=> chat.mine( user ),
+					}
+				},
 			})
 		}
 
@@ -150,7 +165,7 @@ namespace $ {
 			}
 			const category = ticket.category()
 			const owner = $bog_max_owner[ ticket.owner_by( lords ) as keyof typeof $bog_max_owner ] ?? ''
-			lines.push( `${ category?.Title()?.val() ?? '' }, ${ ticket.Place()?.val() ?? '' }` )
+			lines.push( `${ ticket.heading() }, ${ ticket.Place()?.val() ?? '' }` )
 			lines.push( `Ответственный: ${ owner }` )
 			const react = ticket.react_till()
 			if( react ) lines.push( `Реакция по нормативу: до ${ react.toOffset().toString( 'DD.MM hh:mm' ) }` )
@@ -195,6 +210,10 @@ namespace $ {
 			const uk = this.uk()
 			for( const ticket of uk.tickets() ) {
 				if( !ticket.status_by( this.lords() ) ) this.set_status( ticket, 'new' )
+				if( ticket.status_by( this.lords() ) === 'deleted' ) {
+					uk.Tickets( 'auto' )!.cut( ticket.link() )
+					continue
+				}
 				const status = ticket.status_by( this.lords() ) + '|' + ticket.owner_by( this.lords() )
 				const key = ticket.link().str
 				if( uk.Notified()?.key( key )?.val() === status ) continue

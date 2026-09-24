@@ -63,6 +63,8 @@ namespace $ {
 				house: house?.link().str ?? null,
 				text: $bog_max_bot_api.text_of( checked.start ),
 				files: $bog_max_bot_api.files_of( checked.start ),
+				open: checked.start === 'new' ? 'new' : '',
+				ticket: checked.start && bot.ticket( checked.start ) ? checked.start : '',
 				user: {
 					id: checked.user.id,
 					name,

@@ -1,0 +1,4 @@
+$bog_max_pick $bog_max_select
+	filter_hint @ \Поиск или свой вариант
+	custom? \
+	custom_prefix @ \Своё:

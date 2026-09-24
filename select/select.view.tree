@@ -1,3 +1,5 @@
 $bog_max_select $mol_select
+	filter_hint @ \Поиск
+	no_options_message @ \Ничего не нашлось
 	Menu $bog_max_list
 		rows <= menu_content
